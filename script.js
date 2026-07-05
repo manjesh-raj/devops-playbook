@@ -3439,7 +3439,7 @@ function updateSetupNavDot(sectionId) {
     if (steps.length === 0) return;
     const allDone = Array.from(steps).every(s => s.classList.contains('done'));
     // Map section id (setup-X) to nav link data-section (setup-X)
-    const navLink = document.querySelector(\`.nav-link[data-section="\${sectionId}"]\`);
+    const navLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
     if (navLink) {
         const navItem = navLink.closest('li');
         if (navItem) navItem.classList.toggle('all-done', allDone);
