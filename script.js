@@ -92,7 +92,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
 /* ══════════════════════════════════════
    PROGRESS + ACTIVE NAV ON SCROLL
 ══════════════════════════════════════ */
-const sections = document.querySelectorAll('.section');
+const sections = document.querySelectorAll('.section, .content-section');
 const navLinks = document.querySelectorAll('.nav-link');
 const progFill = document.getElementById('progFill');
 const progPct  = document.getElementById('progPct');

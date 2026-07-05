@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manjesh's DevOps Playbook</title>
-  <link rel="stylesheet" href="styles.css?v=6" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
 
@@ -172,9 +175,11 @@
 <main class="main" id="mainContent">
 
     <section id="setup-quickref" class="section">
-      <div class="eyebrow">Reference</div>
-      <h1>Quick Reference</h1>
-      <p class="lede">Daily-use commands in one place — no hunting through install steps. This is the panel you open after setup is done.</p>
+      <div class="sec-header">
+        <div class="sec-badge">Reference</div>
+        <h2>Quick Reference</h2>
+        <p class="sec-desc">Daily-use commands in one place — no hunting through install steps. This is the panel you open after setup is done.</p>
+      </div>
 
       <div class="step">
         <div class="step-index">01</div>
@@ -284,8 +289,10 @@
     </section>
 
     <section id="setup-terminal" class="section">
-      <div class="eyebrow">Environment · Terminal</div>
-      <h1>Terminal Setup</h1>
+      <div class="sec-header">
+        <div class="sec-badge">Environment</div>
+        <h2>Terminal Setup</h2>
+      </div>
 
       <div class="sub-tabs">
         <button class="sub-tab active" data-sub="wezterm">WezTerm <span class="sub-tag">terminal emulator</span></button>
@@ -950,9 +957,11 @@ vim.g.mapleader = <span class="str">" "</span>
     </section>
 
     <section id="setup-whisper" class="section">
-      <div class="eyebrow">Productivity · Voice Input</div>
-      <h1>OpenSuperWhisper</h1>
-      <p class="lede">Local speech-to-text on Apple Silicon using OpenAI's Whisper model. No cloud, no subscription — speak anywhere on macOS and the transcription is pasted in place.</p>
+      <div class="sec-header">
+        <div class="sec-badge">Productivity</div>
+        <h2>OpenSuperWhisper</h2>
+        <p class="sec-desc">Local speech-to-text on Apple Silicon using OpenAI's Whisper model. No cloud, no subscription — speak anywhere on macOS and the transcription is pasted in place.</p>
+      </div>
 
       <!-- Step 1 -->
       <div class="step">
@@ -1041,8 +1050,10 @@ vim.g.mapleader = <span class="str">" "</span>
     </section>
 
     <section id="setup-claude-code" class="section">
-      <div class="eyebrow">Agentic Tooling</div>
-      <h1>Claude Code Setup</h1>
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>Claude Code Setup</h2>
+      </div>
 
       <div class="sub-tabs">
         <button class="sub-tab active" data-sub="global">Global Setup <span class="sub-tag">one-time</span></button>
@@ -1374,9 +1385,11 @@ Remove entries once they are no longer true.&gt;
     </section>
 
     <section id="setup-skills" class="section">
-      <div class="eyebrow">Agentic Tooling</div>
-      <h1>Skills &amp; Plugins</h1>
-      <p class="lede">Skills extend Claude Code with reusable workflows and domain knowledge. Installed globally with <code>npx skills</code> — they live at <code>~/.agents/skills/</code> and are symlinked into Claude Code automatically.</p>
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>Skills &amp; Plugins</h2>
+        <p class="sec-desc">Skills extend Claude Code with reusable workflows and domain knowledge. Installed globally with <code>npx skills</code> — they live at <code>~/.agents/skills/</code> and are symlinked into Claude Code automatically.</p>
+      </div>
 
       <!-- Step 1 -->
       <div class="step">
@@ -1472,9 +1485,11 @@ Remove entries once they are no longer true.&gt;
     </section>
 
     <section id="setup-lavish" class="section">
-      <div class="eyebrow">Agentic Tooling</div>
-      <h1>Lavish</h1>
-      <p class="lede">HTML is the new Markdown. Lavish turns agent-generated HTML artifacts into interactive review surfaces — annotate elements, queue prompts, and send feedback back to the agent without leaving the browser.</p>
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>Lavish</h2>
+        <p class="sec-desc">HTML is the new Markdown. Lavish turns agent-generated HTML artifacts into interactive review surfaces — annotate elements, queue prompts, and send feedback back to the agent without leaving the browser.</p>
+      </div>
 
       <!-- Step 1 -->
       <div class="step">
@@ -1599,9 +1614,11 @@ Only skip lavish if Manjesh explicitly asks for a Markdown file or says
     </section>
 
     <section id="setup-no-mistakes" class="section">
-      <div class="eyebrow">Agentic Tooling</div>
-      <h1>No Mistakes</h1>
-      <p class="lede">A local git proxy that sits in front of your real remote. Push to <code>no-mistakes</code> instead of <code>origin</code> and it runs an AI-driven review-test-lint pipeline in a disposable worktree, then opens a clean PR only after every check passes. Nothing reaches the real remote until the gate is green.</p>
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>No Mistakes</h2>
+        <p class="sec-desc">A local git proxy that sits in front of your real remote. Push to <code>no-mistakes</code> instead of <code>origin</code> and it runs an AI-driven review-test-lint pipeline in a disposable worktree, then opens a clean PR only after every check passes. Nothing reaches the real remote until the gate is green.</p>
+      </div>
 
       <!-- Step 1 -->
       <div class="step">
@@ -1758,9 +1775,11 @@ clean PR, opened for you</span></div>
     </section>
 
     <section id="setup-firstmate" class="section">
-      <div class="eyebrow">Agentic Tooling</div>
-      <h1>Firstmate</h1>
-      <p class="lede">Talk to one agent, ship with a crew. Firstmate turns Claude Code into a fleet orchestrator — you give instructions to a single "first mate" agent, which spawns autonomous crewmates in isolated tmux windows and git worktrees, supervises them to completion, and hands you finished PRs or investigation reports.</p>
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>Firstmate</h2>
+        <p class="sec-desc">Talk to one agent, ship with a crew. Firstmate turns Claude Code into a fleet orchestrator — you give instructions to a single "first mate" agent, which spawns autonomous crewmates in isolated tmux windows and git worktrees, supervises them to completion, and hands you finished PRs or investigation reports.</p>
+      </div>
 
       <!-- Step 1 -->
       <div class="step">
@@ -2019,7 +2038,7 @@ help[1]:
         <div class="stat"><span class="stat-n">9</span><span class="stat-l">Core Modules</span></div>
         <div class="stat"><span class="stat-n">6+</span><span class="stat-l">Live Simulations</span></div>
         <div class="stat"><span class="stat-n">6</span><span class="stat-l">DevOps Projects</span></div>
-        <div class="stat"><span class="stat-n">0</span><span class="stat-l">Setup Required</span></div>
+        <div class="stat"><span class="stat-n">8</span><span class="stat-l">Setup Guides</span></div>
       </div>
     </div>
 
@@ -13426,6 +13445,6 @@ aws cloudwatch describe-alarms \
   </div>
 </footer>
 
-<script src="script.js?v=6"></script>
+<script src="script.js?v=7"></script>
 </body>
 </html>

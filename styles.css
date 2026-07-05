@@ -33,6 +33,9 @@
   --shadow-sm:   0 4px 16px rgba(0,0,0,0.3);
   --trans:       all 0.3s ease;
   --trans-fast:  all 0.15s ease;
+  --font-display: 'Sora', system-ui, -apple-system, sans-serif;
+  --font-body:    'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Consolas', monospace;
 }
 
 [data-theme="light"] {
@@ -56,7 +59,7 @@
 html { scroll-behavior: smooth; font-size: 15px; }
 
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   background: var(--bg);
   color: var(--txt);
   transition: background 0.4s ease, color 0.4s ease;
@@ -64,8 +67,10 @@ body {
   line-height: 1.6;
 }
 
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); text-wrap: balance; letter-spacing: -0.01em; }
+
 a { color: var(--accent); text-decoration: none; }
-code { font-family: 'Consolas','Fira Code',monospace; font-size: 0.85em; }
+code { font-family: var(--font-mono); font-size: 0.85em; }
 ul { list-style: none; }
 img { max-width: 100%; }
 
@@ -106,8 +111,16 @@ img { max-width: 100%; }
   padding: 24px 20px;
   border-bottom: 1px solid var(--border);
 }
-.logo-icon { font-size: 1.6rem; }
-.logo-text { font-size: 1.1rem; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.logo-icon {
+  font-size: 1.15rem;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--glass-b);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.logo-text { font-family: var(--font-display); font-size: 1.08rem; font-weight: 700; letter-spacing: -0.01em; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 /* PROGRESS */
 .sidebar-progress {
@@ -128,14 +141,16 @@ img { max-width: 100%; }
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 20px;
+  margin: 0 8px;
+  padding: 12px 12px;
   cursor: pointer;
-  font-weight: 700;
-  font-size: 0.9rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.88rem;
   color: var(--txt);
   user-select: none;
   transition: var(--trans-fast);
-  border-radius: 0;
+  border-radius: 8px;
 }
 .nav-group-toggle:hover { background: var(--glass); }
 .nav-group-chevron {
@@ -312,8 +327,10 @@ img { max-width: 100%; }
 }
 
 .hero-title {
+  font-family: var(--font-display);
   font-size: clamp(2.4rem, 5vw, 3.8rem);
-  font-weight: 900;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   line-height: 1.1;
   margin-bottom: 20px;
   animation: fadeSlideUp 0.6s ease 0.2s both;
@@ -417,7 +434,7 @@ img { max-width: 100%; }
   backdrop-filter: blur(10px);
   transition: var(--trans);
 }
-.card:hover { border-color: var(--border-h); box-shadow: var(--shadow-sm); }
+.card:hover { border-color: var(--border-h); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
 .card-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; }
 .card-sub { color: var(--txt2); font-size: 0.9rem; margin-bottom: 16px; }
 .card-note { font-size: 0.8rem; color: var(--txt3); margin-top: 8px; }
@@ -466,7 +483,7 @@ img { max-width: 100%; }
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px 16px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   color: #a5b4fc;
   margin: 10px 0;
@@ -478,9 +495,13 @@ img { max-width: 100%; }
 /* ══════════════════════════════════════
    TIMELINE
 ══════════════════════════════════════ */
-.timeline { display: flex; gap: 0; position: relative; padding: 20px 0; flex-wrap: wrap; }
+/* Equal-width items + a line spanning left:50% to width:100% means
+   the connector always reaches exactly the center of the next dot,
+   regardless of how wide any one label is. */
+.timeline { display: flex; gap: 0; position: relative; padding: 20px 0; }
 .tl-item {
-  flex: 1 1 180px;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -491,9 +512,10 @@ img { max-width: 100%; }
 .tl-item:not(:last-child)::after {
   content: '';
   position: absolute;
-  top: 12px; right: -4px;
-  width: 50%; height: 2px;
+  top: 12px; left: 50%;
+  width: 100%; height: 2px;
   background: var(--border-h);
+  z-index: 0;
 }
 .tl-dot {
   width: 24px; height: 24px;
@@ -502,6 +524,8 @@ img { max-width: 100%; }
   border: 2px solid var(--border-h);
   margin-bottom: 12px;
   transition: var(--trans);
+  position: relative;
+  z-index: 1;
 }
 .tl-active { background: var(--grad) !important; border-color: transparent !important; box-shadow: 0 0 12px rgba(99,102,241,0.5); }
 .tl-body { display: flex; flex-direction: column; gap: 4px; }
@@ -673,7 +697,7 @@ img { max-width: 100%; }
   border-radius: var(--radius);
   padding: 16px 18px;
   min-height: 120px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.82rem;
   line-height: 1.8;
 }
@@ -942,7 +966,7 @@ img { max-width: 100%; }
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 14px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   color: #a5b4fc;
   white-space: pre-wrap;
@@ -956,7 +980,7 @@ img { max-width: 100%; }
   border-radius: 8px;
   padding: 12px 14px;
   min-height: 150px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   line-height: 1.8;
   overflow-y: auto;
@@ -1046,7 +1070,7 @@ img { max-width: 100%; }
   border-radius: 6px;
   padding: 8px 12px;
   font-size: 0.78rem;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   color: #a5b4fc;
   line-height: 1.6;
 }
@@ -1083,7 +1107,7 @@ img { max-width: 100%; }
   border-radius: var(--radius);
   padding: 16px;
   min-height: 160px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.82rem;
   line-height: 1.9;
 }
@@ -1112,7 +1136,7 @@ img { max-width: 100%; }
   border-radius: 8px;
   padding: 10px 12px;
   min-height: 80px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   line-height: 1.7;
 }
@@ -1153,7 +1177,7 @@ img { max-width: 100%; }
   background: rgba(0,0,0,0.2);
   border-radius: 6px;
   font-size: 0.75rem;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   color: #a5b4fc;
   line-height: 1.6;
   word-break: break-word;
@@ -1232,6 +1256,10 @@ img { max-width: 100%; }
   .lp-card { min-width: 80px; padding: 14px 12px; }
   .lg-bottom { grid-template-columns: 1fr; }
   .ct-header span, .ct-row span { padding: 8px 10px; font-size: 0.75rem; }
+  .timeline { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .tl-item { flex-direction: row; text-align: left; padding: 0; width: 100%; }
+  .tl-dot { margin-bottom: 0; margin-right: 14px; flex-shrink: 0; }
+  .tl-item:not(:last-child)::after { top: 36px; left: 11px; width: 2px; height: calc(100% + 8px); }
 }
 
 /* ══════════════════════════════════════
@@ -1400,7 +1428,7 @@ canvas { cursor: default; }
   border-radius: 6px;
   font-size: 0.82rem;
   line-height: 1.5;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -1501,7 +1529,7 @@ canvas { cursor: default; }
 }
 .ts-prob-btn:hover, .ts-prob-btn.active { background: rgba(99,102,241,0.12); border-color: var(--accent); color: var(--accent); }
 .tool-sim-output { background: rgba(0,0,0,0.15); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
-.ts-reasoning { font-size: 0.85rem; color: var(--txt2); line-height: 1.6; padding: 10px 14px; background: rgba(99,102,241,0.08); border-radius: 8px; margin-bottom: 12px; font-family: 'Consolas','Fira Code',monospace; white-space: pre-wrap; }
+.ts-reasoning { font-size: 0.85rem; color: var(--txt2); line-height: 1.6; padding: 10px 14px; background: rgba(99,102,241,0.08); border-radius: 8px; margin-bottom: 12px; font-family: var(--font-mono); white-space: pre-wrap; }
 .ts-tools-available h4 { font-size: 0.78rem; font-weight: 700; color: var(--txt3); margin-bottom: 8px; }
 .ts-tools { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
 .ts-tool-pill {
@@ -1510,7 +1538,7 @@ canvas { cursor: default; }
   transition: var(--trans);
 }
 .ts-tool-pill.selected { background: rgba(99,102,241,0.2); border-color: var(--accent); color: var(--accent); font-weight: 700; }
-.ts-chosen { font-size: 0.88rem; padding: 10px 14px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; color: var(--green); font-family: 'Consolas','Fira Code',monospace; white-space: pre-wrap; }
+.ts-chosen { font-size: 0.88rem; padding: 10px 14px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; color: var(--green); font-family: var(--font-mono); white-space: pre-wrap; }
 
 /* Code block with header */
 .cb-header {
@@ -1530,7 +1558,7 @@ pre.cb-code {
   border: 1px solid var(--border);
   border-radius: 0 0 8px 8px;
   padding: 16px 18px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   color: #e2e8f0;
   white-space: pre;
@@ -1674,7 +1702,7 @@ pre.cb-code { border-radius: 8px; }
 .hib-actions { padding: 14px 16px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
 .hitl-log {
   background: rgba(0,0,0,0.2); border: 1px solid var(--border); border-radius: 8px;
-  padding: 10px 14px; min-height: 60px; font-family: 'Consolas','Fira Code',monospace;
+  padding: 10px 14px; min-height: 60px; font-family: var(--font-mono);
   font-size: 0.8rem; line-height: 1.8;
 }
 
@@ -1921,7 +1949,7 @@ pre.cb-code { border-radius: 8px; }
   background: var(--glass-b);
 }
 .fs-tree-title {
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--accent);
@@ -1942,7 +1970,7 @@ pre.cb-code { border-radius: 8px; }
   align-items: center;
   gap: 7px;
   padding: 5px 14px 5px 14px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--txt2);
   cursor: default;
@@ -2030,7 +2058,7 @@ pre.cb-code { border-radius: 8px; }
 /* Detail content (injected by JS) */
 .fs-detail-content {}
 .fs-detail-name {
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--accent);
@@ -2073,7 +2101,7 @@ pre.cb-code { border-radius: 8px; }
 }
 .fs-detail-file-item code {
   color: var(--accent);
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   flex-shrink: 0;
 }
 .fs-detail-file-item span {
@@ -2132,7 +2160,7 @@ pre.cb-code { border-radius: 8px; }
   line-height: 1.4;
 }
 .fs-rule-title code {
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.85em;
   color: var(--accent);
   background: rgba(99,102,241,0.1);
@@ -2166,7 +2194,7 @@ pre.cb-code { border-radius: 8px; }
 .fs-ic-box {
   padding: 8px 14px;
   border-radius: 8px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 700;
   text-align: center;
@@ -2427,7 +2455,7 @@ pre.cb-code { border-radius: 8px; }
   background: rgba(0,0,0,0.35);
   border: 1px solid var(--border);
   border-radius: 8px; padding: 12px 14px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem; line-height: 1.7;
   color: var(--txt2); overflow-x: auto; margin: 0;
   white-space: pre;
@@ -2439,7 +2467,7 @@ pre.cb-code { border-radius: 8px; }
   background: rgba(6,182,212,0.04);
   border: 1px solid rgba(6,182,212,0.2);
   border-radius: 8px; padding: 12px 14px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem; line-height: 1.7;
   color: var(--txt2); overflow-x: auto; margin: 0;
   white-space: pre; min-height: 200px;
@@ -2461,7 +2489,7 @@ pre.cb-code { border-radius: 8px; }
 .helm-syntax-card:hover { border-color: var(--helm); }
 .helm-syntax-code {
   display: block; font-size: 0.78rem; color: #fbbf24;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   margin-bottom: 6px;
 }
 .helm-syntax-desc { font-size: 0.78rem; color: var(--txt2); line-height: 1.4; }
@@ -2481,7 +2509,7 @@ pre.cb-code { border-radius: 8px; }
 }
 .hls-cmd-label { font-size: 0.72rem; color: var(--txt3); margin-bottom: 4px; }
 .hls-cmd {
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.88rem; color: var(--helm);
   transition: all 0.3s ease;
 }
@@ -2513,7 +2541,7 @@ pre.cb-code { border-radius: 8px; }
   background: rgba(6,182,212,0.04);
   border: 1px solid rgba(6,182,212,0.2);
   border-radius: 8px; padding: 14px;
-  font-family: 'Consolas','Fira Code',monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem; line-height: 1.7;
   color: var(--txt2); white-space: pre; overflow-x: auto;
   min-height: 220px; margin: 0;
@@ -2605,7 +2633,7 @@ pre.cb-code { border-radius: 8px; }
 }
 
 /* File tree */
-.kh-tree { font-family: 'Consolas','Fira Code',monospace; font-size: 0.82rem; }
+.kh-tree { font-family: var(--font-mono); font-size: 0.82rem; }
 .kh-tree-root {
   padding: 8px 12px;
   background: rgba(6,182,212,0.08);
@@ -5007,8 +5035,26 @@ pre.cb-code { border-radius: 8px; }
    (ported from Setup Guide)
 ═══════════════════════════════════════ */
 
-/* ── CSS variable needed for step progress ── */
-:root { --sage: #88c09a; }
+/* ── Theme mapping: setup components → AI Mentor palette ──
+   The ported components reference these names; map them to the
+   existing theme variables so dark/light both work. Also fixes
+   ADOT rules that already referenced --text/--text2. */
+:root {
+  --text:         var(--txt);
+  --text2:        var(--txt2);
+  --subtle:       var(--txt2);
+  --muted:        var(--txt3);
+  --gold:         var(--orange);
+  --sage:         var(--green);
+  --overlay:      var(--border);
+  --overlay-soft: var(--glass);
+  --surface:      var(--glass);
+  --code-accent:  #67e8f9;
+}
+[data-theme="light"] {
+  --gold:        #b45309;
+  --code-accent: #0e7490;
+}
 
 /* ── Sub-tabs inside a setup section ── */
 .sub-tabs{
@@ -5052,14 +5098,18 @@ pre.cb-code { border-radius: 8px; }
 .sub-panel{ display: none; }
 .sub-panel.active{ display: block; }
 
-/* ── Steps ── */
+/* ── Steps ──
+   A timeline: the index badges are connected by a vertical rule
+   instead of a full-width divider, so the sequence itself reads
+   as a path rather than a stack of unrelated rows. */
 .step{
     display: flex;
     gap: 18px;
-    padding: 26px 0;
-    border-top: 1px solid var(--overlay, rgba(255,255,255,0.1));
+    padding: 22px 0;
+    position: relative;
 }
-.step:first-of-type{ border-top: none; padding-top: 0; }
+.step:first-of-type{ padding-top: 0; }
+.step:last-of-type{ padding-bottom: 0; }
 
 .step-index{
     flex-shrink: 0;
@@ -5078,9 +5128,22 @@ pre.cb-code { border-radius: 8px; }
     cursor: pointer;
     user-select: none;
     position: relative;
+    z-index: 1;
     transition: background 0.2s, color 0.2s;
 }
-.step-index:hover{ background: rgba(136,192,154,0.08); }
+.step:not(:last-of-type) .step-index::before{
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    width: 1px;
+    height: 44px;
+    background: var(--overlay, rgba(255,255,255,0.14));
+    transform: translateX(-50%);
+    z-index: 0;
+}
+.step.done:not(:last-of-type) .step-index::before{ background: rgba(16,185,129,0.35); }
+.step-index:hover{ background: rgba(16,185,129,0.08); }
 .step-index:hover::after{
     content: '✓';
     position: absolute;
@@ -5102,7 +5165,7 @@ pre.cb-code { border-radius: 8px; }
 
 /* ── Step done state ── */
 .step.done .step-index{
-    background: rgba(136,192,154,0.12);
+    background: rgba(16,185,129,0.12);
     color: var(--sage);
 }
 .step.done .step-index::after{
@@ -5119,10 +5182,12 @@ pre.cb-code { border-radius: 8px; }
 .step.done .step-body{ opacity: 0.4; pointer-events: none; }
 .step-index-num{ display: none; }
 
-/* ── Terminal window ── */
+/* ── Terminal window ──
+   Terminals stay dark in BOTH themes, so everything inside .term
+   uses fixed colors — never theme variables. */
 .term{
     background: #1a1830;
-    border: 1px solid var(--overlay, rgba(255,255,255,0.1));
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 10px;
     overflow: hidden;
     margin: 14px 0 6px 0;
@@ -5134,27 +5199,23 @@ pre.cb-code { border-radius: 8px; }
     gap: 10px;
     padding: 8px 14px;
     background: linear-gradient(180deg, #211f3a, #1c1a30);
-    border-bottom: 1px solid var(--overlay, rgba(255,255,255,0.1));
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
+/* Single .term-btn div styled as 3 real macOS traffic-light dots
+   via box-shadow, so no markup changes were needed per terminal. */
 .term-btn{
-    width: 34px;
-    height: 14px;
-    border-radius: 999px;
-    background: var(--overlay, rgba(255,255,255,0.1));
-    position: relative;
-}
-.term-btn::after{
-    content: "";
-    position: absolute;
-    top: 3px; left: 4px;
-    width: 8px; height: 8px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: var(--muted, #6e6a86);
+    background: #ff5f57;
+    box-shadow: 16px 0 0 #febc2e, 32px 0 0 #28c840;
+    margin-right: 26px;
+    flex-shrink: 0;
 }
 .term-label{
     font-family: var(--font-mono, monospace);
     font-size: 11px;
-    color: var(--subtle, #908caa);
+    color: #908caa;
     letter-spacing: 0.03em;
     margin-left: 2px;
 }
@@ -5165,19 +5226,19 @@ pre.cb-code { border-radius: 8px; }
     font-size: 10.5px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--subtle, #908caa);
+    color: #908caa;
     padding: 4px 9px;
     border-radius: 6px;
-    border: 1px solid var(--overlay, rgba(255,255,255,0.1));
+    border: 1px solid rgba(255,255,255,0.12);
     cursor: pointer;
     transition: color 0.15s ease, border-color 0.15s ease, background 0.25s ease;
 }
-.term-copy:hover{ color: var(--gold, #f6c177); border-color: var(--gold, #f6c177); }
-.term-copy:focus-visible{ outline: 2px solid var(--gold, #f6c177); outline-offset: 2px; }
+.term-copy:hover{ color: #f6c177; border-color: #f6c177; }
+.term-copy:focus-visible{ outline: 2px solid #f6c177; outline-offset: 2px; }
 .term-copy.copied{
-    background: rgba(136,192,154,0.18) !important;
-    color: var(--sage) !important;
-    border-color: rgba(136,192,154,0.3) !important;
+    background: rgba(16,185,129,0.18) !important;
+    color: #34d399 !important;
+    border-color: rgba(16,185,129,0.3) !important;
 }
 .term-body{
     padding: 16px 18px 18px 18px;
@@ -5186,6 +5247,11 @@ pre.cb-code { border-radius: 8px; }
     line-height: 1.7;
     overflow-x: auto;
     white-space: pre;
+    /* Fixed color, not var(--txt) — .term-body sits on a permanently
+       dark background in both themes, but plain unwrapped text (not
+       inside a .kw/.str/.cmd span) would otherwise inherit body's
+       theme color and go near-invisible in light mode. */
+    color: #e0def4;
 }
 .term-body .prompt{ color: #9ccfd8; }
 .term-body .cmd{ color: #e0def4; }
@@ -5199,7 +5265,7 @@ pre.cb-code { border-radius: 8px; }
     display: inline-block;
     width: 7px;
     height: 14px;
-    background: var(--gold, #f6c177);
+    background: #f6c177;
     vertical-align: middle;
     margin-left: 2px;
     animation: blink 1.1s steps(1) infinite;
@@ -5216,47 +5282,62 @@ pre.cb-code { border-radius: 8px; }
     font-size: 13.8px;
     border: 1px solid var(--overlay, rgba(255,255,255,0.1));
 }
-.callout.warn{ background: rgba(234,154,151,0.08); border-color: rgba(234,154,151,0.35); }
-.callout.warn .callout-icon{ color: #ea9a97; }
-.callout.info{ background: rgba(62,143,176,0.08); border-color: rgba(62,143,176,0.35); }
-.callout.info .callout-icon{ color: #3e8fb0; }
-.callout.success{ background: rgba(246,193,119,0.08); border-color: rgba(246,193,119,0.35); }
-.callout.success .callout-icon{ color: #f6c177; }
-.callout.note{ background: rgba(196,167,231,0.08); border-color: rgba(196,167,231,0.35); }
-.callout.note .callout-icon{ color: #c4a7e7; }
+.callout.warn{ background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.35); }
+.callout.warn .callout-icon{ color: var(--red); }
+.callout.info{ background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.35); }
+.callout.info .callout-icon{ color: var(--blue); }
+.callout.success{ background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.35); }
+.callout.success .callout-icon{ color: var(--green); }
+.callout.note{ background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.35); }
+.callout.note .callout-icon{ color: var(--accent2); }
 .callout-icon{ font-family: var(--font-mono, monospace); font-weight: 600; flex-shrink: 0; }
 .callout-text strong{ color: var(--text, #e0def4); }
 .callout-text{ color: var(--subtle, #908caa); }
 
 /* ── KV tables ── */
+/* A reference table reads as a lookup surface, not prose — the whole
+   thing sits in a bordered card, and the key/command column is a
+   distinct tinted "code lane" rather than plain colored text loose
+   on the page. */
 .kv-table{
     width: 100%;
     border-collapse: collapse;
     margin: 14px 0 4px 0;
     font-size: 13.3px;
+    border: 1px solid var(--overlay, rgba(255,255,255,0.1));
+    border-radius: 10px;
+    overflow: hidden;
 }
 .kv-table th{
     text-align: left;
     font-family: var(--font-mono, monospace);
     font-size: 10.5px;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.07em;
     color: var(--muted, #6e6a86);
-    padding: 8px 10px;
+    padding: 11px 18px;
+    background: var(--overlay, rgba(255,255,255,0.06));
     border-bottom: 1px solid var(--overlay, rgba(255,255,255,0.1));
 }
+.kv-table th:first-child, .kv-table td.k{ width: 38%; }
 .kv-table td{
-    padding: 10px 10px;
-    border-bottom: 1px solid var(--overlay, rgba(255,255,255,0.1));
+    padding: 11px 18px;
+    border-bottom: 1px solid var(--overlay, rgba(255,255,255,0.07));
     color: var(--subtle, #908caa);
-    vertical-align: top;
+    vertical-align: middle;
 }
 .kv-table td.k{
     font-family: var(--font-mono, monospace);
-    color: #9ccfd8;
+    font-size: 12.6px;
+    color: var(--code-accent);
     white-space: nowrap;
+    background: var(--overlay-soft, rgba(255,255,255,0.03));
+    border-right: 1px solid var(--overlay, rgba(255,255,255,0.07));
 }
 .kv-table tr:last-child td{ border-bottom: none; }
+.kv-table tr:not(:first-child){ transition: background 0.15s ease; }
+.kv-table tr:not(:first-child):hover td{ background: rgba(99,102,241,0.08) !important; }
+.kv-table tr:not(:first-child):hover td.k{ color: var(--gold); }
 
 /* ── Empty state ── */
 .empty-state{
@@ -5294,7 +5375,7 @@ pre.cb-code { border-radius: 8px; }
     margin-left: auto;
     flex-shrink: 0;
     display: none;
-    box-shadow: 0 0 6px rgba(136,192,154,0.4);
+    box-shadow: 0 0 6px rgba(16,185,129,0.4);
 }
 .nav-item.all-done .install-dot{ display: block; }
 
@@ -5304,7 +5385,7 @@ pre.cb-code { border-radius: 8px; }
     font-size: 11.5px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #3e8fb0;
+    color: var(--code-accent);
     margin-bottom: 10px;
 }
 .section .lede{
