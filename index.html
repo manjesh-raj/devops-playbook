@@ -53,6 +53,7 @@
         <li><a class="nav-link" href="#setup-lavish" data-section="setup-lavish"><span class="ni">◈</span><span>Lavish</span></a></li>
         <li><a class="nav-link" href="#setup-no-mistakes" data-section="setup-no-mistakes"><span class="ni">⛨</span><span>No Mistakes</span></a></li>
         <li><a class="nav-link" href="#setup-firstmate" data-section="setup-firstmate"><span class="ni">⚓</span><span>Firstmate</span></a></li>
+        <li><a class="nav-link" href="#setup-firstmate-cockpit" data-section="setup-firstmate-cockpit"><span class="ni">🖥️</span><span>Firstmate Cockpit</span></a></li>
       </ul>
     </li>
     <li class="nav-group" id="navGroupAI">
@@ -2022,6 +2023,110 @@ help[1]:
         </div>
       </div>
 
+    </section>
+
+    <section id="setup-firstmate-cockpit" class="section">
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>Firstmate Cockpit</h2>
+        <p class="sec-desc">A native macOS desktop app that gives your Firstmate fleet a cockpit. It shows a live dashboard of the crew — who is working, what needs a decision, which PRs are ready — and embeds the first mate's tmux session as a real, interactive terminal, so you can steer the whole fleet without hunting through terminal tabs. Built with FastAPI + pywebview (no Rust), packaged into a real <code>Firstmate.app</code>. Firstmate itself is never modified — the cockpit only reads it and drives its own <code>bin/</code> helper scripts.</p>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-index">01</div>
+        <div class="step-body">
+          <h3>What you get</h3>
+          <ul>
+            <li><strong>Fleet dashboard</strong> — crew status, backlog, projects, PRs ready to merge, and watcher health, at a glance.</li>
+            <li><strong>First Mate console</strong> — an embedded live terminal (the real tmux session) with full scroll, arrow-menus, and permission prompts, plus cleaned Transcript and Conversation views.</li>
+            <li><strong>One-click actions</strong> — message the first mate, merge a PR, answer a prompt.</li>
+            <li><strong>Light / dark themes</strong>, with the captain's identity front and centre.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-index">02</div>
+        <div class="step-body">
+          <h3>Prerequisites</h3>
+          <p>You need a first mate to point it at, and Python 3.12. tmux and Claude Code are covered by earlier panels; Firstmate is the previous panel.</p>
+          <ul>
+            <li>A first mate running <strong>inside tmux</strong> (see the Firstmate panel) — the cockpit talks to it through its tmux pane, so a plain terminal session cannot be reached.</li>
+            <li>Python 3.12 — <code>brew install python@3.12</code>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-index">03</div>
+        <div class="step-body">
+          <h3>Clone and run (dev)</h3>
+          <p>Clone the repo, create a virtualenv, install, and start the local server.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">setup</span>
+              <button class="term-copy" data-copy="git clone https://github.com/manjesh-raj/firstmate-cockpit && cd firstmate-cockpit && python3.12 -m venv .venv && .venv/bin/pip install -e . && .venv/bin/python -m uvicorn backend.app:app --port 8765">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">git clone https://github.com/manjesh-raj/firstmate-cockpit</span>
+<span class="prompt">➜</span> <span class="cmd">cd firstmate-cockpit</span>
+<span class="prompt">➜</span> <span class="cmd">python3.12 -m venv .venv && .venv/bin/pip install -e .</span>
+<span class="prompt">➜</span> <span class="cmd">.venv/bin/python -m uvicorn backend.app:app --port 8765</span>
+<span class="cmt"># then open http://127.0.0.1:8765 — reading the fleet works with zero config</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="step-index">04</div>
+        <div class="step-body">
+          <h3>Build the macOS app</h3>
+          <p>Package it into a real <code>Firstmate.app</code> — pywebview for the native window, py2app for the bundle. No Rust, no extra toolchain.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">build</span>
+              <button class="term-copy" data-copy="./build_app.sh && open dist/Firstmate.app">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">./build_app.sh</span>
+<span class="out">✓ Built: dist/Firstmate.app</span>
+<span class="prompt">➜</span> <span class="cmd">open dist/Firstmate.app</span>
+<span class="cmt"># first launch: right-click → Open (unsigned app, one-time Gatekeeper prompt)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step">
+        <div class="step-index">05</div>
+        <div class="step-body">
+          <h3>Connect to your first mate</h3>
+          <p>Open the console (click <strong>Captain</strong> in the top bar), hit the <strong>gear → Detect</strong>, and pick the pane flagged "firstmate home" — or set <code>FIRSTMATE_TARGET</code> yourself. The choice persists to <code>~/Library/Application&nbsp;Support/firstmate-cockpit/config.json</code>. tmux window indexes vary by <code>base-index</code>, so Detect finds the real target (often <code>firstmate:1.1</code>) rather than you guessing.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">optional</span>
+              <button class="term-copy" data-copy="export FIRSTMATE_TARGET=firstmate:1.1">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">export FIRSTMATE_TARGET=firstmate:1.1</span>
+<span class="cmt"># or just use the in-app gear → Detect (recommended)</span></div>
+          </div>
+          <p style="margin-top:1rem">Now the <strong>Terminal</strong> tab mirrors your live first mate — scroll, arrow-menus, and prompts, all fully interactive, reflected in your real terminal because it is the same tmux session.</p>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="step">
+        <div class="step-index">06</div>
+        <div class="step-body">
+          <h3>Source</h3>
+          <p>Full code, README (API surface, py2app notes, configuration), and design docs live on GitHub: <a href="https://github.com/manjesh-raj/firstmate-cockpit" target="_blank">github.com/manjesh-raj/firstmate-cockpit</a>.</p>
+        </div>
+      </div>
     </section>
 
   <section id="home" class="section hero-section">
