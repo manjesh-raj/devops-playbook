@@ -7,16 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
-
-<!-- ─────────────────────────────────────────
-     THEME TOGGLE
-───────────────────────────────────────── -->
-<button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
-  <span id="themeIcon">🌙</span>
-</button>
 
 <!-- ─────────────────────────────────────────
      SIDEBAR
@@ -195,6 +188,18 @@
      MAIN CONTENT
 ───────────────────────────────────────── -->
 <main class="main" id="mainContent">
+
+    <div class="topbar" id="topbar">
+      <nav class="topbar-crumb" aria-label="Breadcrumb">
+        <span class="tb-dot"></span>
+        <span class="tb-group" id="tbGroup">Workstation Setup</span>
+        <span class="tb-sep">/</span>
+        <span class="tb-section" id="tbSection">Quick Reference</span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
 
     <section id="setup-quickref" class="section">
       <div class="sec-header">
@@ -14703,6 +14708,6 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
   </div>
 </footer>
 
-<script src="script.js?v=9"></script>
+<script src="script.js?v=10"></script>
 </body>
 </html>
