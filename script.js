@@ -108,6 +108,16 @@ const sectionObserver = new IntersectionObserver((entries) => {
       navLinks.forEach(l => {
         l.classList.toggle('active', l.dataset.section === id);
       });
+      // Breadcrumb (top bar) — mirror the active section + its nav group
+      const activeLink = [...navLinks].find(l => l.dataset.section === id);
+      if (activeLink) {
+        const tbSection = document.getElementById('tbSection');
+        const tbGroup   = document.getElementById('tbGroup');
+        const secLabel  = activeLink.querySelector('span:not(.ni):not(.nbadge)');
+        if (tbSection) tbSection.textContent = (secLabel ? secLabel.textContent : activeLink.textContent).trim();
+        const grpLabel = activeLink.closest('.nav-group')?.querySelector('.nav-group-toggle span:not(.ni):not(.nav-group-chevron)');
+        if (tbGroup && grpLabel) tbGroup.textContent = grpLabel.textContent.trim();
+      }
       // Progress
       const pct = Math.round((visitedSections.size / sections.length) * 100);
       progFill.style.width = pct + '%';
