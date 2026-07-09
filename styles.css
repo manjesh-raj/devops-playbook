@@ -11,6 +11,7 @@
   --glass:       rgba(255,255,255,0.04);
   --glass-b:     rgba(255,255,255,0.08);
   --glass-h:     rgba(255,255,255,0.12);
+  --glass2:      rgba(255,255,255,0.05);
   --border:      rgba(255,255,255,0.08);
   --border-h:    rgba(255,255,255,0.18);
   --txt:         #e2e8f0;
@@ -45,6 +46,7 @@
   --glass:       rgba(255,255,255,0.65);
   --glass-b:     rgba(255,255,255,0.85);
   --glass-h:     rgba(255,255,255,1);
+  --glass2:      rgba(99,102,241,0.05);
   --border:      rgba(99,102,241,0.15);
   --border-h:    rgba(99,102,241,0.35);
   --txt:         #1e293b;
@@ -5395,3 +5397,133 @@ pre.cb-code { border-radius: 8px; }
     margin-bottom: 40px;
 }
 .section p.muted-p{ color: var(--subtle, #908caa); font-size: 14px; }
+
+/* ══════════════════════════════════════
+   OPENTELEMETRY SECTION (namespaced .otel-*)
+   Reuses design tokens so dark/light theming is automatic.
+══════════════════════════════════════ */
+.otel-path-num {
+  display: inline-block;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(99,102,241,0.12);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+.otel-path-hot { border-color: rgba(99,102,241,0.45); background: rgba(99,102,241,0.07); }
+
+/* Simulation layout */
+.otel-sim-desc {
+  font-size: 0.86rem;
+  color: var(--txt2);
+  background: var(--glass2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 14px 0 16px;
+  line-height: 1.6;
+}
+.otel-sim-cols { align-items: stretch; }
+.otel-sim-view, .otel-sim-code-side { margin-bottom: 0; display: flex; flex-direction: column; }
+.otel-sim-viewhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--txt2);
+  margin-bottom: 10px;
+}
+.otel-trace-total { color: var(--accent); font-family: var(--font-mono, monospace); }
+.otel-sim-output {
+  flex: 1;
+  min-height: 210px;
+  background: var(--glass2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+  overflow-x: auto;
+}
+.otel-sim-code {
+  flex: 1;
+  min-height: 210px;
+  margin: 0;
+  overflow-x: auto;
+}
+/* Log lines (Step 0 / blind) */
+.otel-logline { padding: 2px 0; color: var(--txt2); white-space: pre; }
+.otel-logline.err { color: var(--red); }
+.otel-logline.dim { opacity: 0.55; }
+.otel-empty { color: var(--txt2); opacity: 0.7; font-style: italic; }
+
+/* Trace waterfall */
+.otel-span-row {
+  display: grid;
+  grid-template-columns: 190px 1fr 54px;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 0;
+  animation: otelFade 0.25s ease;
+}
+@keyframes otelFade { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+.otel-span-name {
+  font-size: 0.74rem;
+  color: var(--txt);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.otel-span-name .otel-manual-tag {
+  font-size: 0.6rem;
+  color: var(--accent2);
+  border: 1px solid var(--accent2);
+  border-radius: 4px;
+  padding: 0 3px;
+  margin-left: 4px;
+}
+.otel-span-barwrap {
+  position: relative;
+  height: 16px;
+  background: var(--glass);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.otel-span-bar {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  color: #fff;
+  line-height: 16px;
+  text-align: right;
+  padding-right: 4px;
+  min-width: 3px;
+  box-sizing: border-box;
+}
+.otel-span-ok     { background: var(--accent); }
+.otel-span-slow   { background: var(--orange); }
+.otel-span-err    { background: var(--red); }
+.otel-span-manual { background: var(--accent2); }
+.otel-span-dur { font-size: 0.7rem; color: var(--txt2); text-align: right; font-family: var(--font-mono, monospace); }
+
+/* Legend */
+.otel-trace-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 0.72rem; color: var(--txt2); }
+.otel-leg { display: inline-flex; align-items: center; gap: 5px; }
+.otel-leg-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.otel-leg-manual { background: var(--accent2); }
+
+/* Nav + controls */
+.otel-sim-nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+.otel-sim-nav .btn { padding: 8px 16px; font-size: 0.82rem; }
+.otel-sim-counter { font-size: 0.78rem; color: var(--txt2); margin-left: auto; }
+
+@media (max-width: 820px) {
+  .otel-span-row { grid-template-columns: 120px 1fr 44px; }
+}

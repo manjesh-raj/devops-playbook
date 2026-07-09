@@ -3481,3 +3481,193 @@ document.querySelectorAll('.term-copy').forEach(btn => {
         });
     });
 });
+
+/* ══════════════════════════════════════
+   OPENTELEMETRY — Sample-Project Simulation
+   (module 09). Self-contained; telemetry is simulated in JS.
+══════════════════════════════════════ */
+const OTEL_SIM_STEPS = [
+  {
+    tab: 'Blind', backend: '🖥️ App console (no telemetry)', legend: false,
+    desc: 'Step 0 — Blind. The orders service has zero instrumentation. A downstream call fails, but all you get is one log line. No idea where the time went or what broke.',
+    code:
+`<span class="cmt"># app.py — no OpenTelemetry at all</span>
+<span class="kw">@app.route</span>(<span class="str">"/orders"</span>, methods=[<span class="str">"POST"</span>])
+<span class="kw">def</span> create_order():
+    order = request.get_json()
+    validate(order)
+    charge(order)   <span class="cmt"># calls payments service</span>
+    save(order)
+    <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"placed"</span>}
+
+<span class="cmt"># All you ever see in the logs:</span>
+<span class="cmt"># ERROR: request failed</span>`,
+    log: [
+      { t: '03:14:22', level: 'INFO', msg: 'POST /orders received', cls: 'dim' },
+      { t: '03:14:24', level: 'ERROR', msg: 'request failed', cls: 'err' },
+      { t: '', level: '', msg: '↳ where? which step? how long? unknown.', cls: 'dim' },
+    ],
+  },
+  {
+    tab: 'Auto', backend: '🔭 Jaeger UI — auto spans', legend: true,
+    desc: 'Step 1 — Auto. Launch with opentelemetry-instrument (zero code changes). Flask, requests and psycopg are auto-instrumented → a real trace waterfall appears: the HTTP request, the payments call and the DB insert, with timings.',
+    code:
+`<span class="cmt"># No code changes — just launch differently:</span>
+$ pip install opentelemetry-distro opentelemetry-exporter-otlp
+$ opentelemetry-bootstrap -a install
+$ OTEL_SERVICE_NAME=orders-api \\
+  OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 \\
+  opentelemetry-instrument python app.py
+
+<span class="cmt"># You instantly get spans for every library call.</span>`,
+    total: 904,
+    spans: [
+      { name: 'POST /orders', depth: 0, start: 0, dur: 904, status: 'ok', attr: 'http.route=/orders' },
+      { name: 'POST http://payments/charge', depth: 1, start: 40, dur: 803, status: 'ok', attr: 'http.status_code=200' },
+      { name: 'INSERT orders', depth: 1, start: 863, dur: 38, status: 'ok', attr: 'db.system=postgresql' },
+    ],
+  },
+  {
+    tab: 'Manual', backend: '🔭 Jaeger UI — hybrid', legend: true,
+    desc: 'Step 2 — Manual. Add named business spans on top of auto. validate_order, charge_payment and save_order nest into the auto spans automatically (shared context) and carry attributes like order.value.',
+    code:
+`<span class="kw">from</span> opentelemetry <span class="kw">import</span> trace
+tracer = trace.get_tracer(__name__)
+
+<span class="kw">def</span> create_order():                 <span class="cmt"># auto span: POST /orders</span>
+    order = request.get_json()
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"validate_order"</span>) <span class="kw">as</span> s:
+        s.set_attribute(<span class="str">"order.value"</span>, order[<span class="str">"total"</span>])
+        validate(order)
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"charge_payment"</span>) <span class="kw">as</span> s:
+        s.set_attribute(<span class="str">"payment.amount"</span>, order[<span class="str">"total"</span>])
+        charge(order)                 <span class="cmt"># auto span nests here</span>
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"save_order"</span>):
+        save(order)`,
+    total: 904,
+    spans: [
+      { name: 'POST /orders', depth: 0, start: 0, dur: 904, status: 'ok', attr: 'http.route=/orders' },
+      { name: 'validate_order', depth: 1, start: 4, dur: 18, status: 'ok', manual: true, attr: 'order.value=249.99' },
+      { name: 'charge_payment', depth: 1, start: 32, dur: 820, status: 'ok', manual: true, attr: 'payment.amount=249.99' },
+      { name: 'POST http://payments/charge', depth: 2, start: 40, dur: 803, status: 'ok', attr: 'http.status_code=200' },
+      { name: 'save_order', depth: 1, start: 860, dur: 42, status: 'ok', manual: true },
+      { name: 'INSERT orders', depth: 2, start: 863, dur: 38, status: 'ok', attr: 'db.system=postgresql' },
+    ],
+  },
+  {
+    tab: 'Break it', backend: '🔭 Jaeger UI — failure', legend: true,
+    desc: 'Step 3 — Break it. The payments service times out. record_exception + set_status paint the exact failing span red with its error — OTel pinpoints the root cause instantly, no log grep required.',
+    code:
+`<span class="kw">from</span> opentelemetry.trace <span class="kw">import</span> Status, StatusCode
+
+<span class="kw">with</span> tracer.start_as_current_span(<span class="str">"charge_payment"</span>) <span class="kw">as</span> s:
+    s.set_attribute(<span class="str">"payment.amount"</span>, order[<span class="str">"total"</span>])
+    <span class="kw">try</span>:
+        requests.post(<span class="str">"http://payments/charge"</span>, timeout=<span class="num">2</span>)
+    <span class="kw">except</span> Exception <span class="kw">as</span> e:
+        s.record_exception(e)                       <span class="cmt"># stack on the span</span>
+        s.set_status(Status(StatusCode.ERROR, str(e)))  <span class="cmt"># span turns red</span>
+        <span class="kw">raise</span>`,
+    total: 2100,
+    spans: [
+      { name: 'POST /orders', depth: 0, start: 0, dur: 2100, status: 'err', attr: 'http.status_code=502' },
+      { name: 'validate_order', depth: 1, start: 4, dur: 18, status: 'ok', manual: true, attr: 'order.value=249.99' },
+      { name: 'charge_payment', depth: 1, start: 32, dur: 2058, status: 'err', manual: true, attr: 'status=ERROR "ConnectTimeout"' },
+      { name: 'POST http://payments/charge', depth: 2, start: 40, dur: 2048, status: 'err', attr: 'exception=ConnectTimeout' },
+    ],
+  },
+];
+
+const otelSimState = { step: 0, revealed: 0, timer: null };
+
+function otelSimRenderWaterfall(step, count) {
+  const cfg = OTEL_SIM_STEPS[step];
+  const out = document.getElementById('otelSimOutput');
+  if (!out) return;
+  const spans = cfg.spans.slice(0, count);
+  out.innerHTML = spans.map(s => {
+    const leftPct  = (s.start / cfg.total) * 100;
+    const widthPct = Math.max((s.dur / cfg.total) * 100, 0.8);
+    const cls = s.status === 'err' ? 'otel-span-err' : s.status === 'slow' ? 'otel-span-slow'
+              : s.manual ? 'otel-span-manual' : 'otel-span-ok';
+    const indent = s.depth * 14;
+    const arrow = s.depth ? '<span style="opacity:.45">' + '└'.repeat(1) + ' </span>' : '';
+    const tag = s.manual ? '<span class="otel-manual-tag">manual</span>' : '';
+    const label = s.dur >= 60 ? s.dur + 'ms' : '';
+    return `<div class="otel-span-row">
+      <div class="otel-span-name" style="padding-left:${indent}px" title="${s.attr||''}">${arrow}${s.name}${tag}</div>
+      <div class="otel-span-barwrap"><div class="otel-span-bar ${cls}" style="left:${leftPct}%;width:${widthPct}%">${label}</div></div>
+      <div class="otel-span-dur">${s.dur}ms</div>
+    </div>` + (s.attr ? `<div class="otel-logline dim" style="padding-left:${indent+14}px;font-size:.68rem">${s.attr}</div>` : '');
+  }).join('');
+  const totalEl = document.getElementById('otelTraceTotal');
+  if (totalEl) totalEl.textContent = count > 0 ? `${cfg.total}ms total` : '';
+}
+
+function otelSimRenderLog(step) {
+  const cfg = OTEL_SIM_STEPS[step];
+  const out = document.getElementById('otelSimOutput');
+  if (!out) return;
+  out.innerHTML = cfg.log.map(l =>
+    `<div class="otel-logline ${l.cls}">${l.t ? '['+l.t+'] ' : ''}${l.level ? l.level+': ' : ''}${l.msg}</div>`
+  ).join('');
+}
+
+function otelSimPlaceholder(step) {
+  const cfg = OTEL_SIM_STEPS[step];
+  const out = document.getElementById('otelSimOutput');
+  if (!out) return;
+  out.innerHTML = cfg.log
+    ? '<div class="otel-empty">▶ Click "Run request" to send POST /orders and see the log.</div>'
+    : '<div class="otel-empty">▶ Click "Run request" to send POST /orders and watch the trace render span by span.</div>';
+  const totalEl = document.getElementById('otelTraceTotal');
+  if (totalEl) totalEl.textContent = '';
+}
+
+function otelSimRun() {
+  const step = otelSimState.step;
+  const cfg = OTEL_SIM_STEPS[step];
+  if (otelSimState.timer) { clearInterval(otelSimState.timer); otelSimState.timer = null; }
+  if (cfg.log) { otelSimRenderLog(step); return; }
+  // progressively reveal spans
+  otelSimState.revealed = 0;
+  otelSimRenderWaterfall(step, 0);
+  otelSimState.timer = setInterval(() => {
+    otelSimState.revealed++;
+    otelSimRenderWaterfall(step, otelSimState.revealed);
+    if (otelSimState.revealed >= cfg.spans.length) {
+      clearInterval(otelSimState.timer); otelSimState.timer = null;
+    }
+  }, 420);
+}
+
+function otelSimStep(n) {
+  n = Math.max(0, Math.min(OTEL_SIM_STEPS.length - 1, n));
+  otelSimState.step = n;
+  if (otelSimState.timer) { clearInterval(otelSimState.timer); otelSimState.timer = null; }
+  const cfg = OTEL_SIM_STEPS[n];
+  // tabs
+  OTEL_SIM_STEPS.forEach((_, i) => {
+    const t = document.getElementById('otelTab' + i);
+    if (t) t.classList.toggle('active', i === n);
+  });
+  // texts
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('otelSimDesc', cfg.desc);
+  set('otelSimBackend', cfg.backend);
+  set('otelSimCounter', `Step ${n} of ${OTEL_SIM_STEPS.length - 1}`);
+  const codeEl = document.getElementById('otelSimCode');
+  if (codeEl) codeEl.innerHTML = cfg.code;
+  const legend = document.getElementById('otelTraceLegend');
+  if (legend) legend.style.display = cfg.legend ? 'flex' : 'none';
+  const prev = document.getElementById('otelPrevBtn');
+  const next = document.getElementById('otelNextBtn');
+  if (prev) prev.disabled = n === 0;
+  if (next) next.disabled = n === OTEL_SIM_STEPS.length - 1;
+  otelSimPlaceholder(n);
+}
+
+/* Init OTel simulation */
+(function initOtelSim() {
+  if (document.getElementById('otelSimOutput')) otelSimStep(0);
+})();
