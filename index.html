@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="styles.css?v=9" />
 </head>
 <body>
 
@@ -2332,7 +2332,7 @@ help[1]:
     </div>
 
     <!-- Token cost & API reality -->
-    <div class="card" style="border-left:3px solid var(--accent)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--accent) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag focus">💰 Real World</span><span class="ctag orange">Cost Awareness</span></div>
       <h3 class="card-title" style="margin-top:8px">Tokens, Cost & API Reality — What Nobody Tells You</h3>
       <p class="card-sub">Before you build anything, understand what you're actually paying for.</p>
@@ -2624,7 +2624,7 @@ print(f"Tokens used: {response.usage_metadata}")
     </div>
 
     <!-- Failure scenarios — what happens when things go wrong -->
-    <div class="card" style="border-left:3px solid var(--red)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--red) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag red">🚨 Failure Modes</span><span class="ctag orange">What Nobody Shows You</span></div>
       <h3 class="card-title" style="margin-top:8px">When Agents Go Wrong — And How to Handle It</h3>
       <p class="card-sub">Real agents fail constantly. Here's every failure mode and the production fix.</p>
@@ -3079,7 +3079,7 @@ graph.add_conditional_edges(<span class="str">"supervisor"</span>, {
     </div>
 
     <!-- RAG in Code — 3-step quickstart -->
-    <div class="card" style="border-left:3px solid var(--accent)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--accent) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag focus">💻 Build It</span><span class="ctag green">3-Step RAG Quickstart</span></div>
       <h3 class="card-title" style="margin-top:8px">RAG in 3 Steps — Load → Embed → Query</h3>
       <p class="card-sub">This is the minimum working RAG pipeline. Everything else is optimisation on top of this.</p>
@@ -5030,7 +5030,7 @@ slack = <span class="fn">WebClient</span>(token=os.environ[<span class="str">"SL
     </div>
 
     <!-- The scenario setup -->
-    <div class="card" style="border-left:3px solid var(--accent)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--accent) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag focus">🎬 The Scenario</span></div>
       <h3 class="card-title" style="margin-top:8px">2:14 AM — PagerDuty fires. Production pod is down.</h3>
       <div class="code-block" style="font-size:0.78rem"><span style="color:var(--red)">🚨 ALERT: High severity — PagerDuty</span>
@@ -5345,7 +5345,7 @@ kubectl apply -f hpa.yaml
     </div>
 
     <!-- Real Scenario: The Multi-Environment Problem -->
-    <div class="card" style="border-left:3px solid var(--cyan)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag cyan">🔥 Real Scenario</span><span class="ctag orange">Pain First</span></div>
       <h3 class="card-title" style="margin-top:8px">The Problem Helm Solves — 3 Environments</h3>
       <p class="card-sub">Imagine you're a DevOps engineer deploying <strong>myapp</strong> to dev, staging, and production. You have 5 Kubernetes files:</p>
@@ -5763,7 +5763,7 @@ kubectl apply -f hpa.yaml
     </div>
 
     <!-- values.schema.json -->
-    <div class="card" style="border-left:3px solid var(--cyan)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag cyan">🔍 Values Validation</span></div>
       <h3 class="card-title" style="margin-top:8px">values.schema.json — Validate Before Deploying</h3>
       <p class="card-sub">Add a schema file and Helm will reject invalid values before touching your cluster — like a TypeScript type checker for your config.</p>
@@ -5879,7 +5879,7 @@ one of: Always, IfNotPresent, Never</span></div>
     </div>
 
     <!-- What NOT to put in values.yaml -->
-    <div class="card" style="border-left:3px solid var(--red)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--red) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag red">🚨 Security</span></div>
       <h3 class="card-title" style="margin-top:8px">What NEVER Goes in values.yaml (and What to Do Instead)</h3>
       <div class="helm-table-wrap" style="margin-top:10px">
@@ -6069,7 +6069,7 @@ kind</span>: Ingress <span class="cmt"># rendered only when enabled</span>
     </div>
 
     <!-- Values Override Hierarchy -->
-    <div class="card" style="border-left:3px solid var(--cyan)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag cyan">🔑 Critical Concept</span></div>
       <h3 class="card-title" style="margin-top:8px">Values Override Hierarchy — How Helm Merges Values</h3>
       <p class="card-sub">Helm merges values from multiple sources. The order of precedence (highest wins):</p>
@@ -6262,7 +6262,7 @@ helm uninstall --keep-history</div>
     </div>
 
     <!-- What actually happens to pods during upgrade -->
-    <div class="card" style="border-left:3px solid var(--cyan)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag cyan">🔑 Zero-Downtime Secret</span></div>
       <h3 class="card-title" style="margin-top:8px">What Happens to Your Pods During <code>helm upgrade</code>?</h3>
       <p class="card-sub">This is the question every beginner has. Here's exactly what happens — step by step.</p>
@@ -6573,7 +6573,7 @@ helm rollback myapp 3   <span class="cmt"># restores rev 3</span></div>
     </div>
 
     <!-- Real incident scenario -->
-    <div class="card" style="border-left:3px solid var(--red)">
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--red) 42%, transparent)">
       <div class="card-tag-row"><span class="ctag red">🚨 Real Incident</span><span class="ctag orange">Prod Down — 30 Second Recovery</span></div>
       <h3 class="card-title" style="margin-top:8px">Scenario: You upgraded prod at 10:05 AM. At 10:07 AM — alerts fire.</h3>
       <div class="kh-deploy-flow" style="margin-top:14px">
@@ -8333,7 +8333,7 @@ kubectl scale deploy payments-api --replicas=1
   </div><!-- /principles grid -->
 
   <!-- Real scenario -->
-  <div class="card" style="border-left:3px solid var(--argocd,#f97316);margin-top:8px">
+  <div class="card" style="border:1px solid color-mix(in srgb, var(--argocd,#f97316) 42%, transparent);margin-top:8px">
     <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">🎬 Real Scenario</span></div>
     <h3 class="card-title">2:30 AM — Production down. 6 AM — your manager asks questions.</h3>
     <div class="two-col" style="margin-bottom:0">
@@ -8403,7 +8403,7 @@ sre-autopilot-config/      ← config repo (ArgoCD watches this)
               <div style="font-size:11px;color:#10b981;">✅ CI writes to config repo → ArgoCD picks up automatically</div>
             </div>
           </div>
-          <div style="padding:12px 16px;background:rgba(249,115,22,0.08);border-left:3px solid var(--argocd);border-radius:6px;font-size:13px;color:var(--text2);">
+          <div style="padding:12px 16px;background:rgba(249,115,22,0.08);border:1px solid color-mix(in srgb, var(--argocd) 42%, transparent);border-radius:6px;font-size:13px;color:var(--text2);">
             🏆 <strong>For the SRE Auto-Pilot project</strong>: Use Pattern 2. The app code repo has the Dockerfile. GitHub Actions builds the image, updates <code>image.tag</code> in <code>values-prod.yaml</code> in the config repo, commits, and pushes. ArgoCD watches the config repo and auto-deploys within 3 minutes.
           </div>
         </div>
@@ -8620,7 +8620,7 @@ argocd admin settings validate         <span class="cmt"># Check config</span></
               </div>
             </div>
           </div>
-          <div style="margin-top:12px;padding:10px 14px;background:rgba(249,115,22,0.08);border-left:3px solid var(--argocd);border-radius:6px;font-size:13px;color:var(--text2);">
+          <div style="margin-top:12px;padding:10px 14px;background:rgba(249,115,22,0.08);border:1px solid color-mix(in srgb, var(--argocd) 42%, transparent);border-radius:6px;font-size:13px;color:var(--text2);">
             💡 The resource tree shows every K8s object ArgoCD manages — from Deployment down to individual Pods. Click any resource → see its live YAML, events, and logs without leaving the UI.
           </div>
         </div>
@@ -9006,7 +9006,7 @@ kubectl get events -n production --sort-by='.lastTimestamp'</code></pre></div>
             </div>
 
           </div>
-          <div style="margin-top:16px;padding:10px 14px;background:rgba(16,185,129,0.08);border-left:3px solid #10b981;border-radius:6px;font-size:13px;color:var(--text2);">
+          <div style="margin-top:16px;padding:10px 14px;background:rgba(16,185,129,0.08);border:1px solid color-mix(in srgb, #10b981 42%, transparent);border-radius:6px;font-size:13px;color:var(--text2);">
             💡 <strong>Golden debug rule:</strong> Start in the ArgoCD UI → click the red/orange resource → read the Events tab → then go to kubectl. 90% of issues are visible in the UI without any CLI commands.
           </div>
         </div>
@@ -9825,19 +9825,19 @@ jobs:
   <div class="card" style="margin-top:16px;">
     <div class="card-title">🐳 DevOps Analogies — You Already Know This</div>
     <div class="two-col" style="gap:12px;">
-      <div class="card" style="background:var(--glass2);border-left:3px solid var(--mcp)">
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>🐳 MCP is like Docker</strong><br>
         <span style="font-size:0.83rem;color:var(--txt2)">Docker standardized app packaging — "build once, run anywhere". MCP standardizes AI tool integration — "build once, use with any AI".</span>
       </div>
-      <div class="card" style="background:var(--glass2);border-left:3px solid var(--mcp)">
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>📡 MCP is like HTTP</strong><br>
         <span style="font-size:0.83rem;color:var(--txt2)">HTTP is a protocol, not a product. Anyone can implement it. MCP is the same — an open spec. Any AI provider, any tool vendor can implement it.</span>
       </div>
-      <div class="card" style="background:var(--glass2);border-left:3px solid var(--mcp)">
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>🔌 MCP is like a K8s Operator</strong><br>
         <span style="font-size:0.83rem;color:var(--txt2)">An Operator defines how a system behaves and reconciles state. An MCP server defines what an AI can do and executes actions on its behalf.</span>
       </div>
-      <div class="card" style="background:var(--glass2);border-left:3px solid var(--mcp)">
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>📦 MCP is like npm/PyPI</strong><br>
         <span style="font-size:0.83rem;color:var(--txt2)">Instead of writing code to use a library, you install an MCP server. Your AI gets all the tools instantly — no integration code required.</span>
       </div>
@@ -10142,15 +10142,15 @@ jobs:
   <div class="card" style="margin-top:16px;">
     <div class="card-title">💬 What You Can Ask After Setup</div>
     <div style="display:grid;gap:10px;margin-top:10px;">
-      <div style="background:var(--glass2);border-radius:8px;padding:12px;border-left:3px solid var(--mcp)">
+      <div style="background:var(--glass2);border-radius:8px;padding:12px;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>📋 Log Analysis:</strong> <em style="color:var(--txt2)">"Check if my app logs have any OOM errors in the last hour"</em><br>
         <span style="font-size:0.8rem;color:var(--txt2)">→ Filesystem MCP reads /var/log/app.log and searches for patterns</span>
       </div>
-      <div style="background:var(--glass2);border-radius:8px;padding:12px;border-left:3px solid var(--mcp)">
+      <div style="background:var(--glass2);border-radius:8px;padding:12px;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>🐙 PR Review:</strong> <em style="color:var(--txt2)">"Find all open PRs older than 3 days with no reviewer assigned"</em><br>
         <span style="font-size:0.8rem;color:var(--txt2)">→ GitHub MCP queries the repos, returns filtered list with author + date</span>
       </div>
-      <div style="background:var(--glass2);border-radius:8px;padding:12px;border-left:3px solid var(--mcp)">
+      <div style="background:var(--glass2);border-radius:8px;padding:12px;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
         <strong>🐘 Database:</strong> <em style="color:var(--txt2)">"Query the users table and find accounts created in the last 24h"</em><br>
         <span style="font-size:0.8rem;color:var(--txt2)">→ Postgres MCP runs the query, Claude formats and explains the results</span>
       </div>
@@ -10290,11 +10290,11 @@ npx @modelcontextprotocol/inspector python system_monitor.py
   <div class="card" style="margin-top:16px;">
     <div class="card-title">📐 MCP Server Design Principles</div>
     <div style="display:grid;gap:10px;margin-top:10px;">
-      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid #22c55e">✅ <strong>Clear tool descriptions</strong> — the LLM reads your docstrings to decide which tool to call. Bad docstrings = wrong tool calls.</div>
-      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid #22c55e">✅ <strong>Flat input schemas</strong> — avoid deeply nested objects. Simple types (str, int, bool) work best. LLMs struggle with complex nested schemas.</div>
-      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid #22c55e">✅ <strong>Structured errors</strong> — return <code>{"error": "message", "suggestion": "try X instead"}</code> rather than letting exceptions propagate. The LLM can act on error messages.</div>
-      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid #22c55e">✅ <strong>Idempotency</strong> — same input should produce same result. Safe to retry if something goes wrong during the agent loop.</div>
-      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid #22c55e">✅ <strong>Rate limiting</strong> — add <code>time.sleep(0.5)</code> between external API calls. Your server is called by an LLM in a loop — it will hammer APIs without this.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Clear tool descriptions</strong> — the LLM reads your docstrings to decide which tool to call. Bad docstrings = wrong tool calls.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Flat input schemas</strong> — avoid deeply nested objects. Simple types (str, int, bool) work best. LLMs struggle with complex nested schemas.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Structured errors</strong> — return <code>{"error": "message", "suggestion": "try X instead"}</code> rather than letting exceptions propagate. The LLM can act on error messages.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Idempotency</strong> — same input should produce same result. Safe to retry if something goes wrong during the agent loop.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Rate limiting</strong> — add <code>time.sleep(0.5)</code> between external API calls. Your server is called by an LLM in a loop — it will hammer APIs without this.</div>
     </div>
   </div>
 </section>
@@ -10470,10 +10470,10 @@ if approval["confirmed"]: restart_pod(pod_name)</pre>
   <div class="card">
     <div class="card-title">🤔 When to Build Your Own MCP Server</div>
     <div style="display:grid;gap:8px;margin-top:10px;">
-      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--mcp)">✅ No official server exists for your tool (e.g., internal monitoring system)</div>
-      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--mcp)">✅ You're on Bitbucket Server / Data Center (on-prem) — the official Atlassian server is cloud-only</div>
-      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--mcp)">✅ You need custom logic — e.g., combined operations across multiple APIs in a single tool</div>
-      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--mcp)">✅ You want to expose your own internal REST API to AI without building a full integration</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ No official server exists for your tool (e.g., internal monitoring system)</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ You're on Bitbucket Server / Data Center (on-prem) — the official Atlassian server is cloud-only</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ You need custom logic — e.g., combined operations across multiple APIs in a single tool</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ You want to expose your own internal REST API to AI without building a full integration</div>
     </div>
   </div>
 
@@ -10986,12 +10986,12 @@ npx @modelcontextprotocol/inspector python bitbucket_mcp.py
   <div class="card" style="margin-top:16px;">
     <div class="card-title">✅ Six Reasons ADOT Wins</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px;">
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--adot);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🏗️ Unified Pipeline</div>One collector, one config, all three signals. No more Frankenstein stacks.</div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--adot);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">☁️ AWS-Native</div>Pre-wired to X-Ray, CloudWatch, AMP. No custom exporter code needed.</div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--adot);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🔒 Enterprise Ready</div>AWS-tested, security-patched, and SLA-backed. No community-only support.</div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--adot);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🌍 Vendor-Neutral</div>Data in OpenTelemetry format. Switch backends (Datadog → Grafana) without re-instrumenting.</div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--adot);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">⚡ Auto-Instrumentation</div>Zero code changes for common frameworks (FastAPI, Django, Redis, SQLAlchemy, gRPC).</div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--adot);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🧩 Extensible</div>Custom receivers, processors, exporters. Write your own pipeline logic when needed.</div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🏗️ Unified Pipeline</div>One collector, one config, all three signals. No more Frankenstein stacks.</div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">☁️ AWS-Native</div>Pre-wired to X-Ray, CloudWatch, AMP. No custom exporter code needed.</div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🔒 Enterprise Ready</div>AWS-tested, security-patched, and SLA-backed. No community-only support.</div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🌍 Vendor-Neutral</div>Data in OpenTelemetry format. Switch backends (Datadog → Grafana) without re-instrumenting.</div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">⚡ Auto-Instrumentation</div>Zero code changes for common frameworks (FastAPI, Django, Redis, SQLAlchemy, gRPC).</div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🧩 Extensible</div>Custom receivers, processors, exporters. Write your own pipeline logic when needed.</div>
     </div>
   </div>
 </section>
@@ -11673,16 +11673,16 @@ LOGS    ──→  Amazon OpenSearch Service (complex queries, ML-based anomaly 
   <div class="card" style="margin-top:16px;">
     <div class="card-title">🔍 X-Ray Features That Change How You Debug</div>
     <div style="display:grid;gap:10px;margin-top:10px;">
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--adot)">
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent)">
         <strong style="color:var(--adot)">Service Map</strong> — Auto-generated diagram of all services, their connections, and health status. Red nodes = unhealthy. Click any node to see its traces. Zero configuration needed.
       </div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--adot)">
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent)">
         <strong style="color:var(--adot)">Trace Analytics</strong> — Filter all traces by any attribute: <code>service.name = "postgres"</code> AND <code>duration > 100</code>. Find the slowest 1% of traces instantly. No Jaeger Query Language needed.
       </div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--adot)">
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent)">
         <strong style="color:var(--adot)">X-Ray Insights</strong> — ML-powered anomaly detection. X-Ray learns your baseline latency distribution and alerts when traces deviate significantly. No threshold tuning needed.
       </div>
-      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border-left:3px solid var(--adot)">
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent)">
         <strong style="color:var(--adot)">CloudWatch ServiceLens</strong> — Unified view combining X-Ray traces, CloudWatch metrics, and logs in one dashboard. Click on a slow service → see its metric charts → click on a spike → see the exact trace.
       </div>
     </div>
@@ -13769,12 +13769,12 @@ $ grep -i error /var/log/app.log | tail -500   <span class="cmt"># 🤞 hope</sp
     <div class="card">
       <h3 class="card-title">✅ Six Advantages</h3>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px;">
-        <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--accent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🌍 Vendor-neutral</div>Send the same data to Jaeger, Prometheus, Datadog, Grafana — no re-instrumentation.</div>
-        <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--accent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🎯 One API, all signals</div>Traces, metrics and logs share one API, one SDK, one protocol (OTLP).</div>
-        <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--accent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🗣️ Broad language support</div>Stable SDKs for Python, Go, Java, JS/Node, .NET, Rust, Ruby, PHP and more.</div>
-        <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--accent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🔌 Zero-code start</div>Auto-instrumentation gives you traces for popular libraries with no code edits.</div>
-        <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--accent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🔮 Future-proof</div>A CNCF standard with the whole industry behind it. Your instrumentation outlives any single vendor.</div>
-        <div style="padding:12px;background:var(--glass2);border-radius:8px;border-left:3px solid var(--accent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🚫 No lock-in</div>The Collector re-routes data centrally — swap backends without touching a single app.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🌍 Vendor-neutral</div>Send the same data to Jaeger, Prometheus, Datadog, Grafana — no re-instrumentation.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🎯 One API, all signals</div>Traces, metrics and logs share one API, one SDK, one protocol (OTLP).</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🗣️ Broad language support</div>Stable SDKs for Python, Go, Java, JS/Node, .NET, Rust, Ruby, PHP and more.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🔌 Zero-code start</div>Auto-instrumentation gives you traces for popular libraries with no code edits.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🔮 Future-proof</div>A CNCF standard with the whole industry behind it. Your instrumentation outlives any single vendor.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🚫 No lock-in</div>The Collector re-routes data centrally — swap backends without touching a single app.</div>
       </div>
     </div>
 
@@ -14703,6 +14703,6 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
   </div>
 </footer>
 
-<script src="script.js?v=8"></script>
+<script src="script.js?v=9"></script>
 </body>
 </html>
