@@ -1721,8 +1721,8 @@ pre.cb-code {
   font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--txt);
-  white-space: pre;
-  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   margin: 0 0 16px 0;
   line-height: 1.7;
   tab-size: 4;
@@ -1730,13 +1730,15 @@ pre.cb-code {
 .cb-header + pre.cb-code { border-top: none; border-radius: 0 0 8px 8px; margin-top: 0; }
 pre.cb-code { border-radius: 8px; }
 [data-theme="light"] pre.cb-code, [data-theme="light"] div.cb-code { background: rgba(99,102,241,0.04); color: #1e293b; }
-/* Every code surface scrolls internally rather than pushing the page wide. */
-.cb-code, pre { max-width: 100%; overflow-x: auto; min-width: 0; }
-div.cb-code { white-space: pre; }
+/* Code surfaces wrap so content stays fully visible with no horizontal scroll.
+   ASCII diagrams/trees (alignment-critical) keep white-space:pre + scroll. */
+.cb-code, pre { max-width: 100%; min-width: 0; overflow-x: auto; }
+pre.cb-code, div.cb-code { white-space: pre-wrap; overflow-wrap: anywhere; }
+.mcp-arch-diagram, .adot-arch-diagram, .pd-file-tree { white-space: pre; overflow-x: auto; }
 
 /* Responsive safety net: long tokens wrap and grid/flex children may shrink
    below their content, so code-bearing sim cards never force the page wide. */
-main :where(p, li, dd, td, code, strong, .card-sub, [class*="-desc"]) { overflow-wrap: anywhere; }
+main :where(p, li, dd, td, code, strong, span, .card-sub, [class*="-desc"]) { overflow-wrap: anywhere; }
 main :where([style*="grid"], [class*="grid"], .two-col) > * { min-width: 0; }
 
 /* Syntax highlighting */
@@ -3393,7 +3395,7 @@ main :where([style*="grid"], [class*="grid"], .two-col) > * { min-width: 0; }
   font-size: 0.85rem; font-weight: 800;
   flex-shrink: 0; margin-top: 2px;
 }
-.fp-step-body { flex: 1; }
+.fp-step-body { flex: 1; min-width: 0; }
 .fp-step-header {
   display: flex; align-items: center; gap: 10px;
   flex-wrap: wrap;
@@ -5669,3 +5671,43 @@ main :where([style*="grid"], [class*="grid"], .two-col) > * { min-width: 0; }
 @media (max-width: 820px) {
   .otel-span-row { grid-template-columns: 120px 1fr 44px; }
 }
+
+/* ══════════════════════════════════════
+   OVERFLOW HARDENING (appended last so it wins the cascade)
+   Wrappable code/output surfaces wrap instead of scrolling, keeping all
+   content visible with no horizontal scroll at any width. ASCII diagrams
+   and data tables that need alignment stay as intentional scrollers.
+══════════════════════════════════════ */
+pre,
+.code-block,
+.helm-tpl-display,
+.helm-rendered-output,
+.helm-sim-output,
+.argocd-drift-yaml,
+.term-body,
+.otel-logline,
+.lg-state-code,
+.uc-flow,
+.arch-flow,
+.al-log,
+.lg-log,
+.sim-output,
+.rag-answer {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+/* Alignment-critical ASCII diagrams & trees keep hard pre + horizontal scroll */
+.mcp-arch-diagram,
+.adot-arch-diagram,
+.pd-file-tree,
+pre.ascii,
+.ascii-art {
+  white-space: pre;
+  overflow-wrap: normal;
+  word-break: normal;
+  overflow-x: auto;
+}
+/* Native select never forces its container wider than the viewport */
+select, .sim-select { max-width: 100%; }
+.sim-controls .sim-select { flex: 1 1 100%; width: 100%; }
