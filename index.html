@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=13" />
 </head>
 <body>
 
@@ -169,8 +169,12 @@
         <li><a class="nav-link" href="#otel-why"            data-section="otel-why"><span class="ni">💡</span><span>Uses &amp; Advantages</span></a></li>
         <li><a class="nav-link" href="#otel-signals"        data-section="otel-signals"><span class="ni">📊</span><span>Three Signals</span></a></li>
         <li><a class="nav-link" href="#otel-tml"            data-section="otel-tml"><span class="ni">🧵</span><span>Traces, Metrics &amp; Logs</span><span class="nbadge focus">NEW</span></a></li>
+        <li><a class="nav-link" href="#otel-metric"         data-section="otel-metric"><span class="ni">📐</span><span>Anatomy of a Metric</span><span class="nbadge focus">NEW</span></a></li>
         <li><a class="nav-link" href="#otel-concepts"       data-section="otel-concepts"><span class="ni">🧩</span><span>Core Concepts</span></a></li>
         <li><a class="nav-link" href="#otel-architecture"   data-section="otel-architecture"><span class="ni">🏗️</span><span>Architecture</span></a></li>
+        <li><a class="nav-link" href="#otel-collector"      data-section="otel-collector"><span class="ni">🛰️</span><span>Inside the Collector</span><span class="nbadge focus">NEW</span></a></li>
+        <li><a class="nav-link" href="#otel-components"     data-section="otel-components"><span class="ni">🧰</span><span>Collector Components</span><span class="nbadge focus">NEW</span></a></li>
+        <li><a class="nav-link" href="#otel-deploy"         data-section="otel-deploy"><span class="ni">📦</span><span>Deploy the Collector</span><span class="nbadge focus">NEW</span></a></li>
         <li><a class="nav-link" href="#otel-auto"           data-section="otel-auto"><span class="ni">⚡</span><span>Auto Instrument</span></a></li>
         <li><a class="nav-link" href="#otel-manual"         data-section="otel-manual"><span class="ni">✍️</span><span>Manual Instrument</span></a></li>
         <li><a class="nav-link" href="#otel-hybrid"         data-section="otel-hybrid"><span class="ni">🤝</span><span>Hybrid</span><span class="nbadge focus">KEY</span></a></li>
@@ -14223,6 +14227,54 @@ tracer = trace.get_tracer(<span class="str">"checkout"</span>)
     </div>
   </section>
 
+  <!-- ─── Deep dive — Anatomy of a Metric ─── -->
+  <section id="otel-metric" class="section">
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Anatomy of a Metric</h2>
+      <p class="sec-desc">You met metrics as “numbers over time.” Now let’s open one up. A single metric is really seven small parts — we’ll name each one and pin it to our checkout example.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — a label on a jar</span></div>
+      <p>Think of a metric like a labelled measuring jar in a lab. The label says <strong>what</strong> it measures and in <strong>what unit</strong>, the shape of the jar decides <strong>how</strong> you read it (a running total vs a snapshot), and every time you check it you write the reading down <strong>with the time</strong>. A metric is just that: a well-labelled number you record again and again.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧪 One metric from our checkout, taken apart</h3>
+      <p class="card-sub">We want to track how long checkouts take. Here is that one metric, field by field — each in a single sentence.</p>
+      <div class="otel-anat">
+        <div class="otel-anat-hd"><b>checkout.request.duration</b> — a histogram, unit ms, labelled by env + status</div>
+        <div class="otel-anat-row"><div class="otel-anat-k">name</div><div class="otel-anat-v"><strong>What it measures</strong>, as a dotted identifier — here <code>checkout.request.duration</code>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">description</div><div class="otel-anat-v"><strong>A human-readable explanation</strong> — “time to fully handle a checkout request.”</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">unit</div><div class="otel-anat-v"><strong>The unit of measure</strong> — <code>ms</code> here (could be bytes, or <code>1</code> for a plain count).</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">kind</div><div class="otel-anat-v"><strong>The type of number.</strong> <code>counter</code> only goes up (total requests), <code>gauge</code> is a value right now (queue depth), <code>histogram</code> is a distribution (latency buckets). <em>(An <code>updown-counter</code> can also go down, e.g. active connections.)</em> Ours is a <strong>histogram</strong>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">label</div><div class="otel-anat-v"><strong>Tags you slice by</strong> (a.k.a. attributes/dimensions) — <code>env=prod</code>, <code>status=200</code>. Lets you ask “p95 for failed checkouts in prod.”</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">aggregation</div><div class="otel-anat-v"><strong>How readings combine over time</strong> — sum (counters), last value (gauges), or bucket counts (histograms). Ours rolls readings into <strong>latency buckets</strong>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">time</div><div class="otel-anat-v"><strong>The timestamp + temporality</strong> that places the value on a timeline — <em>cumulative</em> (totals since start) vs <em>delta</em> (just this interval).</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛒 Reading it back against the example</h3>
+      <p style="color:var(--txt2);line-height:1.85">Put the parts together and the metric reads like a sentence: <strong>for our checkout, <code>checkout.request.duration</code> is a <span style="color:var(--accent)">histogram</span>, unit <span style="color:var(--accent)">ms</span>, labelled by <code>env</code> and <code>status</code>, aggregated into buckets over <span style="color:var(--accent)">time</span>.</strong> The 420ms trace from the previous module is <em>one</em> reading that drops into one of those buckets — thousands of such readings become the p95 line on your dashboard.</p>
+      <div class="callout info">
+        <span class="callout-icon">i</span>
+        <div class="callout-text"><strong>Why kind matters:</strong> pick <code>counter</code> for “how many”, <code>gauge</code> for “how much right now”, and <code>histogram</code> when you care about the <em>spread</em> (p95/p99 latency) — not just the average, which hides the slow tail.</div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>A metric is seven parts: <strong>name, description, unit, kind, label, aggregation, time</strong>.</li>
+        <li><strong>Kind</strong> is the big choice — counter (up-only), gauge (now), histogram (distribution); updown-counter can go both ways.</li>
+        <li><strong>Labels</strong> are the dimensions you slice by; <strong>temporality</strong> (cumulative vs delta) fixes the value on a timeline.</li>
+        <li>Our checkout latency is a <strong>histogram in ms, labelled by env + status</strong> — each traced request is one data point in it.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ─── Module 04 — Core Concepts ─── -->
   <section id="otel-concepts" class="section">
     <div class="sec-header">
@@ -14410,6 +14462,233 @@ server.address        = "db.internal"   <span class="cmt"># not "host"</span></d
         <li>The <strong>API</strong> lives in your code and is a no-op without an SDK; the <strong>SDK</strong> does the real work in-process</li>
         <li>The <strong>Collector</strong> decouples apps from backends: central re-routing, sampling, enrichment, PII scrubbing</li>
         <li>Direct export is fine for dev; add a Collector before production</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── Deep dive — Inside the Collector (how it works) ─── -->
+  <section id="otel-collector" class="section">
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Inside the Collector</h2>
+      <p class="sec-desc">You’ve seen the Collector sit between your app and your backends. Let’s open the box: it’s just three stages in a row — receive, process, send.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — a mail-sorting facility</span></div>
+      <p>Letters pour in through one door (<strong>receive</strong>). Inside, staff sort them, stamp them, weed out junk, and stick on address labels (<strong>process</strong>). Then they load them onto the right trucks headed for different cities (<strong>send</strong>). The OTel Collector is that facility for your telemetry: <strong>Receiver → Processor → Exporter</strong>, in and out.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛰️ The internal pipeline</h3>
+      <p class="card-sub">Telemetry flows left to right through three stages, then out to one or more backends:</p>
+      <div class="otel-cpipe">
+        <div class="ocp-box" style="--ocp:var(--blue)"><div class="ocp-t">📥 Receiver</div><small>The “in” door. Ingests telemetry in many formats — OTLP, Jaeger, Prometheus, and more.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent-ink)"><div class="ocp-t">⚙️ Processor</div><small>The middle. Batch, filter, <strong>sample</strong>, <strong>redact secrets</strong>, and enrich (e.g. add k8s metadata).</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent2)"><div class="ocp-t">📤 Exporter</div><small>The “out” door. Sends to one <em>or more</em> backends at once.</small></div>
+        <span class="ocp-arr" aria-hidden="true">⇒</span>
+        <div class="ocp-backends">
+          <div class="ocp-be">🔍 Jaeger &nbsp;<span style="color:var(--txt3);font-weight:400">traces</span></div>
+          <div class="ocp-be">📈 Prometheus &nbsp;<span style="color:var(--txt3);font-weight:400">metrics</span></div>
+        </div>
+      </div>
+      <p class="card-note">One Collector can fan a single stream out to several backends — send the same traces to Jaeger <em>and</em> a vendor, no app change.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🚦 Wired as pipelines — one per signal</h3>
+      <p style="color:var(--txt2);line-height:1.85">The three stages aren’t one big tube. You wire a <strong>separate pipeline for each signal</strong> — a traces pipeline, a metrics pipeline, a logs pipeline — each with its own receivers, processors and exporters. That’s why a Collector can, say, sample traces heavily while keeping every metric.</p>
+      <div class="code-block"><span class="cmt"># A Collector config is literally receivers → processors → exporters,</span>
+<span class="cmt"># then pipelines that name which of each to use, per signal:</span>
+service:
+  pipelines:
+    <span class="kw">traces</span>:   { receivers: [otlp], processors: [batch, <span class="str">tail_sampling</span>], exporters: [jaeger] }
+    <span class="kw">metrics</span>:  { receivers: [otlp, prometheus], processors: [batch], exporters: [prometheus] }
+    <span class="kw">logs</span>:     { receivers: [otlp], processors: [batch], exporters: [otlp] }</div>
+    </div>
+
+    <div class="devops-box card">
+      <div class="card-tag-row"><span class="ctag orange">🔧 DevOps/SRE Analogy</span></div>
+      <p>The Collector is your <strong>reverse-proxy for telemetry</strong>: apps talk to <em>it</em>, and it owns routing, batching, sampling and PII scrubbing centrally — so switching or adding a backend is a config edit here, never a redeploy of every service.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>The Collector is three stages: <strong>Receiver → Processor → Exporter → backend(s)</strong>.</li>
+        <li><strong>Receivers</strong> accept many formats; <strong>processors</strong> batch/sample/redact/enrich; <strong>exporters</strong> fan out to one or more backends.</li>
+        <li>Stages are wired into <strong>per-signal pipelines</strong> (traces / metrics / logs), each independently configured.</li>
+        <li><strong>For DevOps:</strong> centralise routing and policy in the Collector, not in every app.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── Deep dive — Collector components by signal ─── -->
+  <section id="otel-components" class="section">
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Collector Components You’ll Actually Use</h2>
+      <p class="sec-desc">Receivers, processors and exporters are <strong>pluggable parts you pick per signal</strong> — config, not code. Here are the common real ones, grouped by the signal they serve.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — LEGO bricks</span></div>
+      <p>The Collector is a baseplate; receivers, processors and exporters are <strong>bricks you snap on</strong>. Building for traces? Snap on trace bricks. For metrics? Swap in metric bricks. You’re choosing from a catalogue in a config file — never writing new code.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧵 For traces</h3>
+      <p class="card-sub">Receivers &amp; exporters speak the common trace wire formats; processors shape spans on the way through.</p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🔌 Receivers / Exporters</span></div>
+          <div class="otel-comp-chips">
+            <span class="otel-comp-chip">otlp</span>
+            <span class="otel-comp-chip">jaeger</span>
+            <span class="otel-comp-chip">zipkin</span>
+          </div>
+          <p class="card-note">The same three names work as either a receiver (accept) or an exporter (send). <code>otlp</code> is the native, preferred one.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">⚙️ Processors</span></div>
+          <ul class="otel-comp-list">
+            <li><code>attributes</code> — add, edit or <strong>redact</strong> span attributes (scrub PII).</li>
+            <li><code>batch</code> — group spans before export (fewer, bigger sends).</li>
+            <li><code>queued_retry</code> — buffer + retry on failure (backpressure/reliability).</li>
+            <li><code>resource</code> — attach resource attributes (<code>service.name</code>, k8s pod).</li>
+            <li><code>sampling</code> — keep only a subset of traces (head- or tail-based).</li>
+            <li><code>span</code> — rename or modify spans (e.g. normalise names).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📈 For metrics</h3>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🔌 Receivers</span></div>
+          <div class="otel-comp-chips">
+            <span class="otel-comp-chip">otlp</span>
+            <span class="otel-comp-chip">hostmetrics</span>
+            <span class="otel-comp-chip">prometheus</span>
+          </div>
+          <ul class="otel-comp-list">
+            <li><code>otlp</code> — metrics your app emits via OTel.</li>
+            <li><code>hostmetrics</code> — CPU / memory / disk of the machine itself.</li>
+            <li><code>prometheus</code> — scrape existing Prometheus endpoints.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag orange">📤 Exporters</span></div>
+          <div class="otel-comp-chips">
+            <span class="otel-comp-chip">otlp</span>
+            <span class="otel-comp-chip">prometheus</span>
+          </div>
+          <p class="card-note">Push onward via <code>otlp</code>, or expose a <code>prometheus</code> endpoint for Prometheus to scrape.</p>
+        </div>
+      </div>
+      <div class="callout note" style="margin-top:14px">
+        <span class="callout-icon">i</span>
+        <div class="callout-text"><strong>For logs</strong>, the set mirrors this: an <code>otlp</code> or <code>filelog</code> receiver in, an <code>otlp</code> exporter out — so all three signals feel consistent.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛒 Wiring it for our checkout</h3>
+      <p style="color:var(--txt2);line-height:1.85">Concretely, for the checkout example: for <strong>traces</strong> you’d wire an <code>otlp</code> receiver → <code>batch</code> + <code>sampling</code> processors → a <code>jaeger</code> exporter; for <strong>metrics</strong>, a <code>prometheus</code>/<code>otlp</code> receiver → a <code>prometheus</code> exporter. All of that is a few lines of YAML — <strong>choices, not code</strong>.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Components are <strong>pluggable and chosen per signal</strong> in config — no code changes.</li>
+        <li><strong>Traces:</strong> OTLP/Jaeger/Zipkin in-out; processors <code>attributes</code>, <code>batch</code>, <code>queued_retry</code>, <code>resource</code>, <code>sampling</code>, <code>span</code>.</li>
+        <li><strong>Metrics:</strong> OTLP/hostmetrics/Prometheus receivers; OTLP/Prometheus exporters. Logs mirror the pattern.</li>
+        <li>Prefer <code>otlp</code> as the default; reach for the others to bridge existing Jaeger/Zipkin/Prometheus setups.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── Deep dive — Deploying the Collector (topologies) ─── -->
+  <section id="otel-deploy" class="section">
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Deploying the Collector</h2>
+      <p class="sec-desc">Where does the Collector actually run? There are a few standard shapes. Here’s each one, when to reach for it, and the trade-off — in plain terms.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — local post-box vs central hub</span></div>
+      <p>You can drop a letter in a <strong>post-box on your street</strong> (fast, local, fire-and-forget) — that’s an <strong>agent</strong> running next to your app. Those post-boxes all feed a <strong>central sorting hub</strong> that does the heavy, coordinated work before letters leave the city — that’s a <strong>gateway</strong>. Most setups use both.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧭 The common shape</h3>
+      <p class="card-sub">Telemetry usually hops through a local agent, then a central gateway, then out to backends:</p>
+      <div class="otel-cpipe">
+        <div class="ocp-box" style="--ocp:var(--blue)"><div class="ocp-t">📱 App</div><small>Emits telemetry to a nearby Collector — often just <code>localhost</code>.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent-ink)"><div class="ocp-t">🛰️ Agent</div><small>Runs close to the app (sidecar or DaemonSet). Collects locally, enriches, forwards.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent2)"><div class="ocp-t">🏛️ Gateway</div><small>Central, scaled Collector. Tail-sampling, auth, rate-limits, controlled egress.</small></div>
+        <span class="ocp-arr" aria-hidden="true">⇒</span>
+        <div class="ocp-backends">
+          <div class="ocp-be">📊 Backends</div>
+        </div>
+      </div>
+      <p class="card-note">app → agent (DaemonSet/sidecar) → gateway → backend. Start with just an agent; add a gateway when you want central policy.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🗂️ The patterns, and when to use each</h3>
+      <div class="card-grid-4">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🛰️ Agent</span></div>
+          <p><strong>A Collector near the app/host</strong> that collects locally and forwards on, keeping the app’s job tiny (fire-and-forget).</p>
+          <p class="card-note"><strong>Use when:</strong> you want apps to offload fast. <em>Trade-off:</em> it’s the base pattern — run it as a sidecar or DaemonSet below.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">📦 Sidecar</span></div>
+          <p><strong>A Collector container in the SAME pod</strong> as the app; the app sends to <code>localhost</code>.</p>
+          <p class="card-note"><strong>Use when:</strong> you need strong isolation or per-app config. <em>Trade-off:</em> one Collector per pod = more overhead.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag purple">🖥️ DaemonSet</span></div>
+          <p><strong>ONE Collector per node</strong>; every pod on that node sends to it. The most common agent pattern.</p>
+          <p class="card-note"><strong>Use when:</strong> you want efficiency + node/k8s enrichment. <em>Trade-off:</em> shared by all pods on the node.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag orange">🏛️ Gateway</span></div>
+          <p><strong>A standalone, scaled Collector</strong> (Deployment + Service) that receives from all agents and does the heavy central work.</p>
+          <p class="card-note"><strong>Use when:</strong> you need tail-sampling, auth, rate-limiting or controlled egress. <em>Trade-off:</em> another tier to run.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🤔 Just an agent, or add a gateway?</h3>
+      <div class="two-col">
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag green">✅ Agent only</span></div>
+          <p style="color:var(--txt2)">Fine for smaller setups: each node’s DaemonSet (or a sidecar) enriches locally and exports straight to your backend. Simple, few moving parts.</p>
+        </div>
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag orange">➕ Add a gateway</span></div>
+          <p style="color:var(--txt2)">Reach for a gateway when you want <strong>centralized policy across many services</strong> — tail-based sampling (needs a full trace in one place), auth, egress control, and a single choke-point to your vendors.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li><strong>Agent</strong> = Collector near the app (as a <strong>sidecar</strong> = one per pod, or a <strong>DaemonSet</strong> = one per node, the common choice).</li>
+        <li><strong>Gateway</strong> = a central, scaled Collector for the heavy shared work: tail-sampling, auth, rate-limiting, egress.</li>
+        <li>The usual shape is <strong>app → agent → gateway → backend</strong>.</li>
+        <li>Start agent-only; add a gateway once you need <strong>centralized sampling/policy</strong> across services.</li>
       </ul>
     </div>
   </section>
@@ -15056,6 +15335,6 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
   </div>
 </footer>
 
-<script src="script.js?v=12"></script>
+<script src="script.js?v=13"></script>
 </body>
 </html>
