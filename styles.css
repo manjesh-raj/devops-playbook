@@ -5673,6 +5673,68 @@ main :where([style*="grid"], [class*="grid"], .two-col) > * { min-width: 0; }
 }
 
 /* ══════════════════════════════════════
+   TRACES / METRICS / LOGS — worked-example diagrams
+   (native, theme-aware: sequence diagram in SVG + a
+   Jaeger-style trace waterfall in CSS grid). Namespaced
+   otel-seq* / otel-wf* so nothing collides with the sim.
+══════════════════════════════════════ */
+.otel-dia-cap { font-size: 0.78rem; color: var(--txt3); margin-top: 10px; text-align: center; font-style: italic; }
+
+/* ── Basics primer · the 4-step mental-model flow ── */
+.otel-basics-flow { display: flex; align-items: stretch; gap: 6px; flex-wrap: wrap; margin: 6px 0 4px; }
+.obf-step { flex: 1 1 150px; min-width: 0; background: var(--glass2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+.obf-ic { font-size: 1.5rem; line-height: 1; margin-bottom: 8px; }
+.obf-t { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--accent); margin-bottom: 5px; }
+.obf-d { font-size: 0.8rem; color: var(--txt2); line-height: 1.55; }
+.obf-arrow { align-self: center; color: var(--txt3); font-weight: 700; font-size: 1.1rem; flex: 0 0 auto; }
+@media (max-width: 720px) {
+  .obf-arrow { transform: rotate(90deg); width: 100%; text-align: center; }
+  .obf-step { flex-basis: 100%; }
+}
+
+/* ── Worked example · the service-chain chips ── */
+.otel-svc-chain { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 14px 0; }
+.osc { display: inline-flex; align-items: center; font-family: var(--font-mono, monospace); font-size: 0.82rem; font-weight: 600; color: var(--txt); padding: 6px 12px; border-radius: 999px; background: color-mix(in srgb, var(--osc) 14%, transparent); border: 1px solid color-mix(in srgb, var(--osc) 45%, transparent); }
+.osc-arr { color: var(--txt3); font-weight: 700; }
+
+/* ── Diagram A · sequence diagram (SVG) ── */
+.otel-seq-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.otel-seq { display: block; width: 100%; min-width: 560px; height: auto; }
+.otel-seq-life { stroke: var(--border-h); stroke-width: 1.4; stroke-dasharray: 4 5; }
+.otel-seq-head rect { fill: var(--surface-3); stroke: var(--border-h); }
+.otel-seq-head text { fill: var(--txt); font-family: var(--font-display), sans-serif; font-size: 15px; font-weight: 600; text-anchor: middle; }
+.otel-seq-line { stroke-width: 1.8; fill: none; }
+.otel-seq-req .otel-seq-line { stroke: var(--accent-ink); }
+.otel-seq-res .otel-seq-line { stroke: var(--txt3); stroke-dasharray: 6 4; }
+.otel-seq-lbl { font-family: var(--font-mono, monospace); font-size: 11.5px; text-anchor: middle; }
+.otel-seq-req .otel-seq-lbl { fill: var(--accent); }
+.otel-seq-res .otel-seq-lbl { fill: var(--txt2); }
+.otel-seq-arrow-req { fill: var(--accent-ink); }
+.otel-seq-arrow-res { fill: var(--txt3); }
+
+/* ── Diagram B · trace waterfall ── */
+.otel-wf { border: 1px solid var(--border); border-radius: var(--radius); background: var(--code-well); padding: 16px; }
+.otel-wf-head { display: flex; justify-content: space-between; align-items: center; gap: 10px 18px; flex-wrap: wrap; margin-bottom: 12px; }
+.otel-wf-tid, .otel-wf-total { font-family: var(--font-mono, monospace); font-size: 0.74rem; color: var(--txt2); }
+.otel-wf-tid b { color: var(--accent); font-weight: 600; }
+.otel-wf-axis { display: grid; grid-template-columns: 210px 1fr 58px; gap: 12px; align-items: end; margin-bottom: 8px; }
+.otel-wf-ticks { grid-column: 2; display: flex; justify-content: space-between; font-size: 0.66rem; color: var(--txt3); font-family: var(--font-mono, monospace); border-bottom: 1px dashed var(--border-h); padding-bottom: 4px; }
+.otel-wf-row { display: grid; grid-template-columns: 210px 1fr 58px; gap: 12px; align-items: center; padding: 3px 0; }
+.otel-wf-name { font-size: 0.75rem; color: var(--txt); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-mono, monospace); }
+.otel-wf-svc { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 7px; vertical-align: middle; }
+.otel-wf-track { position: relative; height: 18px; background: var(--glass); border: 1px solid var(--border); border-radius: 4px; }
+.otel-wf-bar { position: absolute; top: -1px; height: calc(100% + 2px); border-radius: 4px; min-width: 5px; box-shadow: var(--shadow-sm); }
+.otel-wf-dur { font-size: 0.7rem; color: var(--txt2); text-align: right; font-family: var(--font-mono, monospace); }
+.otel-wf-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 0.72rem; color: var(--txt2); }
+.otel-wf-leg { display: inline-flex; align-items: center; gap: 6px; }
+.otel-wf-leg .otel-wf-svc { margin-right: 0; }
+
+@media (max-width: 820px) {
+  .otel-wf-axis, .otel-wf-row { grid-template-columns: 128px 1fr 46px; gap: 8px; }
+  .otel-wf-name { font-size: 0.7rem; }
+}
+
+/* ══════════════════════════════════════
    OVERFLOW HARDENING (appended last so it wins the cascade)
    Wrappable code/output surfaces wrap instead of scrolling, keeping all
    content visible with no horizontal scroll at any width. ASCII diagrams
