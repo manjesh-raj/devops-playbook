@@ -47,6 +47,7 @@
         <li><a class="nav-link" href="#setup-no-mistakes" data-section="setup-no-mistakes"><span class="ni">⛨</span><span>No Mistakes</span></a></li>
         <li><a class="nav-link" href="#setup-firstmate" data-section="setup-firstmate"><span class="ni">⚓</span><span>Firstmate</span></a></li>
         <li><a class="nav-link" href="#setup-firstmate-cockpit" data-section="setup-firstmate-cockpit"><span class="ni">🖥️</span><span>Firstmate Cockpit</span></a></li>
+        <li><a class="nav-link" href="#update-latest-changes" data-section="update-latest-changes"><span class="ni">⟳</span><span>Keeping Tools Updated</span></a></li>
       </ul>
     </li>
     <li class="nav-group" id="navGroupAI">
@@ -2158,6 +2159,197 @@ help[1]:
           <h3>Source</h3>
           <p>Full code, README (API surface, py2app notes, configuration), and design docs live on GitHub: <a href="https://github.com/manjesh-raj/firstmate-cockpit" target="_blank">github.com/manjesh-raj/firstmate-cockpit</a>.</p>
         </div>
+      </div>
+    </section>
+
+    <section id="update-latest-changes" class="section">
+      <div class="sec-header">
+        <div class="sec-badge">Agentic Tooling</div>
+        <h2>Keeping Tools Updated</h2>
+        <p class="sec-desc">The setup panels install the kunchenguid crew — firstmate and its companion CLIs. This panel keeps them current. Every tool lives at <code>github.com/kunchenguid/&lt;name&gt;</code>, and <strong>none of these updates need <code>sudo</code></strong> (the Homebrew node prefix and the binary install dirs are all user-writable). Each tool below shows how to check whether it is behind and the exact command to bring it current — update only what has actually fallen behind.</p>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="step">
+        <div class="step-index">01</div>
+        <div class="step-body">
+          <h3>firstmate — git repo, self-update</h3>
+          <p>The firstmate home is a git clone (<code>origin</code> is your personal fork <code>manjesh-raj/firstmate</code>). The preferred update is the built-in command, which fast-forwards this repo plus any secondmate homes and re-reads its instructions.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">preferred</span>
+              <button class="term-copy" data-copy="/updatefirstmate">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">/updatefirstmate</span>
+<span class="cmt"># fast-forwards the firstmate home + secondmate homes, then re-reads instructions</span></div>
+          </div>
+          <p style="margin-top:1rem"><strong>If it has diverged</strong> (you have local commits, so a plain fast-forward is refused), merge from upstream instead:</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">diverged</span>
+              <button class="term-copy" data-copy="git -C <firstmate-home> remote add upstream https://github.com/kunchenguid/firstmate
+git -C <firstmate-home> fetch upstream
+git -C <firstmate-home> merge --no-edit upstream/main">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">git -C &lt;firstmate-home&gt; remote add upstream https://github.com/kunchenguid/firstmate</span>  <span class="cmt"># once; ignore "already exists"</span>
+<span class="prompt">➜</span> <span class="cmd">git -C &lt;firstmate-home&gt; fetch upstream</span>
+<span class="prompt">➜</span> <span class="cmd">git -C &lt;firstmate-home&gt; merge --no-edit upstream/main</span></div>
+          </div>
+          <p style="margin-top:1rem"><strong>Check what's behind:</strong> compare local <code>HEAD</code> against upstream <code>main</code>.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">check</span>
+              <button class="term-copy" data-copy="git -C <firstmate-home> log -1
+git ls-remote https://github.com/kunchenguid/firstmate main">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">git -C &lt;firstmate-home&gt; log -1</span>  <span class="cmt"># installed</span>
+<span class="prompt">➜</span> <span class="cmd">git ls-remote https://github.com/kunchenguid/firstmate main</span>  <span class="cmt"># latest</span></div>
+          </div>
+          <div class="callout warn" style="margin-top:1rem">
+            <span class="callout-icon">!</span>
+            <span class="callout-text"><strong>Never run <code>git clean</code>.</strong> <code>projects/</code>, <code>data/</code>, <code>config/</code>, and <code>state/</code> are gitignored, so a fetch/merge never touches your cloned projects or local fleet state — but <code>git clean</code> would delete exactly those ignored dirs. After updating, re-read <code>AGENTS.md</code>; the operating instructions may have changed. Optionally mirror to your fork with <code>git -C &lt;firstmate-home&gt; push origin main</code> (a clean fast-forward, no force needed).</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <div class="step-index">02</div>
+        <div class="step-body">
+          <h3>axi CLIs — global npm packages</h3>
+          <p>Four CLIs — <code>gh-axi</code>, <code>chrome-devtools-axi</code>, <code>tasks-axi</code>, and <code>lavish-axi</code> — are published to npm from the <a href="https://github.com/kunchenguid/axi" target="_blank">axi</a> monorepo. Update them all in one command:</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">update</span>
+              <button class="term-copy" data-copy="npm install -g gh-axi@latest chrome-devtools-axi@latest tasks-axi@latest lavish-axi@latest">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">npm install -g gh-axi@latest chrome-devtools-axi@latest tasks-axi@latest lavish-axi@latest</span></div>
+          </div>
+          <p style="margin-top:1rem"><strong>Check what's behind:</strong> compare the published version against your installed one for any package.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">check</span>
+              <button class="term-copy" data-copy="npm view lavish-axi version
+npm ls -g --depth=0 | grep axi">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">npm view &lt;pkg&gt; version</span>  <span class="cmt"># latest published</span>
+<span class="prompt">➜</span> <span class="cmd">npm ls -g --depth=0 | grep axi</span>  <span class="cmt"># installed</span></div>
+          </div>
+          <div class="callout info" style="margin-top:1rem">
+            <span class="callout-icon">i</span>
+            <span class="callout-text"><strong>lavish-axi needs a restart to activate.</strong> The <code>npm install</code> does not disturb running review sessions, but the new version only goes live once the lavish server restarts: run <code>lavish-axi stop</code> (it relaunches on next use). That <strong>drops live review connections</strong>, so do it when you are not mid-review.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <div class="step-index">03</div>
+        <div class="step-body">
+          <h3>no-mistakes — self-contained binary</h3>
+          <p>Installed as a binary in <code>~/.no-mistakes/bin</code>, it ships its own updater. No npm, no reinstall script.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">update</span>
+              <button class="term-copy" data-copy="no-mistakes update">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">no-mistakes update</span></div>
+          </div>
+          <p style="margin-top:1rem"><strong>Check what's behind:</strong> <code>no-mistakes --version</code> also prints an "update available" banner when it is behind.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">check</span>
+              <button class="term-copy" data-copy="no-mistakes --version">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">no-mistakes --version</span></div>
+          </div>
+          <div class="callout warn" style="margin-top:1rem">
+            <span class="callout-icon">!</span>
+            <span class="callout-text"><strong>Resets the daemon.</strong> <code>no-mistakes update</code> also restarts the no-mistakes daemon — only run it when no validation pipeline is in flight, or you will kill a run in progress.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step">
+        <div class="step-index">04</div>
+        <div class="step-body">
+          <h3>treehouse — release binary</h3>
+          <p>Installed as a binary at <code>/usr/local/bin/treehouse</code>. It is <strong>not</strong> distributed via npm and has no self-updater — it is release-based, so you compare your version against the repo's latest release tag and reinstall the latest release binary when behind.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">check</span>
+              <button class="term-copy" data-copy="treehouse --version
+git ls-remote --tags --sort=-v:refname https://github.com/kunchenguid/treehouse | head -1">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">treehouse --version</span>  <span class="cmt"># installed</span>
+<span class="prompt">➜</span> <span class="cmd">git ls-remote --tags --sort=-v:refname https://github.com/kunchenguid/treehouse | head -1</span>  <span class="cmt"># latest release tag</span></div>
+          </div>
+          <p style="margin-top:1rem">When behind, install the latest release binary from the <a href="https://github.com/kunchenguid/treehouse" target="_blank">repo's releases page</a> (or its install script).</p>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="step">
+        <div class="step-index">05</div>
+        <div class="step-body">
+          <h3>gnhf — global npm CLI</h3>
+          <p>Not installed by default. The same <code>npm install -g</code> both installs it fresh and updates an existing copy.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">install / update</span>
+              <button class="term-copy" data-copy="npm install -g gnhf@latest">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">npm install -g gnhf@latest</span></div>
+          </div>
+          <p style="margin-top:1rem"><strong>Check what's behind:</strong> same npm pattern as the axi CLIs.</p>
+          <div class="term">
+            <div class="term-bar">
+              <div class="term-btn"></div>
+              <span class="term-label">check</span>
+              <button class="term-copy" data-copy="npm view gnhf version
+npm ls -g --depth=0 | grep gnhf">Copy</button>
+            </div>
+            <div class="term-body"><span class="prompt">➜</span> <span class="cmd">npm view gnhf version</span>  <span class="cmt"># latest</span>
+<span class="prompt">➜</span> <span class="cmd">npm ls -g --depth=0 | grep gnhf</span>  <span class="cmt"># installed</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="step">
+        <div class="step-index">06</div>
+        <div class="step-body">
+          <h3>Safety checklist</h3>
+          <p>Before running any of the above, keep these in mind:</p>
+          <ul>
+            <li><strong>firstmate:</strong> <code>projects/</code>, <code>data/</code>, <code>config/</code>, <code>state/</code> are gitignored and must stay untouched — never <code>git clean</code>. Re-read <code>AGENTS.md</code> after updating.</li>
+            <li><strong>lavish-axi:</strong> schedule the <code>lavish-axi stop</code> restart for a moment when no review is in progress — it drops live sessions.</li>
+            <li><strong>no-mistakes:</strong> run <code>no-mistakes update</code> only when no validation is in flight; it resets the daemon.</li>
+            <li><strong>No <code>sudo</code>:</strong> nothing here needs it. If a global install reports a permission error, stop and fix the npm prefix rather than forcing it.</li>
+            <li>Update only what is actually behind, and note the before/after version of anything you touch.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="takeaways">
+        <h3>🎯 Key Takeaways</h3>
+        <ul>
+          <li>Every tool lives at <code>github.com/kunchenguid/&lt;name&gt;</code>; none need <code>sudo</code>.</li>
+          <li><strong>npm CLIs</strong> (axi tools, gnhf): <code>npm view &lt;pkg&gt; version</code> to check, <code>npm install -g &lt;pkg&gt;@latest</code> to update.</li>
+          <li><strong>Binaries</strong>: <code>no-mistakes update</code> self-updates; treehouse is reinstalled from its latest release tag.</li>
+          <li><strong>firstmate</strong>: prefer <code>/updatefirstmate</code>; fall back to an upstream fetch + merge if diverged.</li>
+          <li>Mind the three side effects — the firstmate gitignore protection, the lavish restart timing, and the no-mistakes daemon reset.</li>
+        </ul>
       </div>
     </section>
 
