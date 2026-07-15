@@ -14499,23 +14499,78 @@ tracer = trace.get_tracer(<span class="str">"checkout"</span>)
       <p class="card-note">Parent/child links + one shared <code>trace_id</code> = the waterfall you'll build in Module 09.</p>
     </div>
 
+    <div class="card">
+      <h3 class="card-title">🌐 Context Propagation — Keeping the Trace Whole Across Processes</h3>
+      <p class="card-sub">A trace only stays connected if every service knows which trace and parent span it belongs to. When a call leaves the process, that link would be lost — so OTel <strong>injects</strong> the <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a> <code>traceparent</code> header onto the outbound request, and the receiver <strong>extracts</strong> it on the way in to parent its new span.</p>
+      <div class="otel-seq-scroll">
+        <svg class="otel-seq" viewBox="0 0 700 260" role="img" aria-label="Sequence diagram. orders-api makes an outbound POST /charge to payments-api and injects the traceparent header carrying trace-id 7b2c1a and span-id a1b2c3. payments-api extracts that header on the way in, creates a child span whose parent is a1b2c3, then responds 200 OK.">
+          <defs>
+            <marker id="otelCtxReq" class="otel-seq-arrow-req" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z"/></marker>
+            <marker id="otelCtxRes" class="otel-seq-arrow-res" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z"/></marker>
+          </defs>
+
+          <!-- lifelines -->
+          <line class="otel-seq-life" x1="180" y1="54" x2="180" y2="212"/>
+          <line class="otel-seq-life" x1="520" y1="54" x2="520" y2="212"/>
+
+          <!-- activation bars -->
+          <rect class="otel-seq-act" x="175" y="100" width="10" height="100" rx="3" style="fill:var(--blue);fill-opacity:.20;stroke:var(--blue);stroke-opacity:.5"/>
+          <rect class="otel-seq-act" x="515" y="120" width="10" height="58" rx="3" style="fill:var(--accent2);fill-opacity:.22;stroke:var(--accent2);stroke-opacity:.55"/>
+
+          <!-- headers -->
+          <g class="otel-seq-head">
+            <rect x="90" y="14" width="180" height="32" rx="8"/><text x="180" y="35">🧾 orders-api (client)</text>
+            <rect x="430" y="14" width="180" height="32" rx="8"/><text x="520" y="35">💳 payments-api (server)</text>
+          </g>
+
+          <!-- request -->
+          <g class="otel-seq-msg otel-seq-req">
+            <text class="otel-seq-lbl" x="350" y="100">POST /charge</text>
+            <text class="otel-seq-lbl" x="350" y="113" style="font-size:10px">traceparent: 00-7b2c1a…f09-a1b2c3-01</text>
+            <line class="otel-seq-line" x1="185" y1="122" x2="513" y2="122" marker-end="url(#otelCtxReq)"/>
+          </g>
+
+          <!-- response -->
+          <g class="otel-seq-msg otel-seq-res">
+            <text class="otel-seq-lbl" x="350" y="171">200 OK</text>
+            <line class="otel-seq-line" x1="513" y1="178" x2="185" y2="178" marker-end="url(#otelCtxRes)"/>
+          </g>
+
+          <!-- inject / extract annotations -->
+          <text class="otel-seq-lbl" x="180" y="234" style="fill:var(--blue)">🖊️ inject() writes the header</text>
+          <text class="otel-seq-lbl" x="520" y="234" style="fill:var(--accent2)">📖 extract() reads it → parent = a1b2c3</text>
+        </svg>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># Anatomy of the header that crosses the wire:</span>
+traceparent: 00-7b2c1af09...f09-a1b2c3d4-01
+<span class="cmt">#            ▲   ▲              ▲        ▲</span>
+<span class="cmt">#          ver  trace-id      span-id  flags (01 = sampled)</span></div>
+      <p class="card-note">The child in <code>payments-api</code> reuses the same <code>trace_id</code> and points its parent at the caller's <code>span_id</code> — that one shared ID is what lets Module 09 stitch both services into a single waterfall. <strong>Baggage</strong> (arbitrary key-values like <code>user.tier=gold</code>) rides the same mechanism in a <code>baggage</code> header.</p>
+    </div>
+
     <div class="two-col">
       <div class="card">
-        <div class="card-tag-row"><span class="ctag blue">🌐 Context Propagation</span></div>
-        <p style="color:var(--txt2)">How a child span in <em>another process</em> knows its parent. OTel injects the <strong>W3C Trace Context</strong> <code>traceparent</code> header into outbound requests and reads it on the way in.</p>
-        <div class="code-block" style="font-size:0.78rem"><span class="cmt"># Injected automatically into HTTP calls:</span>
-traceparent: 00-7b2c1a…f09-a1b2c3d4-01
-<span class="cmt">#            ver  trace-id       span-id  flags</span>
-
-<span class="cmt"># Receiver reads it → new span's parent = a1b2c3d4</span></div>
+        <h3 class="card-title">🏢 Resources — Who Produced the Telemetry</h3>
+        <p class="card-sub">A <strong>Resource</strong> describes the <em>whole producer</em>: the service, its version, where it runs. You set it <em>once</em> at startup and it is attached to <strong>every</strong> span, metric and log the process emits — so you never re-state it per signal.</p>
+        <div class="code-block"><span class="cmt"># Resource — set once, rides on everything</span>
+<span class="kw">service.name</span>:           <span class="str">"orders-api"</span>
+<span class="kw">service.version</span>:        <span class="str">"2.3.1"</span>
+<span class="kw">deployment.environment</span>: <span class="str">"production"</span>
+<span class="kw">host.name</span>:              <span class="str">"ip-10-0-3-42"</span>
+<span class="kw">k8s.pod.name</span>:           <span class="str">"orders-api-7d9f-x8k2"</span></div>
+        <p class="card-note"><code>service.name</code> is the one required key — it is how every backend groups your traces under a service.</p>
       </div>
       <div class="card">
-        <div class="card-tag-row"><span class="ctag green">🏷️ Attributes &amp; Resources</span></div>
-        <p style="color:var(--txt2)"><strong>Attributes</strong> describe one span (<code>http.route</code>, <code>db.system</code>). A <strong>Resource</strong> describes the whole producer (<code>service.name</code>, <code>service.version</code>, host, pod) — attached to every span, metric and log it emits.</p>
-        <div class="code-block" style="font-size:0.78rem"><span class="cmt"># Resource (set once, applies to everything)</span>
-service.name:    "orders-api"
-service.version: "2.3.1"
-deployment.environment: "production"</div>
+        <h3 class="card-title">🏷️ Attributes — Detail About One Span</h3>
+        <p class="card-sub">Where a Resource describes the producer, <strong>attributes</strong> describe <em>one specific span</em> (or metric point / log record). They are the per-operation key-values you filter and group by in your backend.</p>
+        <div class="code-block"><span class="cmt"># Attributes — vary span to span</span>
+span <span class="str">"POST /orders"</span> {
+  <span class="kw">http.request.method</span>:      <span class="str">"POST"</span>
+  <span class="kw">http.route</span>:               <span class="str">"/orders/{id}"</span>
+  <span class="kw">http.response.status_code</span>: <span class="num">200</span>
+  <span class="kw">db.system.name</span>:           <span class="str">"postgresql"</span>
+}</div>
+        <p class="card-note"><strong>Rule of thumb:</strong> if it is true for the <em>whole process</em> → Resource. If it changes <em>per request</em> → attribute.</p>
       </div>
     </div>
 
@@ -14528,34 +14583,99 @@ http.response.status_code = 200         <span class="cmt"># not "code"</span>
 url.path              = "/orders"       <span class="cmt"># not "endpoint"</span>
 db.system.name        = "postgresql"    <span class="cmt"># not "database"</span>
 server.address        = "db.internal"   <span class="cmt"># not "host"</span></div>
-      <p class="card-note">Conventions are why auto-instrumentation from different libraries produces consistent, filterable traces.</p>
+      <p class="card-note">Conventions are why auto-instrumentation from different libraries produces consistent, filterable traces — and why the <code>http.*</code> attributes above are the same in Go, Python and Java.</p>
     </div>
 
     <div class="card">
-      <h3 class="card-title">🧩 The Rest of the Vocabulary</h3>
-      <div class="card-grid-4">
-        <div class="card"><div class="ci">🖊️</div><h4>Tracer / Meter</h4><p>Factories you get from the API to create spans (tracer) and instruments (meter).</p></div>
-        <div class="card"><div class="ci">📤</div><h4>Exporter</h4><p>Serialises telemetry and ships it — e.g. <code>OTLPSpanExporter</code> to a Collector or Jaeger.</p></div>
-        <div class="card"><div class="ci">📦</div><h4>OTLP</h4><p>OpenTelemetry Protocol — the wire format. gRPC on <strong>:4317</strong>, HTTP on <strong>:4318</strong>.</p></div>
-        <div class="card"><div class="ci">🛰️</div><h4>Collector</h4><p>A standalone service: receive → process → export. Decouples apps from backends.</p></div>
-        <div class="card"><div class="ci">🎚️</div><h4>Sampling</h4><p>Keep a subset of traces to control cost. Head-based (decide up front) or tail-based (decide after seeing the whole trace).</p></div>
-        <div class="card"><div class="ci">⚙️</div><h4>Processor</h4><p>SDK/Collector stage that batches, filters or enriches data before export.</p></div>
-        <div class="card"><div class="ci">🧾</div><h4>Span Events</h4><p>Timestamped annotations inside a span (e.g. <code>exception</code>) — a "log pinned to a span."</p></div>
-        <div class="card"><div class="ci">🧳</div><h4>Baggage</h4><p>Key-values that propagate across services alongside context (e.g. <code>user.tier=gold</code>).</p></div>
+      <h3 class="card-title">📤 Exporters — Serialise &amp; Ship</h3>
+      <p class="card-sub">The SDK builds spans in memory; an <strong>exporter</strong> serialises finished batches into a wire format and sends them onward — to a Collector, or straight to a backend like Jaeger. Swapping backends is a one-line exporter change; your instrumentation never moves.</p>
+      <div class="code-block"><span class="cmt"># Python SDK — point the OTLP exporter at a Collector</span>
+<span class="kw">from</span> opentelemetry.exporter.otlp.proto.grpc.trace_exporter <span class="kw">import</span> OTLPSpanExporter
+<span class="kw">from</span> opentelemetry.sdk.trace.export <span class="kw">import</span> BatchSpanProcessor
+
+exporter = <span class="kw">OTLPSpanExporter</span>(endpoint=<span class="str">"http://otel-collector:4317"</span>)
+provider.add_span_processor(<span class="kw">BatchSpanProcessor</span>(exporter))
+<span class="cmt"># Processor buffers &amp; batches finished spans → exporter ships them over OTLP</span></div>
+      <p class="card-note">A <strong>Processor</strong> (here <code>BatchSpanProcessor</code>) sits just before the exporter to batch spans — fewer, bigger network calls instead of one per span.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📦 OTLP — The Wire Protocol</h3>
+      <p class="card-sub">OTLP (OpenTelemetry Protocol) is the standard envelope every exporter and Collector speaks. One protocol carries all three signals — traces, metrics <em>and</em> logs — as Protobuf, over gRPC or HTTP.</p>
+      <div class="otel-anat">
+        <div class="otel-anat-hd">📦 <b>An OTLP export</b> — what one request over the wire carries</div>
+        <div class="otel-anat-row"><div class="otel-anat-k">transport</div><div class="otel-anat-v"><strong>gRPC on <code>:4317</code></strong> (compact, streaming — the default) or <strong>HTTP/protobuf on <code>:4318</code></strong> (firewall-friendly, works everywhere).</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">endpoint</div><div class="otel-anat-v">gRPC dials the host directly; HTTP posts to a signal path — <code>/v1/traces</code>, <code>/v1/metrics</code>, <code>/v1/logs</code>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">payload</div><div class="otel-anat-v"><strong>Protobuf-encoded</strong> <code>ResourceSpans</code>: the <strong>Resource</strong> (set once) wrapping many spans, each with its attributes, events and status.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">signals</div><div class="otel-anat-v">One protocol, three signals — <code>traces</code>, <code>metrics</code>, <code>logs</code> — so a Collector needs only one receiver to ingest everything.</div></div>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># The two endpoint shapes you configure exporters against:</span>
+http://otel-collector:<span class="num">4317</span>            <span class="cmt"># gRPC  (dial host:port)</span>
+http://otel-collector:<span class="num">4318</span>/v1/traces  <span class="cmt"># HTTP  (POST protobuf to signal path)</span></div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛰️ The Collector — Receive → Process → Export</h3>
+      <p class="card-sub">A standalone service that sits between your apps and your backends. Apps ship OTLP to it; it processes the data (batch, sample, redact, enrich) and fans it out to one or more backends — so apps never hardcode a backend and you change routing in one place.</p>
+      <div class="otel-cpipe">
+        <div class="ocp-box" style="--ocp:var(--blue)"><div class="ocp-t">📥 Receivers</div><small>Ingest telemetry — OTLP from your apps, plus Jaeger, Prometheus, and more.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent-ink)"><div class="ocp-t">⚙️ Processors</div><small>Batch, <strong>tail-sample</strong>, redact secrets, enrich (e.g. add k8s metadata).</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent2)"><div class="ocp-t">📤 Exporters</div><small>Fan out to one <em>or more</em> backends at once.</small></div>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># collector-config.yaml — the receive→process→export shape</span>
+<span class="kw">receivers</span>:
+  <span class="kw">otlp</span>:
+    <span class="kw">protocols</span>: { grpc: {}, http: {} }   <span class="cmt"># listen on :4317 / :4318</span>
+<span class="kw">processors</span>:
+  <span class="kw">batch</span>: {}                             <span class="cmt"># group spans before export</span>
+<span class="kw">exporters</span>:
+  <span class="kw">otlp/jaeger</span>: { endpoint: <span class="str">"jaeger:4317"</span> }
+<span class="kw">service</span>:
+  <span class="kw">pipelines</span>:
+    <span class="kw">traces</span>: { receivers: [otlp], processors: [batch], exporters: [otlp/jaeger] }</div>
+      <div class="callout info">
+        <span class="callout-icon">i</span>
+        <div class="callout-text">This is the 30-second version. The dedicated <a href="#otel-collector">Inside the Collector</a> module (Module 06) covers deployment modes, tail-sampling policies and real production configs in depth.</div>
       </div>
     </div>
 
     <div class="card">
-      <h3 class="card-title">🎚️ Sampling in One Picture</h3>
+      <h3 class="card-title">🎚️ Sampling — Keep the Traces That Matter</h3>
+      <p class="card-sub">Tracing everything is expensive; sampling keeps a useful subset. <strong>Head-based</strong> decides up front (cheap, blind); <strong>tail-based</strong> waits for the whole trace, then decides (smart, needs buffering in the Collector).</p>
       <div class="two-col">
         <div class="card">
-          <div class="card-tag-row"><span class="ctag blue">Head-based</span></div>
-          <p style="color:var(--txt2)">Decide at the <em>start</em> of the trace (e.g. keep 10%). Cheap and simple, but you might drop the one slow trace you needed.</p>
+          <div class="card-tag-row"><span class="ctag blue">Head-based · keep 10%</span></div>
+          <p style="color:var(--txt2)">Decide at the <em>start</em> of the trace. Cheap and simple, but you might drop the one slow trace you needed.</p>
+          <div class="code-block" style="font-size:0.78rem"><span class="cmt"># SDK env — sample 10% of traces up front</span>
+OTEL_TRACES_SAMPLER=<span class="str">traceidratio</span>
+OTEL_TRACES_SAMPLER_ARG=<span class="num">0.1</span></div>
         </div>
         <div class="card card-accent">
-          <div class="card-tag-row"><span class="ctag green">Tail-based</span></div>
-          <p style="color:var(--txt2)">Buffer the whole trace, then decide — e.g. <em>always keep errors and slow traces</em>, sample the rest. Done in the Collector. Best of both.</p>
+          <div class="card-tag-row"><span class="ctag green">Tail-based · keep what matters</span></div>
+          <p style="color:var(--txt2)">Buffer the whole trace in the Collector, <em>then</em> decide — always keep errors and slow traces, sample the boring rest.</p>
+          <div class="code-block" style="font-size:0.78rem"><span class="cmt"># Collector processor</span>
+<span class="kw">tail_sampling</span>:
+  <span class="kw">policies</span>:
+    - { type: <span class="str">status_code</span>, <span class="cmt"># keep errors</span>
+        status_code: { status_codes: [ERROR] } }
+    - { type: <span class="str">latency</span>,      <span class="cmt"># keep slow</span>
+        latency: { threshold_ms: <span class="num">500</span> } }
+    - { type: <span class="str">probabilistic</span>, <span class="cmt"># 5% of rest</span>
+        probabilistic: { sampling_percentage: <span class="num">5</span> } }</div>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧩 Supporting Vocabulary</h3>
+      <p class="card-sub">The rest of the words you'll meet — smaller pieces that sit around the eight concepts above.</p>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">🖊️</div><h4>Tracer / Meter</h4><p>Factories you get from the API to create spans (tracer) and instruments (meter).</p></div>
+        <div class="card"><div class="ci">⚙️</div><h4>Processor</h4><p>SDK/Collector stage that batches, filters or enriches data before export.</p></div>
+        <div class="card"><div class="ci">🧾</div><h4>Span Events</h4><p>Timestamped annotations inside a span (e.g. <code>exception</code>) — a "log pinned to a span."</p></div>
+        <div class="card"><div class="ci">🧳</div><h4>Baggage</h4><p>Key-values that propagate across services alongside context (e.g. <code>user.tier=gold</code>).</p></div>
       </div>
     </div>
 
@@ -14563,10 +14683,10 @@ server.address        = "db.internal"   <span class="cmt"># not "host"</span></d
       <h3>🎯 Key Takeaways</h3>
       <ul>
         <li>A <strong>span</strong> is a timed unit of work; nested spans sharing a <code>trace_id</code> make a trace</li>
-        <li><strong>Context propagation</strong> (W3C <code>traceparent</code>) connects spans across process boundaries</li>
-        <li><strong>Resources</strong> describe the producer; <strong>attributes</strong> describe a span; <strong>semantic conventions</strong> standardise the names</li>
-        <li><strong>OTLP</strong> (:4317 gRPC / :4318 HTTP) is the wire protocol; the <strong>Collector</strong> receives, processes and exports it</li>
-        <li>Prefer <strong>tail-based sampling</strong> for "keep every error, sample the boring stuff"</li>
+        <li><strong>Context propagation</strong> injects/extracts the W3C <code>traceparent</code> header so a trace survives crossing a process boundary</li>
+        <li><strong>Resources</strong> describe the producer (set once, rides on everything); <strong>attributes</strong> describe one span (vary per request); <strong>semantic conventions</strong> standardise both sets of names</li>
+        <li>An <strong>exporter</strong> serialises telemetry and ships it over <strong>OTLP</strong> (:4317 gRPC / :4318 HTTP); the <strong>Collector</strong> receives → processes → exports, decoupling apps from backends</li>
+        <li>Prefer <strong>tail-based sampling</strong> ("keep every error and slow trace, sample the boring rest") over blind head-based ratios</li>
       </ul>
     </div>
   </section>
