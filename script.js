@@ -98,35 +98,90 @@ const progFill = document.getElementById('progFill');
 const progPct  = document.getElementById('progPct');
 const visitedSections = new Set();
 
-const sectionObserver = new IntersectionObserver((entries) => {
+// Reflect one section as the active one across all three consumers:
+// the sidebar nav link, the top-bar breadcrumb, and (implicitly) whatever
+// reads .active. Kept in a helper so both the reveal/progress observer and
+// the trigger-band observer below drive it identically.
+let activeSectionId = null;
+function setActiveSection(id) {
+  if (!id || id === activeSectionId) return;
+  activeSectionId = id;
+  // Active nav
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.dataset.section === id);
+  });
+  // Breadcrumb (top bar) — mirror the active section + its nav group
+  const activeLink = [...navLinks].find(l => l.dataset.section === id);
+  if (activeLink) {
+    const tbSection = document.getElementById('tbSection');
+    const tbGroup   = document.getElementById('tbGroup');
+    const secLabel  = activeLink.querySelector('span:not(.ni):not(.nbadge)');
+    if (tbSection) tbSection.textContent = (secLabel ? secLabel.textContent : activeLink.textContent).trim();
+    const grpLabel = activeLink.closest('.nav-group')?.querySelector('.nav-group-toggle span:not(.ni):not(.nav-group-chevron)');
+    if (tbGroup && grpLabel) tbGroup.textContent = grpLabel.textContent.trim();
+  }
+}
+
+// Reveal + progress: fire as soon as any sliver of a section enters the
+// viewport (threshold 0). This must NOT gate active-nav — a section many
+// times taller than the viewport never reaches a positive ratio threshold,
+// which is exactly the scroll-spy bug this replaces.
+const revealObserver = new IntersectionObserver((entries) => {
+  let changed = false;
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      const id = entry.target.id;
-      visitedSections.add(id);
-      // Active nav
-      navLinks.forEach(l => {
-        l.classList.toggle('active', l.dataset.section === id);
-      });
-      // Breadcrumb (top bar) — mirror the active section + its nav group
-      const activeLink = [...navLinks].find(l => l.dataset.section === id);
-      if (activeLink) {
-        const tbSection = document.getElementById('tbSection');
-        const tbGroup   = document.getElementById('tbGroup');
-        const secLabel  = activeLink.querySelector('span:not(.ni):not(.nbadge)');
-        if (tbSection) tbSection.textContent = (secLabel ? secLabel.textContent : activeLink.textContent).trim();
-        const grpLabel = activeLink.closest('.nav-group')?.querySelector('.nav-group-toggle span:not(.ni):not(.nav-group-chevron)');
-        if (tbGroup && grpLabel) tbGroup.textContent = grpLabel.textContent.trim();
-      }
-      // Progress
-      const pct = Math.round((visitedSections.size / sections.length) * 100);
-      progFill.style.width = pct + '%';
-      progPct.textContent  = pct + '%';
+      visitedSections.add(entry.target.id);
+      changed = true;
     }
   });
-}, { threshold: 0.2 });
+  if (changed) {
+    const pct = Math.round((visitedSections.size / sections.length) * 100);
+    progFill.style.width = pct + '%';
+    progPct.textContent  = pct + '%';
+  }
+}, { threshold: 0 });
 
-sections.forEach(s => sectionObserver.observe(s));
+sections.forEach(s => revealObserver.observe(s));
+
+// Active-section detection: a thin horizontal "trigger band" near the
+// vertical middle of the viewport (collapsed via rootMargin). Whichever
+// section is crossing that band is the one the reader is looking at — this
+// is independent of section height, so a 7x-viewport section becomes active
+// just like a short one. threshold 0 fires on entry/exit of the band.
+const inBand = new Set();
+const bandObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) inBand.add(entry.target);
+    else inBand.delete(entry.target);
+  });
+  pickActiveSection();
+}, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+function pickActiveSection() {
+  if (inBand.size) {
+    // Normally exactly one section crosses the thin band; if two do
+    // (adjacent boundary), prefer the topmost so it reads deterministically.
+    let top = null;
+    inBand.forEach(el => {
+      if (!top || el.getBoundingClientRect().top < top.getBoundingClientRect().top) top = el;
+    });
+    setActiveSection(top.id);
+    return;
+  }
+  // No section in the band — happens at the very top or bottom of the page.
+  // Fall back to the last section whose top has scrolled above the band line.
+  const bandY = innerHeight * 0.45;
+  let candidate = null;
+  sections.forEach(el => {
+    if (el.getBoundingClientRect().top <= bandY) candidate = el;
+  });
+  setActiveSection((candidate || sections[0]).id);
+}
+
+sections.forEach(s => bandObserver.observe(s));
+// Resolve the initial active section (e.g. deep-linked #anchor load).
+pickActiveSection();
 
 /* ══════════════════════════════════════
    HERO PARTICLE CANVAS
