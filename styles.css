@@ -6257,14 +6257,16 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 .nb-book--setup { --nb-marker: var(--accent-ink); }
 
 /* ═══════════════════════════════════════════════════
-   BOOKSHELF LANDING — the site front door
-   A cozy library: labelled wooden shelves, each topic a
-   book standing on the plank in its own brand colour.
-   Clicking a book opens that notebook (see initShelf in
-   script.js). Fully token-driven so wood (light) and the
-   night-library palette (dark) are a pure theme swap.
+   BOOKSHELF LANDING - the site front door
+   A library of gradient book cards (.lib-book) in a
+   responsive grid, grouped into labelled shelves, each
+   card in its own brand colour with a spine edge, top
+   gloss, and a real reading-progress bar. Clicking a card
+   opens that notebook (see initShelf in script.js). Fully
+   token-driven so the "reading room" (light) and
+   "night library" (dark) palettes are a pure theme swap.
 ═══════════════════════════════════════════════════ */
-/* Cozy library backdrop, theme-aware: warm "reading room" in light,
+/* Reading-room backdrop, theme-aware: warm "reading room" in light,
    a dim "night library" in dark. A pure token swap. */
 :root      { --shelf-room: radial-gradient(120% 90% at 50% 0%, #17130f 0%, #0e0b09 74%); }
 [data-theme="light"] { --shelf-room: radial-gradient(120% 90% at 50% 0%, #f6efe2 0%, #ece0cc 78%); }

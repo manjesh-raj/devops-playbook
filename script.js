@@ -4206,8 +4206,8 @@ window.nbCurrentPage = window.nbCurrentPage || {};
    BOOKSHELF LANDING
    Each book is a real link to its own topic page (e.g. helm.html),
    so clicking navigates natively. We only add Space-to-activate for
-   parity with a button. Grouping lives in the HTML (one .shelf-row
-   per shelf), so regrouping is a markup move, not a code change.
+   parity with a button. Grouping lives in NB_LIBRARY below, so
+   regrouping is a data change, not a markup move.
 ══════════════════════════════════════ */
 // ── Bookshelf landing (index.html) ──
 // One data structure drives every card. Each book carries its own display
