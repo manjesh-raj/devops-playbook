@@ -3825,7 +3825,7 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       void lf.offsetHeight; lf.style.transition = '';
     }
 
-    function render() {
+    function render(writeHash) {
       leaves.forEach((lf, i) => {
         lf.classList.remove('is-current', 'is-under', 'is-turning');
         lf.style.transition = 'none';
@@ -3840,7 +3840,11 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       const activeId = current === N - 1 ? lastContentId : ids[current];
       window.nbCurrentPage[section.id] = activeId;
       if (typeof setActiveSection === 'function') setActiveSection(activeId);
-      try { history.replaceState(null, '', '#' + ids[current]); } catch (e) { /* file:// */ }
+      // Only user-driven turns own the URL hash. During the initial mass-render
+      // every book would otherwise fight to stamp its own cover into the hash.
+      if (writeHash !== false) {
+        try { history.replaceState(null, '', '#' + ids[current]); } catch (e) { /* file:// */ }
+      }
     }
 
     function animateTo(to) {
@@ -3944,17 +3948,22 @@ window.nbCurrentPage = window.nbCurrentPage || {};
   };
 
   // Init each book: honour a deep link on its own leaves, else open at cover.
+  // render(false) so the mass-render does not stamp the hash (only the target
+  // book keeps/sets it below).
   const hash = location.hash;
-  let deepBook = null;
+  let deepBook = null, coverBook = null;
   controllers.forEach(c => {
     const idx = c.indexOfId(hash);
-    if (idx > 0) { c.current = idx; c.opened = true; c.render(); deepBook = c; }
-    else { c.current = 0; c.render(); }
+    if (idx > 0) { c.current = idx; c.opened = true; c.render(false); deepBook = c; }
+    else { if (idx === 0) coverBook = c; c.current = 0; c.render(false); }
   });
-  if (deepBook) deepBook.section.scrollIntoView({ block: 'start' });
-  else if (controllers.some(c => c.indexOfId(hash) === 0)) {
-    const c = controllers.find(ctl => ctl.indexOfId(hash) === 0);
-    c.section.scrollIntoView({ block: 'start' });
+  const target = deepBook || coverBook;
+  if (target) {
+    try { history.replaceState(null, '', '#' + target.ids[target.current]); } catch (e) { /* file:// */ }
+    // Scroll after layout settles (and after any native fragment jump) so the
+    // book lands at the top of the reading area rather than mid-leaf.
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      target.section.scrollIntoView({ block: 'start' })));
   }
 
   // External hash edits (address bar / back-forward) sync the owning book.

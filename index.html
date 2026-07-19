@@ -83,6 +83,7 @@
         <span class="nav-group-chevron">›</span>
       </div>
       <ul class="nav-sub-list">
+        <li><a class="nav-link" href="#nb-helm-cover" data-section="nb-helm-cover"><span class="ni">&#128215;</span><span>Notebook Cover</span><span class="nbadge focus">BOOK</span></a></li>
         <li><a class="nav-link" href="#helm-home"        data-section="helm-home"><span class="ni">🏠</span><span>Helm Home</span></a></li>
         <li><a class="nav-link" href="#helm-intro"       data-section="helm-intro"><span class="ni">📦</span><span>What is Helm</span></a></li>
         <li><a class="nav-link" href="#helm-anatomy"     data-section="helm-anatomy"><span class="ni">🗂️</span><span>Chart Anatomy</span></a></li>
@@ -108,6 +109,7 @@
         <span class="nav-group-chevron">›</span>
       </div>
       <ul class="nav-sub-list">
+        <li><a class="nav-link" href="#nb-argocd-cover" data-section="nb-argocd-cover"><span class="ni">&#128215;</span><span>Notebook Cover</span><span class="nbadge focus">BOOK</span></a></li>
         <li><a class="nav-link" href="#argocd-home"         data-section="argocd-home"><span class="ni">🏠</span><span>ArgoCD Home</span></a></li>
         <li><a class="nav-link" href="#argocd-intro"        data-section="argocd-intro"><span class="ni">🔮</span><span>What is ArgoCD</span></a></li>
         <li><a class="nav-link" href="#argocd-gitops"       data-section="argocd-gitops"><span class="ni">📐</span><span>GitOps Principles</span></a></li>
@@ -127,6 +129,7 @@
         <span class="nav-group-chevron">›</span>
       </div>
       <ul class="nav-sub-list">
+        <li><a class="nav-link" href="#nb-mcp-cover" data-section="nb-mcp-cover"><span class="ni">&#128215;</span><span>Notebook Cover</span><span class="nbadge focus">BOOK</span></a></li>
         <li><a class="nav-link" href="#mcp-home"         data-section="mcp-home"><span class="ni">🏠</span><span>MCP Home</span></a></li>
         <li><a class="nav-link" href="#mcp-intro"        data-section="mcp-intro"><span class="ni">🔌</span><span>What is MCP?</span></a></li>
         <li><a class="nav-link" href="#mcp-concepts"     data-section="mcp-concepts"><span class="ni">🧩</span><span>Core Concepts</span></a></li>
@@ -146,6 +149,7 @@
         <span class="nav-group-chevron">›</span>
       </div>
       <ul class="nav-sub-list">
+        <li><a class="nav-link" href="#nb-adot-cover" data-section="nb-adot-cover"><span class="ni">&#128215;</span><span>Notebook Cover</span><span class="nbadge focus">BOOK</span></a></li>
         <li><a class="nav-link" href="#adot-home"         data-section="adot-home"><span class="ni">🏠</span><span>ADOT Home</span></a></li>
         <li><a class="nav-link" href="#adot-intro"        data-section="adot-intro"><span class="ni">🔭</span><span>What is ADOT?</span></a></li>
         <li><a class="nav-link" href="#adot-concepts"     data-section="adot-concepts"><span class="ni">🧩</span><span>Core Concepts</span></a></li>
@@ -166,6 +170,7 @@
         <span class="nav-group-chevron">›</span>
       </div>
       <ul class="nav-sub-list">
+        <li><a class="nav-link" href="#nb-otel-cover" data-section="nb-otel-cover"><span class="ni">&#128215;</span><span>Notebook Cover</span><span class="nbadge focus">BOOK</span></a></li>
         <li><a class="nav-link" href="#otel-home"           data-section="otel-home"><span class="ni">🏠</span><span>Home &amp; Path</span></a></li>
         <li><a class="nav-link" href="#otel-intro"          data-section="otel-intro"><span class="ni">🔭</span><span>What is OTel?</span></a></li>
         <li><a class="nav-link" href="#otel-basics"         data-section="otel-basics"><span class="ni">🌱</span><span>Basics: Start Here</span><span class="nbadge focus">NEW</span></a></li>
@@ -5826,7 +5831,38 @@ Jira: OPS-4821 created and assigned to Platform team</span></div>
 
 
   <!-- ══════════════════════ HELM: HOME ══════════════════════ -->
-  <section id="helm-home" class="section helm-hero-section">
+  <section id="nb-helm-cover" class="section nb-section nb-book-section nb-book--helm" aria-roledescription="notebook" aria-label="HELM CHARTS notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="HELM CHARTS cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">HELM<small>CHARTS</small></div>
+      <div class="nb-cover-band">Your Handy Guide to Helm</div>
+      <p class="nb-cover-desc">Packaging and shipping Kubernetes apps with Helm. Chart anatomy, values, templating, the release lifecycle, and day-two work. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is Helm</li><li>Chart anatomy</li><li>values.yaml deep dive</li><li>Templates &amp; values</li><li>Release lifecycle</li><li>Hooks, testing &amp; security</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>Package once, deploy anywhere</li><li>Clear chart structure</li><li>Safe upgrades and rollbacks</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Template it, version it, ship it."</div>
+    </div>
+     </article>
+
+       <article class="nb-leaf" id="helm-home" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
     <div class="helm-hero-inner">
       <div class="hero-badge helm-badge">⛵ Helm Deep Dive</div>
       <h1 class="hero-title">Master <span class="helm-grad-text">Helm Charts</span></h1>
@@ -5854,10 +5890,17 @@ Jira: OPS-4821 created and assigned to Platform team</span></div>
         <div class="lp-card helm-lp-card lp-highlight" onclick="scrollTo_('#helm-lifecycle')"><span class="lp-num">04</span><span class="lp-icon">🔄</span><strong>Production</strong><span>Lifecycle</span></div>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: INTRO ══════════════════════ -->
-  <section id="helm-intro" class="section">
+       <article class="nb-leaf" id="helm-intro" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 01</div>
       <h2>What is Helm?</h2>
@@ -6042,10 +6085,17 @@ kubectl apply -f hpa.yaml
         <li><strong>DevOps angle:</strong> Helm is your deployment artifact. Chart version bumps = deployments</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: ANATOMY ══════════════════════ -->
-  <section id="helm-anatomy" class="section">
+       <article class="nb-leaf" id="helm-anatomy" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 02</div>
       <h2>Chart Anatomy</h2>
@@ -6104,10 +6154,17 @@ kubectl apply -f hpa.yaml
         </div>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: VALUES.YAML DEEP DIVE ══════════════════════ -->
-  <section id="helm-values-deep" class="section">
+       <article class="nb-leaf" id="helm-values-deep" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 02b</div>
       <h2>⚙️ values.yaml — The Complete Guide</h2>
@@ -6499,10 +6556,17 @@ helm template myapp ./chart -f values-prod.yaml</div>
         <li>Use <code>.Values.global</code> in umbrella charts so all subcharts share registry, environment, and pull secrets from one place</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: TEMPLATES ══════════════════════ -->
-  <section id="helm-templates" class="section">
+       <article class="nb-leaf" id="helm-templates" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 03</div>
       <h2>Templates &amp; Values</h2>
@@ -6732,10 +6796,17 @@ helm upgrade --install myapp ./myapp \
         <li style="font-size:0.88rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--orange)">→</span> <code>{{ if .Values.x }}</code> vs <code>{{ if .Values.x | ne "" }}</code> — an empty string is falsy in Go templates</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: LIFECYCLE ══════════════════════ -->
-  <section id="helm-lifecycle" class="section">
+       <article class="nb-leaf" id="helm-lifecycle" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 04</div>
       <h2>Release Lifecycle</h2>
@@ -6937,10 +7008,17 @@ Error: DB_HOST env var not set
         <li>Pods are replaced via rolling update — <strong>zero downtime</strong> when readinessProbe is configured</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: VERSION CONTROL ══════════════════════ -->
-  <section id="helm-versions" class="section">
+       <article class="nb-leaf" id="helm-versions" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Guide</div>
       <h2>🕰️ Version Control &amp; Rollbacks</h2>
@@ -7218,10 +7296,17 @@ helm diff rollback myapp 2</div>
         <li>Use <code>helm diff</code> plugin to preview changes before every upgrade — no surprises</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: REPOS ══════════════════════ -->
-  <section id="helm-repos" class="section">
+       <article class="nb-leaf" id="helm-repos" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 05</div>
       <h2>Repositories</h2>
@@ -7309,10 +7394,17 @@ helm install myapp ./mychart \
         </div>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: HOOKS ══════════════════════ -->
-  <section id="helm-hooks" class="section">
+       <article class="nb-leaf" id="helm-hooks" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 06</div>
       <h2>Hooks</h2>
@@ -7373,10 +7465,17 @@ helm install myapp ./mychart \
         <div class="card" style="margin-bottom:0"><h4>(none)</h4><p>Keep the resource forever. Useful for audit trail — but your cluster accumulates old Job objects.</p></div>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: TESTING ══════════════════════ -->
-  <section id="helm-testing" class="section">
+       <article class="nb-leaf" id="helm-testing" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 07</div>
       <h2>Testing Charts</h2>
@@ -7456,10 +7555,17 @@ ct install --charts ./charts/mychart</pre>
         </div>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: SECURITY ══════════════════════ -->
-  <section id="helm-security" class="section">
+       <article class="nb-leaf" id="helm-security" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 11">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 11 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 08</div>
       <h2>Secrets &amp; Security</h2>
@@ -7509,10 +7615,17 @@ ct install --charts ./charts/mychart</pre>
         </ul>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: SIMULATIONS ══════════════════════ -->
-  <section id="helm-simulations" class="section">
+       <article class="nb-leaf" id="helm-simulations" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 12">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 12 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 09</div>
       <h2>Interactive Simulations</h2>
@@ -7613,10 +7726,17 @@ ct install --charts ./charts/mychart</pre>
       </div>
       <button class="btn btn-helm" style="margin-top:16px" onclick="animateHelmInstall()">▶ Animate Install Order</button>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: PROJECTS ══════════════════════ -->
-  <section id="helm-projects" class="section">
+       <article class="nb-leaf" id="helm-projects" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 13">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 13 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Module 10</div>
       <h2>Helm Project Ideas</h2>
@@ -7692,11 +7812,18 @@ ct install --charts ./charts/mychart</pre>
         </div>
       </div>
     </div>
-  </section>
+      </div>
+     </article>
 
 
   <!-- ══════════════════════ HELM: TROUBLESHOOTING ══════════════════════ -->
-  <section id="helm-troubleshooting" class="section">
+       <article class="nb-leaf" id="helm-troubleshooting" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 14">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 14 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Guide</div>
       <h2>🔧 Troubleshooting Helm</h2>
@@ -7870,10 +7997,17 @@ helm install myapp ./myapp -f values-prod.yaml -n production --create-namespace<
         <li><code>helm history</code> + <code>helm rollback</code> is your safety net — you can always go back</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ══════════════════════ HELM: KUBECTL → HELM PROJECT ══════════════════════ -->
-  <section id="helm-kubectl-project" class="section">
+       <article class="nb-leaf" id="helm-kubectl-project" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 15">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 15 -</div>
+
     <div class="sec-header">
       <div class="sec-badge helm-sec-badge">Helm Lab</div>
       <h2>Project: <span class="helm-grad-text">kubectl → Helm</span></h2>
@@ -8623,11 +8757,69 @@ helm rollback myapp -n production  <span class="cmt"># rolls back to previous re
         <p style="font-size:0.88rem;color:var(--txt2);margin-top:8px">Always debug in this order: <strong>1) helm lint</strong> → <strong>2) helm template --dry-run</strong> → <strong>3) helm install --dry-run --debug</strong> → <strong>4) kubectl logs</strong> → <strong>5) kubectl describe</strong>. 90% of all Helm failures are caught in the first 3 steps before a single pod is created.</p>
       </div>
     </div>
+      </div>
+     </article>
+
+     <article class="nb-leaf nb-backcover" id="nb-helm-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Helm Charts notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-helm-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
   </section>
 
 
+
 <!-- ══════════════════════ ARGOCD HOME ══════════════════════ -->
-<section id="argocd-home" class="section argocd-hero-section">
+  <section id="nb-argocd-cover" class="section nb-section nb-book-section nb-book--argocd" aria-roledescription="notebook" aria-label="ARGO CD notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="ARGO CD cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">ARGO CD<small>NOTES</small></div>
+      <div class="nb-cover-band">Your Handy Guide to GitOps with Argo CD</div>
+      <p class="nb-cover-desc">Continuous delivery for Kubernetes, driven from Git. GitOps principles, Argo CD architecture, applications, sync, and access control. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is Argo CD</li><li>GitOps principles</li><li>Architecture</li><li>Applications</li><li>Sync &amp; health</li><li>RBAC</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>Git is the single source of truth</li><li>Automatic drift detection</li><li>Auditable deployments</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Declare it in Git, let Argo do the rest."</div>
+    </div>
+     </article>
+
+     <article class="nb-leaf" id="argocd-home" role="group" aria-roledescription="page" aria-label="ARGO CD page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
   <div class="argocd-hero-inner">
     <div class="hero-badge argocd-badge">🔄 ArgoCD Deep Dive</div>
     <h1 class="hero-title">Master <span class="argocd-grad-text">ArgoCD &amp; GitOps</span></h1>
@@ -8655,10 +8847,17 @@ helm rollback myapp -n production  <span class="cmt"># rolls back to previous re
       <div class="lp-card argocd-lp-card lp-highlight" onclick="scrollTo_('#argocd-simulations')"><span class="lp-num">04</span><span class="lp-icon">🎮</span><strong>Production</strong><span>Sync &amp; RBAC</span></div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ WHAT IS ARGOCD ══════════════════════ -->
-<section id="argocd-intro" class="section">
+     <article class="nb-leaf" id="argocd-intro" role="group" aria-roledescription="page" aria-label="ARGO CD page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 01</div>
     <h2>What is ArgoCD?</h2>
@@ -8782,10 +8981,17 @@ git push origin main
     </div>
   </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ GITOPS PRINCIPLES ══════════════════════ -->
-<section id="argocd-gitops" class="section">
+     <article class="nb-leaf" id="argocd-gitops" role="group" aria-roledescription="page" aria-label="ARGO CD page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 02</div>
     <h2>GitOps — The Four Principles</h2>
@@ -8955,10 +9161,17 @@ sre-autopilot-config/      ← config repo (ArgoCD watches this)
           </div>
         </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ ARGOCD ARCHITECTURE ══════════════════════ -->
-<section id="argocd-architecture" class="section">
+     <article class="nb-leaf" id="argocd-architecture" role="group" aria-roledescription="page" aria-label="ARGO CD page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 03</div>
     <h2>ArgoCD Architecture — What Runs in Your Cluster</h2>
@@ -9172,10 +9385,17 @@ argocd admin settings validate         <span class="cmt"># Check config</span></
           </div>
         </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ ARGOCD APPLICATIONS ══════════════════════ -->
-<section id="argocd-applications" class="section">
+     <article class="nb-leaf" id="argocd-applications" role="group" aria-roledescription="page" aria-label="ARGO CD page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 04</div>
     <h2>ArgoCD Applications — The Core CRD</h2>
@@ -9329,10 +9549,17 @@ spec:
         namespace: production</pre>
   </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ SYNC & HEALTH ══════════════════════ -->
-<section id="argocd-sync" class="section">
+     <article class="nb-leaf" id="argocd-sync" role="group" aria-roledescription="page" aria-label="ARGO CD page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 05</div>
     <h2>Sync Policies — Auto-Heal, Prune &amp; Waves</h2>
@@ -9558,10 +9785,17 @@ kubectl get events -n production --sort-by='.lastTimestamp'</code></pre></div>
           </div>
         </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ RBAC & SECURITY ══════════════════════ -->
-<section id="argocd-rbac" class="section">
+     <article class="nb-leaf" id="argocd-rbac" role="group" aria-roledescription="page" aria-label="ARGO CD page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 06</div>
     <h2>RBAC, Projects &amp; Security</h2>
@@ -9682,10 +9916,17 @@ data:
     </div>
   </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ HELM + ARGOCD ══════════════════════ -->
-<section id="argocd-helm" class="section">
+     <article class="nb-leaf" id="argocd-helm" role="group" aria-roledescription="page" aria-label="ARGO CD page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 07 · Connecting the Dots</div>
     <h2>Helm + ArgoCD — Best of Both Worlds</h2>
@@ -9911,10 +10152,17 @@ data:
           </div>
         </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ ARGOCD SIMULATIONS ══════════════════════ -->
-<section id="argocd-simulations" class="section">
+     <article class="nb-leaf" id="argocd-simulations" role="group" aria-roledescription="page" aria-label="ARGO CD page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 08 · Hands-On</div>
     <h2>ArgoCD Simulations</h2>
@@ -10011,10 +10259,17 @@ spec:
     <p style="font-size:0.84rem;margin:0">The <strong>Health State Explorer</strong> (interactive click-through of all 6 health states) is in the <a href="#argocd-applications" onclick="scrollTo_('#argocd-applications');return false;" style="color:var(--argocd,#f97316)">Applications section →</a>. The <strong>Sync Lifecycle Stepper</strong> (6-step visual walk-through) is in the <a href="#argocd-sync" onclick="scrollTo_('#argocd-sync');return false;" style="color:var(--argocd,#f97316)">Sync &amp; Health section →</a></p>
   </div>
 
-</section>
+    </div>
+     </article>
 
 <!-- ══════════════════════ ARGOCD REAL PROJECTS ══════════════════════ -->
-<section id="argocd-project" class="section">
+     <article class="nb-leaf" id="argocd-project" role="group" aria-roledescription="page" aria-label="ARGO CD page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
   <div class="sec-header">
     <div class="sec-badge argocd-sec-badge">Module 09 · Build It</div>
     <h2>Real ArgoCD Projects</h2>
@@ -10275,14 +10530,72 @@ jobs:
     <div class="proj-skills"><strong>Skills:</strong> Crossplane · AWS provider · XRD/Composition · GitOps for infra · ArgoCD App-of-Apps</div>
   </div>
 
-</section>
+    </div>
+     </article>
+
+     <article class="nb-leaf nb-backcover" id="nb-argocd-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Argo Cd notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-argocd-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
 
 <!-- ════════════════════════════════════════════════════════
      MCP — MODEL CONTEXT PROTOCOL
 ════════════════════════════════════════════════════════ -->
 
 <!-- Section 1: MCP Home -->
-<section id="mcp-home" class="content-section mcp-hero-section">
+  <section id="nb-mcp-cover" class="section nb-section nb-book-section nb-book--mcp" aria-roledescription="notebook" aria-label="MCP NOTES notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="MCP NOTES cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">MODEL CONTEXT<small>PROTOCOL</small></div>
+      <div class="nb-cover-band">Your Handy Guide to MCP</div>
+      <p class="nb-cover-desc">How models connect to tools and data through the Model Context Protocol. Core concepts, the client-server architecture, and building your own servers. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is MCP</li><li>Core concepts</li><li>Architecture</li><li>Using MCP</li><li>Building a server</li><li>MCP with LangGraph</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>One protocol for many tools</li><li>Reusable servers</li><li>Clear client-server split</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "One protocol to connect them all."</div>
+    </div>
+     </article>
+
+     <article class="nb-leaf" id="mcp-home" role="group" aria-roledescription="page" aria-label="MCP NOTES page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
   <div class="mcp-badge">🔌 MCP Deep Dive</div>
   <h1>Master <span class="mcp-grad-text">Model Context Protocol</span></h1>
   <p class="sec-desc">The open standard that connects AI to everything — databases, repos, APIs, and your own tools. Build once, use with any AI.</p>
@@ -10305,10 +10618,17 @@ jobs:
       <div class="mcp-path-card"><div class="mcp-path-num">04</div><strong>Custom Integrations</strong><br><span style="font-size:0.8rem;color:var(--txt2)">Bitbucket, Jira, Jenkins — any internal API</span></div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 2: What is MCP? -->
-<section id="mcp-intro" class="content-section">
+     <article class="nb-leaf" id="mcp-intro" role="group" aria-roledescription="page" aria-label="MCP NOTES page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
   <div class="mcp-sec-badge">Module 01</div>
   <h2>What is MCP?</h2>
   <p class="sec-desc">The open protocol that makes AI stop reinventing integrations — released by Anthropic, Nov 2024. Now adopted by OpenAI and Google DeepMind.</p>
@@ -10402,10 +10722,17 @@ jobs:
       <div class="mcp-adv-card"><div class="mcp-adv-icon">🌍</div><div class="mcp-adv-title">Ecosystem</div>100+ ready-made servers for common tools. Don't build what already exists.</div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 3: Core Concepts -->
-<section id="mcp-concepts" class="content-section">
+     <article class="nb-leaf" id="mcp-concepts" role="group" aria-roledescription="page" aria-label="MCP NOTES page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
   <div class="mcp-sec-badge">Module 02</div>
   <h2>Core Concepts</h2>
   <p class="sec-desc">Three participants, three primitives — that's all you need to understand MCP completely.</p>
@@ -10494,10 +10821,17 @@ jobs:
     <div class="mcp-concept-json" id="mcpConceptJson">{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}</div>
     <div id="mcpConceptDesc" style="font-size:0.82rem;color:var(--txt2);margin-top:8px">Client asks: what tools do you have? This happens ONCE per session. The server returns all tool names, descriptions, and input schemas — much more token-efficient than repeating schemas in every LLM request.</div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 4: Architecture -->
-<section id="mcp-architecture" class="content-section">
+     <article class="nb-leaf" id="mcp-architecture" role="group" aria-roledescription="page" aria-label="MCP NOTES page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
   <div class="mcp-sec-badge">Module 03</div>
   <h2>How MCP Works Under the Hood</h2>
   <p class="sec-desc">JSON-RPC 2.0, two transports, five lifecycle steps. This is the entire protocol.</p>
@@ -10618,10 +10952,17 @@ jobs:
       </div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 5: Using MCP -->
-<section id="mcp-usage" class="content-section">
+     <article class="nb-leaf" id="mcp-usage" role="group" aria-roledescription="page" aria-label="MCP NOTES page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
   <div class="mcp-sec-badge">Module 04</div>
   <h2>Using MCP Today — No Coding Required</h2>
   <p class="sec-desc">Connect 100+ ready-made servers to Claude Desktop in under 5 minutes. No code needed for most use cases.</p>
@@ -10721,10 +11062,17 @@ jobs:
       </table>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 6: Build a Server -->
-<section id="mcp-build" class="content-section">
+     <article class="nb-leaf" id="mcp-build" role="group" aria-roledescription="page" aria-label="MCP NOTES page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
   <div class="mcp-sec-badge">Module 05</div>
   <h2>Build Your First MCP Server</h2>
   <p class="sec-desc">From zero to a working server in 15 minutes using FastMCP — the FastAPI of MCP.</p>
@@ -10844,10 +11192,17 @@ npx @modelcontextprotocol/inspector python system_monitor.py
       <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Rate limiting</strong> — add <code>time.sleep(0.5)</code> between external API calls. Your server is called by an LLM in a loop — it will hammer APIs without this.</div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 7: MCP + LangGraph -->
-<section id="mcp-langgraph" class="content-section">
+     <article class="nb-leaf" id="mcp-langgraph" role="group" aria-roledescription="page" aria-label="MCP NOTES page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
   <div class="mcp-sec-badge">Module 06 · Connecting the Dots</div>
   <h2>MCP + LangGraph</h2>
   <p class="sec-desc">Use langchain-mcp-adapters to connect any MCP server to your LangGraph agent — production-ready AI with real tools.</p>
@@ -11006,10 +11361,17 @@ if approval["confirmed"]: restart_pod(pod_name)</pre>
       </div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 8: Custom MCP (Bitbucket) -->
-<section id="mcp-custom" class="content-section">
+     <article class="nb-leaf" id="mcp-custom" role="group" aria-roledescription="page" aria-label="MCP NOTES page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
   <div class="mcp-sec-badge">Module 07 · Build Your Own</div>
   <h2>Build a Custom MCP Server</h2>
   <p class="sec-desc">Connect Bitbucket, Jira, Jenkins, or any internal tool to AI agents using the exact same pattern.</p>
@@ -11265,10 +11627,17 @@ npx @modelcontextprotocol/inspector python bitbucket_mcp.py
       💡 <strong>Pattern:</strong> If you have a REST API with Swagger docs, you can build an MCP server for it in under an hour. The FastMCP <code>@mcp.tool()</code> decorator is all you need. Each endpoint becomes one tool.
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 9: Simulations -->
-<section id="mcp-simulations" class="content-section">
+     <article class="nb-leaf" id="mcp-simulations" role="group" aria-roledescription="page" aria-label="MCP NOTES page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
   <div class="mcp-sec-badge">Module 08 · Hands-On</div>
   <h2>MCP Simulations</h2>
   <p class="sec-desc">See the protocol in action — step through real JSON-RPC messages, build a tool piece by piece, and trace a LangGraph agent's reasoning.</p>
@@ -11323,10 +11692,17 @@ npx @modelcontextprotocol/inspector python bitbucket_mcp.py
       </div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 10: Real Projects -->
-<section id="mcp-project" class="content-section">
+     <article class="nb-leaf" id="mcp-project" role="group" aria-roledescription="page" aria-label="MCP NOTES page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
   <div class="mcp-sec-badge">Module 09 · Build It</div>
   <h2>Real MCP Projects</h2>
   <p class="sec-desc">Four projects using MCP — from beginner integrations to production AI agents.</p>
@@ -11428,14 +11804,72 @@ npx @modelcontextprotocol/inspector python bitbucket_mcp.py
     </ol>
     <div class="proj-skills"><strong>Skills:</strong> FastMCP · subprocess · kubectl · LangGraph · Claude Desktop</div>
   </div>
-</section>
+    </div>
+     </article>
+
+     <article class="nb-leaf nb-backcover" id="nb-mcp-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Mcp Notes notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-mcp-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
 
 <!-- ════════════════════════════════════════════════════════
      AWS ADOT — DISTRO FOR OPENTELEMETRY
 ════════════════════════════════════════════════════════ -->
 
 <!-- Section 1: ADOT Home -->
-<section id="adot-home" class="content-section adot-hero-section">
+  <section id="nb-adot-cover" class="section nb-section nb-book-section nb-book--adot" aria-roledescription="notebook" aria-label="AWS ADOT notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="AWS ADOT cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">AWS ADOT<small>NOTES</small></div>
+      <div class="nb-cover-band">Your Handy Guide to the AWS Distro for OpenTelemetry</div>
+      <p class="nb-cover-desc">Running OpenTelemetry the AWS way with ADOT. Core concepts, architecture, install, and wiring telemetry into AWS services. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is ADOT</li><li>Core concepts</li><li>Architecture</li><li>Install</li><li>Monitoring</li><li>ADOT on AWS</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>OpenTelemetry, AWS-supported</li><li>Works with AWS services</li><li>Production ready</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "OpenTelemetry, the AWS way."</div>
+    </div>
+     </article>
+
+     <article class="nb-leaf" id="adot-home" role="group" aria-roledescription="page" aria-label="AWS ADOT page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
   <div class="adot-badge">📡 AWS ADOT Deep Dive</div>
   <h1>Master <span class="adot-grad-text">AWS Distro for OpenTelemetry</span></h1>
   <p class="sec-desc">One collector. Three signals. Every AWS service. Full-stack observability that turns your black-box production system into a glass box — see exactly what's happening, why it's slow, and where it broke.</p>
@@ -11458,10 +11892,17 @@ npx @modelcontextprotocol/inspector python bitbucket_mcp.py
       <div class="adot-path-card"><div class="adot-path-num">04</div><strong>AWS Integrations</strong><br><span style="font-size:0.8rem;color:var(--txt2)">X-Ray traces, CloudWatch metrics, AMP + Grafana dashboards</span></div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 2: What is ADOT? -->
-<section id="adot-intro" class="content-section">
+     <article class="nb-leaf" id="adot-intro" role="group" aria-roledescription="page" aria-label="AWS ADOT page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
   <div class="adot-sec-badge">Module 01</div>
   <h2>What is AWS ADOT?</h2>
   <p class="sec-desc">From "something is broken" to "here's exactly why" — ADOT is the observability layer every production system needs.</p>
@@ -11541,10 +11982,17 @@ npx @modelcontextprotocol/inspector python bitbucket_mcp.py
       <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--adot) 42%, transparent);font-size:0.84rem"><div style="font-weight:700;color:var(--adot);margin-bottom:4px">🧩 Extensible</div>Custom receivers, processors, exporters. Write your own pipeline logic when needed.</div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 3: Core Concepts -->
-<section id="adot-concepts" class="content-section">
+     <article class="nb-leaf" id="adot-concepts" role="group" aria-roledescription="page" aria-label="AWS ADOT page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
   <div class="adot-sec-badge">Module 02</div>
   <h2>Core Concepts — The Three Signals</h2>
   <p class="sec-desc">Everything in observability boils down to three types of data. Master these and you can understand any monitoring system.</p>
@@ -11688,10 +12136,17 @@ customer.tier: "enterprise"</pre>
       </div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 4: Architecture -->
-<section id="adot-architecture" class="content-section">
+     <article class="nb-leaf" id="adot-architecture" role="group" aria-roledescription="page" aria-label="AWS ADOT page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
   <div class="adot-sec-badge">Module 03</div>
   <h2>ADOT Architecture — The Collector Pipeline</h2>
   <p class="sec-desc">The ADOT Collector is the central hub. Everything flows through it — receive data, process it, export to AWS backends.</p>
@@ -11832,10 +12287,17 @@ service:
       processors: [batch, resource]
       exporters: [awsemf, prometheusremotewrite]</pre>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 5: Installation -->
-<section id="adot-install" class="content-section">
+     <article class="nb-leaf" id="adot-install" role="group" aria-roledescription="page" aria-label="AWS ADOT page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
   <div class="adot-sec-badge">Module 04</div>
   <h2>Installation — EKS, ECS, Lambda, EC2</h2>
   <p class="sec-desc">Deploy the ADOT Collector as a DaemonSet on EKS, a sidecar on ECS, a Layer on Lambda, or a systemd service on EC2.</p>
@@ -12027,10 +12489,17 @@ aws xray get-trace-summaries \
 # 4. Check CloudWatch for metrics
 aws cloudwatch list-metrics --namespace SREAutopilot</pre>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 6: What to Monitor -->
-<section id="adot-monitor" class="content-section">
+     <article class="nb-leaf" id="adot-monitor" role="group" aria-roledescription="page" aria-label="AWS ADOT page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
   <div class="adot-sec-badge">Module 05</div>
   <h2>What to Monitor — The Complete Checklist</h2>
   <p class="sec-desc">From the RED method to custom business metrics — here's exactly what to instrument and why.</p>
@@ -12157,10 +12626,17 @@ logging.getLogger().addFilter(TraceIdFilter())
 #  "trace_id":"abc123xyz456","span_id":"span007"}
 # → Click trace_id in CloudWatch → opens X-Ray trace instantly</pre>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 7: AWS Integrations -->
-<section id="adot-aws" class="content-section">
+     <article class="nb-leaf" id="adot-aws" role="group" aria-roledescription="page" aria-label="AWS ADOT page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
   <div class="adot-sec-badge">Module 06 · Key</div>
   <h2>AWS Integrations — Where Your Data Goes</h2>
   <p class="sec-desc">ADOT routes each signal type to the AWS service purpose-built for it. Here's what each service does and when to use it.</p>
@@ -12249,10 +12725,17 @@ LOGS    ──→  Amazon OpenSearch Service (complex queries, ML-based anomaly 
       </table>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 8: SRE Auto-Pilot Integration -->
-<section id="adot-sre" class="content-section">
+     <article class="nb-leaf" id="adot-sre" role="group" aria-roledescription="page" aria-label="AWS ADOT page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
   <div class="adot-sec-badge">Module 07 · Real Project</div>
   <h2>Adding ADOT to the SRE Auto-Pilot</h2>
   <p class="sec-desc">Complete walkthrough: add full-stack observability to the SRE Auto-Pilot FastAPI + LangGraph project running on EKS.</p>
@@ -12420,10 +12903,17 @@ resource "aws_cloudwatch_metric_alarm" "error_rate" {
       <div class="mcp-lg-row"><div class="mcp-lg-node" style="background:rgba(16,185,129,0.12);border-color:var(--adot);color:var(--adot)">🤖 SRE Agent</div><div class="mcp-lg-arrow" style="color:var(--adot)">→</div><div class="mcp-lg-desc">LangGraph agent queries X-Ray API → finds slow Postgres span → diagnoses missing index → posts fix to Slack</div></div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 9: Simulations -->
-<section id="adot-simulations" class="content-section">
+     <article class="nb-leaf" id="adot-simulations" role="group" aria-roledescription="page" aria-label="AWS ADOT page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
   <div class="adot-sec-badge">Module 08 · Hands-On</div>
   <h2>ADOT Simulations</h2>
   <p class="sec-desc">Four interactive simulations — see a real trace waterfall, step through the collector pipeline, trace an RCA investigation, and watch live metrics during an incident.</p>
@@ -12523,10 +13013,17 @@ resource "aws_cloudwatch_metric_alarm" "error_rate" {
       <div class="adot-status-bar" id="adotStatusBar">✅ System healthy — all metrics within SLO thresholds</div>
     </div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- Section 10: Real Projects -->
-<section id="adot-project" class="content-section">
+     <article class="nb-leaf" id="adot-project" role="group" aria-roledescription="page" aria-label="AWS ADOT page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
   <div class="adot-sec-badge">Module 09 · Build It</div>
   <h2>Real ADOT Projects</h2>
   <p class="sec-desc">Four hands-on projects — from basic instrumentation to AI-driven observability.</p>
@@ -12632,10 +13129,17 @@ resource "aws_cloudwatch_metric_alarm" "error_rate" {
     </ol>
     <div class="proj-skills"><strong>Skills:</strong> ADOT · Context propagation · W3C TraceContext · X-Ray Service Map · Helm multi-chart · Kubernetes services</div>
   </div>
-</section>
+    </div>
+     </article>
 
 <!-- ADOT Full Project Walkthrough -->
-<section id="adot-full-project" class="content-section">
+     <article class="nb-leaf" id="adot-full-project" role="group" aria-roledescription="page" aria-label="AWS ADOT page 11">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">AWS ADOT</div>
+      <div class="nb-pagenum">- Page 11 -</div>
+
   <div class="adot-sec-badge">Module 10 · Full Project</div>
   <h2>AWS ADOT Full Project Walkthrough</h2>
   <p class="sec-desc">Assumes an existing EKS cluster. Install ADOT via the AWS EKS Add-on, configure the collector, instrument your app, and get traces in X-Ray, metrics in CloudWatch + AMP, and dashboards in Grafana — every command included.</p>
@@ -14100,7 +14604,34 @@ aws cloudwatch describe-alarms \
     <span class="ctag">AMP</span><span class="ctag">Grafana</span>
     <span class="ctag">Golden Signals</span><span class="ctag">PromQL</span>
   </div>
-</section>
+    </div>
+     </article>
+
+     <article class="nb-leaf nb-backcover" id="nb-adot-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Aws Adot notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-adot-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
 
 
 
@@ -14114,7 +14645,38 @@ aws cloudwatch describe-alarms \
   ═══════════════════════════════════════════════════════════════ -->
 
   <!-- ─── Module 00 — Home / Learning Path ─── -->
-  <section id="otel-home" class="section">
+  <section id="nb-otel-cover" class="section nb-section nb-book-section nb-book--otel" aria-roledescription="notebook" aria-label="OPENTELEMETRY notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">OPEN<small>TELEMETRY</small></div>
+      <div class="nb-cover-band">Your Handy Guide to OpenTelemetry</div>
+      <p class="nb-cover-desc">Vendor-neutral traces, metrics, and logs with OpenTelemetry. The three signals, core concepts, the Collector, and how to instrument code. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is OTel</li><li>Three signals</li><li>Core concepts</li><li>The Collector</li><li>Instrumentation</li><li>Best practices</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>One standard for all signals</li><li>No vendor lock-in</li><li>Instrument once</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Instrument once, send anywhere."</div>
+    </div>
+     </article>
+
+       <article class="nb-leaf" id="otel-home" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">OpenTelemetry · Start Here</div>
       <h2>OpenTelemetry — From Zero to Expert</h2>
@@ -14182,10 +14744,17 @@ aws cloudwatch describe-alarms \
       <div class="card-tag-row"><span class="ctag orange">🔧 Already on AWS?</span></div>
       <p>This group teaches the <strong>vendor-neutral foundation</strong> — everything here works on any cloud, any backend. For the AWS-specific distribution (X-Ray, CloudWatch, AMP, EKS/ECS/Lambda), see the <a href="#adot-home" style="color:var(--accent);font-weight:600">AWS ADOT</a> group after you finish these fundamentals. ADOT <em>is</em> OpenTelemetry — just pre-wired for AWS.</p>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 01 — What is OpenTelemetry? ─── -->
-  <section id="otel-intro" class="section">
+       <article class="nb-leaf" id="otel-intro" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 01</div>
       <h2>What is OpenTelemetry?</h2>
@@ -14266,10 +14835,17 @@ $ grep -i error /var/log/app.log | tail -500   <span class="cmt"># 🤞 hope</sp
         <li><strong>For DevOps:</strong> instrument once, send anywhere — no vendor lock-in, ever</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Basics primer — a gentle from-zero start ─── -->
-  <section id="otel-basics" class="section">
+       <article class="nb-leaf" id="otel-basics" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Start Here</div>
       <h2>Understanding the Basics of OpenTelemetry</h2>
@@ -14353,10 +14929,17 @@ $ grep -i error /var/log/app.log | tail -500   <span class="cmt"># 🤞 hope</sp
         <li>It captures three <strong>signals</strong> — traces, metrics, logs — which the next module unpacks with a worked example.</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 02 — Uses & Advantages ─── -->
-  <section id="otel-why" class="section">
+       <article class="nb-leaf" id="otel-why" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 02</div>
       <h2>Uses &amp; Advantages</h2>
@@ -14421,10 +15004,17 @@ $ grep -i error /var/log/app.log | tail -500   <span class="cmt"># 🤞 hope</sp
         <li><strong>For DevOps:</strong> standardising on OTel is a strategic bet that pays off every time you change tooling</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 03 — The Three Signals ─── -->
-  <section id="otel-signals" class="section">
+       <article class="nb-leaf" id="otel-signals" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 03</div>
       <h2>The Three Signals</h2>
@@ -14502,10 +15092,17 @@ POST /orders                      900ms
         <li><strong>For DevOps:</strong> keep cheap metrics hot for months, sample expensive traces, and correlate logs to spans</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 04 — Core Concepts ─── -->
-  <section id="otel-concepts" class="section">
+       <article class="nb-leaf" id="otel-concepts" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 04</div>
       <h2>Core Concepts</h2>
@@ -14726,10 +15323,17 @@ OTEL_TRACES_SAMPLER_ARG=<span class="num">0.1</span></div>
         <li>Prefer <strong>tail-based sampling</strong> ("keep every error and slow trace, sample the boring rest") over blind head-based ratios</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Deep dive — Traces, Metrics & Logs (worked example) ─── -->
-  <section id="otel-tml" class="section">
+       <article class="nb-leaf" id="otel-tml" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Deep Dive</div>
       <h2>Mastering Traces, Metrics &amp; Logs</h2>
@@ -14985,10 +15589,17 @@ tracer = trace.get_tracer(<span class="str">"checkout"</span>)
         <li><strong>Metrics</strong> (counts/latency), <strong>traces</strong> (this journey) and <strong>logs</strong> (exact events) all describe the one checkout and are stitched together by <code>trace_id</code>.</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Deep dive — Anatomy of a Metric ─── -->
-  <section id="otel-metric" class="section">
+       <article class="nb-leaf" id="otel-metric" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Deep Dive</div>
       <h2>Anatomy of a Metric</h2>
@@ -15033,10 +15644,17 @@ tracer = trace.get_tracer(<span class="str">"checkout"</span>)
         <li>Our checkout latency is a <strong>histogram in ms, labelled by env + status</strong> — each traced request is one data point in it.</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 05 — Architecture ─── -->
-  <section id="otel-architecture" class="section">
+       <article class="nb-leaf" id="otel-architecture" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 05</div>
       <h2>How It Fits Together</h2>
@@ -15120,10 +15738,17 @@ tracer = trace.get_tracer(<span class="str">"checkout"</span>)
         <li>Direct export is fine for dev; add a Collector before production</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Deep dive — Inside the Collector (how it works) ─── -->
-  <section id="otel-collector" class="section">
+       <article class="nb-leaf" id="otel-collector" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Deep Dive</div>
       <h2>Inside the Collector</h2>
@@ -15179,10 +15804,17 @@ service:
         <li><strong>For DevOps:</strong> centralise routing and policy in the Collector, not in every app.</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Deep dive — Collector components by signal ─── -->
-  <section id="otel-components" class="section">
+       <article class="nb-leaf" id="otel-components" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 11">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 11 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Deep Dive</div>
       <h2>Collector Components You’ll Actually Use</h2>
@@ -15266,10 +15898,17 @@ service:
         <li>Prefer <code>otlp</code> as the default; reach for the others to bridge existing Jaeger/Zipkin/Prometheus setups.</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Deep dive — Deploying the Collector (topologies) ─── -->
-  <section id="otel-deploy" class="section">
+       <article class="nb-leaf" id="otel-deploy" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 12">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 12 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Deep Dive</div>
       <h2>Deploying the Collector</h2>
@@ -15347,10 +15986,17 @@ service:
         <li>Start agent-only; add a gateway once you need <strong>centralized sampling/policy</strong> across services.</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 06 — Auto (Zero-Code) Instrumentation ─── -->
-  <section id="otel-auto" class="section">
+       <article class="nb-leaf" id="otel-auto" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 13">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 13 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 06</div>
       <h2>Auto (Zero-Code) Instrumentation</h2>
@@ -15444,10 +16090,17 @@ $ opentelemetry-instrument python app.py</div>
         <li>Great baseline, but blind to your business logic — enrich it with manual spans next</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 07 — Manual (Code-Based) Instrumentation ─── -->
-  <section id="otel-manual" class="section">
+       <article class="nb-leaf" id="otel-manual" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 14">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 14 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 07</div>
       <h2>Manual (Code-Based) Instrumentation</h2>
@@ -15567,10 +16220,17 @@ order_value = meter.create_histogram(
         <li>Manual spans describe <em>your</em> business logic — the part auto-instrumentation can't see</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 08 — Hybrid ─── -->
-  <section id="otel-hybrid" class="section">
+       <article class="nb-leaf" id="otel-hybrid" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 15">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 15 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 08</div>
       <h2>Auto + Manual — The Golden Hybrid</h2>
@@ -15651,10 +16311,17 @@ tracer = trace.get_tracer(__name__)
         <li><strong>For DevOps:</strong> auto everywhere, manual where it counts — the production-standard approach</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 09 — Interactive Simulation (centrepiece) ─── -->
-  <section id="otel-simulations" class="section">
+       <article class="nb-leaf" id="otel-simulations" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 16">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 16 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 09 · Hands-On</div>
       <h2>Interactive Sample-Project Simulation</h2>
@@ -15722,10 +16389,17 @@ tracer = trace.get_tracer(__name__)
         <li><strong>Break it:</strong> the failing span turns red with its status &amp; exception — instant root cause</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 10 — End-to-End Real Project ─── -->
-  <section id="otel-project" class="section">
+       <article class="nb-leaf" id="otel-project" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 17">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 17 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 10</div>
       <h2>End-to-End Real Project</h2>
@@ -15861,10 +16535,17 @@ Tags: service.version=2.3.1  deployment.environment=prod</div>
         <li>Copy this exact skeleton into your own service and adjust the span names</li>
       </ul>
     </div>
-  </section>
+      </div>
+     </article>
 
   <!-- ─── Module 11 — Best Practices & Cheat-Sheet ─── -->
-  <section id="otel-best-practices" class="section">
+       <article class="nb-leaf" id="otel-best-practices" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 18">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 18 -</div>
+
     <div class="sec-header">
       <div class="sec-badge">Module 11 · 12</div>
       <h2>Best Practices &amp; Cheat-Sheet</h2>
@@ -15979,7 +16660,34 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
         <li>You're now zero-to-expert: concepts, all three instrumentation styles, a live sim, and a real project 🎉</li>
       </ul>
     </div>
+      </div>
+     </article>
+
+     <article class="nb-leaf nb-backcover" id="nb-otel-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Opentelemetry notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-otel-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
   </section>
+
 
   <!-- ═══════════════════════════════════════════
        KUBERNETES NOTES — handwritten notebook (pilot)
@@ -16483,6 +17191,6 @@ kubectl describe service my-service</pre>
   </div>
 </footer>
 
-<script src="script.js?v=17"></script>
+<script src="script.js?v=18"></script>
 </body>
 </html>
