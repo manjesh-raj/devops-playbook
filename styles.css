@@ -6223,3 +6223,38 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   .nb-corner-next::after { border-left-width: 32px; }
   .nb-corner-prev::after { border-right-width: 32px; }
 }
+
+/* ═══════════════════════════════════════════════════
+   NOTEBOOK ROLLOUT — ported topic content on paper
+   Each existing topic became a notebook. A topic's original
+   sections are ported AS-IS into .nb-leaf pages wrapped in a
+   .nb-sheet.nb-ported. The ported content keeps its own site
+   styling and per-topic brand colours; the sheet only adds the
+   paper, spiral binding, masthead and page number around it.
+   Per-book brand tints recolour the notebook chrome (marker
+   headings/cover/controls) so each notebook still feels like
+   its topic, without touching the ported content's own colours.
+═══════════════════════════════════════════════════ */
+
+/* Ported content sits directly on the paper. It brings its own
+   theme-aware tokens (--txt, --card surfaces, brand colours), so it
+   stays legible on both the cream and night-notebook paper. */
+.nb-sheet.nb-ported { padding-top: 20px; }
+.nb-sheet.nb-ported .sec-header { margin-top: 6px; }
+/* Ported sections were full-width .section blocks; keep them tidy on paper. */
+.nb-sheet.nb-ported > .sec-header,
+.nb-sheet.nb-ported > p,
+.nb-sheet.nb-ported > .callout { max-width: 74ch; }
+/* Media/diagrams/code inside ported content still scroll internally. */
+.nb-sheet.nb-ported img,
+.nb-sheet.nb-ported canvas { max-width: 100%; height: auto; }
+
+/* Per-book brand tint: recolour only the notebook chrome (--nb-marker
+   drives cover title, masthead, page underline, controls, corners). */
+.nb-book--helm  { --nb-marker: var(--helm); }
+.nb-book--argocd{ --nb-marker: var(--argocd); }
+.nb-book--mcp   { --nb-marker: var(--mcp); }
+.nb-book--adot  { --nb-marker: var(--adot); }
+.nb-book--otel  { --nb-marker: var(--cyan); }
+.nb-book--ai    { --nb-marker: var(--accent-ink); }
+.nb-book--setup { --nb-marker: var(--accent-ink); }

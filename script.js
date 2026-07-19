@@ -112,10 +112,10 @@ const visitedSections = new Set();
 // the trigger-band observer below drive it identically.
 let activeSectionId = null;
 function setActiveSection(id) {
-  // The notebook is one .section (#nb-k8s-cover) that shows one leaf at a
-  // time. When the global scroll-spy activates that section, redirect to the
-  // leaf the book is currently showing so the breadcrumb + nav track the page.
-  if (id === 'nb-k8s-cover' && window.nbActivePageId) id = window.nbActivePageId;
+  // Each notebook is one .section that shows one leaf at a time. When the
+  // global scroll-spy activates a book section, redirect to the leaf the book
+  // is currently showing so the breadcrumb + nav track the page on screen.
+  if (window.nbCurrentPage && window.nbCurrentPage[id]) id = window.nbCurrentPage[id];
   if (!id || id === activeSectionId) return;
   activeSectionId = id;
   // Active nav
@@ -3775,198 +3775,193 @@ function syncNbPlainButtons(on) {
 })();
 
 /* ══════════════════════════════════════
-   KUBERNETES NOTES — page-turn book controller
-   Turns the notebook's stacked leaves into a one-leaf-at-a-time
-   reading "book": a book-open swing on the cover, 3D page turns
+   NOTEBOOKS — multi-book page-turn engine
+   Every .nb-book on the page becomes an independent page-turn
+   "book": a book-open swing on the cover, 3D rotateY page turns
    between leaves, per-leaf internal scrolling, and a book-close
    swing onto an end leaf. Progressive enhancement: if this never
-   runs, the leaves just stack and scroll (see the CSS fallback).
+   runs the leaves just stack and scroll (see the CSS fallback).
    Reduced motion collapses every swing to an instant switch.
-══════════════════════════════════════ */
-(function initNbBook() {
-  const book = document.getElementById('nbBook');
-  if (!book) return;
-  const stage     = document.getElementById('nbStage');
-  const section   = document.getElementById('nb-k8s-cover');
-  const leaves    = Array.from(stage.querySelectorAll('.nb-leaf'));
-  if (!leaves.length) return;
 
-  // Page id per leaf. Leaf 0 (cover) uses the section id, which is the anchor.
-  const ids  = leaves.map((lf, i) => (i === 0 ? 'nb-k8s-cover' : lf.id));
-  const N    = leaves.length;              // 7: cover, 5 pages, end
-  const prevBtn   = document.getElementById('nbPrev');
-  const nextBtn   = document.getElementById('nbNext');
-  const indicator = document.getElementById('nbIndicator');
-  const cornerPrev = document.getElementById('nbCornerPrev');
-  const cornerNext = document.getElementById('nbCornerNext');
+   The current leaf of each book is published in window.nbCurrentPage
+   (sectionId -> leafId) so setActiveSection() can redirect the book
+   section to the leaf on screen, keeping the breadcrumb/nav honest.
+   window.nbBookGoto(href) is the shared hook used by scrollTo_ and
+   deep links to drive whichever book owns that page id.
+══════════════════════════════════════ */
+window.nbCurrentPage = window.nbCurrentPage || {};
+(function initNbBooks() {
+  const books = Array.from(document.querySelectorAll('.nb-book'));
+  if (!books.length) return;
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const TURN_MS = reduced ? 0 : 620;
+  const controllers = [];
 
-  let current = 0;
-  let busy    = false;
-  let opened  = false;
+  function makeBook(book) {
+    const stage   = book.querySelector('.nb-stage');
+    const section = book.closest('.nb-section');
+    const leaves  = Array.from(stage.querySelectorAll(':scope > .nb-leaf'));
+    if (!stage || !section || !leaves.length) return null;
 
-  function pageLabel(i) {
-    if (i === 0)     return 'Cover';
-    if (i === N - 1) return 'The End';
-    return 'Page ' + i + ' / ' + (N - 2);
-  }
+    // Page id per leaf. Leaf 0 (cover) uses the book section id (the anchor).
+    const ids = leaves.map((lf, i) => (i === 0 ? section.id : lf.id));
+    const N   = leaves.length;
+    const prevBtn   = book.querySelector('.nb-prev');
+    const nextBtn   = book.querySelector('.nb-next');
+    const indicator = book.querySelector('.nb-page-indicator');
+    const cornerPrev = stage.querySelector('.nb-corner-prev');
+    const cornerNext = stage.querySelector('.nb-corner-next');
+    // The end leaf (if any) keeps the last content page highlighted in the nav.
+    const lastContentId = ids[Math.max(1, N - 2)] || section.id;
 
-  // Set a transform with or without the CSS transition (instant setup vs tween).
-  function setT(lf, t, animate) {
-    if (animate) { lf.style.transform = t; return; }
-    lf.style.transition = 'none';
-    lf.style.transform  = t;
-    void lf.offsetHeight;          // force reflow so the next change animates
-    lf.style.transition = '';
-  }
+    let current = 0, busy = false, opened = false;
 
-  // Clean static state for the current page (called after each turn settles).
-  function render() {
-    leaves.forEach((lf, i) => {
-      lf.classList.remove('is-current', 'is-under', 'is-turning');
-      lf.style.transition = 'none';
-      if (i === current) { lf.classList.add('is-current'); lf.style.transform = 'rotateY(0deg)'; }
-      else if (i < current) lf.style.transform = 'rotateY(-168deg)';
-      else lf.style.transform = 'rotateY(0deg)';
-      void lf.offsetHeight;
-      lf.style.transition = '';
-    });
-    if (prevBtn) prevBtn.disabled = current === 0;
-    if (nextBtn) nextBtn.disabled = current === N - 1;
-    if (indicator) indicator.textContent = pageLabel(current);
+    const pageLabel = (i) => i === 0 ? 'Cover' : (i === N - 1 ? 'The End' : 'Page ' + i + ' / ' + (N - 2));
 
-    // Drive breadcrumb + nav. The end leaf has no nav link, so it keeps the
-    // last content page (Services) highlighted; the indicator says "The End".
-    window.nbActivePageId = current === N - 1 ? 'nb-k8s-services' : ids[current];
-    if (typeof setActiveSection === 'function') setActiveSection(window.nbActivePageId);
-    try { history.replaceState(null, '', '#' + ids[current]); } catch (e) { /* file:// */ }
-  }
-
-  // Animate the moving leaf only. Direction + book open/close pick the swing.
-  function animateTo(to) {
-    const from     = current;
-    const dir      = to > from ? 1 : -1;
-    const leaving  = leaves[from];
-    const arriving = leaves[to];
-    const isOpen   = to === 0;          // arriving at the front cover -> swing open
-    const isClose  = to === N - 1;      // arriving at the back cover -> swing shut
-
-    leaves.forEach(l => l.classList.remove('is-current', 'is-under', 'is-turning'));
-
-    if (isOpen) {
-      arriving.classList.add('is-current');
-      setT(arriving, 'rotateY(-92deg)', false);
-      requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
-    } else if (dir > 0 && !isClose) {
-      arriving.classList.add('is-under');   setT(arriving, 'rotateY(0deg)', false);
-      leaving.classList.add('is-turning');  setT(leaving,  'rotateY(0deg)', false);
-      requestAnimationFrame(() => { leaving.style.transform = 'rotateY(-168deg)'; });
-    } else if (isClose) {
-      leaving.classList.add('is-under');    setT(leaving,  'rotateY(0deg)',  false);
-      arriving.classList.add('is-turning'); setT(arriving, 'rotateY(92deg)', false);
-      requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
-    } else {
-      leaving.classList.add('is-under');    setT(leaving,  'rotateY(0deg)',   false);
-      arriving.classList.add('is-turning'); setT(arriving, 'rotateY(-168deg)', false);
-      requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+    function setT(lf, t, animate) {
+      if (animate) { lf.style.transform = t; return; }
+      lf.style.transition = 'none'; lf.style.transform = t;
+      void lf.offsetHeight; lf.style.transition = '';
     }
-    current = to;
+
+    function render() {
+      leaves.forEach((lf, i) => {
+        lf.classList.remove('is-current', 'is-under', 'is-turning');
+        lf.style.transition = 'none';
+        if (i === current) { lf.classList.add('is-current'); lf.style.transform = 'rotateY(0deg)'; }
+        else if (i < current) lf.style.transform = 'rotateY(-168deg)';
+        else lf.style.transform = 'rotateY(0deg)';
+        void lf.offsetHeight; lf.style.transition = '';
+      });
+      if (prevBtn) prevBtn.disabled = current === 0;
+      if (nextBtn) nextBtn.disabled = current === N - 1;
+      if (indicator) indicator.textContent = pageLabel(current);
+      const activeId = current === N - 1 ? lastContentId : ids[current];
+      window.nbCurrentPage[section.id] = activeId;
+      if (typeof setActiveSection === 'function') setActiveSection(activeId);
+      try { history.replaceState(null, '', '#' + ids[current]); } catch (e) { /* file:// */ }
+    }
+
+    function animateTo(to) {
+      const from = current, dir = to > from ? 1 : -1;
+      const leaving = leaves[from], arriving = leaves[to];
+      const isOpen = to === 0, isClose = to === N - 1;
+      leaves.forEach(l => l.classList.remove('is-current', 'is-under', 'is-turning'));
+      if (isOpen) {
+        arriving.classList.add('is-current'); setT(arriving, 'rotateY(-92deg)', false);
+        requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+      } else if (dir > 0 && !isClose) {
+        arriving.classList.add('is-under');  setT(arriving, 'rotateY(0deg)', false);
+        leaving.classList.add('is-turning'); setT(leaving,  'rotateY(0deg)', false);
+        requestAnimationFrame(() => { leaving.style.transform = 'rotateY(-168deg)'; });
+      } else if (isClose) {
+        leaving.classList.add('is-under');    setT(leaving,  'rotateY(0deg)',  false);
+        arriving.classList.add('is-turning'); setT(arriving, 'rotateY(92deg)', false);
+        requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+      } else {
+        leaving.classList.add('is-under');    setT(leaving,  'rotateY(0deg)',   false);
+        arriving.classList.add('is-turning'); setT(arriving, 'rotateY(-168deg)', false);
+        requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+      }
+      current = to;
+    }
+
+    function go(to) {
+      if (busy) return;
+      to = Math.max(0, Math.min(N - 1, to));
+      if (to === current) return;
+      busy = true; opened = opened || to === 0;
+      animateTo(to);
+      window.setTimeout(() => { busy = false; render(); }, TURN_MS + 40);
+    }
+
+    function playOpenOnce() {
+      if (opened) return; opened = true;
+      if (reduced || current !== 0) return;
+      const cover = leaves[0];
+      cover.classList.add('is-current');
+      setT(cover, 'rotateY(-92deg)', false);
+      requestAnimationFrame(() => { cover.style.transform = 'rotateY(0deg)'; });
+    }
+
+    const indexOfId = (hash) => hash ? ids.indexOf(String(hash).replace('#', '')) : -1;
+
+    if (prevBtn)    prevBtn.addEventListener('click', () => go(current - 1));
+    if (nextBtn)    nextBtn.addEventListener('click', () => go(current + 1));
+    if (cornerPrev) cornerPrev.addEventListener('click', () => go(current - 1));
+    if (cornerNext) cornerNext.addEventListener('click', () => go(current + 1));
+    stage.querySelectorAll('[data-nb-goto]').forEach(b =>
+      b.addEventListener('click', () => { const t = indexOfId(b.getAttribute('data-nb-goto')); if (t >= 0) go(t); }));
+    stage.querySelectorAll('[data-nb-finish]').forEach(b =>
+      b.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })));
+
+    // Keyboard: Left/Right turn pages, but only while THIS book fills the view.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      const t = e.target;
+      if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      const r = section.getBoundingClientRect(), mid = window.innerHeight * 0.5;
+      if (!(r.top < mid && r.bottom > mid)) return;
+      e.preventDefault();
+      go(current + (e.key === 'ArrowRight' ? 1 : -1));
+    });
+
+    // Touch swipe: horizontal drag turns the page (vertical still scrolls).
+    let sx = 0, sy = 0, tracking = false;
+    stage.addEventListener('touchstart', (e) => {
+      const t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; tracking = true;
+    }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (!tracking) return; tracking = false;
+      const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    // Replay the open swing whenever the cover scrolls into view fresh.
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting && current === 0) playOpenOnce(); });
+    }, { threshold: 0.35 });
+    io.observe(section);
+
+    book.classList.add('nb-ready');
+    return { section, ids, go, render, indexOfId,
+      hasId: (h) => indexOfId(h) >= 0,
+      set current(v) { current = v; }, get current() { return current; },
+      set opened(v) { opened = v; } };
   }
 
-  function go(to) {
-    if (busy) return;
-    to = Math.max(0, Math.min(N - 1, to));
-    if (to === current) return;
-    busy = true;
-    opened = opened || to === 0;
-    animateTo(to);
-    window.setTimeout(() => { busy = false; render(); }, TURN_MS + 40);
-  }
+  books.forEach(b => { const c = makeBook(b); if (c) controllers.push(c); });
 
-  // Play the book-open swing on the cover the first time it comes into view.
-  function playOpenOnce() {
-    if (opened) return;
-    opened = true;
-    if (reduced) return;
-    const cover = leaves[0];
-    if (current !== 0) return;
-    cover.classList.add('is-current');
-    setT(cover, 'rotateY(-92deg)', false);
-    requestAnimationFrame(() => { cover.style.transform = 'rotateY(0deg)'; });
-  }
-
-  function idToIndex(hash) {
-    if (!hash) return -1;
-    return ids.indexOf(String(hash).replace('#', ''));
-  }
-
-  // Public hook used by scrollTo_ (nav links) and deep links.
+  // Shared hook: route a page id to whichever book owns it.
   window.nbBookGoto = function (href) {
-    const idx = idToIndex(href);
-    if (idx < 0) return false;
-    section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-    if (idx === current) render(); else go(idx);
+    const c = controllers.find(ctl => ctl.hasId(href));
+    if (!c) return false;
+    c.section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    const idx = c.indexOfId(href);
+    if (idx === c.current) c.render(); else c.go(idx);
     return true;
   };
 
-  // ── Wire controls ──
-  if (prevBtn)   prevBtn.addEventListener('click', () => go(current - 1));
-  if (nextBtn)   nextBtn.addEventListener('click', () => go(current + 1));
-  if (cornerPrev) cornerPrev.addEventListener('click', () => go(current - 1));
-  if (cornerNext) cornerNext.addEventListener('click', () => go(current + 1));
-  stage.querySelectorAll('[data-nb-goto]').forEach(b =>
-    b.addEventListener('click', () => { const t = idToIndex(b.getAttribute('data-nb-goto')); if (t >= 0) go(t); }));
-  stage.querySelectorAll('[data-nb-finish]').forEach(b =>
-    b.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })));
-
-  // Keyboard: Left/Right turn pages, but only while the book fills the view.
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    const t = e.target;
-    if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
-    const r = section.getBoundingClientRect();
-    const mid = window.innerHeight * 0.5;
-    if (!(r.top < mid && r.bottom > mid)) return;
-    e.preventDefault();
-    go(current + (e.key === 'ArrowRight' ? 1 : -1));
+  // Init each book: honour a deep link on its own leaves, else open at cover.
+  const hash = location.hash;
+  let deepBook = null;
+  controllers.forEach(c => {
+    const idx = c.indexOfId(hash);
+    if (idx > 0) { c.current = idx; c.opened = true; c.render(); deepBook = c; }
+    else { c.current = 0; c.render(); }
   });
-
-  // Touch swipe: horizontal drag turns the page (vertical still scrolls).
-  let sx = 0, sy = 0, tracking = false;
-  stage.addEventListener('touchstart', (e) => {
-    const t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; tracking = true;
-  }, { passive: true });
-  stage.addEventListener('touchend', (e) => {
-    if (!tracking) return; tracking = false;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - sx, dy = t.clientY - sy;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1));
-  }, { passive: true });
-
-  // External hash edits (browser address bar) sync the book.
-  window.addEventListener('hashchange', () => {
-    const i = idToIndex(location.hash);
-    if (i >= 0 && i !== current) go(i);
-  });
-
-  // ── Init ── enter book mode, honour a deep link, else open at the cover.
-  book.classList.add('nb-ready');
-  const initIdx = idToIndex(location.hash);
-  if (initIdx > 0) {
-    current = initIdx; opened = true;          // fast-forward past the open swing
-    render();
-    section.scrollIntoView({ block: 'start' });
-  } else {
-    current = 0;
-    render();
-    if (initIdx === 0) section.scrollIntoView({ block: 'start' });
+  if (deepBook) deepBook.section.scrollIntoView({ block: 'start' });
+  else if (controllers.some(c => c.indexOfId(hash) === 0)) {
+    const c = controllers.find(ctl => ctl.indexOfId(hash) === 0);
+    c.section.scrollIntoView({ block: 'start' });
   }
 
-  // Replay the open swing whenever the cover scrolls into view fresh.
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting && current === 0) playOpenOnce(); });
-  }, { threshold: 0.35 });
-  io.observe(section);
+  // External hash edits (address bar / back-forward) sync the owning book.
+  window.addEventListener('hashchange', () => {
+    const c = controllers.find(ctl => ctl.hasId(location.hash));
+    if (!c) return;
+    const idx = c.indexOfId(location.hash);
+    if (idx >= 0 && idx !== c.current) c.go(idx);
+  });
 })();

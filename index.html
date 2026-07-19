@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=16" />
 </head>
 <body>
 
@@ -38,6 +38,7 @@
         <span class="nav-group-chevron">›</span>
       </div>
       <ul class="nav-sub-list">
+        <li><a class="nav-link" href="#nb-setup-cover" data-section="nb-setup-cover"><span class="ni">&#128215;</span><span>Notebook Cover</span><span class="nbadge focus">BOOK</span></a></li>
         <li><a class="nav-link" href="#setup-quickref" data-section="setup-quickref"><span class="ni">⚡</span><span>Quick Reference</span></a></li>
         <li><a class="nav-link" href="#setup-terminal" data-section="setup-terminal"><span class="ni">🖥</span><span>Terminal Setup</span></a></li>
         <li><a class="nav-link" href="#setup-whisper" data-section="setup-whisper"><span class="ni">🎙</span><span>Voice Input</span></a></li>
@@ -224,7 +225,38 @@
       </button>
     </div>
 
-    <section id="setup-quickref" class="section">
+  <section id="nb-setup-cover" class="section nb-section nb-book-section nb-book--setup" aria-roledescription="notebook" aria-label="WORKSTATION SETUP notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">WORKSTATION<small>SETUP</small></div>
+      <div class="nb-cover-band">Your Handy Guide to the Agentic Workstation</div>
+      <p class="nb-cover-desc">The full setup for the agentic engineering workstation. Terminal, voice input, Claude Code, and the guardrails around them. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>Quick reference</li><li>Terminal setup</li><li>Voice input</li><li>Claude Code</li><li>Skills &amp; plugins</li><li>No Mistakes &amp; Firstmate</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>Everything in one place</li><li>Copy-paste ready commands</li><li>Repeatable from scratch</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Set up once, work fast forever."</div>
+    </div>
+     </article>
+
+         <article class="nb-leaf" id="setup-quickref" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Reference</div>
         <h2>Quick Reference</h2>
@@ -336,9 +368,16 @@
         </div>
       </div>
 
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-terminal" class="section">
+         <article class="nb-leaf" id="setup-terminal" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Environment</div>
         <h2>Terminal Setup</h2>
@@ -1004,9 +1043,16 @@ vim.g.mapleader = <span class="str">" "</span>
       </div>
       </div><!-- /sub-editor -->
 
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-whisper" class="section">
+         <article class="nb-leaf" id="setup-whisper" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Productivity</div>
         <h2>OpenSuperWhisper</h2>
@@ -1097,9 +1143,16 @@ vim.g.mapleader = <span class="str">" "</span>
           <div class="term-body" style="font-size:12px;"><span class="prompt">◎</span> <span class="cmd">listening...</span><span class="cursor"></span></div>
         </div>
       </div>
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-claude-code" class="section">
+         <article class="nb-leaf" id="setup-claude-code" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>Claude Code Setup</h2>
@@ -1488,9 +1541,16 @@ Remove entries once they are no longer true.&gt;
           <div class="term-body" style="font-size:12px;"><span class="prompt">➜</span> <span class="cmd">claude</span><span class="cursor"></span></div>
         </div>
       </div>
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-skills" class="section">
+         <article class="nb-leaf" id="setup-skills" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>Skills &amp; Plugins</h2>
@@ -1588,9 +1648,16 @@ Remove entries once they are no longer true.&gt;
           <div class="term-body" style="font-size:12px;"><span class="prompt">➜</span> <span class="cmd">skill-creator</span><span class="cursor"></span></div>
         </div>
       </div>
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-lavish" class="section">
+         <article class="nb-leaf" id="setup-lavish" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>Lavish</h2>
@@ -1717,9 +1784,16 @@ Only skip lavish if Manjesh explicitly asks for a Markdown file or says
           <div class="term-body" style="font-size:12px;"><span class="prompt">➜</span> <span class="cmd">lavish-axi plan.html</span><span class="cursor"></span></div>
         </div>
       </div>
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-no-mistakes" class="section">
+         <article class="nb-leaf" id="setup-no-mistakes" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>No Mistakes</h2>
@@ -1878,9 +1952,16 @@ clean PR, opened for you</span></div>
         </div>
       </div>
 
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-firstmate" class="section">
+         <article class="nb-leaf" id="setup-firstmate" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>Firstmate</h2>
@@ -2128,9 +2209,16 @@ help[1]:
         </div>
       </div>
 
-    </section>
+        </div>
+     </article>
 
-    <section id="setup-firstmate-cockpit" class="section">
+         <article class="nb-leaf" id="setup-firstmate-cockpit" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>Firstmate Cockpit</h2>
@@ -2232,9 +2320,16 @@ help[1]:
           <p>Full code, README (API surface, py2app notes, configuration), and design docs live on GitHub: <a href="https://github.com/manjesh-raj/firstmate-cockpit" target="_blank">github.com/manjesh-raj/firstmate-cockpit</a>.</p>
         </div>
       </div>
-    </section>
+        </div>
+     </article>
 
-    <section id="update-latest-changes" class="section">
+         <article class="nb-leaf" id="update-latest-changes" role="group" aria-roledescription="page" aria-label="WORKSTATION SETUP page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">WORKSTATION SETUP</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
       <div class="sec-header">
         <div class="sec-badge">Agentic Tooling</div>
         <h2>Keeping Tools Updated</h2>
@@ -2423,7 +2518,34 @@ npm ls -g --depth=0 | grep gnhf">Copy</button>
           <li>Mind the three side effects — the firstmate gitignore protection, the lavish restart timing, and the no-mistakes daemon reset.</li>
         </ul>
       </div>
-    </section>
+        </div>
+     </article>
+
+     <article class="nb-leaf nb-backcover" id="nb-setup-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Workstation Setup notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-setup-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
 
   <section id="home" class="section hero-section">
     <canvas id="particleCanvas" class="particle-canvas"></canvas>
@@ -16193,9 +16315,9 @@ kubectl describe service my-service</pre>
     </div><!-- /nb-stage -->
 
     <div class="nb-book-controls" aria-label="Notebook page controls">
-      <button type="button" class="nb-nav-btn" id="nbPrev" aria-label="Previous page">‹ Prev</button>
-      <span class="nb-page-indicator" id="nbIndicator" aria-live="polite">Cover</span>
-      <button type="button" class="nb-nav-btn" id="nbNext" aria-label="Next page">Next ›</button>
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">‹ Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next ›</button>
     </div>
 
    </div><!-- /nb-book -->
@@ -16211,6 +16333,6 @@ kubectl describe service my-service</pre>
   </div>
 </footer>
 
-<script src="script.js?v=16"></script>
+<script src="script.js?v=17"></script>
 </body>
 </html>
