@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=14" />
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
 
@@ -15711,12 +15711,20 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
 
   <!-- ═══════════════════════════════════════════
        KUBERNETES NOTES — handwritten notebook (pilot)
-       Namespaced nb-* module. Cover + 5 numbered pages.
-       Sections auto-wire into scroll-spy via .section.
+       Namespaced nb-* module. One cover + 5 numbered pages + an end
+       leaf, presented as a page-turn "book" (see initNbBook in
+       script.js). Without JS the leaves stack and scroll normally,
+       so content is never gated on the animation. The book section
+       is one .section; its id (#nb-k8s-cover) is the anchor and the
+       controller drives the breadcrumb/nav to the current leaf.
   ══════════════════════════════════════════════ -->
 
-  <!-- COVER -->
-  <section id="nb-k8s-cover" class="section nb-section">
+  <section id="nb-k8s-cover" class="section nb-section nb-book-section" aria-roledescription="notebook" aria-label="Kubernetes Notes notebook">
+   <div class="nb-book" id="nbBook" data-open="false">
+    <div class="nb-stage" id="nbStage" tabindex="-1">
+
+     <!-- Leaf 0: cover -->
+     <article class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="Notebook cover">
     <div class="nb-sheet nb-cover">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -15761,10 +15769,10 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
       </div>
       <div class="nb-cover-quote"><span class="star">★</span> "Learn, Deploy, and Scale with Kubernetes!"</div>
     </div>
-  </section>
+     </article>
 
-  <!-- PAGE 1 — What is Kubernetes -->
-  <section id="nb-k8s-intro" class="section nb-section">
+     <!-- Leaf 1: Page 1 -->
+     <article class="nb-leaf" id="nb-k8s-intro" role="group" aria-roledescription="page" aria-label="Page 1: What is Kubernetes">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -15847,10 +15855,10 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
         </div>
       </div>
     </div>
-  </section>
+     </article>
 
-  <!-- PAGE 2 — Architecture -->
-  <section id="nb-k8s-architecture" class="section nb-section">
+     <!-- Leaf 2: Page 2 -->
+     <article class="nb-leaf" id="nb-k8s-architecture" role="group" aria-roledescription="page" aria-label="Page 2: Architecture">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -15926,10 +15934,10 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
         The control plane manages the cluster. The worker nodes run the applications.
       </div>
     </div>
-  </section>
+     </article>
 
-  <!-- PAGE 3 — Pods -->
-  <section id="nb-k8s-pods" class="section nb-section">
+     <!-- Leaf 3: Page 3 -->
+     <article class="nb-leaf" id="nb-k8s-pods" role="group" aria-roledescription="page" aria-label="Page 3: Pods">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -16000,10 +16008,10 @@ OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
         It wraps one or more containers that are tightly coupled.
       </div>
     </div>
-  </section>
+     </article>
 
-  <!-- PAGE 4 — Deployments & ReplicaSets -->
-  <section id="nb-k8s-deployments" class="section nb-section">
+     <!-- Leaf 4: Page 4 -->
+     <article class="nb-leaf" id="nb-k8s-deployments" role="group" aria-roledescription="page" aria-label="Page 4: Deployments and ReplicaSets">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -16085,10 +16093,10 @@ kubectl set image deployment/myapp nginx=nginx:1.25
 kubectl rollout undo deployment/myapp</pre>
       </div>
     </div>
-  </section>
+     </article>
 
-  <!-- PAGE 5 — Services -->
-  <section id="nb-k8s-services" class="section nb-section">
+     <!-- Leaf 5: Page 5 -->
+     <article class="nb-leaf" id="nb-k8s-services" role="group" aria-roledescription="page" aria-label="Page 5: Services">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -16161,6 +16169,36 @@ kubectl describe service my-service</pre>
         </div>
       </div>
     </div>
+     </article>
+
+     <!-- Leaf 6: end / back cover -->
+     <article class="nb-leaf nb-backcover" id="nb-k8s-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Kubernetes Notes.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-k8s-cover">↩ Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>✔ Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <!-- decorative dog-ear corners (real controls are the Prev/Next buttons) -->
+     <button type="button" class="nb-corner nb-corner-prev" id="nbCornerPrev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" id="nbCornerNext" aria-hidden="true" tabindex="-1"></button>
+
+    </div><!-- /nb-stage -->
+
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn" id="nbPrev" aria-label="Previous page">‹ Prev</button>
+      <span class="nb-page-indicator" id="nbIndicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn" id="nbNext" aria-label="Next page">Next ›</button>
+    </div>
+
+   </div><!-- /nb-book -->
   </section>
 
 </main>
@@ -16173,6 +16211,6 @@ kubectl describe service my-service</pre>
   </div>
 </footer>
 
-<script src="script.js?v=15"></script>
+<script src="script.js?v=16"></script>
 </body>
 </html>

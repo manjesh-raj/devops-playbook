@@ -6090,3 +6090,136 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   .nb-rings i { width: 15px; height: 8px; }
   .nb-plain-toggle { position: static; display: inline-block; margin: 0 0 8px; }
 }
+
+/* ═══════════════════════════════════════════════════
+   KUBERNETES NOTES — page-turn "book" interaction
+   Scoped to the nb-* module. Progressive enhancement:
+   without JS (no .nb-ready) the leaves stack and scroll
+   like normal sections, so content is never gated on the
+   animation. With JS, one leaf shows at a time inside a
+   fixed reading frame and moving between leaves is a 3D
+   page turn. Reduced-motion collapses the turn to an
+   instant switch via the global reduced-motion block.
+═══════════════════════════════════════════════════ */
+
+.nb-book { position: relative; max-width: 940px; margin: 0 auto; }
+
+/* ── No-JS / pre-ready fallback: stack the leaves, hide book chrome ── */
+.nb-book .nb-leaf + .nb-leaf { margin-top: 30px; }
+.nb-book .nb-backcover,
+.nb-book .nb-corner,
+.nb-book .nb-book-controls { display: none; }
+
+/* ── Reading frame (only once JS adds .nb-ready) ── */
+.nb-book.nb-ready { }
+.nb-book.nb-ready .nb-stage {
+  position: relative;
+  height: clamp(540px, 80vh, 900px);
+  perspective: 2200px;
+  overflow: hidden;
+  border-radius: 3px 16px 16px 3px;
+  box-shadow: var(--shadow);
+}
+.nb-book.nb-ready .nb-leaf {
+  position: absolute; inset: 0; margin: 0;
+  overflow-y: auto; overflow-x: hidden;
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  backface-visibility: hidden;
+  visibility: hidden;
+  transition: transform 0.62s var(--ease);
+  will-change: transform;
+  background: var(--nb-paper);
+}
+.nb-book.nb-ready .nb-leaf.is-current { visibility: visible; z-index: 20; }
+.nb-book.nb-ready .nb-leaf.is-under   { visibility: visible; z-index: 10; }
+.nb-book.nb-ready .nb-leaf.is-turning { visibility: visible; z-index: 30;
+  box-shadow: 0 0 40px rgba(0,0,0,0.35); }
+.nb-book.nb-ready .nb-backcover { display: block; }
+
+/* the paper sheet fills the whole leaf in book mode */
+.nb-book.nb-ready .nb-sheet {
+  max-width: none; margin: 0; min-height: 100%;
+  border: none; border-radius: inherit; box-shadow: none;
+}
+
+/* ── Page controls (below the frame) ── */
+.nb-book.nb-ready .nb-book-controls {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin: 18px auto 0; max-width: 460px;
+}
+.nb-nav-btn {
+  font-family: var(--nb-head); font-weight: 700; font-size: 1.05rem;
+  color: var(--nb-navy); background: var(--nb-paper);
+  border: 1.6px solid var(--nb-box-solid); border-radius: 10px;
+  padding: 8px 18px; cursor: pointer; transition: var(--trans-fast);
+  min-width: 96px;
+}
+.nb-nav-btn:hover:not(:disabled) { color: var(--nb-marker); border-color: var(--nb-marker); }
+.nb-nav-btn:disabled { opacity: 0.4; cursor: default; }
+.nb-nav-btn:focus-visible { outline: 2px solid var(--nb-marker); outline-offset: 2px; }
+.nb-page-indicator {
+  font-family: var(--nb-hand); color: var(--nb-ink2); font-size: 0.95rem;
+  min-width: 92px; text-align: center;
+}
+
+/* ── Dog-ear corner affordances (decorative; buttons are the a11y path) ── */
+.nb-book.nb-ready .nb-corner {
+  display: block; position: absolute; bottom: 0; width: 54px; height: 54px;
+  z-index: 25; border: none; cursor: pointer; padding: 0;
+  background: transparent; transition: transform 0.18s var(--ease);
+}
+.nb-book.nb-ready .nb-corner-next { right: 0; }
+.nb-book.nb-ready .nb-corner-prev { left: 0; }
+.nb-corner::after {
+  content: ""; position: absolute; bottom: 0; width: 0; height: 0;
+}
+.nb-corner-next::after { right: 0; border-bottom: 40px solid var(--nb-box-solid);
+  border-left: 40px solid transparent; opacity: 0.55;
+  border-bottom-right-radius: 3px; }
+.nb-corner-prev::after { left: 0; border-bottom: 40px solid var(--nb-box-solid);
+  border-right: 40px solid transparent; opacity: 0.55;
+  border-bottom-left-radius: 3px; }
+.nb-corner-next:hover { transform: translate(-3px, -3px); }
+.nb-corner-prev:hover { transform: translate(3px, -3px); }
+
+/* ── End / back-cover leaf ── */
+.nb-endsheet { display: flex; align-items: center; justify-content: center; }
+.nb-end-inner { text-align: center; margin: auto; padding: 24px; max-width: 520px; }
+.nb-end-mark {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(2rem, 7vw, 3.2rem); transform: rotate(-1.2deg); margin-bottom: 10px;
+}
+.nb-end-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+.nb-end-btn {
+  font-family: var(--nb-head); font-weight: 700; font-size: 1.1rem;
+  color: var(--nb-paper); background: var(--nb-marker);
+  border: 2px solid var(--nb-marker); border-radius: 10px;
+  padding: 9px 20px; cursor: pointer; transition: var(--trans-fast);
+}
+.nb-end-btn.ghost { color: var(--nb-navy); background: transparent; border-color: var(--nb-navy); }
+.nb-end-btn:hover { filter: brightness(1.08); }
+.nb-end-btn:focus-visible { outline: 2px solid var(--nb-marker); outline-offset: 3px; }
+
+/* ── Book open / close swings (JS adds these on the moving leaf) ── */
+.nb-book.nb-ready .nb-leaf.nb-swing-open { transform: rotateY(-92deg); }
+.nb-book.nb-ready .nb-leaf.nb-swing-shut { transform: rotateY(92deg); }
+
+/* Reduced motion: the global block already collapses transitions to
+   ~instant. Also drop the 3D tilt so switches read as a clean cut. */
+@media (prefers-reduced-motion: reduce) {
+  .nb-book.nb-ready .nb-leaf,
+  .nb-book.nb-ready .nb-leaf.turned-left,
+  .nb-book.nb-ready .nb-leaf.nb-swing-open,
+  .nb-book.nb-ready .nb-leaf.nb-swing-shut { transform: none !important; }
+}
+
+/* Mobile: shorter frame, controls stay inside, no horizontal page overflow */
+@media (max-width: 560px) {
+  .nb-book.nb-ready .nb-stage { height: clamp(460px, 74vh, 760px); }
+  .nb-nav-btn { min-width: 78px; padding: 8px 12px; font-size: 0.98rem; }
+  .nb-book.nb-ready .nb-corner { width: 44px; height: 44px; }
+  .nb-corner-next::after, .nb-corner-prev::after { border-bottom-width: 32px; }
+  .nb-corner-next::after { border-left-width: 32px; }
+  .nb-corner-prev::after { border-right-width: 32px; }
+}
