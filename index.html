@@ -8,106 +8,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=30" />
+  <link rel="stylesheet" href="styles.css?v=31" />
 </head>
 <body>
 <main class="main" id="mainContent">
-    <div class="topbar" id="topbar">
-      <nav class="topbar-crumb" aria-label="Breadcrumb">
-        <span class="tb-dot"></span>
-        <span class="tb-group" id="tbGroup">Library</span>
-        <span class="tb-sep">/</span>
-        <span class="tb-section" id="tbSection">The Shelf</span>
-      </nav>
-      <button class="theme-toggle" data-theme-toggle title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
-        <span data-theme-icon>🌙</span>
-      </button>
-    </div>
 
-<section id="shelf" class="section shelf-section" aria-label="Bookshelf: pick a notebook">
-    <div class="shelf-inner">
-      <div class="shelf-head-row">
+  <section id="shelf" class="section shelf-section" aria-label="The DevOps Playbook library">
+    <div class="lib-inner">
+
+      <header class="lib-header">
         <div>
-          <div class="shelf-title">The DevOps Playbook</div>
-          <div class="shelf-sub">my shelf</div>
+          <h1 class="lib-title">The DevOps Playbook</h1>
+          <p class="lib-subtitle">A shelf of hands-on notebooks. Pick a topic, open the book, and read at your own pace. Your progress is saved as you go.</p>
         </div>
-      </div>
+        <button class="lib-theme" data-theme-toggle title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+          <span data-theme-icon>🌙</span>
+        </button>
+      </header>
 
-      <div class="shelf-row" data-shelf>
-        <div class="shelf-row-head">
-          <span class="shelf-row-label">Foundations</span>
-          <span class="shelf-row-count" data-shelf-count>3</span>
-          <a class="shelf-row-all" href="workstation-setup.html">See all &rsaquo;</a>
-        </div>
-        <div class="shelf-deck">
-          <div class="shelf-books">
-            <a class="shelf-book" href="workstation-setup.html" data-book-title="Workstation Setup" style="--book:var(--accent-ink)" aria-label="Open the Workstation Setup notebook, 10 pages">
-              <span class="sb-emoji" aria-hidden="true">🖥️</span>
-              <span><span class="sb-title">Workstation Setup</span><br><span class="sb-meta">10 pages</span></span>
-            </a>
-            <a class="shelf-book" href="ai.html" data-book-title="AI Engineering" style="--book:var(--brand-2)" aria-label="Open the AI Engineering notebook, 14 pages">
-              <span class="sb-emoji" aria-hidden="true">🤖</span>
-              <span><span class="sb-title">AI Engineering</span><br><span class="sb-meta">14 pages</span></span>
-            </a>
-            <a class="shelf-book" href="mcp.html" data-book-title="MCP" style="--book:var(--mcp)" aria-label="Open the MCP notebook, 10 pages">
-              <span class="sb-emoji" aria-hidden="true">🔌</span>
-              <span><span class="sb-title">MCP</span><br><span class="sb-meta">10 pages</span></span>
-            </a>
-          </div>
-          <div class="shelf-plank" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <div class="shelf-row" data-shelf>
-        <div class="shelf-row-head">
-          <span class="shelf-row-label">Orchestration &amp; Delivery</span>
-          <span class="shelf-row-count" data-shelf-count>3</span>
-          <a class="shelf-row-all" href="kubernetes.html">See all &rsaquo;</a>
-        </div>
-        <div class="shelf-deck">
-          <div class="shelf-books">
-            <a class="shelf-book" href="kubernetes.html" data-book-title="Kubernetes" style="--book:var(--red)" aria-label="Open the Kubernetes notebook, 5 pages">
-              <span class="sb-emoji" aria-hidden="true">☸️</span>
-              <span><span class="sb-title">Kubernetes</span><br><span class="sb-meta">5 pages</span></span>
-            </a>
-            <a class="shelf-book" href="helm.html" data-book-title="Helm Charts" style="--book:var(--helm)" aria-label="Open the Helm Charts notebook, 15 pages">
-              <span class="sb-emoji" aria-hidden="true">⛵</span>
-              <span><span class="sb-title">Helm Charts</span><br><span class="sb-meta">15 pages</span></span>
-            </a>
-            <a class="shelf-book" href="argocd.html" data-book-title="Argo CD" style="--book:var(--argocd)" aria-label="Open the Argo CD notebook, 10 pages">
-              <span class="sb-emoji" aria-hidden="true">🐙</span>
-              <span><span class="sb-title">Argo CD</span><br><span class="sb-meta">10 pages</span></span>
-            </a>
-          </div>
-          <div class="shelf-plank" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <div class="shelf-row" data-shelf>
-        <div class="shelf-row-head">
-          <span class="shelf-row-label">Observability</span>
-          <span class="shelf-row-count" data-shelf-count>2</span>
-          <a class="shelf-row-all" href="opentelemetry.html">See all &rsaquo;</a>
-        </div>
-        <div class="shelf-deck">
-          <div class="shelf-books">
-            <a class="shelf-book" href="opentelemetry.html" data-book-title="Open Telemetry" style="--book:var(--cyan)" aria-label="Open the OpenTelemetry notebook, 18 pages">
-              <span class="sb-emoji" aria-hidden="true">🔭</span>
-              <span><span class="sb-title">Open Telemetry</span><br><span class="sb-meta">18 pages</span></span>
-            </a>
-            <a class="shelf-book" href="aws-adot.html" data-book-title="AWS ADOT" style="--book:var(--adot)" aria-label="Open the AWS ADOT notebook, 11 pages">
-              <span class="sb-emoji" aria-hidden="true">📡</span>
-              <span><span class="sb-title">AWS ADOT</span><br><span class="sb-meta">11 pages</span></span>
-            </a>
-          </div>
-          <div class="shelf-plank" aria-hidden="true"></div>
-        </div>
-      </div>
+      <!-- Every card is rendered from the NB_LIBRARY data structure in script.js. -->
+      <div id="libRoot"></div>
 
     </div>
   </section>
 
 </main>
-<script src="script.js?v=30"></script>
+<script src="script.js?v=31"></script>
 </body>
 </html>

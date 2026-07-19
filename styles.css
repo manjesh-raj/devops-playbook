@@ -6257,121 +6257,113 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 .nb-book--setup { --nb-marker: var(--accent-ink); }
 
 /* ═══════════════════════════════════════════════════
-   BOOKSHELF LANDING — the site front door
-   A cozy library: labelled wooden shelves, each topic a
-   book standing on the plank in its own brand colour.
-   Clicking a book opens that notebook (see initShelf in
-   script.js). Fully token-driven so wood (light) and the
-   night-library palette (dark) are a pure theme swap.
+   BOOKSHELF LANDING - the site front door
+   A library of gradient book cards (.lib-book) in a
+   responsive grid, grouped into labelled shelves, each
+   card in its own brand colour with a spine edge, top
+   gloss, and a real reading-progress bar. Clicking a card
+   opens that notebook (see initShelf in script.js). Fully
+   token-driven so the "reading room" (light) and
+   "night library" (dark) palettes are a pure theme swap.
 ═══════════════════════════════════════════════════ */
-:root {
-  --shelf-room:  radial-gradient(120% 90% at 50% 0%, #1c1712 0%, #120f0c 70%);
-  --shelf-plank: linear-gradient(180deg, #4a3a2b 0%, #33271d 60%, #241b13 100%);
-  --shelf-plank-edge: #5c4632;
-  --shelf-plank-shadow: rgba(0,0,0,0.5);
-  --shelf-label: var(--txt);
-}
-[data-theme="light"] {
-  --shelf-room:  radial-gradient(120% 90% at 50% 0%, #f6efe2 0%, #ece0cc 75%);
-  --shelf-plank: linear-gradient(180deg, #caa878 0%, #b2895a 55%, #96703f 100%);
-  --shelf-plank-edge: #82602f;
-  --shelf-plank-shadow: rgba(90,60,25,0.35);
-  --shelf-label: #4a361f;
-}
+/* Reading-room backdrop, theme-aware: warm "reading room" in light,
+   a dim "night library" in dark. A pure token swap. */
+:root      { --shelf-room: radial-gradient(120% 90% at 50% 0%, #17130f 0%, #0e0b09 74%); }
+[data-theme="light"] { --shelf-room: radial-gradient(120% 90% at 50% 0%, #f6efe2 0%, #ece0cc 78%); }
 
 .shelf-section {
   background: var(--shelf-room);
   max-width: none;
-  padding: 56px clamp(20px, 4vw, 64px) 96px;
+  min-height: 100dvh;
+  padding: clamp(28px, 5vh, 64px) clamp(18px, 4vw, 64px) clamp(48px, 8vh, 96px);
   scroll-margin-top: 72px;
 }
-.shelf-inner { max-width: 1080px; margin: 0 auto; }
+.lib-inner { max-width: 1200px; margin: 0 auto; }
 
-/* Header: title + search */
-.shelf-head-row {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
+/* Header: big title + subtitle + theme toggle. No search box. */
+.lib-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vh, 52px);
 }
-.shelf-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.03em; }
-.shelf-sub { font-family: "Caveat", cursive; font-size: 1.5rem; color: var(--accent); margin-top: 2px; }
-.shelf-search { position: relative; flex: 0 1 320px; min-width: 200px; }
-.shelf-search input {
-  width: 100%; font-family: var(--font-body); font-size: 0.95rem;
-  color: var(--txt); background: var(--surface-1);
-  border: 1px solid var(--border-h); border-radius: 10px; padding: 10px 14px 10px 38px;
+.lib-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.03em; line-height: 1.04; }
+.lib-subtitle { color: var(--txt2); font-size: clamp(0.95rem, 2vw, 1.1rem); line-height: 1.55; margin-top: 12px; max-width: 52ch; }
+.lib-theme {
+  flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-1); border: 1px solid var(--border-h);
+  color: var(--txt); font-size: 1.05rem; cursor: pointer;
+  transition: transform 0.16s var(--ease), background 0.16s var(--ease), border-color 0.16s var(--ease);
 }
-.shelf-search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
-.shelf-search .shelf-search-ico { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); opacity: 0.6; pointer-events: none; }
+.lib-theme:hover { border-color: var(--accent); background: var(--surface-2); transform: translateY(-1px); }
+.lib-theme:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* One shelf (row) */
-.shelf-row { margin-bottom: 42px; }
-.shelf-row-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.shelf-row-label { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--shelf-label); }
-.shelf-row-count {
+/* One category (shelf). Heading + a count chip, then a responsive grid. */
+.lib-cat { margin-bottom: clamp(34px, 5vh, 58px); }
+.lib-cat-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+.lib-cat-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.2rem, 3vw, 1.6rem); color: var(--txt); }
+.lib-cat-count {
   font-size: 0.72rem; font-weight: 700; color: var(--txt2);
-  background: var(--surface-2); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px;
 }
-.shelf-row-all {
-  margin-left: auto; font-size: 0.8rem; font-weight: 600; color: var(--accent);
-  text-decoration: none; display: inline-flex; align-items: center; gap: 3px;
-}
-.shelf-row-all:hover { color: var(--accent-ink); }
-
-/* The plank + the books standing on it */
-.shelf-deck { position: relative; }
-.shelf-books { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; padding: 0 14px; position: relative; z-index: 1; }
-.shelf-plank {
-  height: 18px; margin: 0 2px; border-radius: 4px;
-  background: var(--shelf-plank);
-  border-top: 1px solid var(--shelf-plank-edge);
-  box-shadow: 0 9px 18px var(--shelf-plank-shadow);
-  position: relative; z-index: 0;
+.lib-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: clamp(16px, 2vw, 26px);
 }
 
-/* A book, cover facing out, in its topic brand colour */
-.shelf-book {
+/* A self-contained gradient book card in its topic brand colour. */
+.lib-book {
   --book: var(--brand);
-  position: relative;
-  width: 112px; min-height: 148px; box-sizing: border-box;
+  position: relative; overflow: hidden; isolation: isolate;
+  min-height: 320px; border-radius: 18px; padding: 22px;
   display: flex; flex-direction: column; justify-content: space-between;
-  padding: 11px 11px 13px; text-decoration: none;
-  border-radius: 2px 6px 6px 2px;
-  border-left: 4px solid color-mix(in srgb, var(--book) 55%, #000 45%);
-  background: linear-gradient(180deg,
-    var(--book) 0%, var(--book) 42%,
-    color-mix(in srgb, var(--book) 48%, #000 52%) 100%);
-  color: #fff;
-  box-shadow: 0 7px 13px rgba(0,0,0,0.32), inset -7px 0 12px rgba(0,0,0,0.16);
-  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  text-decoration: none; color: #fff;
+  background: linear-gradient(150deg, var(--book) 0%, color-mix(in srgb, var(--book) 50%, #000 50%) 100%);
+  box-shadow: 0 16px 34px rgba(0,0,0,0.28);
+  transition: transform 0.32s var(--ease), box-shadow 0.32s var(--ease);
 }
-.shelf-book .sb-emoji { font-size: 1.15rem; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3)); }
-.shelf-book .sb-title { font-family: var(--font-display); font-weight: 800; font-size: 0.72rem; line-height: 1.18; text-shadow: 0 1px 2px rgba(0,0,0,0.4); word-break: normal; overflow-wrap: break-word; hyphens: auto; }
-.shelf-book .sb-meta { font-size: 0.62rem; font-weight: 600; opacity: 0.9; text-shadow: 0 1px 1px rgba(0,0,0,0.35); }
-/* page-edge stripes on the fore-edge */
-.shelf-book::after {
-  content: ""; position: absolute; top: 4px; bottom: 4px; right: 2px; width: 3px;
-  background: repeating-linear-gradient(180deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 3px);
-  border-radius: 2px; opacity: 0.5;
+/* spine edge on the right + a soft top gloss for depth */
+.lib-book::before {
+  content: ""; position: absolute; top: 0; right: 0; width: 12px; height: 100%;
+  background: rgba(255,255,255,0.14); z-index: 1;
 }
-.shelf-book:hover, .shelf-book:focus-visible {
-  transform: translateY(-9px) rotate(-1.2deg);
-  box-shadow: 0 18px 28px rgba(0,0,0,0.42), inset -7px 0 12px rgba(0,0,0,0.16);
+.lib-book::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.16), transparent 42%);
 }
-.shelf-book:focus-visible { outline: 2px solid var(--txt); outline-offset: 3px; }
-.shelf-book[hidden] { display: none; }
+.lib-book > * { position: relative; z-index: 2; }
+.lib-book:hover, .lib-book:focus-visible {
+  transform: translateY(-10px) rotate(-2deg);
+  box-shadow: 0 26px 48px rgba(0,0,0,0.4);
+}
+.lib-book:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
-/* empty search state */
-.shelf-empty { color: var(--txt2); font-size: 0.95rem; padding: 8px 14px; display: none; }
-.shelf-row.is-empty { display: none; }
+.lib-book-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.lib-tag {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  padding: 4px 9px; border-radius: 20px; background: rgba(255,255,255,0.18); color: #fff;
+}
+.lib-emoji { font-size: 2rem; line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
-@media (max-width: 560px) {
-  .shelf-book { width: 104px; min-height: 142px; }
-  .shelf-books { gap: 10px; }
-  .shelf-search { flex-basis: 100%; }
+.lib-book-body { margin-top: 16px; flex: 1 1 auto; }
+.lib-book-title { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.lib-book-desc { font-size: 0.86rem; line-height: 1.5; opacity: 0.94; margin-top: 10px; }
+
+.lib-book-foot { margin-top: 18px; }
+.lib-foot-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; font-weight: 600; opacity: 0.92; margin-bottom: 9px; }
+.lib-prog { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.25); overflow: hidden; }
+.lib-prog > span { display: block; height: 100%; background: #fff; border-radius: 10px; transition: width 0.5s var(--ease); }
+
+@media (max-width: 520px) {
+  .lib-grid { grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 14px; }
+  .lib-book { min-height: 278px; padding: 18px; }
+  .lib-book-title { font-size: 1.15rem; }
+  .lib-emoji { font-size: 1.65rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .shelf-book { transition: none; }
-  .shelf-book:hover, .shelf-book:focus-visible { transform: none; }
+  .lib-book, .lib-theme { transition: none; }
+  .lib-book:hover, .lib-book:focus-visible { transform: none; }
+  .lib-prog > span { transition: none; }
 }
 
 /* ═══════════════════════════════════════════════════
@@ -6470,33 +6462,10 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 .tb-home:hover { color: var(--accent-ink); background: var(--surface-2); }
 .tb-home:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-/* (ADDENDUM 8) The bookshelf fits the viewport on a normal desktop window:
-   all shelves visible at once, books scaled to the available height. On short
-   or narrow screens this block is off and the shelf scrolls normally (the
-   graceful fallback), so nothing is ever clipped or overlapped. */
-@media (min-width: 760px) and (min-height: 680px) {
-  .shelf-section {
-    height: calc(100dvh - 58px);
-    overflow: hidden;
-    padding-top: clamp(14px, 2.4vh, 34px);
-    padding-bottom: clamp(14px, 2.4vh, 34px);
-  }
-  .shelf-inner { height: 100%; display: flex; flex-direction: column; }
-  .shelf-head-row { flex: 0 0 auto; margin-bottom: clamp(6px, 1.4vh, 18px); }
-  .shelf-row { flex: 1 1 0; min-height: 0; margin: 0; display: flex; flex-direction: column; }
-  .shelf-row + .shelf-row { margin-top: clamp(6px, 1.6vh, 20px); }
-  .shelf-row-head { flex: 0 0 auto; margin-bottom: clamp(3px, 0.8vh, 10px); }
-  .shelf-deck { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
-  .shelf-books { flex: 1 1 0; min-height: 0; align-items: flex-end; }
-  .shelf-plank { flex: 0 0 auto; height: clamp(12px, 1.8vh, 18px); }
-  .shelf-book {
-    height: 100%; width: auto; aspect-ratio: 112 / 150; min-height: 0;
-    padding: clamp(7px, 1.2vh, 12px) clamp(8px, 0.9vw, 12px) clamp(8px, 1.2vh, 13px);
-  }
-  .shelf-book .sb-emoji { font-size: clamp(0.9rem, 1.7vh, 1.2rem); }
-  .shelf-book .sb-title { font-size: clamp(0.62rem, 1.15vh, 0.8rem); line-height: 1.14; }
-  .shelf-book .sb-meta  { font-size: clamp(0.54rem, 0.9vh, 0.66rem); }
-}
+/* The library grid (index.html) is a normal vertical-scroll page: the
+   responsive grid wraps and every book is visible. No viewport-fit clamp is
+   needed here, and horizontal-scroll rows were intentionally dropped for the
+   grid layout. See the ".lib-*" rules above. */
 
 /* ═══════════════════════════════════════════════════
    ADDENDUM 9 — open notebook fits the viewport
