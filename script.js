@@ -3736,3 +3736,28 @@ function otelSimStep(n) {
 (function initOtelSim() {
   if (document.getElementById('otelSimOutput')) otelSimStep(0);
 })();
+
+/* ══════════════════════════════════════
+   KUBERNETES NOTES — plain-text accessibility toggle
+   Swaps the handwriting fonts for a clean sans across the
+   whole notebook module by toggling html.nb-plain. Code
+   blocks stay monospace (they never read the handwriting
+   vars). The choice persists in localStorage. Copy buttons
+   inside the notebook reuse the existing .term-copy handler.
+══════════════════════════════════════ */
+function toggleNbPlain() {
+  const on = document.documentElement.classList.toggle('nb-plain');
+  localStorage.setItem('nbPlain', on ? '1' : '0');
+  syncNbPlainButtons(on);
+}
+function syncNbPlainButtons(on) {
+  document.querySelectorAll('.nb-plain-toggle').forEach(btn => {
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Aa Handwriting' : 'Aa Plain text';
+  });
+}
+(function initNbPlain() {
+  const on = localStorage.getItem('nbPlain') === '1';
+  if (on) document.documentElement.classList.add('nb-plain');
+  syncNbPlainButtons(on);
+})();

@@ -5811,3 +5811,282 @@ pre.ascii,
 /* Native select never forces its container wider than the viewport */
 select, .sim-select { max-width: 100%; }
 .sim-controls .sim-select { flex: 1 1 100%; width: 100%; }
+
+/* ═══════════════════════════════════════════════════
+   KUBERNETES NOTES — handwritten spiral-notebook module
+   Fully namespaced (nb-*), isolated from every other section.
+   Both themes are first-class: dark = "night notebook"
+   (dark paper, soft ink), light = bright cream paper like
+   the owner's sample. Everything is driven off --nb-* tokens
+   so a theme flip is a pure token swap. Code always stays
+   monospace; a plain-text toggle swaps handwriting for sans.
+═══════════════════════════════════════════════════ */
+
+/* Notebook tokens — DARK (default) = night notebook */
+:root {
+  --nb-paper:    #191d29;   /* dark paper */
+  --nb-paper2:   #141824;   /* inset panels / table stripes */
+  --nb-rule:     rgba(157,180,255,0.09);   /* faint ruled lines */
+  --nb-margin:   rgba(251,113,133,0.55);   /* red margin line */
+  --nb-ink:      #d6ddee;   /* handwriting body ink */
+  --nb-ink2:     #aab2c4;   /* secondary hand ink */
+  --nb-marker:   #ff6f61;   /* marker-red titles/headings, warm on dark */
+  --nb-navy:     #9db4ff;   /* "navy" role, lifted for dark legibility */
+  --nb-box:      rgba(157,180,255,0.42);   /* hand-drawn box border */
+  --nb-box-solid:#9db4ff;
+  --nb-code-bg:  #0c1019;   /* monospace card well */
+  --nb-code-ink: #dfe6f2;
+  --nb-edge:     rgba(255,255,255,0.10);   /* sheet outer edge */
+  --nb-ring:     #565c66;   /* spiral ring metal */
+  --nb-ring-hi:  #8b9099;
+  --nb-desk:     radial-gradient(130% 130% at 50% -10%, #1a2130 0%, var(--bg) 74%);
+
+  /* Handwriting fonts + fallbacks */
+  --nb-title: "Permanent Marker", "Comic Sans MS", cursive;
+  --nb-head:  "Caveat", "Segoe Script", cursive;
+  --nb-hand:  "Kalam", "Comic Sans MS", cursive;
+  --nb-sans:  var(--font-body);
+  --nb-mono:  var(--font-mono);
+}
+
+/* Notebook tokens — LIGHT = bright cream paper (matches the sample) */
+[data-theme="light"] {
+  --nb-paper:    #fbfaf6;
+  --nb-paper2:   #f2f0e7;
+  --nb-rule:     #d3ddec;
+  --nb-margin:   #e2a0a0;
+  --nb-ink:      #28338a;   /* navy handwriting */
+  --nb-ink2:     #3a4166;
+  --nb-marker:   #c0362b;   /* marker red */
+  --nb-navy:     #28338a;
+  --nb-box:      #3a4166;
+  --nb-box-solid:#28338a;
+  --nb-code-bg:  #eceee6;
+  --nb-code-ink: #2f3327;
+  --nb-edge:     rgba(15,23,42,0.16);
+  --nb-ring:     #5a5f68;
+  --nb-ring-hi:  #b9bec6;
+  --nb-desk:     radial-gradient(130% 130% at 50% -10%, #e7e4d7 0%, var(--bg) 78%);
+}
+
+/* Plain-text accessibility mode — swap handwriting for clean sans.
+   Code stays monospace because .nb-code never reads these vars. */
+html.nb-plain {
+  --nb-title: var(--font-display);
+  --nb-head:  var(--font-body);
+  --nb-hand:  var(--font-body);
+}
+
+/* The notebook section sits on a subtle "desk" so the paper reads as a sheet */
+.nb-section { background: var(--nb-desk); }
+
+/* ── The sheet (shared by cover + pages) ── */
+.nb-sheet {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  background-color: var(--nb-paper);
+  background-image: repeating-linear-gradient(
+    to bottom, transparent 0 31px, var(--nb-rule) 31px 32px);
+  color: var(--nb-ink);
+  border: 1px solid var(--nb-edge);
+  border-radius: 3px 14px 14px 3px;
+  box-shadow: var(--shadow);
+  padding: 26px 34px 44px 62px;   /* left room for spiral + margin */
+  overflow: hidden;
+}
+/* red margin line */
+.nb-sheet::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 46px;
+  width: 2px; background: var(--nb-margin); opacity: 0.85;
+}
+/* spiral binding gutter — a subtle shaded strip the rings sit on */
+.nb-sheet::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 4px; width: 30px;
+  background: color-mix(in srgb, var(--nb-paper2) 70%, transparent);
+  border-right: 1px solid var(--nb-edge); border-radius: 6px 0 0 6px;
+}
+/* the metallic spiral rings, evenly stacked over the gutter */
+.nb-rings {
+  position: absolute; top: 0; bottom: 0; left: 4px; width: 30px; z-index: 1;
+  display: flex; flex-direction: column; justify-content: space-around;
+  padding: 14px 0; align-items: center; pointer-events: none;
+}
+.nb-rings i {
+  display: block; width: 22px; height: 9px; border-radius: 9px;
+  background: linear-gradient(var(--nb-ring-hi), var(--nb-ring));
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.45), 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* plain-text toggle button (top-right of each sheet) */
+.nb-plain-toggle {
+  position: absolute; top: 12px; right: 14px; z-index: 3;
+  font-family: var(--nb-sans); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nb-ink2);
+  background: var(--nb-paper2);
+  border: 1px solid var(--nb-edge);
+  border-radius: 20px; padding: 5px 12px; cursor: pointer;
+  transition: var(--trans-fast);
+}
+.nb-plain-toggle:hover { color: var(--nb-marker); border-color: var(--nb-box); }
+
+/* ── Masthead / page number (inner pages) ── */
+.nb-masthead {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(1.5rem, 4vw, 2rem); text-align: center;
+  transform: rotate(-0.6deg); margin: 6px 0 0; letter-spacing: 0.5px;
+}
+.nb-pagenum {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-navy);
+  text-align: center; font-size: 1.25rem; margin: 0 0 14px;
+}
+
+/* ── Text primitives ── */
+.nb-h {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker);
+  font-size: 1.35rem; margin: 18px 0 4px; line-height: 1.2;
+  text-decoration: underline; text-decoration-color: var(--nb-margin);
+  text-underline-offset: 4px;
+}
+.nb-p {
+  font-family: var(--nb-hand); font-size: 1.06rem; color: var(--nb-ink);
+  line-height: 1.55; margin: 4px 0 10px; max-width: 62ch;
+}
+html.nb-plain .nb-p { font-size: 0.98rem; line-height: 1.6; }
+.nb-list { font-family: var(--nb-hand); font-size: 1.04rem; color: var(--nb-ink);
+  margin: 4px 0 12px; padding-left: 26px; line-height: 1.5; list-style: disc; }
+.nb-list li { margin: 4px 0; }
+.nb-list.check { list-style: none; padding-left: 6px; }
+.nb-list.check li::before { content: "✓ "; color: var(--nb-marker); font-weight: 700; }
+html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
+
+/* ── Hand-drawn boxes ── */
+.nb-box {
+  font-family: var(--nb-hand); font-size: 1rem; color: var(--nb-ink);
+  border: 1.5px solid var(--nb-box); border-radius: 10px;
+  padding: 12px 16px; margin: 12px 0; line-height: 1.5;
+  background: color-mix(in srgb, var(--nb-paper2) 55%, transparent);
+}
+.nb-box.dash { border-style: dashed; }
+.nb-box .nb-box-title {
+  display: block; font-family: var(--nb-head); font-weight: 700;
+  color: var(--nb-marker); font-size: 1.15rem; text-align: center;
+  margin-bottom: 6px; text-decoration: underline;
+  text-decoration-color: var(--nb-margin); text-underline-offset: 3px;
+}
+.nb-box.note { border-color: var(--nb-box-solid); border-width: 2px; }
+
+/* two-column layout that stacks on mobile */
+.nb-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+@media (max-width: 760px) { .nb-cols { grid-template-columns: 1fr; } }
+
+/* ── Diagrams (boxes + arrows), token-driven ── */
+.nb-diagram { overflow-x: auto; margin: 12px 0; }
+.nb-flow {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px; min-width: 0;
+}
+.nb-flow.vert { flex-direction: column; }
+.nb-flow.vert .nb-ar { transform: rotate(90deg); }
+.nb-node {
+  font-family: var(--nb-hand); font-size: 0.95rem; color: var(--nb-navy);
+  border: 1.6px solid var(--nb-box-solid); border-radius: 9px;
+  padding: 8px 14px; text-align: center; background: var(--nb-paper);
+  line-height: 1.35;
+}
+.nb-node b, .nb-node .mk { color: var(--nb-marker); font-family: var(--nb-head); font-weight: 700; }
+.nb-node small { display: block; font-size: 0.82rem; color: var(--nb-ink2); }
+.nb-ar { color: var(--nb-marker); font-weight: 700; font-size: 1.2rem; font-family: var(--nb-sans); }
+.nb-branch { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* little container-chip used inside Pod diagrams */
+.nb-chip {
+  font-family: var(--nb-mono); font-size: 0.72rem; color: var(--nb-navy);
+  border: 1.4px solid var(--nb-box-solid); border-radius: 5px;
+  padding: 4px 8px; letter-spacing: 1px; background: var(--nb-paper2);
+}
+.nb-podbox {
+  border: 1.8px solid var(--nb-box-solid); border-radius: 12px;
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+  background: color-mix(in srgb, var(--nb-paper2) 50%, transparent); min-width: 220px;
+}
+.nb-podbox .nb-pod-title { font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker); text-align: center; }
+.nb-podrow { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.nb-subbox {
+  border: 1.4px solid var(--nb-box); border-radius: 8px; padding: 8px 10px;
+  font-family: var(--nb-hand); font-size: 0.9rem; color: var(--nb-ink); text-align: center; flex: 1 1 auto;
+}
+
+/* ── Tables (Docker vs K8s, Service types) ── */
+.nb-table-wrap { overflow-x: auto; margin: 12px 0; }
+.nb-table {
+  width: 100%; border-collapse: collapse; font-family: var(--nb-hand);
+  font-size: 0.95rem; color: var(--nb-ink); min-width: 460px;
+}
+.nb-table th, .nb-table td { border: 1.4px solid var(--nb-box); padding: 8px 11px; text-align: left; vertical-align: top; }
+.nb-table th { font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker); background: var(--nb-paper2); text-align: center; }
+.nb-table tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--nb-paper2) 45%, transparent); }
+
+/* ── kubectl / code card — always real monospace, copy-pasteable ── */
+.nb-code {
+  position: relative; margin: 12px 0;
+  background: var(--nb-code-bg);
+  border: 1.5px solid var(--nb-box);
+  border-left: 3px solid var(--nb-marker);
+  border-radius: 8px;
+}
+.nb-code .nb-code-label {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker);
+  font-size: 1rem; padding: 8px 14px 0; display: block;
+}
+.nb-code pre {
+  font-family: var(--nb-mono); font-size: 0.82rem; color: var(--nb-code-ink);
+  line-height: 1.7; padding: 10px 14px 14px; margin: 0;
+  overflow-x: auto; white-space: pre;
+}
+.nb-code pre .cmt { color: var(--nb-ink2); font-style: italic; }
+/* copy button reuses the site .term-copy handler; nb-copy just restyles it */
+.nb-copy {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  font-family: var(--nb-sans); font-size: 0.7rem; font-weight: 600;
+  color: var(--nb-code-ink); background: color-mix(in srgb, var(--nb-code-bg) 70%, #808080 30%);
+  border: 1px solid var(--nb-box); border-radius: 6px; padding: 3px 9px; cursor: pointer;
+  transition: var(--trans-fast);
+}
+.nb-copy:hover { border-color: var(--nb-marker); color: var(--nb-marker); }
+.nb-copy.copied { color: var(--nb-navy); border-color: var(--nb-navy); }
+
+/* ── Cover page ── */
+.nb-cover-title {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(2.4rem, 9vw, 4.2rem); line-height: 0.95; text-align: center;
+  transform: rotate(-1deg); margin: 16px 0 2px; letter-spacing: -1px;
+}
+.nb-cover-title small { display: block; font-size: 1em; }
+.nb-cover-band {
+  font-family: var(--nb-head); font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: var(--nb-navy); text-align: center; border: 2px solid var(--nb-navy);
+  border-radius: 10px; padding: 8px 14px; margin: 20px auto 16px; max-width: 560px;
+  transform: rotate(0.4deg);
+}
+.nb-cover-desc {
+  font-family: var(--nb-hand); font-size: 1.1rem; text-align: center;
+  color: var(--nb-ink); max-width: 620px; margin: 0 auto 22px; line-height: 1.55;
+}
+.nb-cover-quote {
+  font-family: var(--nb-head); font-weight: 700; font-size: clamp(1.05rem, 3vw, 1.4rem);
+  color: var(--nb-navy); text-align: center; border: 2px solid var(--nb-navy);
+  border-radius: 10px; padding: 10px; margin: 22px auto 4px; max-width: 620px;
+  transform: rotate(-0.5deg);
+}
+.nb-cover-quote .star { color: var(--nb-marker); }
+
+/* mobile: shrink the binding gutter so nothing overflows */
+@media (max-width: 560px) {
+  .nb-sheet { padding: 22px 16px 34px 46px; border-radius: 2px 10px 10px 2px; }
+  .nb-sheet::before { left: 34px; }
+  .nb-sheet::after, .nb-rings { left: 4px; width: 20px; }
+  .nb-rings i { width: 15px; height: 8px; }
+  .nb-plain-toggle { position: static; display: inline-block; margin: 0 0 8px; }
+}

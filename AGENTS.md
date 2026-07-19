@@ -4,6 +4,21 @@ This file is the project's committed home for project-intrinsic agent knowledge:
 
 - Add durable project-specific notes here as they are discovered through real work.
 
+## Content writing style (applies to all playbook prose)
+
+All prose in this playbook must follow the universal **Writing Style** rules in `~/.claude/CLAUDE.md`.
+That file is the source of truth. Do not duplicate it here.
+The rules that bite most often when editing pages:
+
+- Write in a natural, experienced-engineer voice. Not marketing copy.
+- Never use the em dash "-". Use a plain dash "-" instead. This includes decorative labels like page numbers.
+- Do not use semicolons to join two ideas. Use separate sentences.
+- Do not compress several ideas into one sentence, and avoid compressed parenthetical lists such as "(batch, sample, redact, enrich)". Break them into short sentences or bullets.
+- Keep sentences short and direct.
+- Keep commands and config in code blocks, in monospace, never in prose or handwriting.
+
+This is part of the process for every content change, not just the notebook pilot.
+
 ## Site structure & sharp edges
 
 This is a single-page docs site: `index.html` + `styles.css` + `script.js`. No build step.
@@ -22,6 +37,11 @@ This is a single-page docs site: `index.html` + `styles.css` + `script.js`. No b
   - Responsive safety net near the code-block rules: code surfaces get `overflow-x:auto`/`min-width:0`, and grid/flex children get `min-width:0` so wide code in sim cards scrolls internally instead of forcing horizontal page overflow on mobile.
 - Reuse the existing component kit (`.sec-header`, `.card`, `.eli5-card`, `.ctag`, `.two-col`, `.card-grid-4`, `.timeline`, `.devops-box`, `.takeaways`, `.callout` with `.callout-icon`, `.code-block`/`.cb-code` with `.kw`/`.str`/`.cmt`/`.num` highlight spans) rather than inventing styles. Namespace any new JS/CSS per-feature (e.g. `otel*`, `adot*`).
 - **Native theme-aware diagrams** (no raster screenshots): build them with inline SVG or CSS grid and drive every color off tokens so they flip with the theme. Reusable patterns already exist in the OTel deep-dive sections: `.otel-seq*` (SVG sequence diagram - lifelines, activation bars, request/response arrows via `<marker>`, colors set inline as `fill:var(--blue)` etc.), `.otel-wf*` (Jaeger-style trace waterfall in CSS grid - bars positioned with inline `left`/`width` percentages, indented per depth), `.otel-cpipe`/`.ocp-*` (a horizontal box→box→box pipeline flow with a per-box `--ocp` color var and arrows that rotate to vertical on mobile - used for the Collector Receiver→Processor→Exporter and app→agent→gateway diagrams), `.otel-anat*` (a labeled field-by-field "anatomy" table), and `.otel-comp*` (mono component chips + explanation lists). Wrap any wide SVG in an `overflow-x:auto` scroller with a `min-width` so it scrolls internally on mobile instead of overflowing the page.
+- **Handwritten "notebook" module (`nb-*`)** is a deliberately distinct, self-contained look used by the Kubernetes Notes concept (a pilot). It is isolated from every other section - do not restyle other concepts to match it, and do not fold notebook CSS into the shared component kit.
+  - It is a normal set of `<section class="section nb-section">` pages, so scroll-spy, deep links, and browser find all work with no special wiring. Each page is a `.nb-sheet` (`.nb-cover` or `.nb-page`) with a CSS spiral binding (`.nb-rings` capsules over a gutter `::after`), a red margin line (`::before`), and ruled paper (a `repeating-linear-gradient` background).
+  - Both themes are token-driven via `--nb-*` declared in `:root` (dark = "night notebook", dark paper) and re-declared under `[data-theme="light"]` (bright cream paper like the owner's sample). Never hardcode a notebook color that must survive a theme flip.
+  - Fonts: Permanent Marker (cover title), Caveat (headings), Kalam (body), loaded from the shared Google Fonts link in `index.html`. `html.nb-plain` is the **accessibility plain-text toggle** - it swaps the three handwriting vars for the site sans. `toggleNbPlain()` in `script.js` persists the choice in `localStorage` under `nbPlain`.
+  - **Code stays real monospace, always.** kubectl blocks use `.nb-code > pre` (never handwriting) and carry a Copy button that reuses the existing `.term-copy` + `data-copy` handler (add the `nb-copy` class for notebook styling). Tables use `.nb-table` inside a `.nb-table-wrap`, and diagrams use `.nb-diagram`/`.nb-flow`/`.nb-node`; all wide content gets `overflow-x:auto` so it scrolls internally on mobile.
 
 ## Maintaining this file
 
