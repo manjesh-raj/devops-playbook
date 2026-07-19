@@ -6389,7 +6389,7 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
    text-only pages get a narrow readable page, pages with diagrams/tables/
    grids get a wide page whose two-column content sits side by side. */
 .nb-book-section { max-width: none; padding-left: clamp(16px,3vw,40px); padding-right: clamp(16px,3vw,40px); }
-.nb-book { position: relative; max-width: 1180px; margin: 0 auto; padding-right: 168px; }
+.nb-book { position: relative; max-width: 1040px; margin: 0 auto; padding-right: 164px; }
 .nb-book.nb-ready .nb-stage { background: var(--nb-desk); }
 .nb-book.nb-ready .nb-sheet { max-width: 860px; margin: 0 auto; }
 .nb-book.nb-ready .nb-leaf.nb-w-text .nb-sheet { max-width: 680px; }
@@ -6494,4 +6494,29 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   .shelf-book .sb-emoji { font-size: clamp(0.9rem, 1.7vh, 1.2rem); }
   .shelf-book .sb-title { font-size: clamp(0.62rem, 1.15vh, 0.8rem); line-height: 1.14; }
   .shelf-book .sb-meta  { font-size: clamp(0.54rem, 0.9vh, 0.66rem); }
+}
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 9 — open notebook fits the viewport
+   On a normal desktop window the notebook frame + the Prev/Cover/Next
+   footer + the bookmark rail are all visible at once with no document
+   scroll. The stage flex-fills the height between the top bar and the
+   footer; a long page scrolls INSIDE its leaf (.nb-leaf overflow-y:auto),
+   so the footer never gets pushed off. Below these breakpoints the page
+   scrolls normally (graceful fallback) - content is never clipped.
+═══════════════════════════════════════════════════ */
+@media (min-width: 861px) and (min-height: 680px) {
+  /* Section stays a block so the book keeps centering via margin:0 auto
+     (auto margins on a flex item would collapse it to content width). */
+  .nb-book-section {
+    height: calc(100dvh - 58px);
+    overflow: hidden;
+    padding-top: clamp(12px, 2vh, 26px);
+    padding-bottom: clamp(12px, 2vh, 26px);
+  }
+  .nb-book { height: 100%; display: flex; flex-direction: column; }
+  .nb-book.nb-ready .nb-stage { flex: 1 1 auto; min-height: 0; height: auto; }
+  .nb-book.nb-ready .nb-book-controls { flex: 0 0 auto; margin: clamp(8px, 1.2vh, 16px) auto 0; }
+  /* rail fills the full book height in the right gutter */
+  .nb-book.nb-ready .nb-bookmarks { top: 0; bottom: 0; max-height: none; height: auto; }
 }
