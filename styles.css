@@ -6331,7 +6331,8 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 /* A book, cover facing out, in its topic brand colour */
 .shelf-book {
   --book: var(--brand);
-  width: 108px; min-height: 148px; box-sizing: border-box;
+  position: relative;
+  width: 112px; min-height: 148px; box-sizing: border-box;
   display: flex; flex-direction: column; justify-content: space-between;
   padding: 11px 11px 13px; text-decoration: none;
   border-radius: 2px 6px 6px 2px;
@@ -6344,7 +6345,7 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 .shelf-book .sb-emoji { font-size: 1.15rem; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3)); }
-.shelf-book .sb-title { font-family: var(--font-display); font-weight: 800; font-size: 0.78rem; line-height: 1.15; text-shadow: 0 1px 2px rgba(0,0,0,0.4); overflow-wrap: normal; word-break: normal; hyphens: auto; }
+.shelf-book .sb-title { font-family: var(--font-display); font-weight: 800; font-size: 0.72rem; line-height: 1.18; text-shadow: 0 1px 2px rgba(0,0,0,0.4); word-break: normal; overflow-wrap: break-word; hyphens: auto; }
 .shelf-book .sb-meta { font-size: 0.62rem; font-weight: 600; opacity: 0.9; text-shadow: 0 1px 1px rgba(0,0,0,0.35); }
 /* page-edge stripes on the fore-edge */
 .shelf-book::after {
@@ -6364,8 +6365,8 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 .shelf-row.is-empty { display: none; }
 
 @media (max-width: 560px) {
-  .shelf-book { width: 98px; min-height: 140px; }
-  .shelf-books { gap: 12px; }
+  .shelf-book { width: 104px; min-height: 142px; }
+  .shelf-books { gap: 10px; }
   .shelf-search { flex-basis: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {

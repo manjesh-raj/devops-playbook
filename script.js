@@ -4079,10 +4079,7 @@ window.nbCurrentPage = window.nbCurrentPage || {};
 (function initShelf() {
   const shelf = document.getElementById('shelf');
   if (!shelf) return;
-  const books  = Array.from(shelf.querySelectorAll('.shelf-book'));
-  const rows   = Array.from(shelf.querySelectorAll('.shelf-row'));
-  const search = document.getElementById('shelfSearch');
-  const empty  = document.getElementById('shelfEmpty');
+  const books = Array.from(shelf.querySelectorAll('.shelf-book'));
 
   // Open the notebook via the shared engine (falls back to the anchor jump).
   function openBook(href) {
@@ -4098,25 +4095,4 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); openBook(b.getAttribute('href')); }
     });
   });
-
-  // Client-side title filter.
-  if (search) {
-    search.addEventListener('input', () => {
-      const q = search.value.trim().toLowerCase();
-      let anyVisible = false;
-      rows.forEach(row => {
-        let rowVisible = 0;
-        row.querySelectorAll('.shelf-book').forEach(b => {
-          const match = !q || (b.dataset.bookTitle || '').toLowerCase().includes(q);
-          b.hidden = !match;
-          if (match) rowVisible++;
-        });
-        row.classList.toggle('is-empty', rowVisible === 0);
-        const count = row.querySelector('[data-shelf-count]');
-        if (count) count.textContent = rowVisible;
-        if (rowVisible) anyVisible = true;
-      });
-      if (empty) empty.style.display = anyVisible ? 'none' : 'block';
-    });
-  }
 })();

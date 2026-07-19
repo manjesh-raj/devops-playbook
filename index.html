@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20" />
+  <link rel="stylesheet" href="styles.css?v=23" />
 </head>
 <body>
 
@@ -245,16 +245,12 @@
           <div class="shelf-title">The DevOps Playbook</div>
           <div class="shelf-sub">my shelf</div>
         </div>
-        <div class="shelf-search">
-          <span class="shelf-search-ico" aria-hidden="true">🔎</span>
-          <input type="search" id="shelfSearch" placeholder="Search the shelf&hellip;" aria-label="Search notebooks by title" autocomplete="off">
-        </div>
       </div>
 
       <div class="shelf-row" data-shelf>
         <div class="shelf-row-head">
           <span class="shelf-row-label">Foundations</span>
-          <span class="shelf-row-count" data-shelf-count>2</span>
+          <span class="shelf-row-count" data-shelf-count>3</span>
           <a class="shelf-row-all" href="#nb-setup-cover">See all &rsaquo;</a>
         </div>
         <div class="shelf-deck">
@@ -266,6 +262,10 @@
             <a class="shelf-book" href="#nb-ai-cover" data-book-title="AI Engineering" style="--book:var(--brand-2)" aria-label="Open the AI Engineering notebook, 14 pages">
               <span class="sb-emoji" aria-hidden="true">🤖</span>
               <span><span class="sb-title">AI Engineering</span><br><span class="sb-meta">14 pages</span></span>
+            </a>
+            <a class="shelf-book" href="#nb-mcp-cover" data-book-title="MCP" style="--book:var(--mcp)" aria-label="Open the MCP notebook, 10 pages">
+              <span class="sb-emoji" aria-hidden="true">🔌</span>
+              <span><span class="sb-title">MCP</span><br><span class="sb-meta">10 pages</span></span>
             </a>
           </div>
           <div class="shelf-plank" aria-hidden="true"></div>
@@ -305,9 +305,9 @@
         </div>
         <div class="shelf-deck">
           <div class="shelf-books">
-            <a class="shelf-book" href="#nb-otel-cover" data-book-title="OpenTelemetry" style="--book:var(--cyan)" aria-label="Open the OpenTelemetry notebook, 18 pages">
+            <a class="shelf-book" href="#nb-otel-cover" data-book-title="Open Telemetry" style="--book:var(--cyan)" aria-label="Open the OpenTelemetry notebook, 18 pages">
               <span class="sb-emoji" aria-hidden="true">🔭</span>
-              <span><span class="sb-title">OpenTelemetry</span><br><span class="sb-meta">18 pages</span></span>
+              <span><span class="sb-title">Open Telemetry</span><br><span class="sb-meta">18 pages</span></span>
             </a>
             <a class="shelf-book" href="#nb-adot-cover" data-book-title="AWS ADOT" style="--book:var(--adot)" aria-label="Open the AWS ADOT notebook, 11 pages">
               <span class="sb-emoji" aria-hidden="true">📡</span>
@@ -318,24 +318,6 @@
         </div>
       </div>
 
-      <div class="shelf-row" data-shelf>
-        <div class="shelf-row-head">
-          <span class="shelf-row-label">Protocols</span>
-          <span class="shelf-row-count" data-shelf-count>1</span>
-          <a class="shelf-row-all" href="#nb-mcp-cover">See all &rsaquo;</a>
-        </div>
-        <div class="shelf-deck">
-          <div class="shelf-books">
-            <a class="shelf-book" href="#nb-mcp-cover" data-book-title="MCP" style="--book:var(--mcp)" aria-label="Open the MCP notebook, 10 pages">
-              <span class="sb-emoji" aria-hidden="true">🔌</span>
-              <span><span class="sb-title">MCP</span><br><span class="sb-meta">10 pages</span></span>
-            </a>
-          </div>
-          <div class="shelf-plank" aria-hidden="true"></div>
-        </div>
-      </div>
-
-      <p class="shelf-empty" id="shelfEmpty">No notebooks match that search.</p>
     </div>
   </section>
 
@@ -17299,6 +17281,6 @@ kubectl describe service my-service</pre>
   </div>
 </footer>
 
-<script src="script.js?v=23"></script>
+<script src="script.js?v=24"></script>
 </body>
 </html>
