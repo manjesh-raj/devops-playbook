@@ -3817,6 +3817,7 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     const lastContentId = ids[Math.max(1, N - 2)] || section.id;
 
     let current = 0, busy = false, opened = false;
+    let tabs = [];   // bookmark ribbon buttons, one per non-end leaf
 
     const pageLabel = (i) => i === 0 ? 'Cover' : (i === N - 1 ? 'The End' : 'Page ' + i + ' / ' + (N - 2));
 
@@ -3841,6 +3842,11 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       const activeId = current === N - 1 ? lastContentId : ids[current];
       window.nbCurrentPage[section.id] = activeId;
       if (typeof setActiveSection === 'function') setActiveSection(activeId);
+      tabs.forEach(t => {
+        const on = +t.dataset.idx === current;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
       // Only user-driven turns own the URL hash. During the initial mass-render
       // every book would otherwise fight to stamp its own cover into the hash.
       if (writeHash !== false) {
@@ -3945,6 +3951,56 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     }, { threshold: 0.35 });
     io.observe(section);
 
+    // ── Page-width tiers (fix the dead-ruled-area bug) ──
+    // Text-only pages get a narrow, readable page; pages with diagrams,
+    // tables or grids get a wide page so their columns sit side by side.
+    const WIDE = '.nb-cols,.two-col,[class*="grid"],table,canvas,pre,.otel-seq,' +
+      '.otel-wf,.otel-cpipe,.otel-anat,.otel-comp,.nb-table-wrap,.nb-diagram,' +
+      '.nb-podbox,.sim-card,.sim-stage,.adot-arch-diagram,.mcp-arch-diagram,' +
+      '.timeline,.card-grid-4,.card-grid-3,.devops-box';
+    leaves.forEach(lf => {
+      if (lf.classList.contains('nb-leaf-cover') || lf.classList.contains('nb-backcover')) return;
+      const sheet = lf.querySelector('.nb-sheet');
+      lf.classList.add(sheet && sheet.querySelector(WIDE) ? 'nb-w-wide' : 'nb-w-text');
+    });
+
+    // ── Bookmark ribbon rail (in-book sub-topic nav + back to shelf) ──
+    function labelFor(i) {
+      const link = document.querySelector('.nav-link[data-section="' + ids[i] + '"]');
+      if (link) {
+        const span = link.querySelector('span:not(.ni):not(.nbadge)');
+        if (span && span.textContent.trim()) return span.textContent.trim();
+      }
+      const al = leaves[i].getAttribute('aria-label');
+      return al ? al.replace(/^.*page /i, 'Page ') : 'Page ' + i;
+    }
+    const rail = document.createElement('div');
+    rail.className = 'nb-bookmarks';
+    rail.setAttribute('role', 'tablist');
+    rail.setAttribute('aria-label', (section.getAttribute('aria-label') || 'Notebook') + ' sections');
+    const back = document.createElement('a');
+    back.className = 'nb-to-shelf'; back.href = '#shelf';
+    back.innerHTML = '← Shelf';
+    back.setAttribute('aria-label', 'Back to the bookshelf');
+    back.addEventListener('click', (e) => {
+      e.preventDefault();
+      const shelf = document.getElementById('shelf');
+      if (shelf) shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    });
+    rail.appendChild(back);
+    leaves.forEach((lf, i) => {
+      if (lf.classList.contains('nb-backcover')) return;
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'nb-bm'; b.dataset.idx = i;
+      b.setAttribute('role', 'tab');
+      b.textContent = labelFor(i);
+      b.title = b.textContent;
+      b.setAttribute('aria-label', 'Go to ' + b.textContent);
+      b.addEventListener('click', () => go(i));
+      rail.appendChild(b); tabs.push(b);
+    });
+    book.insertBefore(rail, book.firstChild);
+
     book.classList.add('nb-ready');
     return { section, ids, go, render, indexOfId, openSwing,
       hasId: (h) => indexOfId(h) >= 0,
@@ -3979,10 +4035,12 @@ window.nbCurrentPage = window.nbCurrentPage || {};
   const target = deepBook || coverBook;
   if (target) {
     try { history.replaceState(null, '', '#' + target.ids[target.current]); } catch (e) { /* file:// */ }
-    // Scroll after layout settles (and after any native fragment jump) so the
-    // book lands at the top of the reading area rather than mid-leaf.
-    requestAnimationFrame(() => requestAnimationFrame(() =>
-      target.section.scrollIntoView({ block: 'start' })));
+    // Scroll so the book lands under the sticky chrome (top bar + mobile rail),
+    // clearing scroll-margin. Re-assert on a short timer so we win against the
+    // browser's own fragment jump to the (hidden) deep-linked leaf.
+    const land = () => target.section.scrollIntoView({ block: 'start' });
+    requestAnimationFrame(() => requestAnimationFrame(land));
+    window.setTimeout(land, 160);
   }
 
   // External hash edits (address bar / back-forward) sync the owning book.
