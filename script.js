@@ -3912,7 +3912,17 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       window.setTimeout(() => { busy = false; render(); }, TURN_MS + 40);
     }
 
-    const indexOfId = (hash) => hash ? ids.indexOf(String(hash).replace('#', '')) : -1;
+    // Resolve a hash to a leaf index. Ported inner pages keep their bare
+    // original ids (e.g. "otel-intro") while covers and the Kubernetes pages
+    // use the "nb-<topic>-..." form. Normalise by dropping a leading "nb-" on
+    // both sides so a deep link works in either convention (e.g. both
+    // "#nb-otel-intro" and "#otel-intro" resolve to the otel intro leaf).
+    const normId = (s) => String(s || '').replace(/^#/, '').replace(/^nb-/, '');
+    const indexOfId = (hash) => {
+      const h = normId(hash);
+      if (!h) return -1;
+      return ids.findIndex((id) => normId(id) === h);
+    };
 
     if (prevBtn)    prevBtn.addEventListener('click', () => go(current - 1));
     if (nextBtn)    nextBtn.addEventListener('click', () => go(current + 1));
