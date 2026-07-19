@@ -6513,8 +6513,8 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   .nb-book-section {
     height: 100dvh;                 /* topic pages have no top bar now */
     overflow: hidden;
-    padding-top: clamp(12px, 2vh, 24px);
-    padding-bottom: clamp(12px, 2vh, 24px);
+    padding-top: clamp(6px, 1vh, 12px);       /* trim the desk strip up top */
+    padding-bottom: clamp(10px, 1.6vh, 20px);
   }
   .nb-book { height: 100%; display: flex; flex-direction: column; }
   .nb-book.nb-ready .nb-stage { flex: 1 1 auto; min-height: 0; height: auto; }
@@ -6530,15 +6530,26 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 /* Header band at the top of every leaf: running head (topic · page) on the
    left, a handwritten "Date ____" line + the plain-text toggle on the right,
    under a ruled hairline - the authentic notebook header. */
+/* Trim the wasted top space: the header band starts right at the top of the
+   paper (small padding) and hugs the content below it. */
+.nb-book.nb-ready .nb-sheet { padding-top: clamp(10px, 1.5vh, 16px); }
 .nb-headband {
   display: flex; align-items: center; justify-content: space-between;
   gap: 10px; flex-wrap: wrap;
   border-bottom: 1.5px solid var(--nb-box);
-  padding-bottom: 8px; margin-bottom: 16px;
+  padding-bottom: 6px; margin-bottom: clamp(8px, 1.2vh, 12px);
 }
-.nb-hb-run {
-  font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker);
-  font-size: 1.05rem; letter-spacing: 0.01em;
+/* the section content heading sits close under the band */
+.nb-sheet.nb-ported .sec-header { margin-top: 2px; }
+.nb-hb-run { display: inline-flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.nb-hb-title {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(1.05rem, 2.3vh, 1.5rem); letter-spacing: 0.5px;
+  text-transform: uppercase; line-height: 1;
+}
+.nb-hb-page {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-ink2);
+  font-size: 0.92rem; white-space: nowrap;
 }
 .nb-hb-right { display: inline-flex; align-items: center; gap: 12px; }
 .nb-hb-date {
@@ -6565,3 +6576,8 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   .nb-rail-head { flex: 0 0 auto; margin-bottom: 0; }
   .nb-rail-head .nb-to-shelf { flex: 0 0 auto; }
 }
+
+/* ADDENDUM 11 — kill the legacy 56px first-of-type top padding on book pages
+   (it was reserving space for a sticky topbar that no longer exists), so the
+   book starts near the top of the viewport with only a small desk strip. */
+.main > .nb-book-section.nb-section { padding-top: clamp(6px, 1vh, 12px); }

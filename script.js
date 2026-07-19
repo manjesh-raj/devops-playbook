@@ -3999,18 +3999,24 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     });
 
     // ── Notebook header + date band on each leaf (real-notebook feel) ──
-    // A ruled header strip at the top of every page: page label on the left,
-    // a handwritten "Date ____" line + the plain-text toggle on the right.
+    // ONE compact header line: marker topic title + page number on the LEFT,
+    // handwritten "Date ____" on the RIGHT, under a ruled hairline. The old
+    // standalone big centred masthead row is removed to reclaim top space.
     const topic = section.dataset.topic || '';
     leaves.forEach((lf, i) => {
       if (lf.classList.contains('nb-backcover')) return;
       const sheet = lf.querySelector('.nb-sheet');
       if (!sheet || sheet.querySelector('.nb-headband')) return;
+      const isCover = lf.classList.contains('nb-leaf-cover');
       const band = document.createElement('div');
       band.className = 'nb-headband';
       const run = document.createElement('span');
       run.className = 'nb-hb-run';
-      run.textContent = topic + ' · ' + pageLabel(i);
+      // Cover keeps its own big title below, so its band shows just "Cover".
+      run.innerHTML = isCover
+        ? '<span class="nb-hb-page">Cover</span>'
+        : '<span class="nb-hb-title">' + topic + '</span>' +
+          '<span class="nb-hb-page">' + pageLabel(i) + '</span>';
       const rightWrap = document.createElement('span');
       rightWrap.className = 'nb-hb-right';
       const date = document.createElement('span');
@@ -4022,9 +4028,15 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       if (pt) { pt.classList.add('nb-hb-plain'); rightWrap.appendChild(pt); }
       band.appendChild(run);
       band.appendChild(rightWrap);
-      // Drop the old separate "- Page N -" line; the band carries the page.
+      // Drop the old separate "- Page N -" line and the big centred masthead
+      // title row (the band now carries the title + page). The cover's own
+      // .nb-cover-title is left intact.
       const oldPageNum = sheet.querySelector('.nb-pagenum');
       if (oldPageNum) oldPageNum.remove();
+      if (!isCover) {
+        const oldMast = sheet.querySelector('.nb-masthead');
+        if (oldMast) oldMast.remove();
+      }
       const rings = sheet.querySelector('.nb-rings');
       sheet.insertBefore(band, rings ? rings.nextSibling : sheet.firstChild);
     });
