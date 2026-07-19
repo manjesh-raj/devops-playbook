@@ -4,6 +4,48 @@
 ═══════════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════
+   READING PROGRESS (shared: shelf + books)
+══════════════════════════════════════ */
+// A book's reading progress is real, not hardcoded. Every page turn in a
+// notebook records the content page the reader opened (see initNbBooks). The
+// shelf (index.html) reads it back to fill each card's progress bar, so a
+// fresh book shows 0% and progress grows as pages are opened, persisting
+// across visits.
+//
+// Storage: localStorage["nbReadProgress"] = { <bookKey>: [<leafId>, ...] }.
+// The bookKey is the book's cover section id (e.g. "nb-otel-cover"), which the
+// shelf mirrors in its data so the two sides agree without any coupling.
+window.NBProgress = (function () {
+  const KEY = 'nbReadProgress';
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+  function save(all) {
+    try { localStorage.setItem(KEY, JSON.stringify(all)); } catch (e) { /* private mode */ }
+  }
+  return {
+    // Mark one content page of a book as opened. Distinct pages only.
+    record(bookKey, pageId) {
+      if (!bookKey || !pageId) return;
+      const all = load();
+      const seen = all[bookKey] || (all[bookKey] = []);
+      if (seen.indexOf(pageId) === -1) { seen.push(pageId); save(all); }
+    },
+    // How many distinct content pages of this book have been opened.
+    pagesRead(bookKey) {
+      return (load()[bookKey] || []).length;
+    },
+    // Progress as a 0-100 integer, capped so it can never exceed 100%.
+    pct(bookKey, total) {
+      if (!total) return 0;
+      const n = Math.min(this.pagesRead(bookKey), total);
+      return Math.round((n / total) * 100);
+    }
+  };
+})();
+
+/* ══════════════════════════════════════
    THEME TOGGLE
 ══════════════════════════════════════ */
 // Theme toggling is wired by event delegation on any [data-theme-toggle]
@@ -3854,6 +3896,12 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       if (indicator) indicator.textContent = pageLabel(current);
       const activeId = current === N - 1 ? lastContentId : ids[current];
       window.nbCurrentPage[section.id] = activeId;
+      // Record real reading progress: the reader opened a content page
+      // (not the cover at index 0 nor the end leaf at N-1). The shelf reads
+      // this back to fill each book's progress bar.
+      if (current >= 1 && current <= N - 2 && window.NBProgress) {
+        window.NBProgress.record(section.id, ids[current]);
+      }
       if (typeof setActiveSection === 'function') setActiveSection(activeId);
       // Drive the breadcrumb directly from data attributes so it works without
       // a sidebar/nav list (multi-page layout): group = the topic, section =
@@ -4161,14 +4209,82 @@ window.nbCurrentPage = window.nbCurrentPage || {};
    parity with a button. Grouping lives in the HTML (one .shelf-row
    per shelf), so regrouping is a markup move, not a code change.
 ══════════════════════════════════════ */
+// ── Bookshelf landing (index.html) ──
+// One data structure drives every card. Each book carries its own display
+// data plus `key` (its notebook's cover section id) and `pages` (real content
+// page count), so progress bars read straight from NBProgress. Regroup the
+// shelf by moving a book between LIBRARY groups here, not by editing markup.
+window.NB_LIBRARY = [
+  {
+    title: 'Foundations',
+    books: [
+      { key: 'nb-setup-cover',  href: 'workstation-setup.html', title: 'Workstation Setup', emoji: '🖥️', brand: 'var(--accent-ink)', tag: 'Getting started', pages: 10, desc: 'Set up Git, SSH, Docker and your CLI so a fresh machine is ready to ship.' },
+      { key: 'nb-ai-cover',     href: 'ai.html',                title: 'AI Engineering',   emoji: '🤖', brand: 'var(--brand-2)',   tag: 'Intermediate',    pages: 14, desc: 'Work with Claude, prompts and agent workflows in day-to-day engineering.' },
+      { key: 'nb-mcp-cover',    href: 'mcp.html',               title: 'MCP',              emoji: '🔌', brand: 'var(--mcp)',       tag: 'Intermediate',    pages: 10, desc: 'Wire tools and data into models with the Model Context Protocol.' },
+    ],
+  },
+  {
+    title: 'Orchestration & Delivery',
+    books: [
+      { key: 'nb-k8s-cover',    href: 'kubernetes.html', title: 'Kubernetes',  emoji: '☸️', brand: 'var(--red)',    tag: 'Core',         pages: 5,  desc: 'The core objects. Pods, Services and Deployments, and how they fit.' },
+      { key: 'nb-helm-cover',   href: 'helm.html',       title: 'Helm Charts', emoji: '⛵', brand: 'var(--helm)',   tag: 'Intermediate', pages: 15, desc: 'Package and template Kubernetes apps you can version and reuse.' },
+      { key: 'nb-argocd-cover', href: 'argocd.html',     title: 'Argo CD',     emoji: '🐙', brand: 'var(--argocd)', tag: 'Advanced',     pages: 10, desc: 'Run GitOps delivery so the cluster matches what is committed to Git.' },
+    ],
+  },
+  {
+    title: 'Observability',
+    books: [
+      { key: 'nb-otel-cover',   href: 'opentelemetry.html', title: 'OpenTelemetry', emoji: '🔭', brand: 'var(--cyan)', tag: 'Advanced', pages: 18, desc: 'Instrument traces, metrics and logs against one open standard.' },
+      { key: 'nb-adot-cover',   href: 'aws-adot.html',      title: 'AWS ADOT',      emoji: '📡', brand: 'var(--adot)', tag: 'Advanced', pages: 11, desc: 'Ship OpenTelemetry data into AWS with the managed ADOT collector.' },
+    ],
+  },
+];
+
 (function initShelf() {
-  const shelf = document.getElementById('shelf');
-  if (!shelf) return;
-  shelf.querySelectorAll('.shelf-book').forEach(b => {
-    b.addEventListener('keydown', (e) => {
+  const root = document.getElementById('libRoot');
+  if (!root || !Array.isArray(window.NB_LIBRARY)) return;
+
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function cardHTML(b) {
+    const pct = window.NBProgress ? window.NBProgress.pct(b.key, b.pages) : 0;
+    const aria = `Open the ${b.title} notebook. ${b.pages} pages, ${pct}% read.`;
+    return `<a class="lib-book" href="${esc(b.href)}" style="--book:${b.brand}"
+        data-book-key="${esc(b.key)}" data-pages="${b.pages}" aria-label="${esc(aria)}">
+      <div class="lib-book-top">
+        <span class="lib-tag">${esc(b.tag)}</span>
+        <span class="lib-emoji" aria-hidden="true">${b.emoji}</span>
+      </div>
+      <div class="lib-book-body">
+        <div class="lib-book-title">${esc(b.title)}</div>
+        <p class="lib-book-desc">${esc(b.desc)}</p>
+      </div>
+      <div class="lib-book-foot">
+        <div class="lib-foot-meta">
+          <span>${b.pages} pages</span>
+          <span class="lib-pct">${pct}% read</span>
+        </div>
+        <div class="lib-prog"><span style="width:${pct}%"></span></div>
+      </div>
+    </a>`;
+  }
+
+  root.innerHTML = window.NB_LIBRARY.map((group) => `
+    <section class="lib-cat">
+      <div class="lib-cat-head">
+        <h2 class="lib-cat-title">${esc(group.title)}</h2>
+        <span class="lib-cat-count">${group.books.length}</span>
+      </div>
+      <div class="lib-grid">${group.books.map(cardHTML).join('')}</div>
+    </section>`).join('');
+
+  // Links open on Enter natively; add Space for parity with buttons.
+  root.querySelectorAll('.lib-book').forEach((el) => {
+    el.addEventListener('keydown', (e) => {
       if (e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
-        const href = b.getAttribute('href');
+        const href = el.getAttribute('href');
         if (href) window.location.href = href;
       }
     });
