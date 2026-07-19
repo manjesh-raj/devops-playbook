@@ -130,7 +130,8 @@ function setActiveSection(id) {
     const secLabel  = activeLink.querySelector('span:not(.ni):not(.nbadge)');
     if (tbSection) tbSection.textContent = (secLabel ? secLabel.textContent : activeLink.textContent).trim();
     const grpLabel = activeLink.closest('.nav-group')?.querySelector('.nav-group-toggle span:not(.ni):not(.nav-group-chevron)');
-    if (tbGroup && grpLabel) tbGroup.textContent = grpLabel.textContent.trim();
+    // The shelf link is standalone (no nav-group); give it a sensible crumb.
+    if (tbGroup) tbGroup.textContent = grpLabel ? grpLabel.textContent.trim() : (id === 'shelf' ? 'Library' : tbGroup.textContent);
   }
 }
 
@@ -3889,6 +3890,22 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       requestAnimationFrame(() => { cover.style.transform = 'rotateY(0deg)'; });
     }
 
+    // Explicit open swing on the cover — used when the bookshelf opens a book,
+    // so the open animation replays even if the book was opened before.
+    function openSwing() {
+      if (busy) return;
+      opened = true;
+      leaves.forEach(l => l.classList.remove('is-current', 'is-under', 'is-turning'));
+      current = 0;
+      const cover = leaves[0];
+      cover.classList.add('is-current');
+      if (reduced) { render(); return; }
+      busy = true;
+      setT(cover, 'rotateY(-92deg)', false);
+      requestAnimationFrame(() => { cover.style.transform = 'rotateY(0deg)'; });
+      window.setTimeout(() => { busy = false; render(); }, TURN_MS + 40);
+    }
+
     const indexOfId = (hash) => hash ? ids.indexOf(String(hash).replace('#', '')) : -1;
 
     if (prevBtn)    prevBtn.addEventListener('click', () => go(current - 1));
@@ -3929,7 +3946,7 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     io.observe(section);
 
     book.classList.add('nb-ready');
-    return { section, ids, go, render, indexOfId,
+    return { section, ids, go, render, indexOfId, openSwing,
       hasId: (h) => indexOfId(h) >= 0,
       set current(v) { current = v; }, get current() { return current; },
       set opened(v) { opened = v; } };
@@ -3943,7 +3960,9 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     if (!c) return false;
     c.section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     const idx = c.indexOfId(href);
-    if (idx === c.current) c.render(); else c.go(idx);
+    if (idx === 0) c.openSwing();          // opening a book -> replay the open swing
+    else if (idx === c.current) c.render();
+    else c.go(idx);
     return true;
   };
 
@@ -3973,4 +3992,57 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     const idx = c.indexOfId(location.hash);
     if (idx >= 0 && idx !== c.current) c.go(idx);
   });
+})();
+
+/* ══════════════════════════════════════
+   BOOKSHELF LANDING
+   Books are real anchor links to their notebook cover, so they
+   work without JS. Here we (1) route a click through the shared
+   book-open path, (2) support Space to activate, and (3) filter
+   the shelf by title. Grouping lives in the HTML (one .shelf-row
+   per shelf), so regrouping is a markup move, not a code change.
+══════════════════════════════════════ */
+(function initShelf() {
+  const shelf = document.getElementById('shelf');
+  if (!shelf) return;
+  const books  = Array.from(shelf.querySelectorAll('.shelf-book'));
+  const rows   = Array.from(shelf.querySelectorAll('.shelf-row'));
+  const search = document.getElementById('shelfSearch');
+  const empty  = document.getElementById('shelfEmpty');
+
+  // Open the notebook via the shared engine (falls back to the anchor jump).
+  function openBook(href) {
+    if (window.nbBookGoto && window.nbBookGoto(href)) return true;
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ block: 'start' });
+    return false;
+  }
+  books.forEach(b => {
+    b.addEventListener('click', (e) => { e.preventDefault(); openBook(b.getAttribute('href')); });
+    // Anchors already activate on Enter; add Space for parity with buttons.
+    b.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); openBook(b.getAttribute('href')); }
+    });
+  });
+
+  // Client-side title filter.
+  if (search) {
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      let anyVisible = false;
+      rows.forEach(row => {
+        let rowVisible = 0;
+        row.querySelectorAll('.shelf-book').forEach(b => {
+          const match = !q || (b.dataset.bookTitle || '').toLowerCase().includes(q);
+          b.hidden = !match;
+          if (match) rowVisible++;
+        });
+        row.classList.toggle('is-empty', rowVisible === 0);
+        const count = row.querySelector('[data-shelf-count]');
+        if (count) count.textContent = rowVisible;
+        if (rowVisible) anyVisible = true;
+      });
+      if (empty) empty.style.display = anyVisible ? 'none' : 'block';
+    });
+  }
 })();

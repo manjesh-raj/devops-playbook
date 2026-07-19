@@ -6258,3 +6258,120 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 .nb-book--otel  { --nb-marker: var(--cyan); }
 .nb-book--ai    { --nb-marker: var(--accent-ink); }
 .nb-book--setup { --nb-marker: var(--accent-ink); }
+
+/* ═══════════════════════════════════════════════════
+   BOOKSHELF LANDING — the site front door
+   A cozy library: labelled wooden shelves, each topic a
+   book standing on the plank in its own brand colour.
+   Clicking a book opens that notebook (see initShelf in
+   script.js). Fully token-driven so wood (light) and the
+   night-library palette (dark) are a pure theme swap.
+═══════════════════════════════════════════════════ */
+:root {
+  --shelf-room:  radial-gradient(120% 90% at 50% 0%, #1c1712 0%, #120f0c 70%);
+  --shelf-plank: linear-gradient(180deg, #4a3a2b 0%, #33271d 60%, #241b13 100%);
+  --shelf-plank-edge: #5c4632;
+  --shelf-plank-shadow: rgba(0,0,0,0.5);
+  --shelf-label: var(--txt);
+}
+[data-theme="light"] {
+  --shelf-room:  radial-gradient(120% 90% at 50% 0%, #f6efe2 0%, #ece0cc 75%);
+  --shelf-plank: linear-gradient(180deg, #caa878 0%, #b2895a 55%, #96703f 100%);
+  --shelf-plank-edge: #82602f;
+  --shelf-plank-shadow: rgba(90,60,25,0.35);
+  --shelf-label: #4a361f;
+}
+
+.shelf-section {
+  background: var(--shelf-room);
+  max-width: none;
+  padding: 56px clamp(20px, 4vw, 64px) 96px;
+  scroll-margin-top: 72px;
+}
+.shelf-inner { max-width: 1080px; margin: 0 auto; }
+
+/* Header: title + search */
+.shelf-head-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
+}
+.shelf-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.03em; }
+.shelf-sub { font-family: "Caveat", cursive; font-size: 1.5rem; color: var(--accent); margin-top: 2px; }
+.shelf-search { position: relative; flex: 0 1 320px; min-width: 200px; }
+.shelf-search input {
+  width: 100%; font-family: var(--font-body); font-size: 0.95rem;
+  color: var(--txt); background: var(--surface-1);
+  border: 1px solid var(--border-h); border-radius: 10px; padding: 10px 14px 10px 38px;
+}
+.shelf-search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.shelf-search .shelf-search-ico { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); opacity: 0.6; pointer-events: none; }
+
+/* One shelf (row) */
+.shelf-row { margin-bottom: 42px; }
+.shelf-row-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.shelf-row-label { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--shelf-label); }
+.shelf-row-count {
+  font-size: 0.72rem; font-weight: 700; color: var(--txt2);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px;
+}
+.shelf-row-all {
+  margin-left: auto; font-size: 0.8rem; font-weight: 600; color: var(--accent);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 3px;
+}
+.shelf-row-all:hover { color: var(--accent-ink); }
+
+/* The plank + the books standing on it */
+.shelf-deck { position: relative; }
+.shelf-books { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; padding: 0 14px; position: relative; z-index: 1; }
+.shelf-plank {
+  height: 18px; margin: 0 2px; border-radius: 4px;
+  background: var(--shelf-plank);
+  border-top: 1px solid var(--shelf-plank-edge);
+  box-shadow: 0 9px 18px var(--shelf-plank-shadow);
+  position: relative; z-index: 0;
+}
+
+/* A book, cover facing out, in its topic brand colour */
+.shelf-book {
+  --book: var(--brand);
+  width: 108px; min-height: 148px; box-sizing: border-box;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 11px 11px 13px; text-decoration: none;
+  border-radius: 2px 6px 6px 2px;
+  border-left: 4px solid color-mix(in srgb, var(--book) 55%, #000 45%);
+  background: linear-gradient(180deg,
+    var(--book) 0%, var(--book) 42%,
+    color-mix(in srgb, var(--book) 48%, #000 52%) 100%);
+  color: #fff;
+  box-shadow: 0 7px 13px rgba(0,0,0,0.32), inset -7px 0 12px rgba(0,0,0,0.16);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.shelf-book .sb-emoji { font-size: 1.15rem; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3)); }
+.shelf-book .sb-title { font-family: var(--font-display); font-weight: 800; font-size: 0.78rem; line-height: 1.15; text-shadow: 0 1px 2px rgba(0,0,0,0.4); overflow-wrap: normal; word-break: normal; hyphens: auto; }
+.shelf-book .sb-meta { font-size: 0.62rem; font-weight: 600; opacity: 0.9; text-shadow: 0 1px 1px rgba(0,0,0,0.35); }
+/* page-edge stripes on the fore-edge */
+.shelf-book::after {
+  content: ""; position: absolute; top: 4px; bottom: 4px; right: 2px; width: 3px;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 3px);
+  border-radius: 2px; opacity: 0.5;
+}
+.shelf-book:hover, .shelf-book:focus-visible {
+  transform: translateY(-9px) rotate(-1.2deg);
+  box-shadow: 0 18px 28px rgba(0,0,0,0.42), inset -7px 0 12px rgba(0,0,0,0.16);
+}
+.shelf-book:focus-visible { outline: 2px solid var(--txt); outline-offset: 3px; }
+.shelf-book[hidden] { display: none; }
+
+/* empty search state */
+.shelf-empty { color: var(--txt2); font-size: 0.95rem; padding: 8px 14px; display: none; }
+.shelf-row.is-empty { display: none; }
+
+@media (max-width: 560px) {
+  .shelf-book { width: 98px; min-height: 140px; }
+  .shelf-books { gap: 12px; }
+  .shelf-search { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shelf-book { transition: none; }
+  .shelf-book:hover, .shelf-book:focus-visible { transform: none; }
+}
