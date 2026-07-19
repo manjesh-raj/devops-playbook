@@ -4043,12 +4043,18 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     window.setTimeout(land, 160);
   }
 
-  // External hash edits (address bar / back-forward) sync the owning book.
+  // Any hash change (address bar, back/forward, cross-book links, a #shelf
+  // link) routes through the shared opener so we scroll to the OWNING book and
+  // open it at the right page - even when crossing from another book or the
+  // shelf. nbBookGoto handles cover (open swing) vs inner page and always
+  // scrolls the target book into view.
   window.addEventListener('hashchange', () => {
-    const c = controllers.find(ctl => ctl.hasId(location.hash));
-    if (!c) return;
-    const idx = c.indexOfId(location.hash);
-    if (idx >= 0 && idx !== c.current) c.go(idx);
+    if (!location.hash || location.hash === '#shelf') {
+      const shelf = document.getElementById('shelf');
+      if (shelf) shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      return;
+    }
+    window.nbBookGoto(location.hash);
   });
 })();
 
