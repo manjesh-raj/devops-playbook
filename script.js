@@ -58,18 +58,22 @@ function showProject(proj) {
 /* ══════════════════════════════════════
    SIDEBAR & MOBILE MENU
 ══════════════════════════════════════ */
+// The sidebar chrome only exists on the (legacy single-page) layout; the
+// multi-page split has no sidebar, so every access is guarded.
 const sidebar        = document.getElementById('sidebar');
 const hamburger      = document.getElementById('hamburger');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-hamburger.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-  sidebarOverlay.classList.toggle('open');
-});
-sidebarOverlay.addEventListener('click', () => {
-  sidebar.classList.remove('open');
-  sidebarOverlay.classList.remove('open');
-});
+if (hamburger && sidebar && sidebarOverlay) {
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    sidebarOverlay.classList.toggle('open');
+  });
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('open');
+  });
+}
 
 /* ══════════════════════════════════════
    SMOOTH SCROLL HELPER
@@ -79,14 +83,14 @@ function scrollTo_(id) {
   // leaf that may be hidden. nbBookGoto is installed by initNbBook and
   // returns true when it handled a notebook page id.
   if (window.nbBookGoto && window.nbBookGoto(id)) {
-    sidebar.classList.remove('open');
-    sidebarOverlay.classList.remove('open');
+    if (sidebar) sidebar.classList.remove('open');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('open');
     return;
   }
   const el = document.querySelector(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  sidebar.classList.remove('open');
-  sidebarOverlay.classList.remove('open');
+  if (sidebar) sidebar.classList.remove('open');
+  if (sidebarOverlay) sidebarOverlay.classList.remove('open');
 }
 
 // All nav links
@@ -148,7 +152,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       changed = true;
     }
   });
-  if (changed) {
+  if (changed && progFill && progPct) {
     const pct = Math.round((visitedSections.size / sections.length) * 100);
     progFill.style.width = pct + '%';
     progPct.textContent  = pct + '%';
@@ -201,6 +205,7 @@ pickActiveSection();
 ══════════════════════════════════════ */
 (function initParticles() {
   const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;                 // hero canvas only exists on the AI page
   const ctx    = canvas.getContext('2d');
   let W, H, particles = [];
 
@@ -3842,6 +3847,17 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       const activeId = current === N - 1 ? lastContentId : ids[current];
       window.nbCurrentPage[section.id] = activeId;
       if (typeof setActiveSection === 'function') setActiveSection(activeId);
+      // Drive the breadcrumb directly from data attributes so it works without
+      // a sidebar/nav list (multi-page layout): group = the topic, section =
+      // the current leaf's label.
+      const tbGroup = document.getElementById('tbGroup');
+      const tbSection = document.getElementById('tbSection');
+      if (tbGroup && section.dataset.topic) tbGroup.textContent = section.dataset.topic;
+      if (tbSection) {
+        tbSection.textContent = current === N - 1
+          ? 'The End'
+          : (leaves[current].dataset.label || pageLabel(current));
+      }
       tabs.forEach(t => {
         const on = +t.dataset.idx === current;
         t.classList.toggle('is-active', on);
@@ -3975,7 +3991,11 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     });
 
     // ── Bookmark ribbon rail (in-book sub-topic nav + back to shelf) ──
+    // Label source: the leaf's data-label (multi-page), falling back to a
+    // matching sidebar nav link (legacy single-page), then the aria-label.
     function labelFor(i) {
+      const dl = leaves[i].dataset.label;
+      if (dl && dl.trim()) return dl.trim();
       const link = document.querySelector('.nav-link[data-section="' + ids[i] + '"]');
       if (link) {
         const span = link.querySelector('span:not(.ni):not(.nbadge)');
@@ -3987,15 +4007,17 @@ window.nbCurrentPage = window.nbCurrentPage || {};
     const rail = document.createElement('div');
     rail.className = 'nb-bookmarks';
     rail.setAttribute('role', 'tablist');
-    rail.setAttribute('aria-label', (section.getAttribute('aria-label') || 'Notebook') + ' sections');
+    rail.setAttribute('aria-label', (section.dataset.topic || 'Notebook') + ' sections');
+    // Back to the shelf. On the multi-page site this is a real link to
+    // index.html; on the legacy single page (shelf present) it scrolls up.
     const back = document.createElement('a');
-    back.className = 'nb-to-shelf'; back.href = '#shelf';
+    back.className = 'nb-to-shelf'; back.href = 'index.html';
     back.innerHTML = '← Shelf';
     back.setAttribute('aria-label', 'Back to the bookshelf');
     back.addEventListener('click', (e) => {
-      e.preventDefault();
       const shelf = document.getElementById('shelf');
-      if (shelf) shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      if (shelf) { e.preventDefault(); shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
+      // else: let the link navigate to index.html (multi-page)
     });
     rail.appendChild(back);
     leaves.forEach((lf, i) => {
@@ -4070,29 +4092,21 @@ window.nbCurrentPage = window.nbCurrentPage || {};
 
 /* ══════════════════════════════════════
    BOOKSHELF LANDING
-   Books are real anchor links to their notebook cover, so they
-   work without JS. Here we (1) route a click through the shared
-   book-open path, (2) support Space to activate, and (3) filter
-   the shelf by title. Grouping lives in the HTML (one .shelf-row
+   Each book is a real link to its own topic page (e.g. helm.html),
+   so clicking navigates natively. We only add Space-to-activate for
+   parity with a button. Grouping lives in the HTML (one .shelf-row
    per shelf), so regrouping is a markup move, not a code change.
 ══════════════════════════════════════ */
 (function initShelf() {
   const shelf = document.getElementById('shelf');
   if (!shelf) return;
-  const books = Array.from(shelf.querySelectorAll('.shelf-book'));
-
-  // Open the notebook via the shared engine (falls back to the anchor jump).
-  function openBook(href) {
-    if (window.nbBookGoto && window.nbBookGoto(href)) return true;
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ block: 'start' });
-    return false;
-  }
-  books.forEach(b => {
-    b.addEventListener('click', (e) => { e.preventDefault(); openBook(b.getAttribute('href')); });
-    // Anchors already activate on Enter; add Space for parity with buttons.
+  shelf.querySelectorAll('.shelf-book').forEach(b => {
     b.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); openBook(b.getAttribute('href')); }
+      if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        const href = b.getAttribute('href');
+        if (href) window.location.href = href;
+      }
     });
   });
 })();

@@ -6453,3 +6453,45 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   .nb-bm { transition: none; }
   .nb-bm:hover, .nb-bm.is-active { transform: none; }
 }
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 7/8 — multi-page chrome + viewport-fit shelf
+═══════════════════════════════════════════════════ */
+
+/* Breadcrumb "back to shelf" link (topic pages) */
+.tb-home {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.85rem; font-weight: 600; color: var(--accent);
+  text-decoration: none; padding: 3px 9px; border-radius: 7px;
+  transition: var(--trans-fast);
+}
+.tb-home:hover { color: var(--accent-ink); background: var(--surface-2); }
+.tb-home:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* (ADDENDUM 8) The bookshelf fits the viewport on a normal desktop window:
+   all shelves visible at once, books scaled to the available height. On short
+   or narrow screens this block is off and the shelf scrolls normally (the
+   graceful fallback), so nothing is ever clipped or overlapped. */
+@media (min-width: 760px) and (min-height: 680px) {
+  .shelf-section {
+    height: calc(100dvh - 58px);
+    overflow: hidden;
+    padding-top: clamp(14px, 2.4vh, 34px);
+    padding-bottom: clamp(14px, 2.4vh, 34px);
+  }
+  .shelf-inner { height: 100%; display: flex; flex-direction: column; }
+  .shelf-head-row { flex: 0 0 auto; margin-bottom: clamp(6px, 1.4vh, 18px); }
+  .shelf-row { flex: 1 1 0; min-height: 0; margin: 0; display: flex; flex-direction: column; }
+  .shelf-row + .shelf-row { margin-top: clamp(6px, 1.6vh, 20px); }
+  .shelf-row-head { flex: 0 0 auto; margin-bottom: clamp(3px, 0.8vh, 10px); }
+  .shelf-deck { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+  .shelf-books { flex: 1 1 0; min-height: 0; align-items: flex-end; }
+  .shelf-plank { flex: 0 0 auto; height: clamp(12px, 1.8vh, 18px); }
+  .shelf-book {
+    height: 100%; width: auto; aspect-ratio: 112 / 150; min-height: 0;
+    padding: clamp(7px, 1.2vh, 12px) clamp(8px, 0.9vw, 12px) clamp(8px, 1.2vh, 13px);
+  }
+  .shelf-book .sb-emoji { font-size: clamp(0.9rem, 1.7vh, 1.2rem); }
+  .shelf-book .sb-title { font-size: clamp(0.62rem, 1.15vh, 0.8rem); line-height: 1.14; }
+  .shelf-book .sb-meta  { font-size: clamp(0.54rem, 0.9vh, 0.66rem); }
+}

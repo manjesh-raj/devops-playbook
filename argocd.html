@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Argo CD · The DevOps Playbook</title>
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("nbPlain")==="1")document.documentElement.classList.add("nb-plain");}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=25" />
+</head>
+<body>
+<main class="main" id="mainContent">
+    <div class="topbar" id="topbar">
+      <nav class="topbar-crumb" aria-label="Breadcrumb">
+        <a class="tb-home" href="index.html" aria-label="Back to the shelf">📚 Shelf</a>
+        <span class="tb-sep">/</span>
+        <span class="tb-group" id="tbGroup">Argo CD</span>
+        <span class="tb-sep">/</span>
+        <span class="tb-section" id="tbSection">Cover</span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+
+<section id="nb-argocd-cover" data-topic="Argo CD" class="section nb-section nb-book-section nb-book--argocd" aria-roledescription="notebook" aria-label="ARGO CD notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article data-label="Notebook Cover" class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="ARGO CD cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">ARGO CD<small>NOTES</small></div>
+      <div class="nb-cover-band">Your Handy Guide to GitOps with Argo CD</div>
+      <p class="nb-cover-desc">Continuous delivery for Kubernetes, driven from Git. GitOps principles, Argo CD architecture, applications, sync, and access control. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is Argo CD</li><li>GitOps principles</li><li>Architecture</li><li>Applications</li><li>Sync &amp; health</li><li>RBAC</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>Git is the single source of truth</li><li>Automatic drift detection</li><li>Auditable deployments</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Declare it in Git, let Argo do the rest."</div>
+    </div>
+     </article>
+
+     <article data-label="ArgoCD Home" class="nb-leaf" id="argocd-home" role="group" aria-roledescription="page" aria-label="ARGO CD page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
+  <div class="argocd-hero-inner">
+    <div class="hero-badge argocd-badge">🔄 ArgoCD Deep Dive</div>
+    <h1 class="hero-title">Master <span class="argocd-grad-text">ArgoCD &amp; GitOps</span></h1>
+    <p class="hero-sub">From git commit to deployed pod — the declarative, self-healing way to run Kubernetes in production. No more <code>kubectl apply</code> from CI pipelines.</p>
+    <div class="hero-btns">
+      <a href="#argocd-intro" class="btn btn-argocd" onclick="scrollTo_('#argocd-intro');return false;">Start Learning →</a>
+      <a href="#argocd-simulations" class="btn btn-outline" onclick="scrollTo_('#argocd-simulations');return false;">Try Simulations</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-n argocd-stat-n">8</span><span class="stat-l">Modules</span></div>
+      <div class="stat"><span class="stat-n argocd-stat-n">3</span><span class="stat-l">Simulations</span></div>
+      <div class="stat"><span class="stat-n argocd-stat-n">0</span><span class="stat-l">Drift Allowed</span></div>
+      <div class="stat"><span class="stat-n argocd-stat-n">1</span><span class="stat-l">Source of Truth</span></div>
+    </div>
+  </div>
+  <div class="learning-path-preview">
+    <h2 class="lp-heading">Your ArgoCD Journey</h2>
+    <div class="lp-cards">
+      <div class="lp-card argocd-lp-card" onclick="scrollTo_('#argocd-gitops')"><span class="lp-num">01</span><span class="lp-icon">📐</span><strong>GitOps</strong><span>Why &amp; What</span></div>
+      <div class="lp-arrow">→</div>
+      <div class="lp-card argocd-lp-card" onclick="scrollTo_('#argocd-architecture')"><span class="lp-num">02</span><span class="lp-icon">🏗️</span><strong>Architecture</strong><span>How it works</span></div>
+      <div class="lp-arrow">→</div>
+      <div class="lp-card argocd-lp-card" onclick="scrollTo_('#argocd-applications')"><span class="lp-num">03</span><span class="lp-icon">📱</span><strong>Applications</strong><span>Core CRD</span></div>
+      <div class="lp-arrow">→</div>
+      <div class="lp-card argocd-lp-card lp-highlight" onclick="scrollTo_('#argocd-simulations')"><span class="lp-num">04</span><span class="lp-icon">🎮</span><strong>Production</strong><span>Sync &amp; RBAC</span></div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- ══════════════════════ WHAT IS ARGOCD ══════════════════════ -->
+     <article data-label="What is ArgoCD" class="nb-leaf" id="argocd-intro" role="group" aria-roledescription="page" aria-label="ARGO CD page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 01</div>
+    <h2>What is ArgoCD?</h2>
+    <p class="sec-desc">The Kubernetes-native GitOps tool that makes Git your only deployment button — no more kubectl apply from CI pipelines</p>
+  </div>
+
+  <div class="card eli5-card">
+    <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+    <p>Imagine you have a security guard watching your Kubernetes cluster 24/7. He has a rulebook (your Git repo) that says exactly how the cluster should look. If someone sneaks in and manually changes a deployment — the guard notices the difference and puts it back. If you update the rulebook (push to Git) — the guard reads the new rules and updates the cluster automatically. <strong>That security guard is ArgoCD. Git is always boss.</strong></p>
+  </div>
+
+  <!-- The Problem -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-tag-row"><span class="ctag red">😰 Before ArgoCD</span></div>
+      <h3 class="card-title">Push-Based CD (The Problem)</h3>
+      <div class="code-block" style="font-size:0.78rem">
+# Jenkins/GitHub Actions pipeline:
+kubectl apply -f deploy.yaml  # ← credentials in CI!
+kubectl apply -f service.yaml
+kubectl apply -f ingress.yaml</div>
+      <ul style="font-size:0.84rem;color:var(--txt2);margin-top:12px;padding-left:18px;line-height:1.8">
+        <li>Cluster credentials stored in CI secrets</li>
+        <li>No drift detection — cluster can diverge from Git</li>
+        <li>Rollback = re-run old pipeline (if logs kept)</li>
+        <li>Who deployed what? Check CI logs... if they exist</li>
+        <li>Disaster recovery = run pipeline + pray</li>
+      </ul>
+    </div>
+    <div class="card card-accent">
+      <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">✅ With ArgoCD</span></div>
+      <h3 class="card-title">Pull-Based GitOps (The Solution)</h3>
+      <div class="code-block" style="font-size:0.78rem">
+# Only command you need:
+git push origin main
+# ArgoCD detects → syncs → done ✓</div>
+      <ul style="font-size:0.84rem;color:var(--txt2);margin-top:12px;padding-left:18px;line-height:1.8">
+        <li>Zero cluster credentials outside the cluster</li>
+        <li>Self-healing — drift reverted automatically</li>
+        <li>Rollback = <code>git revert</code> + push (90 seconds)</li>
+        <li>Full audit trail in Git — commit, author, PR, time</li>
+        <li>Disaster recovery = <code>argocd sync</code> (cluster rebuilt from Git)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DevOps Analogy -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag blue">🔄 DevOps Analogy</span></div>
+    <h3 class="card-title">ArgoCD = Kubernetes' Desired State Enforcer</h3>
+    <div class="argocd-analogy-grid">
+      <div class="argocd-analogy-item">
+        <span class="argocd-analogy-icon">📁</span>
+        <div><strong>Git</strong><span>Single source of truth — like Terraform state, but for live K8s objects</span></div>
+      </div>
+      <div class="argocd-analogy-item">
+        <span class="argocd-analogy-icon">🔄</span>
+        <div><strong>ArgoCD</strong><span>The reconciliation loop — constantly compares desired (Git) vs actual (cluster)</span></div>
+      </div>
+      <div class="argocd-analogy-item">
+        <span class="argocd-analogy-icon">⚙️</span>
+        <div><strong>Like systemd</strong><span>Defines what should run and restarts it if it drifts — but for your entire Kubernetes cluster</span></div>
+      </div>
+      <div class="argocd-analogy-item">
+        <span class="argocd-analogy-icon">🏗️</span>
+        <div><strong>Like Terraform</strong><span><code>terraform plan</code> = <code>argocd app diff</code> | <code>terraform apply</code> = <code>argocd app sync</code></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Concepts Grid -->
+  <h3 style="font-size:1.05rem;font-weight:700;margin-bottom:14px">Key Concepts</h3>
+  <div class="argocd-concepts-grid">
+    <div class="argocd-concept-card">
+      <div class="argocd-concept-icon">📱</div>
+      <div class="argocd-concept-name">Application</div>
+      <div class="argocd-concept-desc">CRD that defines source (Git path) + destination (cluster/namespace). One app per microservice.</div>
+    </div>
+    <div class="argocd-concept-card">
+      <div class="argocd-concept-icon">🗂️</div>
+      <div class="argocd-concept-name">Project</div>
+      <div class="argocd-concept-desc">RBAC boundary and namespace isolation. Team A can't deploy to Team B's namespace.</div>
+    </div>
+    <div class="argocd-concept-card">
+      <div class="argocd-concept-icon">🔁</div>
+      <div class="argocd-concept-name">Sync</div>
+      <div class="argocd-concept-desc">The act of applying Git state to the cluster. Can be manual (prod) or automated (dev/staging).</div>
+    </div>
+    <div class="argocd-concept-card">
+      <div class="argocd-concept-icon">❤️</div>
+      <div class="argocd-concept-name">Health</div>
+      <div class="argocd-concept-desc">Is the deployed resource actually working? Healthy/Degraded/Progressing — separate from Sync status.</div>
+    </div>
+    <div class="argocd-concept-card">
+      <div class="argocd-concept-icon">📦</div>
+      <div class="argocd-concept-name">Repository</div>
+      <div class="argocd-concept-desc">Git repo, Helm registry, or OCI registry that ArgoCD monitors for changes.</div>
+    </div>
+    <div class="argocd-concept-card">
+      <div class="argocd-concept-icon">🌳</div>
+      <div class="argocd-concept-name">App-of-Apps</div>
+      <div class="argocd-concept-desc">Parent Application that manages child ArgoCD Applications in Git. Scale to 100 services.</div>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="card" style="margin-top:24px">
+    <div class="card-tag-row"><span class="ctag green">📊 Push CD vs GitOps</span></div>
+    <div class="argocd-table-wrap">
+      <table class="argocd-table">
+        <thead><tr><th></th><th>Traditional Push CD</th><th>GitOps (ArgoCD)</th></tr></thead>
+        <tbody>
+          <tr><td>Cluster credentials</td><td>In CI (Jenkins / GitHub Actions secrets)</td><td>Inside cluster only — never leaves</td></tr>
+          <tr><td>Drift detection</td><td>None — cluster silently diverges</td><td>Automatic — alerts on OutOfSync</td></tr>
+          <tr><td>Audit trail</td><td>CI logs (if not rotated)</td><td>Full Git history: author, PR, timestamp</td></tr>
+          <tr><td>Rollback</td><td>Re-run old pipeline, manually</td><td><code>git revert</code> + push → auto-synced</td></tr>
+          <tr><td>Disaster recovery</td><td>Re-run all pipelines + hope</td><td><code>argocd sync</code> → cluster rebuilt from Git</td></tr>
+          <tr><td>Source of truth</td><td>Scattered: CI vars, scripts, manifests</td><td>Git — one place, one history</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ GITOPS PRINCIPLES ══════════════════════ -->
+     <article data-label="GitOps Principles" class="nb-leaf" id="argocd-gitops" role="group" aria-roledescription="page" aria-label="ARGO CD page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 02</div>
+    <h2>GitOps — The Four Principles</h2>
+    <p class="sec-desc">Why GitOps exists and how it fundamentally changes your entire deployment model</p>
+  </div>
+
+  <div class="card eli5-card">
+    <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+    <p>GitOps = Ops done through Git. Instead of clicking buttons or running CLI commands to deploy, you <strong>commit to Git</strong>. An agent inside your cluster reads Git and makes reality match it. Always. Automatically. If reality drifts, the agent corrects it.</p>
+  </div>
+
+  <!-- Four Principles -->
+  <div class="argocd-principles-grid">
+
+    <div class="argocd-principle-card">
+      <div class="argocd-principle-num">1</div>
+      <div class="argocd-principle-body">
+        <div class="argocd-principle-title">Declarative</div>
+        <p>Describe <em>what</em> you want, not <em>how</em> to get there. Write <code>replicas: 3</code> in a YAML file — not <code>kubectl scale --replicas=3</code> in a script. K8s manifests, Helm values, Kustomize overlays — all declarative by nature.</p>
+        <div class="code-block" style="font-size:0.78rem;margin-top:8px">
+# Declarative (GitOps ✓)
+spec:
+  replicas: 3
+  image: myapp:v2.0.0
+
+# Imperative (not GitOps ✗)
+kubectl scale deploy myapp --replicas=3
+kubectl set image deploy/myapp app=myapp:v2.0.0</div>
+      </div>
+    </div>
+
+    <div class="argocd-principle-card">
+      <div class="argocd-principle-num">2</div>
+      <div class="argocd-principle-body">
+        <div class="argocd-principle-title">Versioned &amp; Immutable</div>
+        <p>Git is the single source of truth. Every deployment change is a commit — immutable, timestamped, attributable. You can <code>git log</code> your deployments the same way you <code>git log</code> your code.</p>
+        <div class="code-block" style="font-size:0.78rem;margin-top:8px">
+git log production/values.yaml
+# a3f9c12  alice  bump image to v2.1.0  (2 hours ago)
+# b7e4d80  bob    scale to 5 replicas    (yesterday)
+# c9a1f35  alice  add readinessProbe     (3 days ago)</div>
+      </div>
+    </div>
+
+    <div class="argocd-principle-card">
+      <div class="argocd-principle-num">3</div>
+      <div class="argocd-principle-body">
+        <div class="argocd-principle-title">Pulled Automatically</div>
+        <p>The agent inside the cluster <em>pulls</em> changes from Git — not pushed from outside. The cluster reaches out to Git, not the other way around. <strong>No cluster credentials ever leave the cluster.</strong></p>
+        <div class="argocd-push-pull">
+          <div class="argocd-pp-col">
+            <div class="argocd-pp-label argocd-pp-bad">⬆️ PUSH (Old Way)</div>
+            <div class="argocd-pp-flow">
+              <div class="argocd-pp-box">Developer</div>
+              <div class="argocd-pp-arrow">↓ git push</div>
+              <div class="argocd-pp-box">CI Pipeline</div>
+              <div class="argocd-pp-arrow argocd-pp-danger">↓ kubectl apply<br><small>⚠️ cluster creds in CI!</small></div>
+              <div class="argocd-pp-box">K8s Cluster</div>
+            </div>
+          </div>
+          <div class="argocd-pp-col">
+            <div class="argocd-pp-label argocd-pp-good">⬇️ PULL (GitOps)</div>
+            <div class="argocd-pp-flow">
+              <div class="argocd-pp-box">Developer</div>
+              <div class="argocd-pp-arrow">↓ git push</div>
+              <div class="argocd-pp-box">Git Repo</div>
+              <div class="argocd-pp-arrow argocd-pp-safe">↓ ArgoCD polls<br><small>✅ creds inside cluster</small></div>
+              <div class="argocd-pp-box argocd-pp-box-good">K8s Cluster + ArgoCD</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="argocd-principle-card">
+      <div class="argocd-principle-num">4</div>
+      <div class="argocd-principle-body">
+        <div class="argocd-principle-title">Continuously Reconciled</div>
+        <p>An automated agent runs forever — every 3 minutes by default — comparing desired state (Git) to actual state (cluster). Any drift is corrected. <strong>Self-healing is the default, not a feature you bolt on.</strong></p>
+        <div class="code-block" style="font-size:0.78rem;margin-top:8px">
+# Someone runs this manually at 3am:
+kubectl scale deploy payments-api --replicas=1
+
+# ArgoCD reconciliation loop (next cycle, ~3 min):
+# Desired (Git): replicas: 3
+# Actual (cluster): replicas: 1
+# Action: kubectl apply → replicas restored to 3
+# Alert: "OutOfSync detected and corrected"</div>
+      </div>
+    </div>
+
+  </div><!-- /principles grid -->
+
+  <!-- Real scenario -->
+  <div class="card" style="border:1px solid color-mix(in srgb, var(--argocd,#f97316) 42%, transparent);margin-top:8px">
+    <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">🎬 Real Scenario</span></div>
+    <h3 class="card-title">2:30 AM — Production down. 6 AM — your manager asks questions.</h3>
+    <div class="two-col" style="margin-bottom:0">
+      <div>
+        <p style="font-size:0.84rem;color:var(--txt2);font-weight:600;margin-bottom:6px">❌ Jenkins push pipeline:</p>
+        <p style="font-size:0.83rem;line-height:1.7;color:var(--txt2)">Check CI logs — if not rotated. Hope the deploy step captured the image tag. The approver? Check Jira... maybe. The exact diff? Unavailable.</p>
+      </div>
+      <div>
+        <p style="font-size:0.84rem;color:var(--green);font-weight:600;margin-bottom:6px">✅ GitOps with ArgoCD:</p>
+        <div class="code-block" style="font-size:0.76rem">git log --since="yesterday" \
+  production/values.yaml
+# a3f9c12  alice@co.com
+# "chore: bump payments-api to v2.1.0"
+# PR #482, approved by: bob@co.com
+# 2026-03-17 23:47:33 UTC</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GitOps vs DevOps note -->
+  <div class="card" style="background:var(--glass2)">
+    <div class="card-tag-row"><span class="ctag cyan">💡 GitOps vs DevOps</span></div>
+    <p style="font-size:0.84rem;line-height:1.7;margin:0">GitOps is not a replacement for DevOps — it's the <strong>deployment</strong> part of DevOps done declaratively through Git. CI still builds and tests your code. GitOps takes over at the "deploy to cluster" step. Think of it as: CI builds the artifact, GitOps delivers it.</p>
+  </div>
+
+        <!-- Git Repo Patterns -->
+        <div class="card">
+          <div class="ctag">📁 GitOps Repository Patterns — Where Do All the Files Go?</div>
+          <p style="margin-bottom:16px;color:var(--text2)">One of the first questions every new ArgoCD user has: <strong>"Where do I put my ArgoCD Application YAMLs and Helm charts?"</strong> There are two main patterns:</p>
+          <div class="two-col" style="gap:16px;margin-bottom:20px;">
+            <div style="background:var(--glass2);border-radius:10px;padding:16px;border:1px solid var(--border);">
+              <div style="font-weight:700;color:var(--text1);margin-bottom:8px;">📦 Pattern 1: Monorepo</div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">App code + K8s manifests in the same repo. Simple for small teams.</div>
+              <pre class="ascii" style="background:var(--glass);border-radius:8px;padding:10px;font-size:11px;color:var(--cyan);overflow-x:auto;">sre-autopilot/             ← one repo
+├── app/                   ← FastAPI code
+│   ├── main.py
+│   └── Dockerfile
+├── helm/                  ← Helm chart
+│   ├── Chart.yaml
+│   ├── values.yaml
+│   └── templates/
+└── argocd/                ← ArgoCD apps
+    ├── app-dev.yaml
+    └── app-prod.yaml</pre>
+              <div style="margin-top:10px;font-size:11px;color:#10b981;">✅ Simple · Easy to see code + config together</div>
+              <div style="font-size:11px;color:#ef4444;">❌ ArgoCD re-syncs on every code commit, even non-K8s changes</div>
+            </div>
+            <div style="background:var(--glass2);border-radius:10px;padding:16px;border:1px solid var(--border);">
+              <div style="font-weight:700;color:var(--text1);margin-bottom:8px;">🔀 Pattern 2: App-Config Repo (Recommended)</div>
+              <div style="font-size:12px;color:var(--text2);margin-bottom:10px;">Separate repo for K8s configs. ArgoCD only watches this repo.</div>
+              <pre class="ascii" style="background:var(--glass);border-radius:8px;padding:10px;font-size:11px;color:var(--cyan);overflow-x:auto;">sre-autopilot/             ← app code repo
+├── app/
+│   └── main.py
+└── Dockerfile
+
+sre-autopilot-config/      ← config repo (ArgoCD watches this)
+├── helm/
+│   ├── Chart.yaml
+│   ├── values.yaml
+│   ├── values-dev.yaml
+│   └── values-prod.yaml
+├── argocd-apps/
+│   ├── dev.yaml
+│   └── prod.yaml
+└── README.md</pre>
+              <div style="margin-top:10px;font-size:11px;color:#10b981;">✅ Clean separation · ArgoCD syncs only on config change</div>
+              <div style="font-size:11px;color:#10b981;">✅ CI writes to config repo → ArgoCD picks up automatically</div>
+            </div>
+          </div>
+          <div style="padding:12px 16px;background:rgba(249,115,22,0.08);border:1px solid color-mix(in srgb, var(--argocd) 42%, transparent);border-radius:6px;font-size:13px;color:var(--text2);">
+            🏆 <strong>For the SRE Auto-Pilot project</strong>: Use Pattern 2. The app code repo has the Dockerfile. GitHub Actions builds the image, updates <code>image.tag</code> in <code>values-prod.yaml</code> in the config repo, commits, and pushes. ArgoCD watches the config repo and auto-deploys within 3 minutes.
+          </div>
+        </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ ARGOCD ARCHITECTURE ══════════════════════ -->
+     <article data-label="Architecture" class="nb-leaf" id="argocd-architecture" role="group" aria-roledescription="page" aria-label="ARGO CD page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 03</div>
+    <h2>ArgoCD Architecture — What Runs in Your Cluster</h2>
+    <p class="sec-desc">Five components, one reconciliation loop — all running inside your cluster</p>
+  </div>
+
+  <div class="card eli5-card">
+    <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+    <p>ArgoCD is <strong>5 containers running inside your cluster</strong>. One watches Git. One clones the Git repo and turns templates into real YAML. One compares that YAML to what's actually deployed. One handles the web UI and CLI. One handles who's allowed to log in. That's the whole system.</p>
+  </div>
+
+  <!-- Architecture Diagram -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag blue">🏗️ Architecture Overview</span></div>
+    <div class="argocd-arch-diagram">
+      <div class="argocd-arch-git">
+        <span class="argocd-arch-git-icon">📁</span>
+        <span>Git Repository</span>
+        <span style="font-size:0.75rem;color:var(--txt2)">(GitHub / GitLab / Bitbucket)</span>
+      </div>
+      <div class="argocd-arch-arrow-down">↓ clone &amp; render</div>
+      <div class="argocd-arch-cluster">
+        <div class="argocd-arch-cluster-label">ArgoCD (running in-cluster)</div>
+        <div class="argocd-arch-components">
+          <div class="argocd-arch-box argocd-arch-api">
+            <div class="argocd-arch-box-icon">🌐</div>
+            <div class="argocd-arch-box-name">API Server</div>
+            <div class="argocd-arch-box-desc">REST + gRPC<br>UI / CLI / Webhooks</div>
+          </div>
+          <div class="argocd-arch-box argocd-arch-repo">
+            <div class="argocd-arch-box-icon">📋</div>
+            <div class="argocd-arch-box-name">Repo Server</div>
+            <div class="argocd-arch-box-desc">Clones repos<br>Renders Helm/Kustomize</div>
+          </div>
+          <div class="argocd-arch-box argocd-arch-ctrl">
+            <div class="argocd-arch-box-icon">🔄</div>
+            <div class="argocd-arch-box-name">App Controller</div>
+            <div class="argocd-arch-box-desc">Reconciler loop<br>Diff + Sync</div>
+          </div>
+          <div class="argocd-arch-box argocd-arch-redis">
+            <div class="argocd-arch-box-icon">⚡</div>
+            <div class="argocd-arch-box-name">Redis</div>
+            <div class="argocd-arch-box-desc">Cache layer<br>App state</div>
+          </div>
+          <div class="argocd-arch-box argocd-arch-dex">
+            <div class="argocd-arch-box-icon">🔑</div>
+            <div class="argocd-arch-box-name">Dex</div>
+            <div class="argocd-arch-box-desc">SSO / OIDC<br>GitHub OAuth</div>
+          </div>
+        </div>
+      </div>
+      <div class="argocd-arch-arrow-down">↓ kubectl apply</div>
+      <div class="argocd-arch-k8s">
+        <span class="argocd-arch-git-icon">☸️</span>
+        <span>Kubernetes Cluster (target namespaces)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Components Table -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag orange">⚙️ Component Breakdown</span></div>
+    <div class="argocd-table-wrap">
+      <table class="argocd-table">
+        <thead><tr><th>Component</th><th>Role</th><th>DevOps Analogy</th></tr></thead>
+        <tbody>
+          <tr><td><strong>API Server</strong></td><td>REST + gRPC interface — serves the UI, argocd CLI, and CI webhook calls</td><td>FastAPI entry point for your service</td></tr>
+          <tr><td><strong>Repo Server</strong></td><td>Stateless — clones repos, renders manifests (Helm template, Kustomize build, plain YAML)</td><td>Helm template rendering engine</td></tr>
+          <tr><td><strong>App Controller</strong></td><td>The Kubernetes controller loop — watches cluster state, diffs against Git, triggers sync when OutOfSync</td><td>Kubernetes reconciler (like Deployment controller)</td></tr>
+          <tr><td><strong>Redis</strong></td><td>Caches app state, rendered manifests, cluster info — reduces Git/API calls</td><td>In-memory cache layer</td></tr>
+          <tr><td><strong>Dex</strong></td><td>OIDC identity provider — GitHub OAuth, LDAP, SAML, Microsoft AD</td><td>OAuth2 proxy / identity broker</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Install snippet -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag green">🚀 Installation (5 minutes)</span></div>
+    <div class="cb-header"><span class="cb-lang">Bash</span><span class="cb-title">Install ArgoCD</span></div>
+    <pre class="cb-code"><span class="cmt"># 1. Create namespace</span>
+kubectl create namespace argocd
+
+<span class="cmt"># 2. Apply official manifests</span>
+kubectl apply -n argocd -f \
+  https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+<span class="cmt"># 3. Wait for all pods ready (~60s)</span>
+kubectl wait --for=condition=Ready pod --all \
+  -n argocd --timeout=120s
+
+<span class="cmt"># 4. Get initial admin password</span>
+argocd admin initial-password -n argocd
+
+<span class="cmt"># 5. Port-forward UI for local access</span>
+kubectl port-forward svc/argocd-server \
+  -n argocd 8080:443
+<span class="cmt"># → Open https://localhost:8080  (user: admin)</span></pre>
+  </div>
+
+  <!-- CLI Reference -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag cyan">⌨️ argocd CLI Quick Reference</span></div>
+    <div class="cb-header"><span class="cb-lang">Bash</span><span class="cb-title">Essential ArgoCD commands</span></div>
+    <pre class="cb-code"><span class="cmt"># Authentication</span>
+argocd login localhost:8080 --insecure
+
+<span class="cmt"># Application management</span>
+argocd app list                        <span class="cmt"># List all apps</span>
+argocd app get payments-api            <span class="cmt"># Full details + health</span>
+argocd app diff payments-api           <span class="cmt"># What would change</span>
+argocd app sync payments-api           <span class="cmt"># Trigger sync now</span>
+argocd app wait payments-api --health  <span class="cmt"># Wait until Healthy</span>
+
+<span class="cmt"># History &amp; rollback</span>
+argocd app history payments-api        <span class="cmt"># All revisions</span>
+argocd app rollback payments-api 3     <span class="cmt"># Rollback to revision 3</span>
+
+<span class="cmt"># Troubleshooting</span>
+argocd app logs payments-api           <span class="cmt"># Pod logs via ArgoCD</span>
+argocd admin settings validate         <span class="cmt"># Check config</span></pre>
+  </div>
+
+        <!-- ArgoCD UI Overview -->
+        <div class="card">
+          <div class="ctag">🖥️ The ArgoCD UI — What You'll Actually See</div>
+          <p style="margin-bottom:16px;color:var(--text2)">After <code>kubectl port-forward svc/argocd-server -n argocd 8080:443</code> — open <strong>https://localhost:8080</strong>. Here's what you'll see:</p>
+
+          <!-- UI Mockup: Applications List -->
+          <div style="background:var(--glass);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;font-family:monospace;font-size:13px;">
+            <div style="background:linear-gradient(90deg,#1a1a2e,#16213e);padding:10px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);">
+              <span style="color:#f97316;font-weight:700;font-size:15px;">Argo CD</span>
+              <span style="color:#666;margin-left:auto;font-size:12px">admin | Settings | User Info</span>
+            </div>
+            <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;">
+              <span style="color:var(--text2);font-size:12px;">Applications</span>
+              <span style="margin-left:auto;background:var(--argocd);color:#fff;border-radius:20px;padding:3px 12px;font-size:12px;">+ NEW APP</span>
+            </div>
+            <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px;">
+              <!-- App row 1 - Healthy Synced -->
+              <div style="display:flex;align-items:center;gap:12px;background:var(--glass2);border-radius:8px;padding:10px 14px;">
+                <span style="font-size:18px;">⛵</span>
+                <div style="flex:1;">
+                  <div style="font-weight:700;color:var(--text1)">sre-autopilot-prod</div>
+                  <div style="font-size:11px;color:var(--text2)">namespace: production · chart: sre-autopilot · rev: v1.4.2</div>
+                </div>
+                <span style="background:#10b981;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">✅ Synced</span>
+                <span style="background:#10b981;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">❤️ Healthy</span>
+              </div>
+              <!-- App row 2 - OutOfSync -->
+              <div style="display:flex;align-items:center;gap:12px;background:var(--glass2);border-radius:8px;padding:10px 14px;border:1px solid rgba(249,115,22,0.3);">
+                <span style="font-size:18px;">⛵</span>
+                <div style="flex:1;">
+                  <div style="font-weight:700;color:var(--text1)">sre-autopilot-dev</div>
+                  <div style="font-size:11px;color:var(--text2)">namespace: development · chart: sre-autopilot · rev: v1.4.3</div>
+                </div>
+                <span style="background:#f97316;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">⚠️ OutOfSync</span>
+                <span style="background:#10b981;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">❤️ Healthy</span>
+              </div>
+              <!-- App row 3 - Degraded -->
+              <div style="display:flex;align-items:center;gap:12px;background:var(--glass2);border-radius:8px;padding:10px 14px;border:1px solid rgba(239,68,68,0.3);">
+                <span style="font-size:18px;">🔔</span>
+                <div style="flex:1;">
+                  <div style="font-weight:700;color:var(--text1)">notifications-svc</div>
+                  <div style="font-size:11px;color:var(--text2)">namespace: production · chart: notifications · rev: v0.9.1</div>
+                </div>
+                <span style="background:#10b981;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">✅ Synced</span>
+                <span style="background:#ef4444;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">💔 Degraded</span>
+              </div>
+            </div>
+          </div>
+          <p style="margin-bottom:16px;color:var(--text2);font-size:13px;"><strong>Key insight:</strong> The third app is <strong>Synced but Degraded</strong> — the YAML was applied correctly, but the pod is crashing. This is the most common confusion for new ArgoCD users.</p>
+
+          <!-- App Detail Drill-down -->
+          <div class="ctag" style="margin-bottom:12px;">📱 Click any app → you see the Resource Tree:</div>
+          <div style="background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:12px;font-family:monospace;">
+            <div style="color:var(--argocd);font-weight:700;margin-bottom:10px;">sre-autopilot-prod · production namespace</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;gap:8px;padding-left:0;">
+                <span>📱</span><span style="color:var(--text1)">Application</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Healthy</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:20px;">
+                <span>📦</span><span style="color:var(--text1)">Deployment/fastapi-app</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Healthy</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:40px;">
+                <span>🔵</span><span style="color:#94a3b8)">ReplicaSet/fastapi-app-7d8f9b</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Healthy</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:60px;">
+                <span>🟢</span><span style="color:#94a3b8">Pod/fastapi-app-7d8f9b-xk2p1</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Running</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:20px;">
+                <span>📦</span><span style="color:var(--text1)">Deployment/redis</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Healthy</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:20px;">
+                <span>🔗</span><span style="color:var(--text1)">Service/fastapi-svc</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Healthy</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;padding-left:20px;">
+                <span>🌐</span><span style="color:var(--text1)">Ingress/fastapi-ingress</span>
+                <span style="margin-left:auto;background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;">Healthy</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;padding:10px 14px;background:rgba(249,115,22,0.08);border:1px solid color-mix(in srgb, var(--argocd) 42%, transparent);border-radius:6px;font-size:13px;color:var(--text2);">
+            💡 The resource tree shows every K8s object ArgoCD manages — from Deployment down to individual Pods. Click any resource → see its live YAML, events, and logs without leaving the UI.
+          </div>
+        </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ ARGOCD APPLICATIONS ══════════════════════ -->
+     <article data-label="Applications" class="nb-leaf" id="argocd-applications" role="group" aria-roledescription="page" aria-label="ARGO CD page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 04</div>
+    <h2>ArgoCD Applications — The Core CRD</h2>
+    <p class="sec-desc">Every deployment starts with an Application YAML — the CRD that connects Git to your cluster</p>
+  </div>
+
+  <div class="card eli5-card">
+    <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+    <p>An ArgoCD Application is a YAML file that says: <em>"Watch this Git repo at this path, and keep this Kubernetes namespace in sync with it."</em> That's all. One Application = one microservice. ArgoCD reads this YAML and does all the work.</p>
+  </div>
+
+  <!-- Annotated Application YAML -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag blue">📱 Annotated Application YAML</span></div>
+    <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">payments-api Application</span></div>
+    <pre class="cb-code">apiVersion: argoproj.io/v1alpha1
+kind: Application              <span class="cmt"># ArgoCD custom resource</span>
+metadata:
+  name: payments-api
+  namespace: argocd            <span class="cmt"># Always lives in argocd namespace</span>
+spec:
+  project: production          <span class="cmt"># RBAC boundary (ArgoCD Project)</span>
+
+  source:
+    repoURL: https://github.com/myorg/k8s-config
+    targetRevision: HEAD       <span class="cmt"># Branch / tag / commit SHA</span>
+    path: apps/payments-api    <span class="cmt"># Folder with K8s manifests</span>
+
+    <span class="cmt"># --- For Helm charts, replace path with: ---</span>
+    <span class="cmt"># chart: payments-api</span>
+    <span class="cmt"># helm:</span>
+    <span class="cmt">#   valueFiles: [values.yaml, values-prod.yaml]</span>
+
+  destination:
+    server: https://kubernetes.default.svc  <span class="cmt"># In-cluster target</span>
+    namespace: production
+
+  syncPolicy:
+    automated:
+      selfHeal: true    <span class="cmt"># Revert manual kubectl changes</span>
+      prune: true       <span class="cmt"># Delete K8s resources removed from Git</span>
+    syncOptions:
+      - CreateNamespace=true   <span class="cmt"># Auto-create namespace</span>
+      - ServerSideApply=true   <span class="cmt"># Use server-side apply</span></pre>
+  </div>
+
+  <!-- Sync vs Health -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-tag-row"><span class="ctag blue">🔁 Sync Status</span></div>
+      <h3 class="card-title">Does Git match the cluster?</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+        <div class="argocd-status-pill argocd-synced">✅ Synced — Git and cluster match perfectly</div>
+        <div class="argocd-status-pill argocd-outofsync">⚠️ OutOfSync — Cluster differs from Git</div>
+        <div class="argocd-status-pill argocd-syncing">🔄 Syncing — Applying changes right now</div>
+        <div class="argocd-status-pill argocd-unknown-s">❓ Unknown — Can't determine sync state</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-tag-row"><span class="ctag orange">❤️ Health Status</span></div>
+      <h3 class="card-title">Is the deployed app working?</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+        <div class="argocd-status-pill argocd-healthy">🟢 Healthy — All resources running fine</div>
+        <div class="argocd-status-pill argocd-progressing">🟡 Progressing — Rollout in progress</div>
+        <div class="argocd-status-pill argocd-degraded">🔴 Degraded — Pod crashing / unavailable</div>
+        <div class="argocd-status-pill argocd-suspended">⏸️ Suspended — App paused manually</div>
+        <div class="argocd-status-pill argocd-missing">🚫 Missing — In Git but not in cluster</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background:rgba(249,115,22,.08);border-color:rgba(249,115,22,.3)">
+    <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">💡 Critical Insight</span></div>
+    <p style="font-size:0.84rem;margin:0">You can be <strong>Synced</strong> but <strong>Degraded</strong>. The YAML was applied successfully, but the pod is CrashLoopBackOff. Sync ≠ Healthy. Always check <em>both</em> statuses.</p>
+  </div>
+
+  <!-- Health Explorer -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag green">🎮 Interactive: Health State Explorer</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px">Click any state to see what causes it and how to fix it:</p>
+    <div class="argocd-health-states" id="argoHealthStates">
+      <button class="argocd-health-btn argocd-h-healthy active" onclick="selectArgoHealth('healthy')">🟢 Healthy</button>
+      <button class="argocd-health-btn argocd-h-progressing" onclick="selectArgoHealth('progressing')">🟡 Progressing</button>
+      <button class="argocd-health-btn argocd-h-degraded" onclick="selectArgoHealth('degraded')">🔴 Degraded</button>
+      <button class="argocd-health-btn argocd-h-suspended" onclick="selectArgoHealth('suspended')">⏸️ Suspended</button>
+      <button class="argocd-health-btn argocd-h-unknown" onclick="selectArgoHealth('unknown')">❓ Unknown</button>
+      <button class="argocd-health-btn argocd-h-missing" onclick="selectArgoHealth('missing')">🚫 Missing</button>
+    </div>
+    <div class="argocd-health-detail" id="argoHealthDetail">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+
+  <!-- App-of-Apps -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag purple">🌳 App-of-Apps Pattern</span></div>
+    <h3 class="card-title">Scale to 50 services without losing your mind</h3>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px"><strong>Problem:</strong> 30 microservices = 30 Application YAMLs to manage, update, and troubleshoot individually.</p>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px"><strong>Solution:</strong> One "root" Application that watches a Git folder full of Application YAMLs — and creates them all automatically.</p>
+    <div class="argocd-aoa-tree">
+      <div class="argocd-aoa-root">
+        <span class="argocd-aoa-icon">🌳</span>
+        <span>root-app (Application)</span>
+        <span class="argocd-aoa-arrow">↓ watches /argocd-apps/ in Git</span>
+      </div>
+      <div class="argocd-aoa-children">
+        <div class="argocd-aoa-child"><span>📱</span> payments-api.yaml (Application CRD)</div>
+        <div class="argocd-aoa-child"><span>📱</span> auth-service.yaml (Application CRD)</div>
+        <div class="argocd-aoa-child"><span>📱</span> frontend.yaml (Application CRD)</div>
+        <div class="argocd-aoa-child argocd-aoa-more"><span>📱</span> ... 27 more services</div>
+      </div>
+    </div>
+    <div class="code-block" style="font-size:0.78rem;margin-top:14px">
+# Git repo structure for App-of-Apps:
+argocd-apps/
+├── payments-api.yaml   ← kind: Application
+├── auth-service.yaml   ← kind: Application
+├── frontend.yaml       ← kind: Application
+└── ...
+
+# Root Application just points here:
+spec.source.path: argocd-apps/
+# ArgoCD creates all child Apps automatically</div>
+  </div>
+
+  <!-- ApplicationSet -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag cyan">⚡ ApplicationSet — Next Level</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px">Instead of writing 30 Application YAMLs, write ONE ApplicationSet with a template and a generator. ArgoCD creates all Applications automatically.</p>
+    <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">ApplicationSet with git-directory generator</span></div>
+    <pre class="cb-code">apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: all-services
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/myorg/k8s-config
+      revision: HEAD
+      directories:
+      - path: apps/*         <span class="cmt"># Every folder = one Application</span>
+  template:
+    metadata:
+      name: <span class="str">'{{path.basename}}'</span>  <span class="cmt"># app name = folder name</span>
+    spec:
+      source:
+        path: <span class="str">'{{path}}'</span>
+        repoURL: https://github.com/myorg/k8s-config
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: production</pre>
+  </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ SYNC & HEALTH ══════════════════════ -->
+     <article data-label="Sync &amp; Health" class="nb-leaf" id="argocd-sync" role="group" aria-roledescription="page" aria-label="ARGO CD page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 05</div>
+    <h2>Sync Policies — Auto-Heal, Prune &amp; Waves</h2>
+    <p class="sec-desc">Make your cluster self-healing — and know exactly when not to</p>
+  </div>
+
+  <!-- Manual vs Auto -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag blue">🔁 Manual vs Auto-Sync</span></div>
+    <div class="argocd-table-wrap">
+      <table class="argocd-table">
+        <thead><tr><th></th><th>Manual Sync</th><th>Auto-Sync</th></tr></thead>
+        <tbody>
+          <tr><td><strong>When to use</strong></td><td>Production — human approval gates required</td><td>Dev / staging — deploy on every commit</td></tr>
+          <tr><td><strong>Triggered by</strong></td><td><code>argocd app sync</code> or UI click</td><td>ArgoCD polls Git every ~3 min (or webhook)</td></tr>
+          <tr><td><strong>selfHeal</strong></td><td>Disabled — manual changes survive</td><td>Enabled — manual changes reverted</td></tr>
+          <tr><td><strong>prune</strong></td><td>Disabled — deleted Git resources kept</td><td>Enabled — resources removed from Git get deleted</td></tr>
+          <tr><td><strong>Risk</strong></td><td>Drift builds up if nobody runs sync</td><td>Prune can delete resources if Git has a typo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- selfHeal + prune -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-tag-row"><span class="ctag green">🛡️ selfHeal: true</span></div>
+      <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:10px">Someone runs <code>kubectl scale</code> or <code>kubectl apply</code> manually. ArgoCD detects the drift and reverts it on the next reconciliation cycle.</p>
+      <div class="code-block" style="font-size:0.78rem">
+syncPolicy:
+  automated:
+    selfHeal: true
+# Result:
+# kubectl scale deploy myapp --replicas=1
+# ArgoCD: "OutOfSync detected"
+# ArgoCD: "kubectl apply → replicas: 3 restored"</div>
+    </div>
+    <div class="card">
+      <div class="card-tag-row"><span class="ctag orange">⚠️ prune: true</span></div>
+      <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:10px">You remove a resource from Git (e.g., an old ConfigMap). ArgoCD deletes it from the cluster. Powerful — but dangerous if a YAML file has a typo.</p>
+      <div class="code-block" style="font-size:0.78rem">
+syncPolicy:
+  automated:
+    prune: true
+# ⚠️ Warning: test prune in dev first.
+# If a valid manifest is accidentally
+# excluded from Git, ArgoCD will delete
+# the K8s resource from the cluster.</div>
+    </div>
+  </div>
+
+  <!-- Sync Phases -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag purple">🔄 Sync Phases &amp; Hooks</span></div>
+    <div class="argocd-table-wrap">
+      <table class="argocd-table">
+        <thead><tr><th>Phase</th><th>When it runs</th><th>Common use cases</th></tr></thead>
+        <tbody>
+          <tr><td><strong>PreSync</strong></td><td>Before any resources are applied</td><td>DB migrations, backups, schema validation</td></tr>
+          <tr><td><strong>Sync</strong></td><td>Main resource apply (Deployments, Services, etc.)</td><td>Everything else — the normal deploy</td></tr>
+          <tr><td><strong>PostSync</strong></td><td>After all resources are healthy</td><td>Smoke tests, cache warm-up, Slack notifications</td></tr>
+          <tr><td><strong>SyncFail</strong></td><td>If the sync fails</td><td>Alert on-call team, trigger rollback procedure</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cb-header" style="margin-top:14px"><span class="cb-lang">YAML</span><span class="cb-title">PreSync DB migration hook</span></div>
+    <pre class="cb-code">apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+  annotations:
+    argocd.argoproj.io/hook: PreSync           <span class="cmt"># Run before apply</span>
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/sync-wave: <span class="str">"-1"</span>       <span class="cmt"># Before wave 0</span>
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: myapp:v2.0.0
+        command: [<span class="str">"python"</span>, <span class="str">"manage.py"</span>, <span class="str">"migrate"</span>]</pre>
+  </div>
+
+  <!-- Sync Waves -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag cyan">🌊 Sync Waves — Ordering Resources</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px">Within a sync phase, waves control order. Lower wave number applies first. Use to ensure namespaces and RBAC exist before workloads.</p>
+    <div class="argocd-wave-flow">
+      <div class="argocd-wave-step"><span class="argocd-wave-num">wave: -1</span><span>Namespace creation</span></div>
+      <div class="argocd-wave-arrow">→</div>
+      <div class="argocd-wave-step"><span class="argocd-wave-num">wave: 0</span><span>RBAC + ServiceAccounts</span></div>
+      <div class="argocd-wave-arrow">→</div>
+      <div class="argocd-wave-step"><span class="argocd-wave-num">wave: 1</span><span>ConfigMaps + Secrets</span></div>
+      <div class="argocd-wave-arrow">→</div>
+      <div class="argocd-wave-step argocd-wave-final"><span class="argocd-wave-num">wave: 2</span><span>Deployments + Services</span></div>
+    </div>
+    <div class="code-block" style="font-size:0.78rem;margin-top:14px">
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"  # Deploy after RBAC is ready</div>
+  </div>
+
+  <!-- Sync Windows -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag red">🚫 Sync Windows — Deploy Freezes</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:10px">Block all syncs during maintenance windows, high-traffic periods, or change freezes.</p>
+    <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">No deploys on Friday evenings</span></div>
+    <pre class="cb-code">spec:
+  syncWindows:
+  - kind: deny
+    schedule: <span class="str">"0 17 * * 5"</span>    <span class="cmt"># Fridays 5pm</span>
+    duration: 3h
+    applications:
+    - <span class="str">"*"</span>                    <span class="cmt"># All apps</span>
+    namespaces:
+    - production
+  - kind: allow
+    schedule: <span class="str">"0 2 * * 1-5"</span>   <span class="cmt"># Weekdays 2am</span>
+    duration: 2h              <span class="cmt"># Maintenance window</span>
+    applications:
+    - <span class="str">"*"</span></pre>
+  </div>
+
+  <!-- Interactive Lifecycle Stepper -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">🎮 Interactive: Sync Lifecycle</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px">Step through the complete lifecycle — git push to self-healed:</p>
+    <div class="argocd-lifecycle-sim" id="argoLifecycleSim">
+      <div class="argocd-lcs-display">
+        <div class="argocd-lcs-step-info">
+          <div class="argocd-lcs-counter" id="argoLcsCounter">Step 1 / 6</div>
+          <div class="argocd-lcs-cmd" id="argoLcsCmd"></div>
+          <div class="argocd-lcs-state-row">
+            <span style="font-size:0.8rem;color:var(--txt2)">App Status:</span>
+            <span class="argocd-lcs-badge" id="argoLcsBadge"></span>
+          </div>
+          <div class="argocd-lcs-desc" id="argoLcsDesc"></div>
+        </div>
+      </div>
+      <div class="argocd-lcs-nav">
+        <button class="btn btn-outline" onclick="argoLcsStep(-1)" id="argoLcsPrev">← Prev</button>
+        <button class="btn btn-argocd" onclick="argoLcsStep(1)" id="argoLcsNext">Next →</button>
+      </div>
+    </div>
+  </div>
+
+        <!-- Troubleshooting Guide -->
+        <div class="card">
+          <div class="ctag">🚨 When Things Go Wrong — ArgoCD Troubleshooting Guide</div>
+          <p style="margin-bottom:16px;color:var(--text2)">ArgoCD will show you <em>what</em> is wrong. Here's how to fix the most common problems a new user hits:</p>
+
+          <div style="display:flex;flex-direction:column;gap:14px;">
+
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:14px 16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:#ef4444;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">SYNC FAILED</span>
+                <span style="font-weight:700;color:var(--text1);">ComparisonError: failed to get cluster info</span>
+              </div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:6px;"><strong>Cause:</strong> ArgoCD can't reach the target cluster. Usually a network/cert issue or the cluster was rebuilt.</div>
+              <div class="cb-code" style="margin-top:6px;"><pre style="margin:0;padding:0;font-size:12px;"><code>argocd cluster list                    # Is the cluster registered?
+argocd cluster get https://k8s.svc    # Show cluster connection status
+kubectl get pods -n argocd             # Are ArgoCD pods running?</code></pre></div>
+            </div>
+
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:14px 16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:#ef4444;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">SYNC FAILED</span>
+                <span style="font-weight:700;color:var(--text1);">helm template failed: error converting YAML to JSON</span>
+              </div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:6px;"><strong>Cause:</strong> Your Helm templates have a YAML syntax error. ArgoCD can't render the manifests.</div>
+              <div class="cb-code" style="margin-top:6px;"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># Test locally before pushing to Git:</span>
+helm template my-release ./helm-chart --values values-prod.yaml
+<span class="hljs-comment"># Also lint the chart:</span>
+helm lint ./helm-chart</code></pre></div>
+            </div>
+
+            <div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:14px 16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:var(--argocd);color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">DEGRADED</span>
+                <span style="font-weight:700;color:var(--text1);">Synced ✅ but Degraded 💔 — Pod CrashLoopBackOff</span>
+              </div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:6px;"><strong>Cause:</strong> ArgoCD applied the manifests correctly, but the app is crashing. This is an app bug, not ArgoCD issue.</div>
+              <div class="cb-code" style="margin-top:6px;"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># Get pod details:</span>
+kubectl get pods -n production
+kubectl describe pod &lt;pod-name&gt; -n production   # Events section
+kubectl logs &lt;pod-name&gt; -n production --previous <span class="hljs-comment"># Last crash logs</span>
+<span class="hljs-comment"># In ArgoCD UI: click the Deployment → click the Pod → "Logs" tab</span></code></pre></div>
+            </div>
+
+            <div style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.2);border-radius:10px;padding:14px 16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:var(--argocd);color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">STUCK OUTOFSYNC</span>
+                <span style="font-weight:700;color:var(--text1);">App keeps flipping OutOfSync even after sync</span>
+              </div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:6px;"><strong>Cause:</strong> An external controller (HPA, admission webhook, operator) is modifying the resource after ArgoCD applies it. Classic "drift loop."</div>
+              <div class="cb-code" style="margin-top:6px;"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># See the actual diff causing OutOfSync:</span>
+argocd app diff my-app
+<span class="hljs-comment"># Common fix: use ignoreDifferences in Application YAML:</span>
+spec:
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas   <span class="hljs-comment"># HPA manages replicas — ignore this field</span></code></pre></div>
+            </div>
+
+            <div style="background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;padding:14px 16px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <span style="background:#ef4444;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">SYNC FAILED</span>
+                <span style="font-weight:700;color:var(--text1);">ProgressDeadlineExceeded — rollout stuck</span>
+              </div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:6px;"><strong>Cause:</strong> The new pods can't start within the deadline (600s default). New image broken, resource limits too low, or node doesn't have capacity.</div>
+              <div class="cb-code" style="margin-top:6px;"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># Roll back immediately while you investigate:</span>
+argocd app rollback my-app
+<span class="hljs-comment"># Check what happened to new pods:</span>
+kubectl describe deployment my-app -n production
+kubectl get events -n production --sort-by='.lastTimestamp'</code></pre></div>
+            </div>
+
+          </div>
+          <div style="margin-top:16px;padding:10px 14px;background:rgba(16,185,129,0.08);border:1px solid color-mix(in srgb, #10b981 42%, transparent);border-radius:6px;font-size:13px;color:var(--text2);">
+            💡 <strong>Golden debug rule:</strong> Start in the ArgoCD UI → click the red/orange resource → read the Events tab → then go to kubectl. 90% of issues are visible in the UI without any CLI commands.
+          </div>
+        </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ RBAC & SECURITY ══════════════════════ -->
+     <article data-label="RBAC &amp; Security" class="nb-leaf" id="argocd-rbac" role="group" aria-roledescription="page" aria-label="ARGO CD page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 06</div>
+    <h2>RBAC, Projects &amp; Security</h2>
+    <p class="sec-desc">Who can sync what, to where — and how to keep secrets out of Git</p>
+  </div>
+
+  <!-- Projects -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag blue">🗂️ ArgoCD Projects — Isolation Boundaries</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px">An ArgoCD Project is a namespace isolation + access control boundary for a team. Team A's apps can only deploy to Team A's namespaces from Team A's repos — even if they have ArgoCD access.</p>
+    <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">AppProject for the payments team</span></div>
+    <pre class="cb-code">apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: payments-team
+  namespace: argocd
+spec:
+  description: <span class="str">"Payments team — production namespace"</span>
+
+  <span class="cmt"># Only allow from these repos</span>
+  sourceRepos:
+  - <span class="str">'https://github.com/myorg/payments-*'</span>
+
+  <span class="cmt"># Only allow deploying to these namespaces</span>
+  destinations:
+  - namespace: payments-production
+    server: https://kubernetes.default.svc
+  - namespace: payments-staging
+    server: https://kubernetes.default.svc
+
+  <span class="cmt"># Block dangerous cluster-level resources</span>
+  clusterResourceBlacklist:
+  - group: <span class="str">''</span>
+    kind: Node
+  - group: rbac.authorization.k8s.io
+    kind: ClusterRole</pre>
+  </div>
+
+  <!-- RBAC -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag purple">🔐 RBAC Policy Syntax</span></div>
+    <div class="cb-header"><span class="cb-lang">RBAC</span><span class="cb-title">argocd-rbac-cm ConfigMap</span></div>
+    <pre class="cb-code"><span class="cmt"># Policy format: p, subject, resource, action, object, effect</span>
+<span class="cmt"># Subjects: role:name or user email or group</span>
+<span class="cmt"># Resources: applications, clusters, repositories, projects</span>
+<span class="cmt"># Actions: get, create, update, delete, sync, override, action</span>
+
+p, role:devops, applications, sync,   */*, allow
+p, role:devops, applications, get,    */*, allow
+p, role:devops, applications, delete, */*, deny    <span class="cmt"># No deletes!</span>
+
+p, role:readonly, applications, get,  */*, allow
+p, role:readonly, applications, sync, */*, deny
+
+<span class="cmt"># Assign users to roles</span>
+g, alice@company.com, role:devops
+g, ops-team,          role:devops     <span class="cmt"># SSO group</span>
+g, bob@company.com,   role:readonly</pre>
+  </div>
+
+  <!-- Secrets management -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag red">🔒 Secrets — Never Store Plaintext in Git</span></div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:14px">The biggest ArgoCD mistake: putting <code>password: mysecret</code> in values.yaml and pushing to Git. Here are the production-safe alternatives:</p>
+    <div class="argocd-table-wrap">
+      <table class="argocd-table">
+        <thead><tr><th>Approach</th><th>Tool</th><th>How it works</th><th>Best for</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vault Plugin</strong></td><td>ArgoCD Vault Plugin (AVP)</td><td>Replaces <code>&lt;path:vault/data/prod#key&gt;</code> placeholders at sync time</td><td>✅ HashiCorp Vault users</td></tr>
+          <tr><td><strong>External Secrets</strong></td><td>ESO + AWS SM / GCP SM</td><td>K8s operator syncs secrets from cloud secret stores as K8s Secrets</td><td>✅ Cloud-native teams</td></tr>
+          <tr><td><strong>Sealed Secrets</strong></td><td>Bitnami SealedSecrets</td><td>Encrypt secrets with cluster-specific key, store encrypted YAML in Git</td><td>✅ Simple, K8s native</td></tr>
+          <tr><td><strong>SOPS</strong></td><td>Mozilla SOPS + Age/KMS</td><td>Encrypt YAML values in Git, decrypt at sync time</td><td>✅ Helm chart teams</td></tr>
+          <tr><td><strong>❌ Plaintext</strong></td><td>values.yaml</td><td>Secrets visible in Git history forever</td><td>❌ Never in production</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SSO setup -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag cyan">🔑 SSO Setup — GitHub OAuth via Dex</span></div>
+    <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">argocd-cm ConfigMap — GitHub OAuth</span></div>
+    <pre class="cb-code">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  namespace: argocd
+data:
+  url: https://argocd.mycompany.com
+
+  dex.config: |
+    connectors:
+    - type: github
+      id: github
+      name: GitHub
+      config:
+        clientID: <span class="str">$GITHUB_CLIENT_ID</span>
+        clientSecret: <span class="str">$GITHUB_CLIENT_SECRET</span>
+        orgs:
+        - name: myorg           <span class="cmt"># Restrict to your GitHub org</span>
+          teams:
+          - devops-team
+          - platform-team</pre>
+  </div>
+
+  <!-- Security checklist -->
+  <div class="card" style="border-color:var(--orange)">
+    <div class="card-tag-row"><span class="ctag orange">✅ Security Checklist</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+      <div class="argocd-check-item argocd-check-good">✅ Enable SSO (Dex + GitHub/OIDC) — disable local users in prod</div>
+      <div class="argocd-check-item argocd-check-good">✅ Create ArgoCD Projects per team — restrict source repos and destinations</div>
+      <div class="argocd-check-item argocd-check-good">✅ Use role:readonly for developers — only DevOps/SRE gets sync permission</div>
+      <div class="argocd-check-item argocd-check-good">✅ Never use the default project in production — always create named projects</div>
+      <div class="argocd-check-item argocd-check-good">✅ Use Sealed Secrets / ESO — no plaintext secrets in Git, ever</div>
+      <div class="argocd-check-item argocd-check-good">✅ Enable argocd-notifications for sync failures and degraded apps</div>
+      <div class="argocd-check-item argocd-check-good">✅ Set resource limits on ArgoCD components — it runs in prod cluster</div>
+      <div class="argocd-check-item argocd-check-warn">⚠️ Rotate admin password after initial setup — or disable it entirely</div>
+    </div>
+  </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ HELM + ARGOCD ══════════════════════ -->
+     <article data-label="Helm + ArgoCD" class="nb-leaf" id="argocd-helm" role="group" aria-roledescription="page" aria-label="ARGO CD page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 07 · Connecting the Dots</div>
+    <h2>Helm + ArgoCD — Best of Both Worlds</h2>
+    <p class="sec-desc">Use ArgoCD to continuously deliver your Helm charts — no manual <code>helm upgrade</code> ever again</p>
+  </div>
+
+  <div class="card eli5-card">
+    <div class="card-tag-row"><span class="ctag purple">👶 Why this combination wins</span></div>
+    <p><strong>Helm</strong> gives you templating power — one chart, many environments. <strong>ArgoCD</strong> gives you GitOps delivery — git push = deployed, drift-detected, audited. Together: every <code>helm upgrade</code> is a git commit, every rollback is a <code>git revert</code>, and your cluster is always as-declared-in-Git.</p>
+  </div>
+
+  <!-- ArgoCD Application for Helm -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag blue">📱 ArgoCD Application — Helm Source</span></div>
+    <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">Application pointing to a Helm chart</span></div>
+    <pre class="cb-code">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: payments-api-prod
+  namespace: argocd
+spec:
+  source:
+    repoURL: https://github.com/myorg/k8s-config
+    targetRevision: main
+    path: charts/payments-api   <span class="cmt"># Helm chart directory in Git</span>
+
+    helm:
+      releaseName: payments-api  <span class="cmt"># Override Release.Name</span>
+      valueFiles:
+        - values.yaml            <span class="cmt"># Base values (always applied)</span>
+        - values-production.yaml <span class="cmt"># Env override (higher priority)</span>
+      values: |                  <span class="cmt"># Inline values (highest priority)</span>
+        image:
+          tag: <span class="str">"v2.1.0"</span>
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production</pre>
+  </div>
+
+  <!-- Values strategy -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag green">📁 Values File Strategy — One Chart, Many Environments</span></div>
+    <div class="code-block" style="font-size:0.82rem">
+# Git repo layout — one chart, two ArgoCD Applications:
+charts/payments-api/
+├── Chart.yaml
+├── templates/
+├── values.yaml              ← base defaults (always read)
+├── values-staging.yaml      ← staging ArgoCD App adds this
+└── values-production.yaml   ← prod ArgoCD App adds this</div>
+    <div class="two-col" style="margin-top:14px;margin-bottom:0">
+      <div class="card" style="margin:0">
+        <div class="card-tag-row"><span class="ctag cyan">🔵 Staging App</span></div>
+        <div class="code-block" style="font-size:0.78rem">
+helm:
+  valueFiles:
+    - values.yaml
+    - values-staging.yaml
+  # replicas: 1, debug: true,
+  # image.tag: latest</div>
+      </div>
+      <div class="card" style="margin:0">
+        <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">🟠 Production App</span></div>
+        <div class="code-block" style="font-size:0.78rem">
+helm:
+  valueFiles:
+    - values.yaml
+    - values-production.yaml
+  # replicas: 5, debug: false,
+  # image.tag: v2.1.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Source types -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag orange">📦 ArgoCD Source Types</span></div>
+    <div class="argocd-table-wrap">
+      <table class="argocd-table">
+        <thead><tr><th>Mode</th><th>Config</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Helm chart in Git</strong></td><td><code>path: charts/myapp</code></td><td>Full chart lives in repo — most flexible</td></tr>
+          <tr><td><strong>Helm from registry</strong></td><td><code>chart: myapp</code> + <code>repoURL: oci://</code></td><td>ArgoCD pulls from ArtifactHub/Bitnami</td></tr>
+          <tr><td><strong>Kustomize</strong></td><td><code>kustomize:</code> block</td><td>Patch-based overlays over base manifests</td></tr>
+          <tr><td><strong>Plain YAML</strong></td><td><code>path: manifests/</code></td><td>Just apply all files in folder</td></tr>
+          <tr><td><strong>Jsonnet</strong></td><td><code>directory.jsonnet:</code></td><td>For Jsonnet-based config generation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Gotchas -->
+  <div class="card" style="border-color:var(--orange)">
+    <div class="card-tag-row"><span class="ctag orange">⚠️ Common Gotchas: Helm + ArgoCD</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="argocd-gotcha"><strong>Release.Name mismatch:</strong> By default ArgoCD sets <code>Release.Name</code> = Application name. Always set <code>helm.releaseName</code> explicitly to avoid surprise name changes.</div>
+      <div class="argocd-gotcha"><strong>helm diff vs argocd app diff:</strong> The <code>helm diff</code> plugin doesn't work with ArgoCD's server-side rendering. Use <code>argocd app diff myapp</code> instead.</div>
+      <div class="argocd-gotcha"><strong>Hooks fire twice:</strong> If your Helm chart has hooks AND you configure ArgoCD sync hooks, both fire. Be careful of duplicate DB migrations or smoke tests.</div>
+      <div class="argocd-gotcha"><strong>helm test doesn't run:</strong> <code>helm test</code> commands don't execute via ArgoCD. Use a PostSync hook Job instead.</div>
+      <div class="argocd-gotcha"><strong>Sensitive values in inline values:</strong> The <code>values:</code> block in Application YAML is stored in the cluster as plaintext. Use Sealed Secrets or ESO for anything sensitive.</div>
+    </div>
+  </div>
+
+  <!-- End-to-end flow -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag green">🔄 End-to-End GitOps Flow</span></div>
+    <div class="argocd-e2e-flow">
+      <div class="argocd-e2e-step">
+        <div class="argocd-e2e-num">1</div>
+        <div class="argocd-e2e-body">
+          <strong>Developer edits <code>values-production.yaml</code></strong>
+          <span>Changes <code>image.tag: v2.1.0</code> → creates PR → approved → merged to main</span>
+        </div>
+      </div>
+      <div class="argocd-e2e-arrow">↓</div>
+      <div class="argocd-e2e-step">
+        <div class="argocd-e2e-num">2</div>
+        <div class="argocd-e2e-body">
+          <strong>ArgoCD detects the commit</strong>
+          <span>Polls every 3 min or webhook triggered → OutOfSync detected</span>
+        </div>
+      </div>
+      <div class="argocd-e2e-arrow">↓</div>
+      <div class="argocd-e2e-step">
+        <div class="argocd-e2e-num">3</div>
+        <div class="argocd-e2e-body">
+          <strong>Repo Server renders the chart</strong>
+          <span>Runs <code>helm template payments-api ./charts -f values.yaml -f values-production.yaml</code></span>
+        </div>
+      </div>
+      <div class="argocd-e2e-arrow">↓</div>
+      <div class="argocd-e2e-step">
+        <div class="argocd-e2e-num">4</div>
+        <div class="argocd-e2e-body">
+          <strong>App Controller diffs + applies</strong>
+          <span><code>kubectl apply</code> with only the changed resources — rolling update begins</span>
+        </div>
+      </div>
+      <div class="argocd-e2e-arrow">↓</div>
+      <div class="argocd-e2e-step argocd-e2e-final">
+        <div class="argocd-e2e-num">✅</div>
+        <div class="argocd-e2e-body">
+          <strong>Synced + Healthy</strong>
+          <span>Deployment complete. Zero manual <code>helm upgrade</code>. Full Git audit trail.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        <!-- GitHub Actions + ArgoCD Complete Pipeline -->
+        <div class="card">
+          <div class="ctag">🤖 GitHub Actions → ArgoCD: The Complete CI/CD Pipeline</div>
+          <p style="margin-bottom:14px;color:var(--text2)">The most common real-world pattern: <strong>CI (GitHub Actions) builds and tags the image → writes the new tag to Git → ArgoCD detects the Git change → deploys automatically.</strong> Here's the exact workflow for the SRE Auto-Pilot:</p>
+
+          <div class="ctag" style="margin-bottom:8px;background:rgba(99,102,241,0.1);color:var(--purple);">Step 1 — CI: Build &amp; Push Image (app code repo)</div>
+          <div class="cb-code" style="margin-bottom:16px;"><pre style="margin:0;padding:0;"><code><span class="hljs-comment"># .github/workflows/build.yml  (in sre-autopilot/ repo)</span>
+name: Build and Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build &amp; push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ghcr.io/myorg/sre-autopilot:<span class="hljs-string">${{ github.sha }}</span>
+
+      <span class="hljs-comment"># This is the KEY step — update image tag in the CONFIG repo</span>
+      - name: Update image tag in config repo
+        run: |
+          git clone https://x-access-token:<span class="hljs-string">${{ secrets.CONFIG_REPO_TOKEN }}</span>@github.com/myorg/sre-autopilot-config
+          cd sre-autopilot-config
+          <span class="hljs-comment"># Use yq or sed to update the tag in values-prod.yaml</span>
+          yq e -i '.image.tag = "<span class="hljs-string">${{ github.sha }}</span>"' helm/values-prod.yaml
+          git config user.email "ci@myorg.com"
+          git config user.name "CI Bot"
+          git commit -am "ci: bump image tag to <span class="hljs-string">${{ github.sha }}</span>"
+          git push</code></pre></div>
+
+          <div class="ctag" style="margin-bottom:8px;background:rgba(249,115,22,0.1);color:var(--argocd);">Step 2 — ArgoCD: Auto-detects the Git change (config repo)</div>
+          <div style="background:var(--glass2);border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <span style="background:var(--argocd);color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;">ArgoCD polls every 3 min</span>
+              <span style="color:var(--text2)">OR configure a webhook for instant detection</span>
+            </div>
+            <div style="font-family:monospace;font-size:12px;color:var(--cyan);">
+              ArgoCD sees: values-prod.yaml changed → image.tag: abc123 → new version<br>
+              App status → OutOfSync → ArgoCD runs: helm template → kubectl apply<br>
+              Deployment rollout starts → pods updated → App status → Synced ✅ Healthy ✅
+            </div>
+          </div>
+
+          <div class="ctag" style="margin-bottom:8px;background:rgba(16,185,129,0.1);color:#10b981;">Step 3 — Webhook (optional but recommended for instant deploys)</div>
+          <div class="cb-code" style="margin-bottom:16px;"><pre style="margin:0;padding:0;"><code><span class="hljs-comment"># In sre-autopilot-config repo → Settings → Webhooks → Add webhook</span>
+Payload URL: https://your-argocd.company.com/api/webhook
+Content type: application/json
+Secret: (set same as argocd-secret webhook.github.secret)
+Events: Just the push event ✅
+
+<span class="hljs-comment"># ArgoCD argocd-cm ConfigMap - enable webhook processing:</span>
+data:
+  webhook.github.secret: <span class="hljs-string">"your-webhook-secret"</span></code></pre></div>
+
+          <div style="background:var(--glass2);border-radius:10px;padding:14px 16px;border:1px solid rgba(249,115,22,0.2);">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">🔄 Complete Flow — End to End</div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--purple);color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">1</span><span style="color:var(--text2)">Developer merges PR to <code>main</code> in app code repo</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--purple);color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">2</span><span style="color:var(--text2)">GitHub Actions: builds <code>ghcr.io/myorg/sre-autopilot:abc123</code>, pushes to GHCR</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--purple);color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">3</span><span style="color:var(--text2)">GitHub Actions: clones config repo, <code>yq</code> updates <code>image.tag</code> in <code>values-prod.yaml</code>, pushes commit</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--argocd);color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">4</span><span style="color:var(--text2)">Git webhook fires → ArgoCD notified instantly (no 3-min wait)</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--argocd);color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">5</span><span style="color:var(--text2)">ArgoCD Repo Server clones config repo, runs <code>helm template</code> with new tag</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:var(--argocd);color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">6</span><span style="color:var(--text2)">App Controller diffs rendered YAML vs cluster → OutOfSync → triggers sync</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">7</span><span style="color:var(--text2)">kubectl apply → rolling update → new pods up → old pods terminated → <strong>Synced ✅ Healthy ✅</strong></span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="background:#10b981;color:#fff;border-radius:10px;padding:1px 8px;font-size:10px;min-width:24px;text-align:center;">8</span><span style="color:var(--text2)">Slack notification: "sre-autopilot-prod deployed abc123 — Synced ✅ · 2m 14s"</span></div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ ARGOCD SIMULATIONS ══════════════════════ -->
+     <article data-label="Simulations" class="nb-leaf" id="argocd-simulations" role="group" aria-roledescription="page" aria-label="ARGO CD page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 08 · Hands-On</div>
+    <h2>ArgoCD Simulations</h2>
+    <p class="sec-desc">See sync, drift, and recovery in action — no cluster required</p>
+  </div>
+
+  <!-- Sim 1: Drift Detector -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag" style="background:rgba(249,115,22,.15);color:#f97316">🎮 Sim 1: Drift Detector</span></div>
+    <h3 class="card-title">Watch ArgoCD detect and heal cluster drift</h3>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:16px">Simulate someone running <code>kubectl scale</code> manually and watch ArgoCD respond.</p>
+
+    <div class="argocd-drift-status">
+      <span style="font-size:0.84rem;color:var(--txt2)">Application status:</span>
+      <span class="argocd-sync-badge argocd-sync-synced" id="driftStatusBadge">✅ Synced</span>
+      <span class="argocd-sync-badge" id="driftAutoHealBadge" style="display:none;background:rgba(16,185,129,.15);color:var(--green)">🛡️ Auto-Heal ON</span>
+    </div>
+
+    <div class="argocd-drift-sim">
+      <div class="argocd-drift-panel">
+        <div class="argocd-drift-label">📁 Git State (desired)</div>
+        <div class="argocd-drift-yaml" id="driftGitState">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-api
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: app
+        image: payments-api:v1.0.0</div>
+      </div>
+      <div class="argocd-drift-panel">
+        <div class="argocd-drift-label">☸️ Cluster State (actual)</div>
+        <div class="argocd-drift-yaml" id="driftClusterState">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-api
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: app
+        image: payments-api:v1.0.0</div>
+      </div>
+    </div>
+
+    <div class="argocd-drift-diff" id="driftDiffPanel" style="display:none">
+      <div class="argocd-drift-diff-label">⚠️ Diff detected:</div>
+      <div class="argocd-drift-diff-content" id="driftDiffContent"></div>
+    </div>
+
+    <div class="argocd-drift-btns">
+      <button class="btn btn-outline" onclick="driftIntroduce()" id="driftIntroduceBtn">⚡ Introduce Drift (kubectl scale --replicas=5)</button>
+      <button class="btn btn-argocd" onclick="driftSync()" id="driftSyncBtn" style="display:none">🔄 Sync Now</button>
+      <button class="btn btn-outline" onclick="toggleDriftAutoHeal()" id="driftAutoHealBtn">🛡️ Enable Auto-Heal</button>
+    </div>
+    <div class="argocd-drift-log" id="driftLog"></div>
+  </div>
+
+  <!-- Sim 2: GitOps Pipeline Stepper -->
+  <div class="card">
+    <div class="card-tag-row"><span class="ctag green">🎮 Sim 2: GitOps Pipeline Walkthrough</span></div>
+    <h3 class="card-title">Step through a complete git push → deployed cycle</h3>
+
+    <div class="argocd-pipeline-sim" id="argoPipelineSim">
+      <div class="argocd-ps-progress">
+        <div class="argocd-ps-counter" id="argoStepCounter">Step 1 / 6</div>
+        <div class="argocd-ps-dots" id="argoStepDots"></div>
+      </div>
+      <div class="argocd-ps-body">
+        <div class="argocd-ps-cmd-wrap">
+          <div class="argocd-ps-cmd-label">Command / Action</div>
+          <div class="argocd-ps-cmd" id="argoStepCmd"></div>
+        </div>
+        <div class="argocd-ps-state-wrap">
+          <div class="argocd-ps-cmd-label">ArgoCD Status</div>
+          <div class="argocd-ps-state" id="argoStepState"></div>
+        </div>
+      </div>
+      <div class="argocd-ps-desc" id="argoStepDesc"></div>
+      <div class="argocd-ps-nav">
+        <button class="btn btn-outline" onclick="argoStep(-1)" id="argoStepPrev">← Prev</button>
+        <button class="btn btn-argocd" onclick="argoStep(1)" id="argoStepNext">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sim 3 is the Health State Explorer (already in Applications section) -->
+  <div class="card" style="background:var(--glass2)">
+    <div class="card-tag-row"><span class="ctag cyan">💡 More Simulations</span></div>
+    <p style="font-size:0.84rem;margin:0">The <strong>Health State Explorer</strong> (interactive click-through of all 6 health states) is in the <a href="#argocd-applications" onclick="scrollTo_('#argocd-applications');return false;" style="color:var(--argocd,#f97316)">Applications section →</a>. The <strong>Sync Lifecycle Stepper</strong> (6-step visual walk-through) is in the <a href="#argocd-sync" onclick="scrollTo_('#argocd-sync');return false;" style="color:var(--argocd,#f97316)">Sync &amp; Health section →</a></p>
+  </div>
+
+    </div>
+     </article>
+
+<!-- ══════════════════════ ARGOCD REAL PROJECTS ══════════════════════ -->
+     <article data-label="Real Project" class="nb-leaf" id="argocd-project" role="group" aria-roledescription="page" aria-label="ARGO CD page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">ARGO CD</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
+  <div class="sec-header">
+    <div class="sec-badge argocd-sec-badge">Module 09 · Build It</div>
+    <h2>Real ArgoCD Projects</h2>
+    <p class="sec-desc">Four progressively complex GitOps projects to build, ship, and add to your DevOps portfolio</p>
+  </div>
+
+<div class="proj-card" style="border:1px solid rgba(249,115,22,0.25);">
+          <div class="proj-header">
+            <span class="proj-icon">⛵</span>
+            <div>
+              <h3 class="proj-title">GitOps the SRE Auto-Pilot — Full Walkthrough</h3>
+              <div class="proj-tags">
+                <span class="proj-tag">ArgoCD</span>
+                <span class="proj-tag">Helm</span>
+                <span class="proj-tag">Multi-env</span>
+                <span class="proj-tag">GitHub Actions</span>
+                <span class="proj-tag">GitOps</span>
+              </div>
+            </div>
+            <span class="proj-level intermediate">Intermediate</span>
+          </div>
+          <p>Take the AI SRE Auto-Pilot project (FastAPI + Redis + Postgres) and deploy it entirely via ArgoCD. This walkthrough shows you every file you need to create — not just a roadmap.</p>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">📁 Step 1 — Create the Config Repo Structure</div>
+            <pre class="ascii" style="background:var(--glass);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--cyan);overflow-x:auto;">sre-autopilot-config/           ← new dedicated Git repo
+├── helm/
+│   ├── Chart.yaml
+│   ├── values.yaml             ← base defaults
+│   ├── values-dev.yaml         ← dev overrides
+│   ├── values-prod.yaml        ← prod overrides (CI writes image.tag here)
+│   └── templates/
+│       ├── deployment.yaml
+│       ├── service.yaml
+│       └── ingress.yaml
+└── argocd-apps/
+    ├── sre-dev.yaml            ← ArgoCD Application for dev
+    └── sre-prod.yaml           ← ArgoCD Application for prod</pre>
+          </div>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">📄 Step 2 — Chart.yaml</div>
+            <div class="cb-code"><pre style="margin:0;padding:0;font-size:12px;"><code>apiVersion: v2
+name: sre-autopilot
+description: AI SRE Auto-Pilot — FastAPI + LangGraph + Redis + Postgres
+type: application
+version: 1.0.0        <span class="hljs-comment"># chart version — bump when chart structure changes</span>
+appVersion: "1.0.0"   <span class="hljs-comment"># app version — CI will update this to image tag</span></code></pre></div>
+          </div>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">📄 Step 3 — values.yaml (base defaults)</div>
+            <div class="cb-code"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># helm/values.yaml — default values, safe for dev</span>
+fastapi:
+  image:
+    repository: ghcr.io/myorg/sre-autopilot
+    tag: "latest"          <span class="hljs-comment"># CI will overwrite this in values-prod.yaml</span>
+    pullPolicy: IfNotPresent
+  replicas: 1
+  port: 8000
+  env:
+    ENVIRONMENT: "development"
+    LOG_LEVEL: "debug"
+
+redis:
+  enabled: true
+  image: redis:7-alpine
+  port: 6379
+
+postgres:
+  enabled: true
+  image: postgres:15-alpine
+  port: 5432
+  database: sre_db
+  user: sre_user
+
+ingress:
+  enabled: false          <span class="hljs-comment"># disabled in dev, enabled in prod overlay</span>
+  host: ""</code></pre></div>
+          </div>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">📄 Step 4 — values-prod.yaml (production overlay — CI writes image.tag here)</div>
+            <div class="cb-code"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># helm/values-prod.yaml — production overrides</span>
+fastapi:
+  image:
+    tag: "abc1234"         <span class="hljs-comment"># ← CI (GitHub Actions) writes the git SHA here on every build</span>
+  replicas: 3              <span class="hljs-comment"># scale up for prod</span>
+  env:
+    ENVIRONMENT: "production"
+    LOG_LEVEL: "info"
+
+ingress:
+  enabled: true
+  host: sre-autopilot.company.com
+
+postgres:
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"</code></pre></div>
+          </div>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">📄 Step 5 — ArgoCD Application YAML for prod (argocd-apps/sre-prod.yaml)</div>
+            <div class="cb-code"><pre style="margin:0;padding:0;font-size:12px;"><code>apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sre-autopilot-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/myorg/sre-autopilot-config
+    targetRevision: main
+    path: helm                           <span class="hljs-comment"># folder with the Helm chart</span>
+    helm:
+      releaseName: sre-autopilot
+      valueFiles:
+        - values.yaml                    <span class="hljs-comment"># base</span>
+        - values-prod.yaml               <span class="hljs-comment"># prod overrides (has the image tag)</span>
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      selfHeal: true                     <span class="hljs-comment"># revert any manual kubectl changes</span>
+      prune: true                        <span class="hljs-comment"># delete resources removed from Git</span>
+    syncOptions:
+      - CreateNamespace=true</code></pre></div>
+          </div>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">📄 Step 6 — Apply the Application to the cluster</div>
+            <div class="cb-code"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># One-time bootstrap — apply the Application YAML</span>
+kubectl apply -f argocd-apps/sre-prod.yaml -n argocd
+
+<span class="hljs-comment"># Watch ArgoCD pick it up:</span>
+argocd app list
+argocd app get sre-autopilot-prod
+
+<span class="hljs-comment"># Trigger first sync manually (then it auto-syncs forever after):</span>
+argocd app sync sre-autopilot-prod</code></pre></div>
+          </div>
+
+          <div style="margin:16px 0;">
+            <div style="font-weight:700;color:var(--text1);margin-bottom:10px;">🔄 Step 7 — GitHub Actions: auto-update image tag on every merge to main</div>
+            <div class="cb-code"><pre style="margin:0;padding:0;font-size:12px;"><code><span class="hljs-comment"># .github/workflows/deploy.yml in sre-autopilot/ (app code repo)</span>
+name: Build &amp; GitOps Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t ghcr.io/myorg/sre-autopilot:<span class="hljs-string">${{ github.sha }}</span> .
+      - name: Push image
+        run: docker push ghcr.io/myorg/sre-autopilot:<span class="hljs-string">${{ github.sha }}</span>
+      - name: Update config repo image tag
+        run: |
+          git clone https://x-access-token:<span class="hljs-string">${{ secrets.CONFIG_TOKEN }}</span>@github.com/myorg/sre-autopilot-config
+          cd sre-autopilot-config
+          <span class="hljs-comment"># Update the image tag — ArgoCD will detect this Git change and deploy</span>
+          sed -i 's|tag: ".*"|tag: "<span class="hljs-string">${{ github.sha }}</span>"|' helm/values-prod.yaml
+          git commit -am "ci: deploy <span class="hljs-string">${{ github.sha }}</span>"
+          git push</code></pre></div>
+          </div>
+
+          <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:14px 16px;margin-top:8px;">
+            <div style="font-weight:700;color:#10b981;margin-bottom:8px;">✅ What you now have after these 7 steps:</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text2);">
+              <div>🔀 Every merge to <code>main</code> → automatic deploy to production in ~3 minutes</div>
+              <div>📜 Full audit trail: who deployed what, when, with a git SHA and PR link</div>
+              <div>🔁 Self-healing: someone runs <code>kubectl scale</code> manually → ArgoCD reverts it</div>
+              <div>⏮️ Rollback: <code>argocd app rollback sre-autopilot-prod 3</code> — back in 30 seconds</div>
+              <div>🔍 Disaster recovery: <code>kubectl apply -f argocd-apps/sre-prod.yaml</code> → entire app rebuilt</div>
+            </div>
+          </div>
+        </div>
+
+  <div class="proj-card">
+    <div class="proj-header">
+      <span class="proj-icon">🌳</span>
+      <div class="proj-meta">
+        <h3>Multi-Environment App-of-Apps</h3>
+        <div class="proj-tags"><span>App-of-Apps</span><span>ApplicationSet</span><span>3 environments</span></div>
+      </div>
+      <span class="proj-diff intermediate">Intermediate</span>
+    </div>
+    <p>Build an App-of-Apps structure managing 5 microservices across 3 environments (dev/staging/prod). Use ApplicationSet with a git-directory generator to auto-onboard new services from a folder.</p>
+    <div class="proj-arch">
+      <strong>Architecture:</strong>
+      <div class="arch-flow">root-app (Application) → watches /argocd-apps/prod/ in Git → creates child apps for payments, auth, frontend, notifications, gateway → each deploys to prod namespace</div>
+    </div>
+    <div class="proj-roadmap">
+      <strong>4-step Roadmap:</strong>
+      <ol>
+        <li>Create /argocd-apps/ folder structure in Git (dev, staging, prod subfolders)</li>
+        <li>Create root Application pointing to /argocd-apps/prod/</li>
+        <li>Add child Application YAMLs for each service into Git</li>
+        <li>Replace manual Application YAMLs with a single ApplicationSet and git-directory generator</li>
+      </ol>
+    </div>
+    <div class="proj-skills"><strong>Skills:</strong> App-of-Apps · ApplicationSet · Git structure design · ArgoCD Projects</div>
+  </div>
+
+  <div class="proj-card">
+    <div class="proj-header">
+      <span class="proj-icon">🔔</span>
+      <div class="proj-meta">
+        <h3>ArgoCD Notifications + Slack Pipeline</h3>
+        <div class="proj-tags"><span>Notifications</span><span>Slack</span><span>Alerting</span></div>
+      </div>
+      <span class="proj-diff beginner">Beginner</span>
+    </div>
+    <p>Set up argocd-notifications to send Slack messages on every sync start, sync failure, app degraded, and successful deployment. Include a direct link to the ArgoCD app diff in every message.</p>
+    <div class="proj-arch">
+      <strong>Architecture:</strong>
+      <div class="arch-flow">ArgoCD sync events → argocd-notifications controller → Slack webhook → #deployments channel with status + diff link + pod health</div>
+    </div>
+    <div class="proj-roadmap">
+      <strong>3-step Roadmap:</strong>
+      <ol>
+        <li>Install argocd-notifications controller and configure Slack webhook</li>
+        <li>Create notification templates (sync-started, sync-failed, app-degraded, sync-succeeded)</li>
+        <li>Subscribe applications to notifications via annotations in Application YAML</li>
+      </ol>
+    </div>
+    <div class="proj-skills"><strong>Skills:</strong> argocd-notifications · Slack webhooks · K8s annotations · observability</div>
+  </div>
+
+  <div class="proj-card">
+    <div class="proj-header">
+      <span class="proj-icon">🏗️</span>
+      <div class="proj-meta">
+        <h3>ArgoCD + Crossplane Full GitOps</h3>
+        <div class="proj-tags"><span>Crossplane</span><span>Infrastructure as Code</span><span>Advanced</span></div>
+      </div>
+      <span class="proj-diff advanced">Advanced</span>
+    </div>
+    <p>Use ArgoCD to manage Crossplane XR compositions — provisioning cloud infrastructure (RDS, S3, VPC) via git commit. Both code and infrastructure driven entirely by Git, zero AWS console clicks.</p>
+    <div class="proj-arch">
+      <strong>Architecture:</strong>
+      <div class="arch-flow">git commit (RDS XR spec) → ArgoCD syncs Crossplane XR → Crossplane provisions RDS on AWS → connection secret injected into cluster → app deployment uses it</div>
+    </div>
+    <div class="proj-roadmap">
+      <strong>4-step Roadmap:</strong>
+      <ol>
+        <li>Install Crossplane and AWS provider in cluster (managed by ArgoCD App)</li>
+        <li>Create Crossplane CompositeResourceDefinition for a managed PostgreSQL (XPostgreSQL)</li>
+        <li>Create ArgoCD Application for infrastructure XRs — separate from app deployments</li>
+        <li>App-of-Apps: one root app managing infra-app + services-app, full GitOps end to end</li>
+      </ol>
+    </div>
+    <div class="proj-skills"><strong>Skills:</strong> Crossplane · AWS provider · XRD/Composition · GitOps for infra · ArgoCD App-of-Apps</div>
+  </div>
+
+    </div>
+     </article>
+
+     <article data-label="The End" class="nb-leaf nb-backcover" id="nb-argocd-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Argo Cd notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-argocd-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>🧠 AI Learning Mentor for DevOps Engineers</span>
+    <span>Built with HTML · CSS · Vanilla JS - runs fully offline</span>
+  </div>
+</footer>
+
+<script src="script.js?v=25"></script>
+</body>
+</html>

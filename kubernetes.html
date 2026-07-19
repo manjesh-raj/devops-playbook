@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kubernetes · The DevOps Playbook</title>
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("nbPlain")==="1")document.documentElement.classList.add("nb-plain");}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=25" />
+</head>
+<body>
+<main class="main" id="mainContent">
+    <div class="topbar" id="topbar">
+      <nav class="topbar-crumb" aria-label="Breadcrumb">
+        <a class="tb-home" href="index.html" aria-label="Back to the shelf">📚 Shelf</a>
+        <span class="tb-sep">/</span>
+        <span class="tb-group" id="tbGroup">Kubernetes</span>
+        <span class="tb-sep">/</span>
+        <span class="tb-section" id="tbSection">Cover</span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+
+<section id="nb-k8s-cover" data-topic="Kubernetes" class="section nb-section nb-book-section" aria-roledescription="notebook" aria-label="Kubernetes Notes notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <!-- Leaf 0: cover -->
+     <article data-label="Notebook Cover" class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="Notebook cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">KUBERNETES<small>NOTES</small></div>
+      <div class="nb-cover-band">Your Handy Guide to Kubernetes Concepts</div>
+      <p class="nb-cover-desc">A collection of core Kubernetes concepts, explained in plain words.
+        Every page keeps clear diagrams and short examples.
+        Good for quick revision and interview prep.</p>
+      <div class="nb-diagram">
+        <div class="nb-flow">
+          <span class="nb-node"><b>Kubernetes</b></span><span class="nb-ar">→</span>
+          <span class="nb-node">Core Concepts</span><span class="nb-ar">→</span>
+          <span class="nb-node">Pods &amp; Containers</span>
+        </div>
+        <div class="nb-flow" style="margin-top:10px">
+          <span class="nb-node">Clusters &amp; Nodes</span><span class="nb-ar">→</span>
+          <span class="nb-node">Deployments &amp; Services</span><span class="nb-ar">→</span>
+          <span class="nb-node">Networking</span>
+        </div>
+      </div>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check">
+            <li>Core Concepts</li>
+            <li>Architecture</li>
+            <li>Pods &amp; Controllers</li>
+            <li>Deployments &amp; ReplicaSets</li>
+            <li>Services &amp; Networking</li>
+          </ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list">
+            <li>Easy to understand</li>
+            <li>Well structured</li>
+            <li>Interview focused</li>
+            <li>Quick to revise</li>
+            <li>Handwritten style for better recall</li>
+          </ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">★</span> "Learn, Deploy, and Scale with Kubernetes!"</div>
+    </div>
+     </article>
+
+     <!-- Leaf 1: Page 1 -->
+     <article data-label="What is Kubernetes" class="nb-leaf" id="nb-k8s-intro" role="group" aria-roledescription="page" aria-label="Page 1: What is Kubernetes">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">KUBERNETES NOTES</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. What is Kubernetes?</h3>
+          <p class="nb-p">Kubernetes (K8s) is an open-source container orchestration platform.
+            It automates how containers are deployed, scaled, and networked.
+            It also handles their day-to-day management.
+            Google built it originally. The CNCF maintains it today.</p>
+        </div>
+        <div class="nb-box note" style="align-self:center">
+          <span class="nb-box-title">In Simple Words</span>
+          Kubernetes runs our containerized applications reliably at scale.
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">2. Why Kubernetes Was Created</h3>
+          <p class="nb-p">Earlier we ran containers directly with Docker.
+            Managing many containers by hand became very hard.
+            Kubernetes solves that problem for us.</p>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Problems With Docker Alone</span>
+          <ul class="nb-list">
+            <li>Hard to manage many containers</li>
+            <li>No automatic scaling</li>
+            <li>No self-healing when a container fails</li>
+            <li>No built-in load balancing</li>
+            <li>No rolling updates</li>
+            <li>Networking and storage are hard to wire up</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="nb-h">3. Features of Kubernetes</h3>
+      <ul class="nb-list">
+        <li>Automatic deployment and scaling</li>
+        <li>Self-healing that restarts failed containers</li>
+        <li>Load balancing and service discovery</li>
+        <li>Rolling updates and easy rollback</li>
+        <li>Storage orchestration</li>
+        <li>Secret and configuration management</li>
+        <li>Runs anywhere, whether on-prem, cloud, or hybrid</li>
+      </ul>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">4. Container Orchestration</h3>
+          <p class="nb-p">Container orchestration means managing the full lifecycle of containers for us.
+            That covers deploying, scaling, networking, and monitoring.
+            Kubernetes does all of this automatically.</p>
+          <div class="nb-table-wrap">
+            <table class="nb-table">
+              <thead><tr><th colspan="2">Docker vs Kubernetes</th></tr>
+                <tr><th>Docker</th><th>Kubernetes</th></tr></thead>
+              <tbody>
+                <tr><td>Manages a single container</td><td>Manages many containers</td></tr>
+                <tr><td>Manual process</td><td>Automatic process</td></tr>
+                <tr><td>No scaling or self-healing</td><td>Auto scaling and self-healing</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="nb-diagram" style="align-self:start">
+          <div class="nb-flow vert">
+            <span class="nb-node"><b>Application</b></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node">Pods <small>smallest deployable unit</small></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node"><b>Kubernetes</b><small>orchestration layer</small></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node">Cluster <small>collection of nodes</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 2: Page 2 -->
+     <article data-label="Architecture" class="nb-leaf" id="nb-k8s-architecture" role="group" aria-roledescription="page" aria-label="Page 2: Architecture">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">KUBERNETES NOTES</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. Kubernetes Architecture</h3>
+          <p class="nb-p">Kubernetes follows a master-worker (client-server) architecture.
+            The cluster splits into two main parts.</p>
+          <ul class="nb-list">
+            <li>Control Plane (Master)</li>
+            <li>Worker Nodes</li>
+          </ul>
+        </div>
+        <div class="nb-diagram" style="align-self:start">
+          <div class="nb-flow vert">
+            <span class="nb-node">User / Client</span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node">kubectl</span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node"><b>Kubernetes Cluster</b></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-branch">
+              <span class="nb-node">Control Plane <small>(Master)</small></span>
+              <span class="nb-node">Worker Nodes <small>(Minions)</small></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="nb-h">2. Control Plane Components</h3>
+      <p class="nb-p">The control plane makes global decisions about the cluster, such as scheduling.
+        It watches for cluster events and responds to them.
+        It keeps the cluster in the desired state.</p>
+      <div class="nb-box dash">
+        <ul class="nb-list">
+          <li><b>API Server</b> - the front end of Kubernetes. It exposes the REST API that kubectl and other components use.</li>
+          <li><b>etcd</b> - a consistent, highly available key-value store that holds all cluster data.</li>
+          <li><b>Scheduler</b> - watches for new Pods and picks a Node for each one to run on.</li>
+          <li><b>Controller Manager</b> - runs the controllers that regulate cluster state, such as the Node and ReplicaSet controllers.</li>
+        </ul>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">3. Worker Node Components</h3>
+          <p class="nb-p">Worker Nodes run the containerized applications.
+            They keep the runtime environment healthy.</p>
+          <ul class="nb-list">
+            <li><b>kubelet</b> - makes sure containers are running inside a Pod.</li>
+            <li><b>kube-proxy</b> - maintains the network rules for communication.</li>
+            <li><b>Container Runtime</b> - runs the containers, for example containerd or Docker.</li>
+          </ul>
+        </div>
+        <div class="nb-diagram" style="align-self:start">
+          <div class="nb-podbox" style="min-width:200px">
+            <span class="nb-pod-title">Worker Node</span>
+            <div class="nb-subbox">kubelet</div>
+            <div class="nb-subbox">kube-proxy</div>
+            <div class="nb-subbox">Container Runtime</div>
+            <div class="nb-podrow">
+              <span class="nb-node" style="padding:4px 10px">Pod</span>
+              <span class="nb-node" style="padding:4px 10px">Pod</span>
+              <span class="nb-node" style="padding:4px 10px">Pod</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nb-box note">
+        The control plane manages the cluster. The worker nodes run the applications.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 3: Page 3 -->
+     <article data-label="Pods" class="nb-leaf" id="nb-k8s-pods" role="group" aria-roledescription="page" aria-label="Page 3: Pods">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">KUBERNETES NOTES</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. What is a Pod?</h3>
+          <p class="nb-p">A Pod is the smallest deployable unit in Kubernetes.
+            It wraps one or more containers that share the same network and storage.
+            Containers in a Pod are always scheduled together on the same node.</p>
+        </div>
+        <div class="nb-diagram" style="align-self:start">
+          <div class="nb-podbox">
+            <span class="nb-pod-title">Pod</span>
+            <div class="nb-podrow">
+              <span class="nb-node" style="padding:6px 10px"><span class="mk">Container 1</span><br><span class="nb-chip">||||</span></span>
+              <span class="nb-node" style="padding:6px 10px"><span class="mk">Container 2</span><br><span class="nb-chip">||||</span></span>
+            </div>
+            <div class="nb-subbox">Shared Network (IP)</div>
+            <div class="nb-subbox">Shared Storage (Volumes)</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="nb-h">2. Pod Types</h3>
+      <div class="nb-cols">
+        <ul class="nb-list">
+          <li><b>Single Container Pod</b> - holds only one container.</li>
+          <li><b>Multi Container Pod</b> - holds several containers that work closely together.</li>
+        </ul>
+        <div class="nb-diagram">
+          <div class="nb-flow">
+            <span class="nb-podbox" style="min-width:120px"><span class="nb-pod-title">Single</span><div class="nb-podrow"><span class="nb-chip">C1</span></div></span>
+            <span class="nb-podbox" style="min-width:150px"><span class="nb-pod-title">Multi</span><div class="nb-podrow"><span class="nb-chip">C1</span><span class="nb-chip">C2</span></div></span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="nb-h">3. Pod Lifecycle</h3>
+      <p class="nb-p">A Pod moves through several phases during its life.</p>
+      <div class="nb-diagram">
+        <div class="nb-flow">
+          <span class="nb-node"><b>Pending</b><small>accepted, not yet running</small></span><span class="nb-ar">→</span>
+          <span class="nb-node"><b>Running</b><small>bound to a node, containers up</small></span><span class="nb-ar">→</span>
+          <span class="nb-node"><b>Succeeded</b><small>finished, will not restart</small></span><span class="nb-ar">→</span>
+          <span class="nb-node"><b>Failed</b><small>error, will not restart</small></span><span class="nb-ar">→</span>
+          <span class="nb-node"><b>Unknown</b><small>state cannot be read</small></span>
+        </div>
+      </div>
+
+      <h3 class="nb-h">4. Why a Pod Instead of a Container?</h3>
+      <div class="nb-table-wrap">
+        <table class="nb-table">
+          <thead><tr><th>Container (Docker)</th><th>Pod (Kubernetes)</th></tr></thead>
+          <tbody>
+            <tr><td>Single container</td><td>One or more containers</td></tr>
+            <tr><td>Manual management</td><td>Managed by Kubernetes</td></tr>
+            <tr><td>No self-healing</td><td>Self-healing on failure</td></tr>
+            <tr><td>Scaling is manual</td><td>Auto scaling is possible</td></tr>
+            <tr><td>No shared resources</td><td>Shares network and storage</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nb-box note">
+        <b>In short:</b> a Pod is the smallest unit Kubernetes creates or deploys.
+        It wraps one or more containers that are tightly coupled.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 4: Page 4 -->
+     <article data-label="Deployments &amp; ReplicaSets" class="nb-leaf" id="nb-k8s-deployments" role="group" aria-roledescription="page" aria-label="Page 4: Deployments and ReplicaSets">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">KUBERNETES NOTES</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. Deployments</h3>
+          <p class="nb-p">A Deployment manages ReplicaSets for us.
+            It gives declarative updates for Pods and ReplicaSets.</p>
+          <p class="nb-p">It helps with:</p>
+          <ul class="nb-list">
+            <li>Scaling</li>
+            <li>Rolling updates</li>
+            <li>Rollback</li>
+            <li>Self-healing</li>
+          </ul>
+        </div>
+        <div class="nb-diagram" style="align-self:start">
+          <div class="nb-flow vert">
+            <span class="nb-node"><b>Deployment</b><small>manages ReplicaSet</small></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node"><b>ReplicaSet</b><small>keeps desired count</small></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node">Pods <small>the running copies</small></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">2. ReplicaSet</h3>
+          <p class="nb-p">A ReplicaSet keeps a set number of Pod replicas running at all times.
+            If a Pod fails, the ReplicaSet creates a new one to match the desired count.</p>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Key Points</span>
+          <ul class="nb-list">
+            <li>Ensures high availability</li>
+            <li>Maintains the desired number of Pods</li>
+            <li>Monitors Pods continuously</li>
+            <li>Works under a Deployment</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="nb-h">3. Scaling</h3>
+      <p class="nb-p">We can scale Pods up or down based on the load.</p>
+      <ul class="nb-list">
+        <li><b>Manual scaling</b> - use <code>kubectl scale</code>.</li>
+        <li><b>Auto scaling</b> - use the Horizontal Pod Autoscaler (HPA).</li>
+      </ul>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">4. Rolling Update</h3>
+          <p class="nb-p">A rolling update lets us ship a new version without downtime.
+            New Pods come up one by one while old Pods retire gradually.</p>
+        </div>
+        <div>
+          <h3 class="nb-h">5. Rollback</h3>
+          <p class="nb-p">If an update goes wrong, we can roll back to the last stable version quickly.</p>
+        </div>
+      </div>
+
+      <h3 class="nb-h">6. kubectl Commands (Deployments)</h3>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="kubectl get deployments&#10;kubectl create deployment myapp --image=nginx&#10;kubectl scale deployment myapp --replicas=5&#10;kubectl rollout status deployment/myapp&#10;kubectl set image deployment/myapp nginx=nginx:1.25&#10;kubectl rollout undo deployment/myapp">Copy</button>
+        <span class="nb-code-label">Everyday deployment commands</span>
+<pre><span class="cmt"># list, create and scale</span>
+kubectl get deployments
+kubectl create deployment myapp --image=nginx
+kubectl scale deployment myapp --replicas=5
+
+<span class="cmt"># roll out a new image, then undo if it goes wrong</span>
+kubectl rollout status deployment/myapp
+kubectl set image deployment/myapp nginx=nginx:1.25
+kubectl rollout undo deployment/myapp</pre>
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 5: Page 5 -->
+     <article data-label="Services" class="nb-leaf" id="nb-k8s-services" role="group" aria-roledescription="page" aria-label="Page 5: Services">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">KUBERNETES NOTES</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. Services - Why?</h3>
+          <p class="nb-p">Pods are ephemeral. They can be created, destroyed, and recreated at any time.
+            Their IP addresses keep changing.
+            A Service gives a stable IP and DNS name to reach a group of Pods.
+            It also load balances traffic across them.</p>
+        </div>
+        <div class="nb-diagram" style="align-self:start">
+          <div class="nb-flow vert">
+            <span class="nb-node">Client</span>
+            <span class="nb-ar">→</span>
+            <span class="nb-node"><b>Service</b><small>stable IP / DNS</small></span>
+            <span class="nb-ar">→</span>
+            <span class="nb-branch">
+              <span class="nb-node" style="padding:4px 10px">Pod</span>
+              <span class="nb-node" style="padding:4px 10px">Pod</span>
+              <span class="nb-node" style="padding:4px 10px">Pod</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="nb-h">2. Service Types</h3>
+      <div class="nb-table-wrap">
+        <table class="nb-table">
+          <thead><tr><th>Type</th><th>Use</th><th>Accessible From</th></tr></thead>
+          <tbody>
+            <tr><td>ClusterIP</td><td>Internal communication inside the cluster</td><td>Inside the cluster. This is the default.</td></tr>
+            <tr><td>NodePort</td><td>Expose the service on each Node's IP</td><td>Outside the cluster, via Node IP and port</td></tr>
+            <tr><td>LoadBalancer</td><td>Expose the service to external traffic</td><td>Outside the cluster, via a cloud load balancer</td></tr>
+            <tr><td>ExternalName</td><td>Map the service to an external domain</td><td>Inside the cluster, resolved to a DNS name</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">3. Service Example (ClusterIP)</h3>
+          <div class="nb-box">
+            <ul class="nb-list">
+              <li>Service name: <code>my-service</code></li>
+              <li>Type: ClusterIP</li>
+              <li>Cluster IP: 10.96.0.15</li>
+              <li>Port: 80, target port: 8080</li>
+            </ul>
+            A client inside the cluster reaches <code>my-service:80</code>.
+            Traffic is load balanced across the Pods.
+          </div>
+        </div>
+        <div>
+          <h3 class="nb-h">4. Try It With kubectl</h3>
+          <div class="nb-code">
+            <button class="term-copy nb-copy" data-copy="kubectl expose deployment myapp --port=80 --target-port=8080&#10;kubectl get services&#10;kubectl describe service my-service">Copy</button>
+            <span class="nb-code-label">Create and inspect a Service</span>
+<pre><span class="cmt"># expose a deployment as a ClusterIP service</span>
+kubectl expose deployment myapp \
+  --port=80 --target-port=8080
+
+<span class="cmt"># list and inspect services</span>
+kubectl get services
+kubectl describe service my-service</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 6: end / back cover -->
+     <article data-label="The End" class="nb-leaf nb-backcover" id="nb-k8s-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Kubernetes Notes.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-k8s-cover">↩ Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>✔ Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <!-- decorative dog-ear corners (real controls are the Prev/Next buttons) -->
+     <button type="button" class="nb-corner nb-corner-prev" id="nbCornerPrev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" id="nbCornerNext" aria-hidden="true" tabindex="-1"></button>
+
+    </div><!-- /nb-stage -->
+
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">‹ Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next ›</button>
+    </div>
+
+   </div><!-- /nb-book -->
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>🧠 AI Learning Mentor for DevOps Engineers</span>
+    <span>Built with HTML · CSS · Vanilla JS - runs fully offline</span>
+  </div>
+</footer>
+
+<script src="script.js?v=25"></script>
+</body>
+</html>

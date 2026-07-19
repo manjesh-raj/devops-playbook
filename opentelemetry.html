@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenTelemetry · The DevOps Playbook</title>
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("nbPlain")==="1")document.documentElement.classList.add("nb-plain");}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=25" />
+</head>
+<body>
+<main class="main" id="mainContent">
+    <div class="topbar" id="topbar">
+      <nav class="topbar-crumb" aria-label="Breadcrumb">
+        <a class="tb-home" href="index.html" aria-label="Back to the shelf">📚 Shelf</a>
+        <span class="tb-sep">/</span>
+        <span class="tb-group" id="tbGroup">OpenTelemetry</span>
+        <span class="tb-sep">/</span>
+        <span class="tb-section" id="tbSection">Cover</span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+
+<section id="nb-otel-cover" data-topic="OpenTelemetry" class="section nb-section nb-book-section nb-book--otel" aria-roledescription="notebook" aria-label="OPENTELEMETRY notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article data-label="Notebook Cover" class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">OPEN<small>TELEMETRY</small></div>
+      <div class="nb-cover-band">Your Handy Guide to OpenTelemetry</div>
+      <p class="nb-cover-desc">Vendor-neutral traces, metrics, and logs with OpenTelemetry. The three signals, core concepts, the Collector, and how to instrument code. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is OTel</li><li>Three signals</li><li>Core concepts</li><li>The Collector</li><li>Instrumentation</li><li>Best practices</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>One standard for all signals</li><li>No vendor lock-in</li><li>Instrument once</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Instrument once, send anywhere."</div>
+    </div>
+     </article>
+
+       <article data-label="Home &amp; Path" class="nb-leaf" id="otel-home" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">OpenTelemetry · Start Here</div>
+      <h2>OpenTelemetry — From Zero to Expert</h2>
+      <p class="sec-desc">The vendor-neutral standard for traces, metrics &amp; logs. Learn to see inside any system — no prior observability knowledge required.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Your app is a sealed factory. Things go in, things come out, but when it's slow or broken you're standing outside guessing. <strong>OpenTelemetry (OTel) puts sensors on every machine inside the factory</strong> — every request, every database call, every error — and streams that data out to a screen you can watch. This guide takes you from "what is observability?" all the way to instrumenting a real Python service three different ways and reading the traces like a pro.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🎯 What You'll Be Able to Do</h3>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">🔭</div><h4>Explain OTel</h4><p>Articulate observability vs monitoring and why a vendor-neutral standard matters.</p><span class="tag-pill">Concepts</span></div>
+        <div class="card"><div class="ci">🧩</div><h4>Know the signals</h4><p>Traces, metrics and logs — what each is, and how they correlate.</p><span class="tag-pill">Fundamentals</span></div>
+        <div class="card"><div class="ci">⚡</div><h4>Instrument code</h4><p>Auto, manual and hybrid instrumentation in real Python.</p><span class="tag-pill">Hands-on</span></div>
+        <div class="card"><div class="ci">🚀</div><h4>Ship to a backend</h4><p>Run a Collector and read traces in a Jaeger-style UI.</p><span class="tag-pill">Production</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">👥 Who This Is For</h3>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">✅ Perfect if you are…</span></div>
+          <ul style="color:var(--txt2);padding-left:18px;line-height:1.8">
+            <li>A developer who has never instrumented anything</li>
+            <li>A DevOps/SRE engineer wiring up observability</li>
+            <li>Coming from vendor SDKs (Datadog, New Relic) and want the open standard</li>
+            <li>Curious how traces, metrics and logs actually work</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🧭 Prerequisites</span></div>
+          <ul style="color:var(--txt2);padding-left:18px;line-height:1.8">
+            <li>Basic Python (you can read a Flask route)</li>
+            <li>You've used a terminal and <code>pip install</code></li>
+            <li>That's it — everything else is taught from scratch</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🗺️ The 12-Module Roadmap</h3>
+      <p class="card-sub">Each module builds on the last. Foundations → instrumentation → a driveable simulation → a full project → a cheat-sheet.</p>
+      <div class="card-grid-4">
+        <div class="card"><div class="otel-path-num">01</div><strong>What is OTel?</strong><p>Observability vs monitoring, the CNCF standard.</p></div>
+        <div class="card"><div class="otel-path-num">02</div><strong>Uses &amp; Advantages</strong><p>Problems solved, no lock-in, future-proof.</p></div>
+        <div class="card"><div class="otel-path-num">03</div><strong>Three Signals</strong><p>Traces, metrics, logs and how they correlate.</p></div>
+        <div class="card"><div class="otel-path-num">04</div><strong>Core Concepts</strong><p>Spans, context, resources, OTLP, sampling.</p></div>
+        <div class="card"><div class="otel-path-num">05</div><strong>Architecture</strong><p>App → SDK → OTLP → Collector → Backend.</p></div>
+        <div class="card"><div class="otel-path-num">06</div><strong>Auto Instrumentation</strong><p>Zero-code telemetry in minutes.</p></div>
+        <div class="card"><div class="otel-path-num">07</div><strong>Manual Instrumentation</strong><p>The OTel API/SDK by hand.</p></div>
+        <div class="card"><div class="otel-path-num">08</div><strong>Hybrid</strong><p>Auto baseline + manual enrichment.</p></div>
+        <div class="card otel-path-hot"><div class="otel-path-num">09</div><strong>Interactive Simulation</strong><p>Drive a live trace waterfall. <span class="tag-pill">🎮 centrepiece</span></p></div>
+        <div class="card"><div class="otel-path-num">10</div><strong>Real Project</strong><p>Instrument an orders service end to end.</p></div>
+        <div class="card"><div class="otel-path-num">11</div><strong>Best Practices</strong><p>Conventions, sampling, cost, secrets.</p></div>
+        <div class="card"><div class="otel-path-num">12</div><strong>Cheat-Sheet</strong><p>One-glance API &amp; command reference.</p></div>
+      </div>
+    </div>
+
+    <div class="card devops-box">
+      <div class="card-tag-row"><span class="ctag orange">🔧 Already on AWS?</span></div>
+      <p>This group teaches the <strong>vendor-neutral foundation</strong> — everything here works on any cloud, any backend. For the AWS-specific distribution (X-Ray, CloudWatch, AMP, EKS/ECS/Lambda), see the <a href="#adot-home" style="color:var(--accent);font-weight:600">AWS ADOT</a> group after you finish these fundamentals. ADOT <em>is</em> OpenTelemetry — just pre-wired for AWS.</p>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 01 — What is OpenTelemetry? ─── -->
+       <article data-label="What is OTel?" class="nb-leaf" id="otel-intro" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 01</div>
+      <h2>What is OpenTelemetry?</h2>
+      <p class="sec-desc">The pain of blind debugging — and the open standard that fixes it.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Imagine your body could only tell you "I feel bad" but not <em>where</em> it hurts. That's software without observability. <strong>OpenTelemetry is a universal language for your software to describe exactly what it's doing</strong> — "this request came in, it called the database, that took 800ms, then it crashed here." It's not a product you buy; it's a free, open <em>standard</em> (like USB or HTTP) that every tool agrees to speak, so you're never locked into one vendor.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">😰 The Problem: Blind Debugging</h3>
+      <p class="card-sub">A real 3am incident, without observability:</p>
+      <div class="code-block"><span class="cmt"># The only clue you have:</span>
+[2026-07-09 03:14:22] ERROR: request failed
+
+<span class="cmt"># The questions you CAN'T answer:</span>
+<span class="cmt">#  → Which user? Which endpoint?</span>
+<span class="cmt">#  → Was it the database, the payment API, or our code?</span>
+<span class="cmt">#  → How long did each step take before it died?</span>
+<span class="cmt">#  → Is it every request or just 2%?</span>
+<span class="cmt">#  → Did it start after this morning's deploy?</span>
+
+<span class="cmt"># So you do this for 3 hours:</span>
+$ ssh prod-box-1
+$ grep -i error /var/log/app.log | tail -500   <span class="cmt"># 🤞 hope</span></div>
+      <p class="card-note">Every "grep and pray" session is a symptom of missing telemetry.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag blue">📟 Monitoring</span></div>
+        <p><strong>Known-unknowns.</strong> You decide in advance what to watch, build dashboards for it, and get alerts when a threshold trips.</p>
+        <ul style="color:var(--txt2);padding-left:18px;line-height:1.7">
+          <li>"Is CPU &gt; 90%?" ✅ can answer</li>
+          <li>"Why is <em>this specific</em> user's checkout slow?" ❌ can't — you never built that dashboard</li>
+        </ul>
+        <p class="card-note">Great for the failures you predicted.</p>
+      </div>
+      <div class="card card-accent">
+        <div class="card-tag-row"><span class="ctag green">🔍 Observability</span></div>
+        <p><strong>Unknown-unknowns.</strong> You collect rich, high-cardinality telemetry so you can ask <em>new</em> questions after the fact — without shipping new code.</p>
+        <ul style="color:var(--txt2);padding-left:18px;line-height:1.7">
+          <li>"Show every request from user 4471 that touched the payments DB and took &gt; 1s" ✅</li>
+          <li>Debug failures you never anticipated</li>
+        </ul>
+        <p class="card-note">OpenTelemetry is how you <em>produce</em> that telemetry.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🌐 OTel = The Vendor-Neutral CNCF Standard</h3>
+      <div class="two-col">
+        <div>
+          <p style="color:var(--txt2);line-height:1.8">OpenTelemetry is a <strong>Cloud Native Computing Foundation (CNCF)</strong> project — the same foundation that stewards Kubernetes and Prometheus. It's the <strong>second most active CNCF project</strong> after Kubernetes.</p>
+          <p style="color:var(--txt2);line-height:1.8">It was born in 2019 from the merger of two competing standards — <strong>OpenTracing</strong> and <strong>OpenCensus</strong> — ending the "pick a side" era. OTel defines:</p>
+          <ul style="color:var(--txt2);padding-left:18px;line-height:1.8">
+            <li>An <strong>API</strong> your code calls (stable, never changes under you)</li>
+            <li>An <strong>SDK</strong> that implements it (pluggable)</li>
+            <li><strong>OTLP</strong>, a wire protocol every backend accepts</li>
+            <li><strong>Semantic conventions</strong> — agreed names for attributes</li>
+          </ul>
+        </div>
+        <div class="card devops-box" style="margin-bottom:0">
+          <div class="card-tag-row"><span class="ctag orange">🔧 DevOps/SRE Analogy</span></div>
+          <p><strong>OTel is the "USB-C of observability."</strong> Before USB-C, every device had its own charger. Before OTel, every vendor had its own agent and SDK — instrument once for Datadog, re-instrument for New Relic. With OTel you instrument <em>once</em> and plug into <em>any</em> backend. Switch vendors by changing one config line, not rewriting your code.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li><strong>Monitoring</strong> answers questions you knew to ask; <strong>observability</strong> lets you ask new ones after the fact</li>
+        <li>OpenTelemetry is an open <em>standard</em> (API + SDK + OTLP + conventions), not a product you buy</li>
+        <li>It's a top-tier CNCF project, born from merging OpenTracing + OpenCensus in 2019</li>
+        <li><strong>For DevOps:</strong> instrument once, send anywhere — no vendor lock-in, ever</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Basics primer — a gentle from-zero start ─── -->
+       <article data-label="Basics: Start Here" class="nb-leaf" id="otel-basics" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Start Here</div>
+      <h2>Understanding the Basics of OpenTelemetry</h2>
+      <p class="sec-desc">New to all of this? Read this one page first. No jargon, no setup — just the shape of the whole thing so everything after it clicks.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — the flight recorder</span></div>
+      <p>A plane has a <strong>black box</strong> that quietly records everything it does — altitude, speed, every switch flipped — so that if anything ever goes wrong, someone can replay exactly what happened. <strong>OpenTelemetry is a black box for your software.</strong> It records what your app does as it runs, in one standard format, so that later you (or any tool) can replay it and understand exactly what happened and why.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔭 What OpenTelemetry is, in one sentence</h3>
+      <p style="color:var(--txt2);line-height:1.8;font-size:1.02rem">OpenTelemetry (people write it <strong>“OTel”</strong>) is <strong>a single, vendor-neutral way to capture how your software behaves</strong> while it runs — and then send that information to <em>any</em> tool you like for storing and viewing.</p>
+      <p style="color:var(--txt2);line-height:1.8">Two words in there are the whole point:</p>
+      <ul style="color:var(--txt2);padding-left:18px;line-height:1.85">
+        <li><strong>“single”</strong> — you learn and wire up <em>one</em> thing, not a different one for every tool.</li>
+        <li><strong>“vendor-neutral”</strong> — it belongs to no company. Nobody can lock you in. Switch which tool you view your data in without changing your app.</li>
+      </ul>
+      <div class="callout note" style="margin-top:14px">
+        <span class="callout-icon">i</span>
+        <div class="callout-text"><strong>It is not a product you buy.</strong> It’s an open <em>standard</em> — a shared agreement, like how every country’s plug fits a USB cable. You don’t “buy” USB; everyone just agrees on its shape.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧠 The one mental model to remember</h3>
+      <p class="card-sub">If you take away nothing else, take this. Everything in OTel is just these four steps, left to right:</p>
+      <div class="otel-basics-flow">
+        <div class="obf-step"><div class="obf-ic">✍️</div><div class="obf-t">Instrument once</div><div class="obf-d">Add OTel to your app one time. Now it describes what it’s doing as it runs.</div></div>
+        <div class="obf-arrow" aria-hidden="true">→</div>
+        <div class="obf-step"><div class="obf-ic">📦</div><div class="obf-t">Export via OTLP</div><div class="obf-d">The data leaves your app in <em>one</em> standard envelope format called OTLP.</div></div>
+        <div class="obf-arrow" aria-hidden="true">→</div>
+        <div class="obf-step"><div class="obf-ic">🛰️</div><div class="obf-t">Collector</div><div class="obf-d">A little post-office process receives it, tidies it up, and forwards it on.</div></div>
+        <div class="obf-arrow" aria-hidden="true">→</div>
+        <div class="obf-step"><div class="obf-ic">📊</div><div class="obf-t">Any backend</div><div class="obf-d">It lands in whatever tool you want to look at it in — Jaeger, Grafana, Datadog…</div></div>
+      </div>
+      <p class="card-note">Instrument once → export via OTLP → Collector → any backend. That single arrow is OpenTelemetry.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧩 The building blocks, named simply</h3>
+      <p class="card-sub">You’ll meet these words everywhere. Here’s each one in a single plain sentence — no need to memorise, just recognise them.</p>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">📚</div><h4>API &amp; SDK</h4><p>The <strong>API</strong> is the small set of commands your code calls (“start recording here”). The <strong>SDK</strong> is the engine that actually does the recording.</p></div>
+        <div class="card"><div class="ci">⚡</div><h4>Instrumentation</h4><p>The act of adding those recording calls. <strong>Auto</strong> = OTel adds them for you for common libraries. <strong>Manual</strong> = you add a few yourself for your own logic.</p></div>
+        <div class="card"><div class="ci">🛰️</div><h4>The Collector</h4><p>A separate helper process that <strong>receives, processes, and forwards</strong> your telemetry, so your app doesn’t have to know where it ends up.</p></div>
+        <div class="card"><div class="ci">📦</div><h4>OTLP</h4><p>The <strong>OpenTelemetry Protocol</strong> — the one standard “envelope” format the data travels in. Every OTel-friendly tool can open it.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📡 And the three kinds of data it captures — “the signals”</h3>
+      <p class="card-sub">OTel captures three types of information about your app. One line each here; the very next module takes traces apart in full detail with a real example.</p>
+      <div class="card-grid-4">
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag blue">🧵 Traces</span></div>
+          <p>The <strong>step-by-step journey of one single request</strong> through your system — where it went and how long each hop took.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">📈 Metrics</span></div>
+          <p><strong>Numbers counted over time</strong> — like “requests per second” or “average response time” — great for dashboards.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag purple">📝 Logs</span></div>
+          <p><strong>Individual timestamped messages</strong> your app writes — “user 42 checked out”, “payment declined” — the fine-grained detail.</p>
+        </div>
+        <div class="card devops-box" style="margin-bottom:0">
+          <div class="card-tag-row"><span class="ctag orange">➡️ Next up</span></div>
+          <p>Module <em>Traces, Metrics &amp; Logs</em> teaches all three using one checkout request you can follow end to end.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>OpenTelemetry (“OTel”) is <strong>one vendor-neutral way to capture how your software behaves</strong> — a standard, not a product.</li>
+        <li>The whole model is one line: <strong>instrument once → export via OTLP → Collector → any backend</strong>.</li>
+        <li>Building blocks: the <strong>API/SDK</strong> record, <strong>instrumentation</strong> (auto or manual) adds the recording, the <strong>Collector</strong> forwards, and <strong>OTLP</strong> is the shared envelope.</li>
+        <li>It captures three <strong>signals</strong> — traces, metrics, logs — which the next module unpacks with a worked example.</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 02 — Uses & Advantages ─── -->
+       <article data-label="Uses &amp; Advantages" class="nb-leaf" id="otel-why" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 02</div>
+      <h2>Uses &amp; Advantages</h2>
+      <p class="sec-desc">The concrete problems OTel solves, and why teams standardise on it.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>If every appliance in your kitchen used a different plug, your kitchen would be chaos. OTel gives all your software one shared "plug shape" for telemetry. <strong>You wire things up once, and you can rearrange your monitoring tools freely — forever.</strong></p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🩹 Problems It Solves</h3>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">🧟</div><h4>Tool Sprawl</h4><p>One SDK per vendor, per signal. OTel replaces all of them with one API.</p></div>
+        <div class="card"><div class="ci">🔒</div><h4>Vendor Lock-In</h4><p>Re-instrumenting to switch vendors costs months. OTel makes it a config change.</p></div>
+        <div class="card"><div class="ci">🕳️</div><h4>Blind Spots</h4><p>Correlated traces+metrics+logs replace disconnected, guess-driven debugging.</p></div>
+        <div class="card"><div class="ci">🧩</div><h4>Inconsistency</h4><p>Semantic conventions mean <code>http.request.method</code> means the same thing everywhere.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">💼 Real Use-Cases</h3>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🐌 Latency hunting</span></div>
+          <p style="color:var(--txt2)">A checkout is slow. A trace shows the request spent 812ms of its 900ms inside one un-indexed SQL query. Fix found in 30 seconds, not 3 hours.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">🔗 Distributed tracing</span></div>
+          <p style="color:var(--txt2)">A request crosses 6 microservices. One trace ID stitches the whole journey together so you see exactly which hop failed.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag orange">📉 SLOs from metrics</span></div>
+          <p style="color:var(--txt2)">Emit a latency histogram; compute p99 and an error-budget burn rate to drive alerting that reflects user pain.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag purple">🚀 Deploy correlation</span></div>
+          <p style="color:var(--txt2)">Tag spans with <code>service.version</code>; instantly see error rate jump the moment <code>v2.3.1</code> rolls out.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">✅ Six Advantages</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:10px;">
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🌍 Vendor-neutral</div>Send the same data to Jaeger, Prometheus, Datadog, Grafana — no re-instrumentation.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🎯 One API, all signals</div>Traces, metrics and logs share one API, one SDK, one protocol (OTLP).</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🗣️ Broad language support</div>Stable SDKs for Python, Go, Java, JS/Node, .NET, Rust, Ruby, PHP and more.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🔌 Zero-code start</div>Auto-instrumentation gives you traces for popular libraries with no code edits.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🔮 Future-proof</div>A CNCF standard with the whole industry behind it. Your instrumentation outlives any single vendor.</div>
+        <div style="padding:12px;background:var(--glass2);border-radius:8px;border:1px solid color-mix(in srgb, var(--accent) 42%, transparent);font-size:0.85rem"><div style="font-weight:700;color:var(--accent);margin-bottom:4px">🚫 No lock-in</div>The Collector re-routes data centrally — swap backends without touching a single app.</div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>OTel kills tool sprawl, vendor lock-in and inconsistent naming in one move</li>
+        <li>Real wins: latency hunting, distributed tracing, SLOs, deploy correlation</li>
+        <li>Instrument once → send anywhere; the Collector lets you re-route without redeploying apps</li>
+        <li><strong>For DevOps:</strong> standardising on OTel is a strategic bet that pays off every time you change tooling</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 03 — The Three Signals ─── -->
+       <article data-label="Three Signals" class="nb-leaf" id="otel-signals" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 03</div>
+      <h2>The Three Signals</h2>
+      <p class="sec-desc">Traces, metrics and logs from scratch — and how they lock together.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — Ordering a pizza</span></div>
+      <p><strong>Metrics</strong> = the store's dashboard: "42 orders/hour, avg 28 min." <strong>Traces</strong> = the GPS track of <em>your</em> pizza: order → kitchen (12 min) → oven (8 min) → driver (14 min → stuck in traffic!). <strong>Logs</strong> = the notes stapled to the box: "18:02 extra cheese added, 18:20 driver left." Metrics tell you something's wrong, traces tell you <em>where</em>, logs tell you <em>exactly what</em>.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📊 The Three Signals Side by Side</h3>
+      <div class="card-grid-4">
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag green">📈 Metrics</span></div>
+          <p><strong>Numbers over time.</strong> Cheap, aggregatable, great for dashboards &amp; alerts.</p>
+          <p style="color:var(--txt2);font-size:0.82rem">requests/sec, p99 latency, error rate, memory %</p>
+          <p style="font-size:0.8rem;color:var(--green)">⚡ "How bad, right now?"</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🔍 Traces</span></div>
+          <p><strong>The journey of one request</strong> across every service, as nested spans.</p>
+          <p style="color:var(--txt2);font-size:0.82rem">span tree with timings &amp; parent/child links</p>
+          <p style="font-size:0.8rem;color:var(--blue)">⚡ "Where did the time go?"</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag purple">📝 Logs</span></div>
+          <p><strong>Timestamped events.</strong> The rich detail of what happened at a moment.</p>
+          <p style="color:var(--txt2);font-size:0.82rem">"03:14 payment declined: card_expired"</p>
+          <p style="font-size:0.8rem;color:var(--accent2)">⚡ "What exactly happened?"</p>
+        </div>
+        <div class="card devops-box" style="margin-bottom:0">
+          <div class="card-tag-row"><span class="ctag orange">💡 Together</span></div>
+          <p>A metric alerts, a trace localises, a log explains. OTel's superpower is <strong>correlating all three</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔗 How They Correlate — One Trace ID Ties It All</h3>
+      <p class="card-sub">Because OTel emits all three signals from the same SDK, it stamps them with shared identifiers. This is what makes "jump from a spiking metric straight to the exact failing log line" possible.</p>
+      <div class="code-block"><span class="cmt"># 1) A metric fires an alert</span>
+http.server.request.duration  p99 = 1240ms   <span class="cmt"># SLO breach!</span>
+
+<span class="cmt"># 2) Exemplars on the metric link to a slow trace</span>
+trace_id = 7b2c1a...f09   <span class="cmt"># ← attached to the p99 bucket</span>
+
+<span class="cmt"># 3) Open that trace — the span tree shows the culprit</span>
+POST /orders                      900ms
+  └─ charge_payment               812ms   <span class="cmt">⚠️ here</span>
+       └─ POST api.stripe.com      803ms
+
+<span class="cmt"># 4) Logs carry the SAME trace_id + span_id (auto-injected)</span>
+{"level":"ERROR","trace_id":"7b2c1a...f09",
+ "span_id":"a1b2c3d4","msg":"stripe timeout after 800ms"}</div>
+      <p class="card-note">Metric → trace → log, all stitched by <code>trace_id</code>. No copy-pasting timestamps between four tools.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">⏱️ Where Each Signal Shines</h3>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">Detect</span><strong>Metrics</strong><p>An SLO dashboard shows p99 latency spiking. Cheap to keep for months.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">Localise</span><strong>Traces</strong><p>Pull a slow trace; the waterfall points at the exact slow span.</p></div></div>
+        <div class="tl-item"><div class="tl-dot tl-active"></div><div class="tl-body"><span class="tl-year">Explain</span><strong>Logs</strong><p>The span's correlated logs give the precise error message and stack.</p></div></div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li><strong>Metrics</strong> = aggregated numbers (detect), <strong>traces</strong> = per-request journeys (localise), <strong>logs</strong> = discrete events (explain)</li>
+        <li>OTel emits all three from one SDK and stamps them with a shared <code>trace_id</code>/<code>span_id</code></li>
+        <li>That shared context is what lets you pivot metric → trace → log in one click</li>
+        <li><strong>For DevOps:</strong> keep cheap metrics hot for months, sample expensive traces, and correlate logs to spans</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 04 — Core Concepts ─── -->
+       <article data-label="Core Concepts" class="nb-leaf" id="otel-concepts" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 04</div>
+      <h2>Core Concepts</h2>
+      <p class="sec-desc">The vocabulary of OTel: spans, context, resources, attributes, conventions, exporters, the Collector, OTLP and sampling.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>A <strong>span</strong> is one stopwatch around one unit of work ("query the DB"). A <strong>trace</strong> is all the stopwatches for one request, arranged as a family tree. <strong>Context</strong> is the note that says "you belong to this trace, your parent is that span" — it rides along automatically so the tree stays connected even across network calls.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🎯 Spans — The Atom of a Trace</h3>
+      <p class="card-sub">A span records: a name, a start &amp; end time, a status, attributes (key-values), events (timestamped notes), and its parent. Nest spans and you get a trace.</p>
+      <div class="code-block">Trace  7b2c1a…f09   <span class="cmt"># one ID for the whole request</span>
+│
+├─ span  POST /orders            [0 → 900ms]   <span class="cmt"># root span</span>
+│    span_id: a1        status: OK
+│    attributes: { http.request.method: "POST",
+│                  http.response.status_code: 200 }
+│
+│  ├─ span  validate_order        [4 → 30ms]   parent: a1
+│  │
+│  ├─ span  charge_payment        [32 → 844ms] parent: a1
+│  │    └─ span  POST stripe.com  [40 → 843ms] parent: charge  <span class="cmt">⚠️ slow</span>
+│  │
+│  └─ span  db.insert orders      [846 → 898ms] parent: a1</div>
+      <p class="card-note">Parent/child links + one shared <code>trace_id</code> = the waterfall you'll build in Module 09.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🌐 Context Propagation — Keeping the Trace Whole Across Processes</h3>
+      <p class="card-sub">A trace only stays connected if every service knows which trace and parent span it belongs to. When a call leaves the process, that link would be lost — so OTel <strong>injects</strong> the <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a> <code>traceparent</code> header onto the outbound request, and the receiver <strong>extracts</strong> it on the way in to parent its new span.</p>
+      <div class="otel-seq-scroll">
+        <svg class="otel-seq" viewBox="0 0 700 260" role="img" aria-label="Sequence diagram. orders-api makes an outbound POST /charge to payments-api and injects the traceparent header carrying trace-id 7b2c1a and span-id a1b2c3. payments-api extracts that header on the way in, creates a child span whose parent is a1b2c3, then responds 200 OK.">
+          <defs>
+            <marker id="otelCtxReq" class="otel-seq-arrow-req" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z"/></marker>
+            <marker id="otelCtxRes" class="otel-seq-arrow-res" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z"/></marker>
+          </defs>
+
+          <!-- lifelines -->
+          <line class="otel-seq-life" x1="180" y1="54" x2="180" y2="212"/>
+          <line class="otel-seq-life" x1="520" y1="54" x2="520" y2="212"/>
+
+          <!-- activation bars -->
+          <rect class="otel-seq-act" x="175" y="100" width="10" height="100" rx="3" style="fill:var(--blue);fill-opacity:.20;stroke:var(--blue);stroke-opacity:.5"/>
+          <rect class="otel-seq-act" x="515" y="120" width="10" height="58" rx="3" style="fill:var(--accent2);fill-opacity:.22;stroke:var(--accent2);stroke-opacity:.55"/>
+
+          <!-- headers -->
+          <g class="otel-seq-head">
+            <rect x="90" y="14" width="180" height="32" rx="8"/><text x="180" y="35">🧾 orders-api (client)</text>
+            <rect x="430" y="14" width="180" height="32" rx="8"/><text x="520" y="35">💳 payments-api (server)</text>
+          </g>
+
+          <!-- request -->
+          <g class="otel-seq-msg otel-seq-req">
+            <text class="otel-seq-lbl" x="350" y="100">POST /charge</text>
+            <text class="otel-seq-lbl" x="350" y="113" style="font-size:10px">traceparent: 00-7b2c1a…f09-a1b2c3-01</text>
+            <line class="otel-seq-line" x1="185" y1="122" x2="513" y2="122" marker-end="url(#otelCtxReq)"/>
+          </g>
+
+          <!-- response -->
+          <g class="otel-seq-msg otel-seq-res">
+            <text class="otel-seq-lbl" x="350" y="171">200 OK</text>
+            <line class="otel-seq-line" x1="513" y1="178" x2="185" y2="178" marker-end="url(#otelCtxRes)"/>
+          </g>
+
+          <!-- inject / extract annotations -->
+          <text class="otel-seq-lbl" x="180" y="234" style="fill:var(--blue)">🖊️ inject() writes the header</text>
+          <text class="otel-seq-lbl" x="520" y="234" style="fill:var(--accent2)">📖 extract() reads it → parent = a1b2c3</text>
+        </svg>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># Anatomy of the header that crosses the wire:</span>
+traceparent: 00-7b2c1af09...f09-a1b2c3d4-01
+<span class="cmt">#            ▲   ▲              ▲        ▲</span>
+<span class="cmt">#          ver  trace-id      span-id  flags (01 = sampled)</span></div>
+      <p class="card-note">The child in <code>payments-api</code> reuses the same <code>trace_id</code> and points its parent at the caller's <code>span_id</code> — that one shared ID is what lets Module 09 stitch both services into a single waterfall. <strong>Baggage</strong> (arbitrary key-values like <code>user.tier=gold</code>) rides the same mechanism in a <code>baggage</code> header.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h3 class="card-title">🏢 Resources — Who Produced the Telemetry</h3>
+        <p class="card-sub">A <strong>Resource</strong> describes the <em>whole producer</em>: the service, its version, where it runs. You set it <em>once</em> at startup and it is attached to <strong>every</strong> span, metric and log the process emits — so you never re-state it per signal.</p>
+        <div class="code-block"><span class="cmt"># Resource — set once, rides on everything</span>
+<span class="kw">service.name</span>:           <span class="str">"orders-api"</span>
+<span class="kw">service.version</span>:        <span class="str">"2.3.1"</span>
+<span class="kw">deployment.environment</span>: <span class="str">"production"</span>
+<span class="kw">host.name</span>:              <span class="str">"ip-10-0-3-42"</span>
+<span class="kw">k8s.pod.name</span>:           <span class="str">"orders-api-7d9f-x8k2"</span></div>
+        <p class="card-note"><code>service.name</code> is the one required key — it is how every backend groups your traces under a service.</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">🏷️ Attributes — Detail About One Span</h3>
+        <p class="card-sub">Where a Resource describes the producer, <strong>attributes</strong> describe <em>one specific span</em> (or metric point / log record). They are the per-operation key-values you filter and group by in your backend.</p>
+        <div class="code-block"><span class="cmt"># Attributes — vary span to span</span>
+span <span class="str">"POST /orders"</span> {
+  <span class="kw">http.request.method</span>:      <span class="str">"POST"</span>
+  <span class="kw">http.route</span>:               <span class="str">"/orders/{id}"</span>
+  <span class="kw">http.response.status_code</span>: <span class="num">200</span>
+  <span class="kw">db.system.name</span>:           <span class="str">"postgresql"</span>
+}</div>
+        <p class="card-note"><strong>Rule of thumb:</strong> if it is true for the <em>whole process</em> → Resource. If it changes <em>per request</em> → attribute.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📖 Semantic Conventions — Agreed Names</h3>
+      <p class="card-sub">OTel standardises attribute names so every backend understands your data the same way. Use them instead of inventing your own.</p>
+      <div class="code-block"><span class="cmt"># ✅ Use the convention                    ❌ Don't invent</span>
+http.request.method   = "POST"          <span class="cmt"># not "verb"</span>
+http.response.status_code = 200         <span class="cmt"># not "code"</span>
+url.path              = "/orders"       <span class="cmt"># not "endpoint"</span>
+db.system.name        = "postgresql"    <span class="cmt"># not "database"</span>
+server.address        = "db.internal"   <span class="cmt"># not "host"</span></div>
+      <p class="card-note">Conventions are why auto-instrumentation from different libraries produces consistent, filterable traces — and why the <code>http.*</code> attributes above are the same in Go, Python and Java.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📤 Exporters — Serialise &amp; Ship</h3>
+      <p class="card-sub">The SDK builds spans in memory; an <strong>exporter</strong> serialises finished batches into a wire format and sends them onward — to a Collector, or straight to a backend like Jaeger. Swapping backends is a one-line exporter change; your instrumentation never moves.</p>
+      <div class="code-block"><span class="cmt"># Python SDK — point the OTLP exporter at a Collector</span>
+<span class="kw">from</span> opentelemetry.exporter.otlp.proto.grpc.trace_exporter <span class="kw">import</span> OTLPSpanExporter
+<span class="kw">from</span> opentelemetry.sdk.trace.export <span class="kw">import</span> BatchSpanProcessor
+
+exporter = <span class="kw">OTLPSpanExporter</span>(endpoint=<span class="str">"http://otel-collector:4317"</span>)
+provider.add_span_processor(<span class="kw">BatchSpanProcessor</span>(exporter))
+<span class="cmt"># Processor buffers &amp; batches finished spans → exporter ships them over OTLP</span></div>
+      <p class="card-note">A <strong>Processor</strong> (here <code>BatchSpanProcessor</code>) sits just before the exporter to batch spans — fewer, bigger network calls instead of one per span.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📦 OTLP — The Wire Protocol</h3>
+      <p class="card-sub">OTLP (OpenTelemetry Protocol) is the standard envelope every exporter and Collector speaks. One protocol carries all three signals — traces, metrics <em>and</em> logs — as Protobuf, over gRPC or HTTP.</p>
+      <div class="otel-anat">
+        <div class="otel-anat-hd">📦 <b>An OTLP export</b> — what one request over the wire carries</div>
+        <div class="otel-anat-row"><div class="otel-anat-k">transport</div><div class="otel-anat-v"><strong>gRPC on <code>:4317</code></strong> (compact, streaming — the default) or <strong>HTTP/protobuf on <code>:4318</code></strong> (firewall-friendly, works everywhere).</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">endpoint</div><div class="otel-anat-v">gRPC dials the host directly; HTTP posts to a signal path — <code>/v1/traces</code>, <code>/v1/metrics</code>, <code>/v1/logs</code>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">payload</div><div class="otel-anat-v"><strong>Protobuf-encoded</strong> <code>ResourceSpans</code>: the <strong>Resource</strong> (set once) wrapping many spans, each with its attributes, events and status.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">signals</div><div class="otel-anat-v">One protocol, three signals — <code>traces</code>, <code>metrics</code>, <code>logs</code> — so a Collector needs only one receiver to ingest everything.</div></div>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># The two endpoint shapes you configure exporters against:</span>
+http://otel-collector:<span class="num">4317</span>            <span class="cmt"># gRPC  (dial host:port)</span>
+http://otel-collector:<span class="num">4318</span>/v1/traces  <span class="cmt"># HTTP  (POST protobuf to signal path)</span></div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛰️ The Collector — Receive → Process → Export</h3>
+      <p class="card-sub">A standalone service that sits between your apps and your backends. Apps ship OTLP to it; it processes the data (batch, sample, redact, enrich) and fans it out to one or more backends — so apps never hardcode a backend and you change routing in one place.</p>
+      <div class="otel-cpipe">
+        <div class="ocp-box" style="--ocp:var(--blue)"><div class="ocp-t">📥 Receivers</div><small>Ingest telemetry — OTLP from your apps, plus Jaeger, Prometheus, and more.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent-ink)"><div class="ocp-t">⚙️ Processors</div><small>Batch, <strong>tail-sample</strong>, redact secrets, enrich (e.g. add k8s metadata).</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent2)"><div class="ocp-t">📤 Exporters</div><small>Fan out to one <em>or more</em> backends at once.</small></div>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># collector-config.yaml — the receive→process→export shape</span>
+<span class="kw">receivers</span>:
+  <span class="kw">otlp</span>:
+    <span class="kw">protocols</span>: { grpc: {}, http: {} }   <span class="cmt"># listen on :4317 / :4318</span>
+<span class="kw">processors</span>:
+  <span class="kw">batch</span>: {}                             <span class="cmt"># group spans before export</span>
+<span class="kw">exporters</span>:
+  <span class="kw">otlp/jaeger</span>: { endpoint: <span class="str">"jaeger:4317"</span> }
+<span class="kw">service</span>:
+  <span class="kw">pipelines</span>:
+    <span class="kw">traces</span>: { receivers: [otlp], processors: [batch], exporters: [otlp/jaeger] }</div>
+      <div class="callout info">
+        <span class="callout-icon">i</span>
+        <div class="callout-text">This is the 30-second version. The dedicated <a href="#otel-collector">Inside the Collector</a> module (Module 06) covers deployment modes, tail-sampling policies and real production configs in depth.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🎚️ Sampling — Keep the Traces That Matter</h3>
+      <p class="card-sub">Tracing everything is expensive; sampling keeps a useful subset. <strong>Head-based</strong> decides up front (cheap, blind); <strong>tail-based</strong> waits for the whole trace, then decides (smart, needs buffering in the Collector).</p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">Head-based · keep 10%</span></div>
+          <p style="color:var(--txt2)">Decide at the <em>start</em> of the trace. Cheap and simple, but you might drop the one slow trace you needed.</p>
+          <div class="code-block" style="font-size:0.78rem"><span class="cmt"># SDK env — sample 10% of traces up front</span>
+OTEL_TRACES_SAMPLER=<span class="str">traceidratio</span>
+OTEL_TRACES_SAMPLER_ARG=<span class="num">0.1</span></div>
+        </div>
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag green">Tail-based · keep what matters</span></div>
+          <p style="color:var(--txt2)">Buffer the whole trace in the Collector, <em>then</em> decide — always keep errors and slow traces, sample the boring rest.</p>
+          <div class="code-block" style="font-size:0.78rem"><span class="cmt"># Collector processor</span>
+<span class="kw">tail_sampling</span>:
+  <span class="kw">policies</span>:
+    - { type: <span class="str">status_code</span>, <span class="cmt"># keep errors</span>
+        status_code: { status_codes: [ERROR] } }
+    - { type: <span class="str">latency</span>,      <span class="cmt"># keep slow</span>
+        latency: { threshold_ms: <span class="num">500</span> } }
+    - { type: <span class="str">probabilistic</span>, <span class="cmt"># 5% of rest</span>
+        probabilistic: { sampling_percentage: <span class="num">5</span> } }</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧩 Supporting Vocabulary</h3>
+      <p class="card-sub">The rest of the words you'll meet — smaller pieces that sit around the eight concepts above.</p>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">🖊️</div><h4>Tracer / Meter</h4><p>Factories you get from the API to create spans (tracer) and instruments (meter).</p></div>
+        <div class="card"><div class="ci">⚙️</div><h4>Processor</h4><p>SDK/Collector stage that batches, filters or enriches data before export.</p></div>
+        <div class="card"><div class="ci">🧾</div><h4>Span Events</h4><p>Timestamped annotations inside a span (e.g. <code>exception</code>) — a "log pinned to a span."</p></div>
+        <div class="card"><div class="ci">🧳</div><h4>Baggage</h4><p>Key-values that propagate across services alongside context (e.g. <code>user.tier=gold</code>).</p></div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>A <strong>span</strong> is a timed unit of work; nested spans sharing a <code>trace_id</code> make a trace</li>
+        <li><strong>Context propagation</strong> injects/extracts the W3C <code>traceparent</code> header so a trace survives crossing a process boundary</li>
+        <li><strong>Resources</strong> describe the producer (set once, rides on everything); <strong>attributes</strong> describe one span (vary per request); <strong>semantic conventions</strong> standardise both sets of names</li>
+        <li>An <strong>exporter</strong> serialises telemetry and ships it over <strong>OTLP</strong> (:4317 gRPC / :4318 HTTP); the <strong>Collector</strong> receives → processes → exports, decoupling apps from backends</li>
+        <li>Prefer <strong>tail-based sampling</strong> ("keep every error and slow trace, sample the boring rest") over blind head-based ratios</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Deep dive — Traces, Metrics & Logs (worked example) ─── -->
+       <article data-label="Traces, Metrics &amp; Logs" class="nb-leaf" id="otel-tml" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Mastering Traces, Metrics &amp; Logs</h2>
+      <p class="sec-desc">One real request, followed end to end. We’ll watch a single “checkout” click travel <strong>Frontend → Checkout → Cart → DB</strong>, and use it to make traces, spans, metrics and logs finally click.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — following a parcel</span></div>
+      <p>When you order a parcel, one <strong>tracking number</strong> follows it the whole way: warehouse → van → sorting hub → your door, with a timestamp at each stop. A <strong>trace</strong> is that tracking history for <em>one</em> request. Each <strong>stop</strong> along the way is a <strong>span</strong>. In this module we follow one parcel — a checkout click — and watch its tracking history get built, stop by stop.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛒 Our one example: clicking “Checkout”</h3>
+      <p style="color:var(--txt2);line-height:1.8">A shopper clicks <strong>Checkout</strong>. Behind that one click, four pieces of software talk to each other in a chain:</p>
+      <div class="otel-svc-chain">
+        <span class="osc" style="--osc:var(--blue)">🖥️ Frontend</span><span class="osc-arr">→</span>
+        <span class="osc" style="--osc:var(--accent-ink)">🧾 Checkout</span><span class="osc-arr">→</span>
+        <span class="osc" style="--osc:var(--accent2)">🛍️ Cart</span><span class="osc-arr">→</span>
+        <span class="osc" style="--osc:var(--cyan)">🗄️ DB</span>
+      </div>
+      <p style="color:var(--txt2);line-height:1.8">The <strong>Frontend</strong> asks the <strong>Checkout</strong> service to place the order. Checkout needs to know what’s in the basket, so it asks the <strong>Cart</strong> service. Cart reads the items from the <strong>database (DB)</strong>. Then every answer travels back up the chain to the shopper. That’s it — hold this picture; both diagrams below are just this one journey drawn two different ways.</p>
+    </div>
+
+    <!-- Diagram A: sequence diagram -->
+    <div class="card">
+      <h3 class="card-title">🗺️ Diagram A — the request flow (who calls whom)</h3>
+      <p class="card-sub">Read it top to bottom = time moving forward. Each column is one service. Solid arrows are <strong>requests</strong> going out; dashed arrows are <strong>responses</strong> coming back.</p>
+      <div class="otel-seq-scroll">
+        <svg class="otel-seq" viewBox="0 0 820 372" role="img" aria-label="Sequence diagram. Frontend requests checkout from Checkout, which requests the cart from Cart, which runs a SQL query on the DB. Responses then return in reverse: DB to Cart, Cart to Checkout, Checkout to Frontend.">
+          <defs>
+            <marker id="otelSeqReq" class="otel-seq-arrow-req" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z"/></marker>
+            <marker id="otelSeqRes" class="otel-seq-arrow-res" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z"/></marker>
+          </defs>
+
+          <!-- lifelines -->
+          <line class="otel-seq-life" x1="110" y1="54" x2="110" y2="360"/>
+          <line class="otel-seq-life" x1="320" y1="54" x2="320" y2="360"/>
+          <line class="otel-seq-life" x1="530" y1="54" x2="530" y2="360"/>
+          <line class="otel-seq-life" x1="740" y1="54" x2="740" y2="360"/>
+
+          <!-- activation bars -->
+          <rect class="otel-seq-act" x="105" y="104" width="10" height="234" rx="3" style="fill:var(--blue);fill-opacity:.20;stroke:var(--blue);stroke-opacity:.5"/>
+          <rect class="otel-seq-act" x="315" y="104" width="10" height="234" rx="3" style="fill:var(--accent-ink);fill-opacity:.22;stroke:var(--accent-ink);stroke-opacity:.55"/>
+          <rect class="otel-seq-act" x="525" y="150" width="10" height="146" rx="3" style="fill:var(--accent2);fill-opacity:.22;stroke:var(--accent2);stroke-opacity:.55"/>
+          <rect class="otel-seq-act" x="735" y="196" width="10" height="54" rx="3" style="fill:var(--cyan);fill-opacity:.22;stroke:var(--cyan);stroke-opacity:.55"/>
+
+          <!-- headers -->
+          <g class="otel-seq-head">
+            <rect x="45" y="14" width="130" height="32" rx="8"/><text x="110" y="35">🖥️ Frontend</text>
+            <rect x="255" y="14" width="130" height="32" rx="8"/><text x="320" y="35">🧾 Checkout</text>
+            <rect x="465" y="14" width="130" height="32" rx="8"/><text x="530" y="35">🛍️ Cart</text>
+            <rect x="675" y="14" width="130" height="32" rx="8"/><text x="740" y="35">🗄️ DB</text>
+          </g>
+
+          <!-- requests -->
+          <g class="otel-seq-msg otel-seq-req">
+            <line class="otel-seq-line" x1="115" y1="104" x2="313" y2="104" marker-end="url(#otelSeqReq)"/>
+            <text class="otel-seq-lbl" x="214" y="97">GET /checkout</text>
+          </g>
+          <g class="otel-seq-msg otel-seq-req">
+            <line class="otel-seq-line" x1="325" y1="150" x2="523" y2="150" marker-end="url(#otelSeqReq)"/>
+            <text class="otel-seq-lbl" x="424" y="143">GET /cart</text>
+          </g>
+          <g class="otel-seq-msg otel-seq-req">
+            <line class="otel-seq-line" x1="535" y1="196" x2="733" y2="196" marker-end="url(#otelSeqReq)"/>
+            <text class="otel-seq-lbl" x="634" y="189">SQL query</text>
+          </g>
+
+          <!-- responses -->
+          <g class="otel-seq-msg otel-seq-res">
+            <line class="otel-seq-line" x1="733" y1="250" x2="535" y2="250" marker-end="url(#otelSeqRes)"/>
+            <text class="otel-seq-lbl" x="634" y="243">rows[ ]</text>
+          </g>
+          <g class="otel-seq-msg otel-seq-res">
+            <line class="otel-seq-line" x1="523" y1="296" x2="325" y2="296" marker-end="url(#otelSeqRes)"/>
+            <text class="otel-seq-lbl" x="424" y="289">cart JSON</text>
+          </g>
+          <g class="otel-seq-msg otel-seq-res">
+            <line class="otel-seq-line" x1="313" y1="338" x2="115" y2="338" marker-end="url(#otelSeqRes)"/>
+            <text class="otel-seq-lbl" x="214" y="331">200 OK</text>
+          </g>
+        </svg>
+      </div>
+      <p class="otel-dia-cap">The request fans out to the right, then the answers unwind back to the left. Nothing here mentions OpenTelemetry yet — this is just what your app already does.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧵 So what is a <em>trace</em>? And a <em>span</em>?</h3>
+      <p style="color:var(--txt2);line-height:1.85">Now we add OpenTelemetry’s two most important words, defined against the picture you just saw:</p>
+      <div class="two-col">
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag blue">🧵 Trace</span></div>
+          <p><strong>A trace is the complete journey of one request across every service it touches.</strong></p>
+          <p style="color:var(--txt2)">One checkout click = one trace. The whole of Diagram A, start to finish, is a single trace.</p>
+        </div>
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag purple">▪️ Span</span></div>
+          <p><strong>A span is one single unit of work inside that trace</strong> — one API call, one DB query, one processing step.</p>
+          <p style="color:var(--txt2)">Every arrow-and-box of work in Diagram A becomes one span. A trace is simply a bag of spans that belong to the same request.</p>
+        </div>
+      </div>
+      <p class="card-sub" style="margin-top:16px">Each span carries a few facts about that one step:</p>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">🏷️</div><h4>Name</h4><p>What this step is, e.g. <code>API - Checkout</code>.</p></div>
+        <div class="card"><div class="ci">⏱️</div><h4>Start &amp; duration</h4><p>When it began and how long it took (e.g. 250ms).</p></div>
+        <div class="card"><div class="ci">🚦</div><h4>Status</h4><p>Did it succeed or error?</p></div>
+        <div class="card"><div class="ci">🔖</div><h4>Attributes</h4><p>Extra key/values, e.g. <code>http.route</code>, <code>db.system</code>.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔗 How the spans stay connected — parent/child &amp; context propagation</h3>
+      <p style="color:var(--txt2);line-height:1.85">Here’s the clever bit. The four services run on different machines and don’t know about each other’s spans. So how do all these spans end up in <em>one</em> trace instead of four disconnected ones?</p>
+      <ul style="color:var(--txt2);padding-left:18px;line-height:1.9">
+        <li><strong>Parent/child spans</strong> — when one span starts work that causes another span, the first is the <strong>parent</strong> and the second is its <strong>child</strong>. Checkout’s span is the parent of Cart’s span, which is the parent of the DB span. This is exactly the nesting you saw in Diagram A.</li>
+        <li><strong>Context propagation</strong> — the trick that keeps the chain linked across services. The Frontend starts the first span (the <strong>root span</strong>) and generates a shared <code>trace_id</code>. When it calls Checkout, it slips that id into the request’s HTTP headers — a standard header called <strong>W3C <code>traceparent</code></strong>. Checkout reads that header, creates its span as a <em>child</em>, and passes the same context onward to Cart, and Cart to the DB.</li>
+      </ul>
+      <div class="callout info" style="margin-top:14px">
+        <span class="callout-icon">i</span>
+        <div class="callout-text"><strong>The result:</strong> every span in this request shares the same <code>trace_id</code>. That shared id is the thread that lets a backend gather them all back up and rebuild the exact call tree — which is Diagram B.</div>
+      </div>
+      <div class="code-block" style="margin-top:14px"><span class="cmt"># The one header that stitches the trace together (W3C traceparent):</span>
+<span class="cmt">#          version  trace_id (same for every span!)   parent span_id  flags</span>
+traceparent: 00-<span class="str">4bf92f3577b34da6a3ce929d0e0e4736</span>-<span class="num">00f067aa0ba902b7</span>-01
+<span class="cmt">#               └─ Frontend sets this, Checkout & Cart just pass it along ─┘</span></div>
+    </div>
+
+    <!-- Diagram B: trace waterfall -->
+    <div class="card">
+      <h3 class="card-title">📊 Diagram B — the same request as a trace (the waterfall)</h3>
+      <p class="card-sub">Now the payoff. Take every span from that one request, line them up by <strong>start time</strong> (left = earlier), draw each as a bar whose <strong>width = how long it took</strong>, and <strong>indent children under their parent</strong>. You get the view every tracing tool (Jaeger, Grafana Tempo…) shows you:</p>
+      <div class="otel-wf">
+        <div class="otel-wf-head">
+          <span class="otel-wf-tid">trace_id <b>4bf92f35…e4736</b> · 1 trace · 5 spans</span>
+          <span class="otel-wf-total">total 420ms</span>
+        </div>
+        <div class="otel-wf-axis">
+          <div class="otel-wf-ticks"><span>0ms</span><span>105</span><span>210</span><span>315</span><span>420ms</span></div>
+        </div>
+
+        <div class="otel-wf-row">
+          <div class="otel-wf-name" style="padding-left:0"><span class="otel-wf-svc" style="background:var(--blue)"></span>Frontend – checkout</div>
+          <div class="otel-wf-track"><div class="otel-wf-bar" style="left:0%;width:100%;background:var(--blue)"></div></div>
+          <div class="otel-wf-dur">420ms</div>
+        </div>
+        <div class="otel-wf-row">
+          <div class="otel-wf-name" style="padding-left:14px"><span class="otel-wf-svc" style="background:var(--accent-ink)"></span>API - Checkout</div>
+          <div class="otel-wf-track"><div class="otel-wf-bar" style="left:9.5%;width:85.7%;background:var(--accent-ink)"></div></div>
+          <div class="otel-wf-dur">360ms</div>
+        </div>
+        <div class="otel-wf-row">
+          <div class="otel-wf-name" style="padding-left:28px"><span class="otel-wf-svc" style="background:var(--accent2)"></span>API - CartDetail</div>
+          <div class="otel-wf-track"><div class="otel-wf-bar" style="left:21.4%;width:59.5%;background:var(--accent2)"></div></div>
+          <div class="otel-wf-dur">250ms</div>
+        </div>
+        <div class="otel-wf-row">
+          <div class="otel-wf-name" style="padding-left:42px"><span class="otel-wf-svc" style="background:var(--cyan)"></span>DB Call</div>
+          <div class="otel-wf-track"><div class="otel-wf-bar" style="left:33.3%;width:26.2%;background:var(--cyan)"></div></div>
+          <div class="otel-wf-dur">110ms</div>
+        </div>
+        <div class="otel-wf-row">
+          <div class="otel-wf-name" style="padding-left:42px"><span class="otel-wf-svc" style="background:var(--green)"></span>Data process</div>
+          <div class="otel-wf-track"><div class="otel-wf-bar" style="left:61.9%;width:16.7%;background:var(--green)"></div></div>
+          <div class="otel-wf-dur">70ms</div>
+        </div>
+
+        <div class="otel-wf-legend">
+          <span class="otel-wf-leg"><span class="otel-wf-svc" style="background:var(--blue)"></span>Frontend</span>
+          <span class="otel-wf-leg"><span class="otel-wf-svc" style="background:var(--accent-ink)"></span>Checkout</span>
+          <span class="otel-wf-leg"><span class="otel-wf-svc" style="background:var(--accent2)"></span>Cart</span>
+          <span class="otel-wf-leg"><span class="otel-wf-svc" style="background:var(--cyan)"></span>DB</span>
+          <span class="otel-wf-leg"><span class="otel-wf-svc" style="background:var(--green)"></span>Processing</span>
+        </div>
+      </div>
+      <p class="otel-dia-cap">Same journey as Diagram A, turned on its side. The nesting <em>is</em> the parent/child relationship; the bar lengths instantly show the DB call and processing ate most of the time.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🎬 How the trace is formed — step by step</h3>
+      <p class="card-sub">Watch Diagram A become Diagram B. Each step opens a span; when work returns, that span closes and its bar’s width is fixed.</p>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">00:00</span><strong>Frontend opens the root span</strong><p>The click arrives. Frontend starts <code>Frontend – checkout</code>, mints a fresh <code>trace_id</code>, and calls Checkout — passing the context in the <code>traceparent</code> header.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">00:10</span><strong>Checkout opens a child span</strong><p>Checkout reads the header, opens <code>API - Checkout</code> as a <em>child</em> of the root, then calls Cart with the same context.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">00:12</span><strong>Cart opens its child span</strong><p><code>API - CartDetail</code> opens under Checkout. To answer, Cart must read the database.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">00:13</span><strong>The DB call span</strong><p><code>DB Call</code> opens under CartDetail, runs the SQL, and returns the rows — then closes (110ms).</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-body"><span class="tl-year">00:24</span><strong>Processing, then everything closes</strong><p>Cart runs <code>Data process</code> on the rows, then each span closes as its answer bubbles back up: Cart → Checkout → Frontend. The shopper sees “200 OK”.</p></div></div>
+        <div class="tl-item"><div class="tl-dot tl-active"></div><div class="tl-body"><span class="tl-year">after</span><strong>The backend reassembles the trace</strong><p>All five spans (each stamped with the same <code>trace_id</code>) arrive at the Collector and backend, which sorts them by parent and start time into the single waterfall above.</p></div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📈📝 Where metrics and logs fit into the <em>same</em> request</h3>
+      <p style="color:var(--txt2);line-height:1.85">The trace shows this <em>one</em> checkout in detail. But the same flow also produces the other two signals — describing the very same journey from different angles:</p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">📈 Metrics — the zoomed-out numbers</span></div>
+          <p style="color:var(--txt2)">Every checkout like this one <strong>increments counters and records timings</strong>. Across thousands of requests they aggregate into dashboards:</p>
+          <ul style="color:var(--txt2);padding-left:18px;line-height:1.75">
+            <li><code>checkout.requests</code> — count of checkouts (this one adds +1)</li>
+            <li><code>http.server.duration</code> p95 — our 420ms lands in this histogram</li>
+            <li><code>db.client.duration</code> — the 110ms DB call feeds this</li>
+          </ul>
+          <p class="card-note">Metrics tell you <em>“checkouts are slow lately”</em> — they don’t tell you why.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag purple">📝 Logs — the exact detail, correlated</span></div>
+          <p style="color:var(--txt2)">Inside the <code>DB Call</code> span, the code writes a normal log line. Because OTel is active, that log is automatically stamped with the current <code>trace_id</code>:</p>
+          <div class="code-block" style="font-size:0.76rem">{<span class="str">"level"</span>:<span class="str">"INFO"</span>, <span class="str">"msg"</span>:<span class="str">"cart loaded: 3 items"</span>,
+ <span class="str">"trace_id"</span>:<span class="str">"4bf92f35…e4736"</span>,
+ <span class="str">"span_id"</span>:<span class="str">"00f067aa0ba902b7"</span>}</div>
+          <p class="card-note">That shared <code>trace_id</code> lets you jump from this log straight to the waterfall — and back.</p>
+        </div>
+      </div>
+      <div class="callout success" style="margin-top:14px">
+        <span class="callout-icon">✓</span>
+        <div class="callout-text"><strong>One request, three views:</strong> a <strong>metric</strong> says <em>how many / how slow</em> in aggregate, a <strong>trace</strong> says <em>where the time went</em> for this one, and a <strong>log</strong> says <em>exactly what happened</em> at one moment — all tied together by the same <code>trace_id</code>.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🐍 Making it concrete — a manual span with context propagation</h3>
+      <p class="card-sub">Here is the Checkout handler in Python. It reads the incoming trace context, opens its own child span, and passes the context onward — the exact behaviour behind Diagram A.</p>
+      <div class="code-block"><span class="kw">from</span> opentelemetry <span class="kw">import</span> trace
+<span class="kw">from</span> opentelemetry.propagate <span class="kw">import</span> extract, inject
+
+tracer = trace.get_tracer(<span class="str">"checkout"</span>)
+
+<span class="kw">def</span> <span class="fn">checkout_handler</span>(request):
+    <span class="cmt"># 1) Continue the SAME trace: read the caller's traceparent header</span>
+    ctx = extract(request.headers)
+
+    <span class="cmt"># 2) Open a CHILD span under the Frontend's root span</span>
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"API - Checkout"</span>, context=ctx) <span class="kw">as</span> span:
+        span.set_attribute(<span class="str">"http.route"</span>, <span class="str">"/checkout"</span>)
+        span.set_attribute(<span class="str">"user.id"</span>, request.user_id)
+
+        <span class="cmt"># 3) Call Cart — inject context so its span is our child</span>
+        headers = {}
+        inject(headers)                      <span class="cmt"># adds the traceparent header</span>
+        cart = http.get(<span class="str">"http://cart/cart"</span>, headers=headers)
+
+        span.set_status(trace.StatusCode.OK)
+        <span class="kw">return</span> cart                          <span class="cmt"># span closes here → its bar width is fixed</span></div>
+      <p class="card-note"><code>extract</code> continues the trace from upstream; <code>inject</code> hands it downstream. That pair is context propagation — the entire reason the five spans share one <code>trace_id</code>.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>A <strong>trace</strong> is one request’s full journey; a <strong>span</strong> is one unit of work within it (name, start, duration, status, attributes).</li>
+        <li><strong>Parent/child</strong> nesting plus <strong>context propagation</strong> (the W3C <code>traceparent</code> header) give every span the same <code>trace_id</code>, so the backend can rebuild the waterfall.</li>
+        <li>The <strong>sequence diagram</strong> (who calls whom) and the <strong>trace waterfall</strong> (spans over time) are the same request drawn two ways.</li>
+        <li><strong>Metrics</strong> (counts/latency), <strong>traces</strong> (this journey) and <strong>logs</strong> (exact events) all describe the one checkout and are stitched together by <code>trace_id</code>.</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Deep dive — Anatomy of a Metric ─── -->
+       <article data-label="Anatomy of a Metric" class="nb-leaf" id="otel-metric" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Anatomy of a Metric</h2>
+      <p class="sec-desc">You met metrics as “numbers over time.” Now let’s open one up. A single metric is really seven small parts — we’ll name each one and pin it to our checkout example.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — a label on a jar</span></div>
+      <p>Think of a metric like a labelled measuring jar in a lab. The label says <strong>what</strong> it measures and in <strong>what unit</strong>, the shape of the jar decides <strong>how</strong> you read it (a running total vs a snapshot), and every time you check it you write the reading down <strong>with the time</strong>. A metric is just that: a well-labelled number you record again and again.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧪 One metric from our checkout, taken apart</h3>
+      <p class="card-sub">We want to track how long checkouts take. Here is that one metric, field by field — each in a single sentence.</p>
+      <div class="otel-anat">
+        <div class="otel-anat-hd"><b>checkout.request.duration</b> — a histogram, unit ms, labelled by env + status</div>
+        <div class="otel-anat-row"><div class="otel-anat-k">name</div><div class="otel-anat-v"><strong>What it measures</strong>, as a dotted identifier — here <code>checkout.request.duration</code>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">description</div><div class="otel-anat-v"><strong>A human-readable explanation</strong> — “time to fully handle a checkout request.”</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">unit</div><div class="otel-anat-v"><strong>The unit of measure</strong> — <code>ms</code> here (could be bytes, or <code>1</code> for a plain count).</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">kind</div><div class="otel-anat-v"><strong>The type of number.</strong> <code>counter</code> only goes up (total requests), <code>gauge</code> is a value right now (queue depth), <code>histogram</code> is a distribution (latency buckets). <em>(An <code>updown-counter</code> can also go down, e.g. active connections.)</em> Ours is a <strong>histogram</strong>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">label</div><div class="otel-anat-v"><strong>Tags you slice by</strong> (a.k.a. attributes/dimensions) — <code>env=prod</code>, <code>status=200</code>. Lets you ask “p95 for failed checkouts in prod.”</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">aggregation</div><div class="otel-anat-v"><strong>How readings combine over time</strong> — sum (counters), last value (gauges), or bucket counts (histograms). Ours rolls readings into <strong>latency buckets</strong>.</div></div>
+        <div class="otel-anat-row"><div class="otel-anat-k">time</div><div class="otel-anat-v"><strong>The timestamp + temporality</strong> that places the value on a timeline — <em>cumulative</em> (totals since start) vs <em>delta</em> (just this interval).</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛒 Reading it back against the example</h3>
+      <p style="color:var(--txt2);line-height:1.85">Put the parts together and the metric reads like a sentence: <strong>for our checkout, <code>checkout.request.duration</code> is a <span style="color:var(--accent)">histogram</span>, unit <span style="color:var(--accent)">ms</span>, labelled by <code>env</code> and <code>status</code>, aggregated into buckets over <span style="color:var(--accent)">time</span>.</strong> The 420ms trace from the previous module is <em>one</em> reading that drops into one of those buckets — thousands of such readings become the p95 line on your dashboard.</p>
+      <div class="callout info">
+        <span class="callout-icon">i</span>
+        <div class="callout-text"><strong>Why kind matters:</strong> pick <code>counter</code> for “how many”, <code>gauge</code> for “how much right now”, and <code>histogram</code> when you care about the <em>spread</em> (p95/p99 latency) — not just the average, which hides the slow tail.</div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>A metric is seven parts: <strong>name, description, unit, kind, label, aggregation, time</strong>.</li>
+        <li><strong>Kind</strong> is the big choice — counter (up-only), gauge (now), histogram (distribution); updown-counter can go both ways.</li>
+        <li><strong>Labels</strong> are the dimensions you slice by; <strong>temporality</strong> (cumulative vs delta) fixes the value on a timeline.</li>
+        <li>Our checkout latency is a <strong>histogram in ms, labelled by env + status</strong> — each traced request is one data point in it.</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 05 — Architecture ─── -->
+       <article data-label="Architecture" class="nb-leaf" id="otel-architecture" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 05</div>
+      <h2>How It Fits Together</h2>
+      <p class="sec-desc">The end-to-end path: App → SDK → OTLP → Collector → Backend — and why the Collector earns its place.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Your app <em>produces</em> telemetry (the SDK). It <em>mails</em> it in a standard envelope (OTLP). A <em>post office</em> sorts and forwards it (the Collector). Finally it lands at a <em>reading room</em> where you view it (the backend, e.g. Jaeger). Each piece has one job, so you can swap any of them without touching the others.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🏗️ The Full Pipeline</h3>
+      <div class="code-block">┌─────────────────────────────┐
+│  YOUR APP (orders-api)      │
+│                             │
+│  OTel API   ← your code calls (stable, thin)
+│     │                       │
+│  OTel SDK   ← creates spans/metrics, batches
+│     │                       │
+│  Exporter   ← serialises to OTLP
+└─────┼───────────────────────┘
+      │  OTLP  (gRPC :4317 / HTTP :4318)
+      ▼
+┌─────────────────────────────┐
+│  OTEL COLLECTOR (a sidecar   │
+│  or a shared service)        │
+│                             │
+│  Receiver → Processor(s) → Exporter(s)
+│   (OTLP)   (batch, sample,   (Jaeger, Prometheus,
+│            resource, filter)  Loki, any vendor)
+└─────┬─────────────┬──────────┘
+      ▼             ▼
+   ┌───────┐    ┌───────────┐
+   │ Jaeger│    │ Prometheus│   ← BACKENDS (view/store)
+   │(traces)│   │ (metrics) │
+   └───────┘    └───────────┘</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧭 Where Each Piece Runs</h3>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">📚</div><h4>API</h4><p>Compiled into your app. Just interfaces — a no-op if no SDK is installed. This is what your business code calls.</p></div>
+        <div class="card"><div class="ci">⚙️</div><h4>SDK</h4><p>In your app process. The real implementation: samplers, processors, exporters. Configured at startup.</p></div>
+        <div class="card"><div class="ci">🛰️</div><h4>Collector</h4><p>A separate process — sidecar container, DaemonSet, or a central deployment. Optional but recommended.</p></div>
+        <div class="card"><div class="ci">🗄️</div><h4>Backend</h4><p>Where data is stored &amp; visualised: Jaeger, Prometheus, Grafana, or a SaaS vendor.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛰️ Why the Collector Matters (and when to skip it)</h3>
+      <div class="two-col">
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag green">✅ With a Collector</span></div>
+          <ul style="color:var(--txt2);padding-left:18px;line-height:1.7">
+            <li>Apps only know one endpoint — change backends centrally</li>
+            <li>Offload batching, retry, sampling, PII scrubbing from the app</li>
+            <li>Fan-out to multiple backends at once</li>
+            <li>Enrich with host/k8s metadata the app can't see</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">➡️ Direct to backend</span></div>
+          <p style="color:var(--txt2)">You <em>can</em> export straight from the SDK to a backend that speaks OTLP (Jaeger does). Fine for local dev and demos — the app carries retry/batch itself. Add a Collector before production.</p>
+          <div class="code-block" style="font-size:0.78rem">OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="devops-box card">
+      <div class="card-tag-row"><span class="ctag orange">🔧 DevOps/SRE Analogy</span></div>
+      <p>The Collector is your <strong>reverse-proxy / load-balancer for telemetry</strong>. Just as you don't hardcode every backend IP into every client, you don't hardcode every observability vendor into every app. Point apps at the Collector; re-route, sample and scrub in one place. The AWS-specific version of this pipeline is covered in <a href="#adot-architecture" style="color:var(--accent);font-weight:600">AWS ADOT → Architecture</a>.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>The path is <strong>API → SDK → OTLP → Collector → Backend</strong>; each layer is swappable</li>
+        <li>The <strong>API</strong> lives in your code and is a no-op without an SDK; the <strong>SDK</strong> does the real work in-process</li>
+        <li>The <strong>Collector</strong> decouples apps from backends: central re-routing, sampling, enrichment, PII scrubbing</li>
+        <li>Direct export is fine for dev; add a Collector before production</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Deep dive — Inside the Collector (how it works) ─── -->
+       <article data-label="Inside the Collector" class="nb-leaf" id="otel-collector" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Inside the Collector</h2>
+      <p class="sec-desc">You’ve seen the Collector sit between your app and your backends. Let’s open the box: it’s just three stages in a row — receive, process, send.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — a mail-sorting facility</span></div>
+      <p>Letters pour in through one door (<strong>receive</strong>). Inside, staff sort them, stamp them, weed out junk, and stick on address labels (<strong>process</strong>). Then they load them onto the right trucks headed for different cities (<strong>send</strong>). The OTel Collector is that facility for your telemetry: <strong>Receiver → Processor → Exporter</strong>, in and out.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛰️ The internal pipeline</h3>
+      <p class="card-sub">Telemetry flows left to right through three stages, then out to one or more backends:</p>
+      <div class="otel-cpipe">
+        <div class="ocp-box" style="--ocp:var(--blue)"><div class="ocp-t">📥 Receiver</div><small>The “in” door. Ingests telemetry in many formats — OTLP, Jaeger, Prometheus, and more.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent-ink)"><div class="ocp-t">⚙️ Processor</div><small>The middle. Batch, filter, <strong>sample</strong>, <strong>redact secrets</strong>, and enrich (e.g. add k8s metadata).</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent2)"><div class="ocp-t">📤 Exporter</div><small>The “out” door. Sends to one <em>or more</em> backends at once.</small></div>
+        <span class="ocp-arr" aria-hidden="true">⇒</span>
+        <div class="ocp-backends">
+          <div class="ocp-be">🔍 Jaeger &nbsp;<span style="color:var(--txt3);font-weight:400">traces</span></div>
+          <div class="ocp-be">📈 Prometheus &nbsp;<span style="color:var(--txt3);font-weight:400">metrics</span></div>
+        </div>
+      </div>
+      <p class="card-note">One Collector can fan a single stream out to several backends — send the same traces to Jaeger <em>and</em> a vendor, no app change.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🚦 Wired as pipelines — one per signal</h3>
+      <p style="color:var(--txt2);line-height:1.85">The three stages aren’t one big tube. You wire a <strong>separate pipeline for each signal</strong> — a traces pipeline, a metrics pipeline, a logs pipeline — each with its own receivers, processors and exporters. That’s why a Collector can, say, sample traces heavily while keeping every metric.</p>
+      <div class="code-block"><span class="cmt"># A Collector config is literally receivers → processors → exporters,</span>
+<span class="cmt"># then pipelines that name which of each to use, per signal:</span>
+service:
+  pipelines:
+    <span class="kw">traces</span>:   { receivers: [otlp], processors: [batch, <span class="str">tail_sampling</span>], exporters: [jaeger] }
+    <span class="kw">metrics</span>:  { receivers: [otlp, prometheus], processors: [batch], exporters: [prometheus] }
+    <span class="kw">logs</span>:     { receivers: [otlp], processors: [batch], exporters: [otlp] }</div>
+    </div>
+
+    <div class="devops-box card">
+      <div class="card-tag-row"><span class="ctag orange">🔧 DevOps/SRE Analogy</span></div>
+      <p>The Collector is your <strong>reverse-proxy for telemetry</strong>: apps talk to <em>it</em>, and it owns routing, batching, sampling and PII scrubbing centrally — so switching or adding a backend is a config edit here, never a redeploy of every service.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>The Collector is three stages: <strong>Receiver → Processor → Exporter → backend(s)</strong>.</li>
+        <li><strong>Receivers</strong> accept many formats; <strong>processors</strong> batch/sample/redact/enrich; <strong>exporters</strong> fan out to one or more backends.</li>
+        <li>Stages are wired into <strong>per-signal pipelines</strong> (traces / metrics / logs), each independently configured.</li>
+        <li><strong>For DevOps:</strong> centralise routing and policy in the Collector, not in every app.</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Deep dive — Collector components by signal ─── -->
+       <article data-label="Collector Components" class="nb-leaf" id="otel-components" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 11">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 11 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Collector Components You’ll Actually Use</h2>
+      <p class="sec-desc">Receivers, processors and exporters are <strong>pluggable parts you pick per signal</strong> — config, not code. Here are the common real ones, grouped by the signal they serve.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — LEGO bricks</span></div>
+      <p>The Collector is a baseplate; receivers, processors and exporters are <strong>bricks you snap on</strong>. Building for traces? Snap on trace bricks. For metrics? Swap in metric bricks. You’re choosing from a catalogue in a config file — never writing new code.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧵 For traces</h3>
+      <p class="card-sub">Receivers &amp; exporters speak the common trace wire formats; processors shape spans on the way through.</p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🔌 Receivers / Exporters</span></div>
+          <div class="otel-comp-chips">
+            <span class="otel-comp-chip">otlp</span>
+            <span class="otel-comp-chip">jaeger</span>
+            <span class="otel-comp-chip">zipkin</span>
+          </div>
+          <p class="card-note">The same three names work as either a receiver (accept) or an exporter (send). <code>otlp</code> is the native, preferred one.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">⚙️ Processors</span></div>
+          <ul class="otel-comp-list">
+            <li><code>attributes</code> — add, edit or <strong>redact</strong> span attributes (scrub PII).</li>
+            <li><code>batch</code> — group spans before export (fewer, bigger sends).</li>
+            <li><code>queued_retry</code> — buffer + retry on failure (backpressure/reliability).</li>
+            <li><code>resource</code> — attach resource attributes (<code>service.name</code>, k8s pod).</li>
+            <li><code>sampling</code> — keep only a subset of traces (head- or tail-based).</li>
+            <li><code>span</code> — rename or modify spans (e.g. normalise names).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📈 For metrics</h3>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🔌 Receivers</span></div>
+          <div class="otel-comp-chips">
+            <span class="otel-comp-chip">otlp</span>
+            <span class="otel-comp-chip">hostmetrics</span>
+            <span class="otel-comp-chip">prometheus</span>
+          </div>
+          <ul class="otel-comp-list">
+            <li><code>otlp</code> — metrics your app emits via OTel.</li>
+            <li><code>hostmetrics</code> — CPU / memory / disk of the machine itself.</li>
+            <li><code>prometheus</code> — scrape existing Prometheus endpoints.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag orange">📤 Exporters</span></div>
+          <div class="otel-comp-chips">
+            <span class="otel-comp-chip">otlp</span>
+            <span class="otel-comp-chip">prometheus</span>
+          </div>
+          <p class="card-note">Push onward via <code>otlp</code>, or expose a <code>prometheus</code> endpoint for Prometheus to scrape.</p>
+        </div>
+      </div>
+      <div class="callout note" style="margin-top:14px">
+        <span class="callout-icon">i</span>
+        <div class="callout-text"><strong>For logs</strong>, the set mirrors this: an <code>otlp</code> or <code>filelog</code> receiver in, an <code>otlp</code> exporter out — so all three signals feel consistent.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛒 Wiring it for our checkout</h3>
+      <p style="color:var(--txt2);line-height:1.85">Concretely, for the checkout example: for <strong>traces</strong> you’d wire an <code>otlp</code> receiver → <code>batch</code> + <code>sampling</code> processors → a <code>jaeger</code> exporter; for <strong>metrics</strong>, a <code>prometheus</code>/<code>otlp</code> receiver → a <code>prometheus</code> exporter. All of that is a few lines of YAML — <strong>choices, not code</strong>.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Components are <strong>pluggable and chosen per signal</strong> in config — no code changes.</li>
+        <li><strong>Traces:</strong> OTLP/Jaeger/Zipkin in-out; processors <code>attributes</code>, <code>batch</code>, <code>queued_retry</code>, <code>resource</code>, <code>sampling</code>, <code>span</code>.</li>
+        <li><strong>Metrics:</strong> OTLP/hostmetrics/Prometheus receivers; OTLP/Prometheus exporters. Logs mirror the pattern.</li>
+        <li>Prefer <code>otlp</code> as the default; reach for the others to bridge existing Jaeger/Zipkin/Prometheus setups.</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Deep dive — Deploying the Collector (topologies) ─── -->
+       <article data-label="Deploy the Collector" class="nb-leaf" id="otel-deploy" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 12">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 12 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Deep Dive</div>
+      <h2>Deploying the Collector</h2>
+      <p class="sec-desc">Where does the Collector actually run? There are a few standard shapes. Here’s each one, when to reach for it, and the trade-off — in plain terms.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5 — local post-box vs central hub</span></div>
+      <p>You can drop a letter in a <strong>post-box on your street</strong> (fast, local, fire-and-forget) — that’s an <strong>agent</strong> running next to your app. Those post-boxes all feed a <strong>central sorting hub</strong> that does the heavy, coordinated work before letters leave the city — that’s a <strong>gateway</strong>. Most setups use both.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧭 The common shape</h3>
+      <p class="card-sub">Telemetry usually hops through a local agent, then a central gateway, then out to backends:</p>
+      <div class="otel-cpipe">
+        <div class="ocp-box" style="--ocp:var(--blue)"><div class="ocp-t">📱 App</div><small>Emits telemetry to a nearby Collector — often just <code>localhost</code>.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent-ink)"><div class="ocp-t">🛰️ Agent</div><small>Runs close to the app (sidecar or DaemonSet). Collects locally, enriches, forwards.</small></div>
+        <span class="ocp-arr" aria-hidden="true">→</span>
+        <div class="ocp-box" style="--ocp:var(--accent2)"><div class="ocp-t">🏛️ Gateway</div><small>Central, scaled Collector. Tail-sampling, auth, rate-limits, controlled egress.</small></div>
+        <span class="ocp-arr" aria-hidden="true">⇒</span>
+        <div class="ocp-backends">
+          <div class="ocp-be">📊 Backends</div>
+        </div>
+      </div>
+      <p class="card-note">app → agent (DaemonSet/sidecar) → gateway → backend. Start with just an agent; add a gateway when you want central policy.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🗂️ The patterns, and when to use each</h3>
+      <div class="card-grid-4">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">🛰️ Agent</span></div>
+          <p><strong>A Collector near the app/host</strong> that collects locally and forwards on, keeping the app’s job tiny (fire-and-forget).</p>
+          <p class="card-note"><strong>Use when:</strong> you want apps to offload fast. <em>Trade-off:</em> it’s the base pattern — run it as a sidecar or DaemonSet below.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag green">📦 Sidecar</span></div>
+          <p><strong>A Collector container in the SAME pod</strong> as the app; the app sends to <code>localhost</code>.</p>
+          <p class="card-note"><strong>Use when:</strong> you need strong isolation or per-app config. <em>Trade-off:</em> one Collector per pod = more overhead.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag purple">🖥️ DaemonSet</span></div>
+          <p><strong>ONE Collector per node</strong>; every pod on that node sends to it. The most common agent pattern.</p>
+          <p class="card-note"><strong>Use when:</strong> you want efficiency + node/k8s enrichment. <em>Trade-off:</em> shared by all pods on the node.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag orange">🏛️ Gateway</span></div>
+          <p><strong>A standalone, scaled Collector</strong> (Deployment + Service) that receives from all agents and does the heavy central work.</p>
+          <p class="card-note"><strong>Use when:</strong> you need tail-sampling, auth, rate-limiting or controlled egress. <em>Trade-off:</em> another tier to run.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🤔 Just an agent, or add a gateway?</h3>
+      <div class="two-col">
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag green">✅ Agent only</span></div>
+          <p style="color:var(--txt2)">Fine for smaller setups: each node’s DaemonSet (or a sidecar) enriches locally and exports straight to your backend. Simple, few moving parts.</p>
+        </div>
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag orange">➕ Add a gateway</span></div>
+          <p style="color:var(--txt2)">Reach for a gateway when you want <strong>centralized policy across many services</strong> — tail-based sampling (needs a full trace in one place), auth, egress control, and a single choke-point to your vendors.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li><strong>Agent</strong> = Collector near the app (as a <strong>sidecar</strong> = one per pod, or a <strong>DaemonSet</strong> = one per node, the common choice).</li>
+        <li><strong>Gateway</strong> = a central, scaled Collector for the heavy shared work: tail-sampling, auth, rate-limiting, egress.</li>
+        <li>The usual shape is <strong>app → agent → gateway → backend</strong>.</li>
+        <li>Start agent-only; add a gateway once you need <strong>centralized sampling/policy</strong> across services.</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 06 — Auto (Zero-Code) Instrumentation ─── -->
+       <article data-label="Auto Instrument" class="nb-leaf" id="otel-auto" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 13">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 13 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 06</div>
+      <h2>Auto (Zero-Code) Instrumentation</h2>
+      <p class="sec-desc">Get real traces for a Flask app in three commands — without editing a single line of code.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Auto-instrumentation is like clip-on sensors. OTel already knows how popular libraries (Flask, requests, SQLAlchemy, Redis…) behave, so it <strong>wraps them for you at startup</strong> and emits spans automatically. You write zero telemetry code and instantly see every HTTP request, DB query and outbound call.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔧 How It Works</h3>
+      <p class="card-sub">A launcher (<code>opentelemetry-instrument</code>) starts your app and <strong>monkey-patches</strong> known libraries before your code runs, injecting spans around their calls. The SDK is configured entirely through environment variables.</p>
+      <div class="code-block"><span class="cmt"># 1) Install the distro (SDK + auto-instrumentation tooling)</span>
+$ pip install opentelemetry-distro opentelemetry-exporter-otlp
+
+<span class="cmt"># 2) Detect installed libs and pull matching instrumentation</span>
+$ opentelemetry-bootstrap -a install
+<span class="cmt">#    → installs opentelemetry-instrumentation-flask,</span>
+<span class="cmt">#      -requests, -sqlalchemy, … based on YOUR deps</span>
+
+<span class="cmt"># 3) Run your app through the launcher — no code changes</span>
+$ opentelemetry-instrument \
+    --service_name orders-api \
+    --exporter_otlp_endpoint http://localhost:4318 \
+    python app.py</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🐍 The Flask App (completely untouched)</h3>
+      <div class="code-block"><span class="cmt"># app.py — NOT modified for telemetry at all</span>
+<span class="kw">from</span> flask <span class="kw">import</span> Flask
+<span class="kw">import</span> requests
+
+app = Flask(__name__)
+
+<span class="kw">@app.route</span>(<span class="str">"/orders/&lt;oid&gt;"</span>)
+<span class="kw">def</span> get_order(oid):
+    <span class="cmt"># auto-instrumented: this outbound call becomes a child span</span>
+    inv = requests.get(<span class="str">f"http://inventory/stock/{oid}"</span>).json()
+    <span class="kw">return</span> {<span class="str">"order"</span>: oid, <span class="str">"in_stock"</span>: inv[<span class="str">"qty"</span>]}
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    app.run(port=<span class="num">5000</span>)</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">⚙️ Configure with Environment Variables</h3>
+      <div class="code-block"><span class="cmt"># Everything is env-var driven — 12-factor friendly</span>
+<span class="kw">export</span> OTEL_SERVICE_NAME=orders-api
+<span class="kw">export</span> OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318
+<span class="kw">export</span> OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+<span class="kw">export</span> OTEL_TRACES_EXPORTER=otlp
+<span class="kw">export</span> OTEL_METRICS_EXPORTER=otlp
+<span class="kw">export</span> OTEL_LOGS_EXPORTER=otlp
+<span class="kw">export</span> OTEL_RESOURCE_ATTRIBUTES=<span class="str">"service.version=2.3.1,deployment.environment=prod"</span>
+
+$ opentelemetry-instrument python app.py</div>
+    </div>
+
+    <div class="two-col">
+      <div class="card card-accent">
+        <div class="card-tag-row"><span class="ctag green">🎁 What you get for free</span></div>
+        <ul style="color:var(--txt2);padding-left:18px;line-height:1.7">
+          <li>A span per inbound HTTP request (route, method, status)</li>
+          <li>Child spans for outbound <code>requests</code> calls</li>
+          <li>DB query spans (SQLAlchemy, psycopg, Redis…)</li>
+          <li>Context propagation across services — automatically</li>
+          <li>Baseline metrics &amp; correlated logs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag blue">⚖️ Honest pros &amp; cons</span></div>
+        <p style="color:var(--txt2);margin-bottom:6px"><strong style="color:var(--green)">Pros:</strong> instant, no code changes, consistent naming, perfect first step.</p>
+        <p style="color:var(--txt2)"><strong style="color:var(--orange)">Cons:</strong> only covers libraries it knows — it has <em>no idea</em> about <em>your</em> business logic. It can't tell you "fraud check took 300ms" or add <code>order.value=249.99</code>. Some overhead; occasional patching quirks.</p>
+      </div>
+    </div>
+
+    <div class="devops-box card">
+      <div class="card-tag-row"><span class="ctag orange">🔧 DevOps/SRE tip</span></div>
+      <p>Auto-instrumentation is your <strong>day-one baseline</strong> — roll it out fleet-wide to get distributed traces everywhere with near-zero effort. It answers "which service/endpoint is slow." To answer "which <em>business step</em> is slow," you add manual spans (Module 07) on top. That combination is the industry standard (Module 08).</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Three commands: <code>pip install opentelemetry-distro</code> → <code>opentelemetry-bootstrap -a install</code> → <code>opentelemetry-instrument python app.py</code></li>
+        <li>It monkey-patches known libraries at startup; your app code is untouched</li>
+        <li>Configured entirely via <code>OTEL_*</code> environment variables</li>
+        <li>Great baseline, but blind to your business logic — enrich it with manual spans next</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 07 — Manual (Code-Based) Instrumentation ─── -->
+       <article data-label="Manual Instrument" class="nb-leaf" id="otel-manual" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 14">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 14 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 07</div>
+      <h2>Manual (Code-Based) Instrumentation</h2>
+      <p class="sec-desc">Use the OTel API/SDK directly to describe <em>your</em> business logic — the spans auto can't create.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Auto-instrumentation labels the highways (HTTP, DB). Manual instrumentation lets <strong>you</strong> label the streets that matter to your business — "validate_order," "charge_payment," "check_fraud." You wrap the important bits of your own code in named spans and attach the attributes you care about.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧰 One-Time SDK Setup</h3>
+      <p class="card-sub">Manual instrumentation needs the SDK wired up once at startup (auto did this for you behind the scenes). Modelled on the official Python guide.</p>
+      <div class="code-block"><span class="cmt"># telemetry.py — configure the tracer + meter providers once</span>
+<span class="kw">from</span> opentelemetry <span class="kw">import</span> trace, metrics
+<span class="kw">from</span> opentelemetry.sdk.resources <span class="kw">import</span> Resource
+<span class="kw">from</span> opentelemetry.sdk.trace <span class="kw">import</span> TracerProvider
+<span class="kw">from</span> opentelemetry.sdk.trace.export <span class="kw">import</span> BatchSpanProcessor
+<span class="kw">from</span> opentelemetry.sdk.metrics <span class="kw">import</span> MeterProvider
+<span class="kw">from</span> opentelemetry.sdk.metrics.export <span class="kw">import</span> PeriodicExportingMetricReader
+<span class="kw">from</span> opentelemetry.exporter.otlp.proto.http.trace_exporter <span class="kw">import</span> OTLPSpanExporter
+<span class="kw">from</span> opentelemetry.exporter.otlp.proto.http.metric_exporter <span class="kw">import</span> OTLPMetricExporter
+
+resource = Resource.create({
+    <span class="str">"service.name"</span>: <span class="str">"orders-api"</span>,
+    <span class="str">"service.version"</span>: <span class="str">"2.3.1"</span>,
+})
+
+<span class="cmt"># Traces</span>
+provider = TracerProvider(resource=resource)
+provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
+trace.set_tracer_provider(provider)
+
+<span class="cmt"># Metrics</span>
+reader = PeriodicExportingMetricReader(OTLPMetricExporter())
+metrics.set_meter_provider(MeterProvider(resource=resource, metric_readers=[reader]))</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🎯 Creating Spans, Attributes &amp; Status</h3>
+      <div class="code-block"><span class="kw">from</span> opentelemetry <span class="kw">import</span> trace
+<span class="kw">from</span> opentelemetry.trace <span class="kw">import</span> Status, StatusCode
+
+tracer = trace.get_tracer(__name__)
+
+<span class="kw">def</span> validate_order(order):
+    <span class="cmt"># start_as_current_span opens a span and makes it "current"</span>
+    <span class="cmt"># so any auto/child spans nest under it automatically</span>
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"validate_order"</span>) <span class="kw">as</span> span:
+        span.set_attribute(<span class="str">"order.id"</span>, order[<span class="str">"id"</span>])
+        span.set_attribute(<span class="str">"order.item_count"</span>, len(order[<span class="str">"items"</span>]))
+        span.set_attribute(<span class="str">"order.value"</span>, order[<span class="str">"total"</span>])
+
+        <span class="kw">if</span> order[<span class="str">"total"</span>] &lt;= <span class="num">0</span>:
+            <span class="cmt"># mark the span failed — shows red in the trace UI</span>
+            span.set_status(Status(StatusCode.ERROR, <span class="str">"non-positive total"</span>))
+            <span class="kw">raise</span> ValueError(<span class="str">"invalid order total"</span>)
+
+        span.add_event(<span class="str">"validation.passed"</span>)   <span class="cmt"># timestamped note on the span</span>
+        <span class="kw">return</span> True</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">💥 Recording Exceptions</h3>
+      <div class="code-block"><span class="kw">def</span> charge_payment(order):
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"charge_payment"</span>) <span class="kw">as</span> span:
+        span.set_attribute(<span class="str">"payment.amount"</span>, order[<span class="str">"total"</span>])
+        <span class="kw">try</span>:
+            <span class="kw">return</span> stripe_charge(order)
+        <span class="kw">except</span> Exception <span class="kw">as</span> e:
+            <span class="cmt"># attaches stack trace as a span event + sets status</span>
+            span.record_exception(e)
+            span.set_status(Status(StatusCode.ERROR, str(e)))
+            <span class="kw">raise</span>
+    <span class="cmt"># You can also decorate a whole function:</span>
+    <span class="cmt"># @tracer.start_as_current_span("charge_payment")</span></div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📈 Custom Metrics — Counters &amp; Histograms</h3>
+      <p class="card-sub">Spans answer "what happened in this request." Metrics answer "how often / how much" across all requests.</p>
+      <div class="code-block"><span class="kw">from</span> opentelemetry <span class="kw">import</span> metrics
+
+meter = metrics.get_meter(__name__)
+
+<span class="cmt"># A counter only goes up — great for totals</span>
+orders_placed = meter.create_counter(
+    <span class="str">"orders.placed"</span>, unit=<span class="str">"{order}"</span>, description=<span class="str">"Orders successfully placed"</span>)
+
+<span class="cmt"># A histogram records a distribution — great for latency/value (p50/p99)</span>
+order_value = meter.create_histogram(
+    <span class="str">"orders.value"</span>, unit=<span class="str">"USD"</span>, description=<span class="str">"Order value distribution"</span>)
+
+<span class="kw">def</span> place_order(order):
+    <span class="cmt"># attributes become dimensions you can group/filter by</span>
+    orders_placed.add(<span class="num">1</span>, {<span class="str">"payment.method"</span>: order[<span class="str">"method"</span>]})
+    order_value.record(order[<span class="str">"total"</span>], {<span class="str">"currency"</span>: <span class="str">"USD"</span>})</div>
+    </div>
+
+    <div class="devops-box card">
+      <div class="card-tag-row"><span class="ctag orange">🔧 Rules of thumb</span></div>
+      <ul style="color:var(--txt2);padding-left:18px;line-height:1.8">
+        <li>Name spans for the <em>operation</em>, not the outcome: <code>charge_payment</code>, not <code>charge_ok</code></li>
+        <li>Use <code>start_as_current_span</code> so nesting &amp; context propagation "just work"</li>
+        <li>Put high-value context in attributes (IDs, amounts, tenant) — <strong>never secrets</strong> (Module 11)</li>
+        <li>Reuse tracer/meter per module; don't create them per request</li>
+      </ul>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Wire the SDK once (<code>TracerProvider</code> + <code>BatchSpanProcessor</code> + OTLP exporter)</li>
+        <li><code>tracer.start_as_current_span(...)</code> is the workhorse — add <code>set_attribute</code>, <code>set_status</code>, <code>record_exception</code></li>
+        <li>Use <strong>counters</strong> for "how many" and <strong>histograms</strong> for distributions (latency, value)</li>
+        <li>Manual spans describe <em>your</em> business logic — the part auto-instrumentation can't see</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 08 — Hybrid ─── -->
+       <article data-label="Hybrid" class="nb-leaf" id="otel-hybrid" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 15">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 15 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 08</div>
+      <h2>Auto + Manual — The Golden Hybrid</h2>
+      <p class="sec-desc">Why the industry standard is auto for breadth + manual for depth, working as one seamless trace.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Auto-instrumentation is a security camera on every door (broad, automatic). Manual instrumentation is you narrating the important moments ("now we're checking the vault"). <strong>The hybrid runs both</strong> — the cameras catch everything, your narration explains the parts that matter. And because they share the same "current span" context, your narrated spans slot neatly <em>inside</em> the camera footage.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🤝 Why Hybrid Wins</h3>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">📡</div><h4>Breadth (auto)</h4><p>Every HTTP/DB/cache call traced fleet-wide, day one, zero code.</p></div>
+        <div class="card"><div class="ci">🔬</div><h4>Depth (manual)</h4><p>Business spans + attributes for the logic that actually matters.</p></div>
+        <div class="card"><div class="ci">🧵</div><h4>Shared context</h4><p>Manual spans auto-nest under auto spans — one connected trace.</p></div>
+        <div class="card"><div class="ci">💸</div><h4>Right effort</h4><p>Don't hand-write HTTP spans; don't leave business logic invisible.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧵 How Manual Spans Nest Inside Auto Spans</h3>
+      <p class="card-sub">The auto Flask span is the "current" span when your handler runs. Because <code>start_as_current_span</code> parents to whatever is current, your manual spans drop straight in — no wiring needed.</p>
+      <div class="code-block"><span class="cmt"># App is launched with:  opentelemetry-instrument python app.py</span>
+<span class="cmt"># → Flask + requests are AUTO-instrumented.</span>
+
+<span class="kw">from</span> opentelemetry <span class="kw">import</span> trace
+tracer = trace.get_tracer(__name__)
+
+<span class="kw">@app.route</span>(<span class="str">"/orders"</span>, methods=[<span class="str">"POST"</span>])
+<span class="kw">def</span> create_order():                      <span class="cmt"># ← AUTO span: POST /orders</span>
+    order = request.get_json()
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"validate_order"</span>):   <span class="cmt"># ← MANUAL, nests in auto</span>
+        validate(order)
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"charge_payment"</span>) <span class="kw">as</span> s:  <span class="cmt"># ← MANUAL</span>
+        s.set_attribute(<span class="str">"order.value"</span>, order[<span class="str">"total"</span>])
+        charge(order)                       <span class="cmt"># auto span for stripe HTTP call nests here</span>
+    <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"placed"</span>}</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🆚 Auto-Only vs Hybrid — Same Request, Different Insight</h3>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-tag-row"><span class="ctag blue">Auto-only trace</span></div>
+          <div class="code-block" style="font-size:0.78rem">POST /orders                 900ms
+  └─ POST api.stripe.com       803ms
+  └─ INSERT orders             52ms
+<span class="cmt"># You know Stripe was slow.</span>
+<span class="cmt"># But what were WE doing for the</span>
+<span class="cmt"># other ~45ms? No idea.</span></div>
+        </div>
+        <div class="card card-accent">
+          <div class="card-tag-row"><span class="ctag green">Hybrid trace</span></div>
+          <div class="code-block" style="font-size:0.78rem">POST /orders                 900ms
+  ├─ validate_order            18ms  <span class="cmt">✔ our code</span>
+  ├─ charge_payment            820ms
+  │    └─ POST api.stripe.com  803ms
+  │    order.value=249.99
+  └─ db.insert orders          52ms
+<span class="cmt"># Business steps + Stripe, one view.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="devops-box card">
+      <div class="card-tag-row"><span class="ctag orange">🔧 The playbook</span></div>
+      <p><strong>1)</strong> Roll out auto-instrumentation everywhere for a free baseline. <strong>2)</strong> Add manual spans only around the business logic you actually debug. <strong>3)</strong> Enrich with attributes (IDs, amounts, tenant) for filtering. This is exactly how mature teams — and AWS ADOT deployments — run OTel in production.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Hybrid = auto for <strong>breadth</strong> (every library call) + manual for <strong>depth</strong> (your business logic)</li>
+        <li>Manual spans nest under auto spans automatically via the shared "current span" context</li>
+        <li>Auto-only tells you <em>which service</em> is slow; hybrid tells you <em>which business step</em></li>
+        <li><strong>For DevOps:</strong> auto everywhere, manual where it counts — the production-standard approach</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 09 — Interactive Simulation (centrepiece) ─── -->
+       <article data-label="Simulation" class="nb-leaf" id="otel-simulations" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 16">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 16 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 09 · Hands-On</div>
+      <h2>Interactive Sample-Project Simulation</h2>
+      <p class="sec-desc">Instrument a tiny Flask "orders" app step by step and watch the telemetry appear. Everything here is simulated in your browser — no backend, no network.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Drive it yourself. Start <strong>blind</strong> (only a log line), turn on <strong>auto</strong> (spans appear), add <strong>manual</strong> spans (your business logic shows up), then <strong>break it</strong> and watch OTel point straight at the failing span. Each step shows the exact code you'd write, so you connect "I wrote this" → "this span appeared."</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎮 The Orders-Service Telemetry Simulator</div>
+      <p style="font-size:0.85rem;color:var(--txt2);margin-bottom:14px">A user places an order: <code>POST /orders</code> → validate → charge payment (calls Stripe) → save to DB. Step through instrumenting it.</p>
+
+      <!-- Step tabs -->
+      <div class="agent-type-tabs" role="tablist">
+        <button class="atype-tab active" id="otelTab0" onclick="otelSimStep(0)">0 · Blind</button>
+        <button class="atype-tab" id="otelTab1" onclick="otelSimStep(1)">1 · Auto</button>
+        <button class="atype-tab" id="otelTab2" onclick="otelSimStep(2)">2 · Manual</button>
+        <button class="atype-tab" id="otelTab3" onclick="otelSimStep(3)">3 · Break it</button>
+      </div>
+
+      <!-- Step description -->
+      <div id="otelSimDesc" class="otel-sim-desc"></div>
+
+      <div class="two-col otel-sim-cols">
+        <!-- LEFT: the trace / telemetry view -->
+        <div class="card otel-sim-view">
+          <div class="otel-sim-viewhead">
+            <span id="otelSimBackend">🖥️ App console</span>
+            <span class="otel-trace-total" id="otelTraceTotal"></span>
+          </div>
+          <div id="otelSimOutput" class="otel-sim-output"></div>
+          <div class="otel-trace-legend" id="otelTraceLegend" style="display:none;">
+            <span class="otel-leg"><i class="otel-leg-dot" style="background:var(--accent)"></i>OK</span>
+            <span class="otel-leg"><i class="otel-leg-dot" style="background:var(--orange)"></i>Slow</span>
+            <span class="otel-leg"><i class="otel-leg-dot" style="background:var(--red)"></i>Error</span>
+            <span class="otel-leg"><i class="otel-leg-dot otel-leg-manual"></i>Manual span</span>
+          </div>
+        </div>
+
+        <!-- RIGHT: the code you'd write -->
+        <div class="card otel-sim-code-side">
+          <div class="otel-sim-viewhead"><span>📝 Code for this step</span></div>
+          <div id="otelSimCode" class="code-block otel-sim-code"></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="otel-sim-nav">
+        <button class="btn btn-outline" id="otelRunBtn" onclick="otelSimRun()">▶ Run request</button>
+        <button class="btn btn-outline" id="otelPrevBtn" onclick="otelSimStep(otelSimState.step-1)">← Prev step</button>
+        <button class="btn btn-outline" id="otelNextBtn" onclick="otelSimStep(otelSimState.step+1)">Next step →</button>
+        <span class="otel-sim-counter" id="otelSimCounter"></span>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 What the Simulation Proved</h3>
+      <ul>
+        <li><strong>Blind:</strong> a lone log line can't tell you where time went or what failed</li>
+        <li><strong>Auto:</strong> one launcher flag renders a full HTTP → DB → external-API waterfall</li>
+        <li><strong>Manual:</strong> named business spans (<code>validate_order</code>, <code>charge_payment</code>) nest in with attributes</li>
+        <li><strong>Break it:</strong> the failing span turns red with its status &amp; exception — instant root cause</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 10 — End-to-End Real Project ─── -->
+       <article data-label="Real Project" class="nb-leaf" id="otel-project" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 17">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 17 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 10</div>
+      <h2>End-to-End Real Project</h2>
+      <p class="sec-desc">Instrument a realistic Python orders service with hybrid instrumentation, run a Collector, and read the trace in Jaeger.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>We'll take a small but real service and wire up everything you've learned — auto for the plumbing, manual for the business steps, a Collector to route the data, and Jaeger to look at it. By the end you can copy this shape into your own app.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🏗️ The Architecture</h3>
+      <div class="code-block">orders-api (Flask)                     docker-compose services
+  ├─ auto: Flask, requests, psycopg    ┌──────────────────────────┐
+  └─ manual: validate / charge / save  │ orders-api   :5000        │
+        │                              │ otel-collector :4317/4318 │
+        │  OTLP :4318                   │ jaeger        :16686 (UI) │
+        ▼                              └──────────────────────────┘
+   OTel Collector ──► Jaeger (traces)  ──► Prometheus (metrics)</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🐍 The Instrumented Service</h3>
+      <div class="code-block"><span class="cmt"># app.py — hybrid: launched via opentelemetry-instrument (auto)</span>
+<span class="cmt">#          + manual spans/metrics for business logic</span>
+<span class="kw">from</span> flask <span class="kw">import</span> Flask, request
+<span class="kw">import</span> requests, psycopg
+<span class="kw">from</span> opentelemetry <span class="kw">import</span> trace, metrics
+<span class="kw">from</span> opentelemetry.trace <span class="kw">import</span> Status, StatusCode
+
+app    = Flask(__name__)
+tracer = trace.get_tracer(<span class="str">"orders-api"</span>)
+meter  = metrics.get_meter(<span class="str">"orders-api"</span>)
+orders_placed = meter.create_counter(<span class="str">"orders.placed"</span>, unit=<span class="str">"{order}"</span>)
+order_value   = meter.create_histogram(<span class="str">"orders.value"</span>, unit=<span class="str">"USD"</span>)
+
+<span class="kw">@app.route</span>(<span class="str">"/orders"</span>, methods=[<span class="str">"POST"</span>])
+<span class="kw">def</span> create_order():                       <span class="cmt"># auto span: POST /orders</span>
+    order = request.get_json()
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"validate_order"</span>) <span class="kw">as</span> s:
+        s.set_attribute(<span class="str">"order.id"</span>, order[<span class="str">"id"</span>])
+        s.set_attribute(<span class="str">"order.value"</span>, order[<span class="str">"total"</span>])
+        <span class="kw">if</span> order[<span class="str">"total"</span>] &lt;= <span class="num">0</span>:
+            s.set_status(Status(StatusCode.ERROR, <span class="str">"bad total"</span>))
+            <span class="kw">return</span> {<span class="str">"error"</span>: <span class="str">"invalid total"</span>}, <span class="num">400</span>
+
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"charge_payment"</span>) <span class="kw">as</span> s:
+        s.set_attribute(<span class="str">"payment.amount"</span>, order[<span class="str">"total"</span>])
+        <span class="kw">try</span>:
+            requests.post(<span class="str">"http://payments/charge"</span>, json=order, timeout=<span class="num">2</span>)  <span class="cmt"># auto child span</span>
+        <span class="kw">except</span> Exception <span class="kw">as</span> e:
+            s.record_exception(e); s.set_status(Status(StatusCode.ERROR, str(e)))
+            <span class="kw">return</span> {<span class="str">"error"</span>: <span class="str">"payment failed"</span>}, <span class="num">502</span>
+
+    <span class="kw">with</span> tracer.start_as_current_span(<span class="str">"save_order"</span>):
+        <span class="kw">with</span> psycopg.connect(<span class="str">"postgresql://db/orders"</span>) <span class="kw">as</span> conn:  <span class="cmt"># auto DB span</span>
+            conn.execute(<span class="str">"INSERT INTO orders VALUES (%s,%s)"</span>,
+                         (order[<span class="str">"id"</span>], order[<span class="str">"total"</span>]))
+
+    orders_placed.add(<span class="num">1</span>, {<span class="str">"payment.method"</span>: order[<span class="str">"method"</span>]})
+    order_value.record(order[<span class="str">"total"</span>], {<span class="str">"currency"</span>: <span class="str">"USD"</span>})
+    <span class="kw">return</span> {<span class="str">"status"</span>: <span class="str">"placed"</span>}, <span class="num">201</span></div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🛰️ The Collector Config (otel-collector-config.yaml)</h3>
+      <div class="code-block"><span class="kw">receivers</span>:
+  <span class="kw">otlp</span>:
+    <span class="kw">protocols</span>:
+      <span class="kw">grpc</span>: { endpoint: <span class="num">0.0.0.0</span>:<span class="num">4317</span> }
+      <span class="kw">http</span>: { endpoint: <span class="num">0.0.0.0</span>:<span class="num">4318</span> }
+
+<span class="kw">processors</span>:
+  <span class="kw">batch</span>: {}                       <span class="cmt"># buffer before export (efficiency)</span>
+  <span class="kw">resource</span>:                       <span class="cmt"># enrich every span with metadata</span>
+    <span class="kw">attributes</span>:
+      - { key: deployment.environment, value: prod, action: upsert }
+  <span class="kw">tail_sampling</span>:                  <span class="cmt"># keep all errors + slow, sample the rest</span>
+    <span class="kw">policies</span>:
+      - { name: errors, type: status_code, status_code: { status_codes: [ERROR] } }
+      - { name: slow,   type: latency,     latency: { threshold_ms: <span class="num">500</span> } }
+      - { name: sample, type: probabilistic, probabilistic: { sampling_percentage: <span class="num">10</span> } }
+
+<span class="kw">exporters</span>:
+  <span class="kw">otlp/jaeger</span>: { endpoint: jaeger:<span class="num">4317</span>, tls: { insecure: true } }
+  <span class="kw">prometheus</span>: { endpoint: <span class="num">0.0.0.0</span>:<span class="num">8889</span> }
+
+<span class="kw">service</span>:
+  <span class="kw">pipelines</span>:
+    <span class="kw">traces</span>:  { receivers: [otlp], processors: [batch, resource, tail_sampling], exporters: [otlp/jaeger] }
+    <span class="kw">metrics</span>: { receivers: [otlp], processors: [batch], exporters: [prometheus] }</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🚀 Run It</h3>
+      <div class="code-block"><span class="cmt"># Jaeger accepts OTLP natively and serves its UI on :16686</span>
+$ docker run -d --name jaeger -p <span class="num">16686</span>:<span class="num">16686</span> -p <span class="num">4317</span>:<span class="num">4317</span> jaegertracing/all-in-one
+
+$ pip install opentelemetry-distro opentelemetry-exporter-otlp
+$ opentelemetry-bootstrap -a install
+$ OTEL_SERVICE_NAME=orders-api \
+  OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 \
+  opentelemetry-instrument python app.py
+
+$ curl -XPOST localhost:5000/orders \
+    -d '{"id":"A-1001","total":249.99,"method":"card","items":[1,2]}'
+<span class="cmt"># → open http://localhost:16686 and search service "orders-api"</span></div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔭 The Trace in Jaeger</h3>
+      <p class="card-sub">This is what the request looks like in the Jaeger UI — auto spans (plumbing) and manual spans (business) in one waterfall.</p>
+      <div class="code-block">Jaeger ▸ orders-api ▸ POST /orders          Trace 7b2c1a…f09   904.2ms
+────────────────────────────────────────────────────────────────
+POST /orders                        ████████████████████████  904ms
+  validate_order                    █                          18ms   order.value=249.99
+  charge_payment                      ██████████████████████   820ms
+    POST http://payments/charge         █████████████████████  803ms  http.status=200
+  save_order                                                █   41ms
+    INSERT orders                                           █   38ms  db.system=postgresql
+────────────────────────────────────────────────────────────────
+Tags: service.version=2.3.1  deployment.environment=prod</div>
+      <p class="card-note">Every concept lands here: resource attrs, auto + manual spans, semantic conventions, context propagation, and a Collector routing to Jaeger. For the AWS X-Ray equivalent, see <a href="#adot-full-project" style="color:var(--accent);font-weight:600">ADOT → Full Project</a>.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>A production-shaped service = auto baseline + manual business spans + custom metrics</li>
+        <li>The Collector config is where batching, enrichment and tail-sampling live — not in the app</li>
+        <li>Jaeger ingests OTLP directly; one <code>docker run</code> gives you a trace UI on :16686</li>
+        <li>Copy this exact skeleton into your own service and adjust the span names</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ─── Module 11 — Best Practices & Cheat-Sheet ─── -->
+       <article data-label="Best Practices" class="nb-leaf" id="otel-best-practices" role="group" aria-roledescription="page" aria-label="OPENTELEMETRY page 18">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">OPENTELEMETRY</div>
+      <div class="nb-pagenum">- Page 18 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge">Module 11 · 12</div>
+      <h2>Best Practices &amp; Cheat-Sheet</h2>
+      <p class="sec-desc">The habits that keep OTel useful and affordable — plus a one-glance reference you'll return to.</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Instrumenting is easy; instrumenting <em>well</em> is a few good habits: use standard names, sample smartly, never log secrets, and turn metrics into promises (SLOs). Do these and your telemetry stays trustworthy and cheap.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">✅ Best Practices</h3>
+      <div class="card-grid-4">
+        <div class="card"><div class="ci">📖</div><h4>Use semantic conventions</h4><p>Standard attribute names (<code>http.*</code>, <code>db.*</code>) so every backend understands your data.</p></div>
+        <div class="card"><div class="ci">🎚️</div><h4>Sample with intent</h4><p>Tail-based: keep <strong>100% of errors &amp; slow traces</strong>, sample the rest (~10%).</p></div>
+        <div class="card"><div class="ci">🔒</div><h4>Never log secrets</h4><p>No tokens, cards, PII in spans/logs. Scrub in the Collector as a safety net.</p></div>
+        <div class="card"><div class="ci">🎯</div><h4>SLOs from metrics</h4><p>Turn latency histograms + error rate into SLOs &amp; error-budget alerts.</p></div>
+        <div class="card"><div class="ci">🛰️</div><h4>Always run a Collector</h4><p>In production, route through a Collector — never hardcode a backend in apps.</p></div>
+        <div class="card"><div class="ci">🏷️</div><h4>Set resource attrs</h4><p><code>service.name</code>, <code>service.version</code>, <code>deployment.environment</code> on everything.</p></div>
+        <div class="card"><div class="ci">💸</div><h4>Control cardinality</h4><p>Never put unbounded values (user IDs, timestamps) in <em>metric</em> attributes — it explodes cost.</p></div>
+        <div class="card"><div class="ci">📦</div><h4>Batch, don't block</h4><p>Use <code>BatchSpanProcessor</code>; telemetry must never slow the request path.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔒 Never-Log-Secrets — Scrub in the Collector</h3>
+      <div class="code-block"><span class="cmt"># Redact sensitive attributes centrally, as a safety net</span>
+<span class="kw">processors</span>:
+  <span class="kw">attributes/scrub</span>:
+    <span class="kw">actions</span>:
+      - { key: http.request.header.authorization, action: delete }
+      - { key: user.email, action: hash }
+      - { key: credit_card, action: delete }</div>
+      <p class="card-note">Defence in depth: don't record secrets in the first place, and scrub anyway.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📊 SLOs From Metrics</h3>
+      <div class="two-col">
+        <div>
+          <p style="color:var(--txt2);line-height:1.8">A histogram of request duration gives you percentiles. Define an SLO, then alert on <strong>error-budget burn</strong> rather than raw spikes.</p>
+          <ul style="color:var(--txt2);padding-left:18px;line-height:1.8">
+            <li><strong>SLI:</strong> % requests with duration &lt; 300ms</li>
+            <li><strong>SLO:</strong> 99.5% over 30 days</li>
+            <li><strong>Alert:</strong> budget burning &gt; 2% / hour</li>
+          </ul>
+        </div>
+        <div class="code-block" style="font-size:0.78rem"><span class="cmt"># From the OTLP-exported histogram (PromQL):</span>
+histogram_quantile(0.99,
+  rate(http_server_request_duration_bucket[5m]))
+
+<span class="cmt"># Error ratio for the budget:</span>
+sum(rate(http_requests_total{status=~"5.."}[5m]))
+  / sum(rate(http_requests_total[5m]))</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📋 The Cheat-Sheet</h3>
+      <div class="two-col">
+        <div>
+          <div class="card-tag-row"><span class="ctag green">🐍 Python API</span></div>
+          <div class="code-block" style="font-size:0.78rem"><span class="cmt"># Traces</span>
+tracer = trace.get_tracer(__name__)
+<span class="kw">with</span> tracer.start_as_current_span(<span class="str">"work"</span>) <span class="kw">as</span> s:
+    s.set_attribute(<span class="str">"k"</span>, v)
+    s.add_event(<span class="str">"milestone"</span>)
+    s.set_status(Status(StatusCode.ERROR, <span class="str">"msg"</span>))
+    s.record_exception(e)
+
+<span class="cmt"># Metrics</span>
+meter = metrics.get_meter(__name__)
+c = meter.create_counter(<span class="str">"hits"</span>);      c.add(1, {"route": r})
+h = meter.create_histogram(<span class="str">"latency"</span>);  h.record(ms)
+g = meter.create_up_down_counter(<span class="str">"queue"</span>); g.add(-1)</div>
+        </div>
+        <div>
+          <div class="card-tag-row"><span class="ctag blue">🖥️ Commands &amp; env</span></div>
+          <div class="code-block" style="font-size:0.78rem"><span class="cmt"># Auto-instrument (zero code)</span>
+pip install opentelemetry-distro opentelemetry-exporter-otlp
+opentelemetry-bootstrap -a install
+opentelemetry-instrument python app.py
+
+<span class="cmt"># Key environment variables</span>
+OTEL_SERVICE_NAME=orders-api
+OTEL_EXPORTER_OTLP_ENDPOINT=http://collector:4318
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+OTEL_TRACES_SAMPLER=parentbased_traceidratio
+OTEL_TRACES_SAMPLER_ARG=0.1
+OTEL_RESOURCE_ATTRIBUTES=service.version=2.3.1
+
+<span class="cmt"># OTLP ports:  gRPC 4317  ·  HTTP 4318  ·  Jaeger UI 16686</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧠 Mental Model — The Whole Guide in One Line</h3>
+      <div class="code-block"><span class="kw">API</span> (your code calls) → <span class="kw">SDK</span> (spans/metrics/logs) → <span class="kw">OTLP</span> → <span class="kw">Collector</span> (batch·sample·scrub·route) → <span class="kw">Backend</span> (Jaeger/Prometheus/vendor)
+                                                              ▲
+             auto = breadth  ·  manual = depth  ·  hybrid = both, one connected trace</div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Standard names + tail sampling + a Collector = trustworthy, affordable telemetry</li>
+        <li>Never record secrets; scrub in the Collector as defence in depth</li>
+        <li>Watch <strong>metric cardinality</strong> — unbounded attributes are the #1 cost trap</li>
+        <li>Turn histograms into SLOs and alert on error-budget burn, not raw spikes</li>
+        <li>You're now zero-to-expert: concepts, all three instrumentation styles, a live sim, and a real project 🎉</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+     <article data-label="The End" class="nb-leaf nb-backcover" id="nb-otel-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Opentelemetry notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-otel-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>🧠 AI Learning Mentor for DevOps Engineers</span>
+    <span>Built with HTML · CSS · Vanilla JS - runs fully offline</span>
+  </div>
+</footer>
+
+<script src="script.js?v=25"></script>
+</body>
+</html>

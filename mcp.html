@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCP · The DevOps Playbook</title>
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("nbPlain")==="1")document.documentElement.classList.add("nb-plain");}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=25" />
+</head>
+<body>
+<main class="main" id="mainContent">
+    <div class="topbar" id="topbar">
+      <nav class="topbar-crumb" aria-label="Breadcrumb">
+        <a class="tb-home" href="index.html" aria-label="Back to the shelf">📚 Shelf</a>
+        <span class="tb-sep">/</span>
+        <span class="tb-group" id="tbGroup">MCP</span>
+        <span class="tb-sep">/</span>
+        <span class="tb-section" id="tbSection">Cover</span>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode" aria-label="Toggle dark/light mode">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </div>
+
+<section id="nb-mcp-cover" data-topic="MCP" class="section nb-section nb-book-section nb-book--mcp" aria-roledescription="notebook" aria-label="MCP NOTES notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article data-label="Notebook Cover" class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="MCP NOTES cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">MODEL CONTEXT<small>PROTOCOL</small></div>
+      <div class="nb-cover-band">Your Handy Guide to MCP</div>
+      <p class="nb-cover-desc">How models connect to tools and data through the Model Context Protocol. Core concepts, the client-server architecture, and building your own servers. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is MCP</li><li>Core concepts</li><li>Architecture</li><li>Using MCP</li><li>Building a server</li><li>MCP with LangGraph</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>One protocol for many tools</li><li>Reusable servers</li><li>Clear client-server split</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "One protocol to connect them all."</div>
+    </div>
+     </article>
+
+     <article data-label="MCP Home" class="nb-leaf" id="mcp-home" role="group" aria-roledescription="page" aria-label="MCP NOTES page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
+  <div class="mcp-badge">🔌 MCP Deep Dive</div>
+  <h1>Master <span class="mcp-grad-text">Model Context Protocol</span></h1>
+  <p class="sec-desc">The open standard that connects AI to everything — databases, repos, APIs, and your own tools. Build once, use with any AI.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+    <button class="btn-mcp" onclick="document.getElementById('mcp-intro').scrollIntoView({behavior:'smooth'})">Start Learning →</button>
+    <button class="btn-outline" onclick="document.getElementById('mcp-simulations').scrollIntoView({behavior:'smooth'})">Try Simulations</button>
+  </div>
+  <div class="mcp-stats-row">
+    <div class="mcp-stat"><span class="mcp-stat-num">8</span><div class="mcp-stat-lbl">Modules</div></div>
+    <div class="mcp-stat"><span class="mcp-stat-num">3</span><div class="mcp-stat-lbl">Simulations</div></div>
+    <div class="mcp-stat"><span class="mcp-stat-num">∞</span><div class="mcp-stat-lbl">Tools</div></div>
+    <div class="mcp-stat"><span class="mcp-stat-num">1</span><div class="mcp-stat-lbl">Protocol</div></div>
+  </div>
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Learning Path</div>
+    <div class="mcp-path-grid">
+      <div class="mcp-path-card"><div class="mcp-path-num">01</div><strong>What is MCP?</strong><br><span style="font-size:0.8rem;color:var(--txt2)">The N×M problem, why it exists, DevOps analogies</span></div>
+      <div class="mcp-path-card"><div class="mcp-path-num">02</div><strong>Build a Server</strong><br><span style="font-size:0.8rem;color:var(--txt2)">FastMCP, @mcp.tool(), test with Inspector</span></div>
+      <div class="mcp-path-card"><div class="mcp-path-num">03</div><strong>Add to LangGraph</strong><br><span style="font-size:0.8rem;color:var(--txt2)">MultiServerMCPClient, connect all your tools</span></div>
+      <div class="mcp-path-card"><div class="mcp-path-num">04</div><strong>Custom Integrations</strong><br><span style="font-size:0.8rem;color:var(--txt2)">Bitbucket, Jira, Jenkins — any internal API</span></div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 2: What is MCP? -->
+     <article data-label="What is MCP?" class="nb-leaf" id="mcp-intro" role="group" aria-roledescription="page" aria-label="MCP NOTES page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
+  <div class="mcp-sec-badge">Module 01</div>
+  <h2>What is MCP?</h2>
+  <p class="sec-desc">The open protocol that makes AI stop reinventing integrations — released by Anthropic, Nov 2024. Now adopted by OpenAI and Google DeepMind.</p>
+
+  <div class="card eli5-card">
+    <div class="card-title">🧠 ELI5 — The USB-C Analogy</div>
+    <p style="font-size:0.9rem;line-height:1.7">MCP is the <strong>USB-C of AI tools</strong>. Before USB-C, every device had a different charger — nightmare. USB-C standardized it all. Before MCP, every AI tool needed custom code to talk to every data source. MCP standardizes how AI connects to <em>everything</em>. Write one MCP server for your Bitbucket instance and <em>any</em> AI that speaks MCP can use it instantly.</p>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">⚡ The N×M Problem — Before and After MCP</div>
+    <div class="mcp-nm-grid">
+      <div class="mcp-nm-before">
+        <div class="mcp-nm-title">❌ Before MCP: N×M integrations</div>
+        <p style="font-size:0.83rem;color:var(--txt2)">5 data sources × 3 AI tools = <strong style="color:#ef4444">15 custom integrations</strong>. Each one had different auth, different error handling, duplicate code. Change one API and 3 integrations break.</p>
+        <div style="font-family:monospace;font-size:0.78rem;margin-top:10px;color:#ef4444">
+          Claude → GitHub (custom)<br>
+          Claude → Postgres (custom)<br>
+          Claude → Jira (custom)<br>
+          GPT-4 → GitHub (custom)<br>
+          GPT-4 → Postgres (custom)<br>
+          GPT-4 → Jira (custom)<br>
+          <span style="color:var(--txt2)">... 9 more ...</span>
+        </div>
+      </div>
+      <div class="mcp-nm-after">
+        <div class="mcp-nm-title">✅ After MCP: N+M integrations</div>
+        <p style="font-size:0.83rem;color:var(--txt2)">5 data sources × 1 MCP standard = <strong style="color:var(--mcp)">5 MCP servers</strong>. Any AI that speaks MCP connects to all 5 instantly. Build once, use everywhere.</p>
+        <div style="font-family:monospace;font-size:0.78rem;margin-top:10px;color:var(--mcp)">
+          Any AI → MCP Client → GitHub MCP<br>
+          Any AI → MCP Client → Postgres MCP<br>
+          Any AI → MCP Client → Jira MCP<br>
+          <span style="color:var(--txt2)">Add a new AI? Zero new integrations.<br>Add a new tool? One MCP server.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📅 Timeline — How We Got Here</div>
+    <div class="mcp-timeline">
+      <div class="mcp-tl-item">
+        <div class="mcp-tl-year">2023</div>
+        <div class="mcp-tl-desc">Function calling — LLMs can call tools, but schemas are baked into every single API request. No standardization. Every provider did it differently.</div>
+      </div>
+      <div class="mcp-tl-item">
+        <div class="mcp-tl-year">Nov 2024</div>
+        <div class="mcp-tl-desc">Anthropic releases MCP as an open standard. Tools are described once per session (not per request). Claude Desktop ships with MCP support out of the box.</div>
+      </div>
+      <div class="mcp-tl-item">
+        <div class="mcp-tl-year">Early 2025</div>
+        <div class="mcp-tl-desc">OpenAI and Google DeepMind adopt MCP. Cursor, Windsurf, VS Code Copilot, and LangGraph all add native MCP support. 100+ official MCP servers published.</div>
+      </div>
+      <div class="mcp-tl-item">
+        <div class="mcp-tl-year">2025+</div>
+        <div class="mcp-tl-desc">MCP becomes the de-facto standard for AI tool integration. Every major enterprise SaaS (Atlassian, AWS, Slack) ships an official MCP server.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🐳 DevOps Analogies — You Already Know This</div>
+    <div class="two-col" style="gap:12px;">
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>🐳 MCP is like Docker</strong><br>
+        <span style="font-size:0.83rem;color:var(--txt2)">Docker standardized app packaging — "build once, run anywhere". MCP standardizes AI tool integration — "build once, use with any AI".</span>
+      </div>
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>📡 MCP is like HTTP</strong><br>
+        <span style="font-size:0.83rem;color:var(--txt2)">HTTP is a protocol, not a product. Anyone can implement it. MCP is the same — an open spec. Any AI provider, any tool vendor can implement it.</span>
+      </div>
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>🔌 MCP is like a K8s Operator</strong><br>
+        <span style="font-size:0.83rem;color:var(--txt2)">An Operator defines how a system behaves and reconciles state. An MCP server defines what an AI can do and executes actions on its behalf.</span>
+      </div>
+      <div class="card" style="background:var(--glass2);border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>📦 MCP is like npm/PyPI</strong><br>
+        <span style="font-size:0.83rem;color:var(--txt2)">Instead of writing code to use a library, you install an MCP server. Your AI gets all the tools instantly — no integration code required.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">✅ Why MCP Wins — Six Key Advantages</div>
+    <div class="mcp-advantages-grid">
+      <div class="mcp-adv-card"><div class="mcp-adv-icon">🏗️</div><div class="mcp-adv-title">Standardization</div>Build once, works with Claude, ChatGPT, LangGraph, Cursor — any MCP-compatible AI.</div>
+      <div class="mcp-adv-card"><div class="mcp-adv-icon">🔒</div><div class="mcp-adv-title">Security</div>Tools run locally on your machine. Your API keys and credentials never leave your network.</div>
+      <div class="mcp-adv-card"><div class="mcp-adv-icon">🧩</div><div class="mcp-adv-title">Composability</div>Mix filesystem + GitHub + Postgres in one agent. Each server is independent and pluggable.</div>
+      <div class="mcp-adv-card"><div class="mcp-adv-icon">⚡</div><div class="mcp-adv-title">Token Efficiency</div>Tools are discovered once per session via tools/list, not repeated in every single LLM request.</div>
+      <div class="mcp-adv-card"><div class="mcp-adv-icon">🔄</div><div class="mcp-adv-title">Dynamic Updates</div>Servers can notify clients when tools change at runtime — no restart needed.</div>
+      <div class="mcp-adv-card"><div class="mcp-adv-icon">🌍</div><div class="mcp-adv-title">Ecosystem</div>100+ ready-made servers for common tools. Don't build what already exists.</div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 3: Core Concepts -->
+     <article data-label="Core Concepts" class="nb-leaf" id="mcp-concepts" role="group" aria-roledescription="page" aria-label="MCP NOTES page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
+  <div class="mcp-sec-badge">Module 02</div>
+  <h2>Core Concepts</h2>
+  <p class="sec-desc">Three participants, three primitives — that's all you need to understand MCP completely.</p>
+
+  <div class="card eli5-card">
+    <div class="card-title">🍽️ ELI5 — The Restaurant Model</div>
+    <p style="font-size:0.9rem;line-height:1.7">Think of a restaurant. The <strong>Host</strong> is the restaurant manager (Claude Desktop or your app) — responsible for everything. The <strong>Client</strong> is a waiter who knows exactly one kitchen. The <strong>Server</strong> is a kitchen that specializes in one type of food (file system, GitHub, Postgres). The manager can have multiple waiters, each connecting to a different kitchen simultaneously.</p>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">👥 The Three Participants</div>
+    <div class="mcp-arch-visual">
+      <div class="mcp-host-box">
+        <strong style="color:var(--mcp)">🖥️ HOST</strong> &nbsp;— Claude Desktop / Your LangGraph Agent / Cursor IDE<br>
+        <span style="font-size:0.78rem;color:var(--txt2)">Manages the user interaction and owns all MCP Clients</span>
+        <div class="mcp-client-row">
+          <div class="mcp-client-box">🔗 Client 1<br><span style="font-size:0.72rem;color:var(--txt2)">→ Filesystem</span></div>
+          <div class="mcp-client-box">🔗 Client 2<br><span style="font-size:0.72rem;color:var(--txt2)">→ GitHub</span></div>
+          <div class="mcp-client-box">🔗 Client 3<br><span style="font-size:0.72rem;color:var(--txt2)">→ Postgres</span></div>
+        </div>
+      </div>
+      <div class="mcp-conn-label">↕ JSON-RPC 2.0 (STDIO or HTTP)</div>
+      <div class="mcp-server-row">
+        <div class="mcp-server-box">📁 Filesystem<br>MCP Server</div>
+        <div class="mcp-server-box">🐙 GitHub<br>MCP Server</div>
+        <div class="mcp-server-box">🐘 Postgres<br>MCP Server</div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:14px;gap:12px;">
+      <div style="font-size:0.83rem"><strong style="color:var(--mcp)">Host</strong> — the application the user runs. Creates and manages Clients. Has access to the LLM. Examples: Claude Desktop, your custom Python agent, Cursor.</div>
+      <div style="font-size:0.83rem"><strong style="color:var(--mcp)">Client</strong> — lives inside the Host. Maintains exactly one connection to one Server. Handles the JSON-RPC protocol. Usually invisible to you.</div>
+    </div>
+    <div style="margin-top:10px;font-size:0.83rem"><strong style="color:var(--mcp)">Server</strong> — a lightweight process that exposes tools and data. Can be local (stdin/stdout) or remote (HTTPS). You build these in Python with FastMCP.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🧩 The Three Primitives</div>
+    <div class="mcp-primitives-grid">
+      <div class="mcp-primitive-card mcp-prim-tool">
+        <div class="mcp-prim-tag">ACTION</div>
+        <div class="mcp-prim-title">🔧 Tool</div>
+        <strong>What:</strong> Callable functions — the AI invokes these to <em>do things</em>.<br><br>
+        <strong>DevOps analogy:</strong> Like a kubectl command or REST API endpoint.<br><br>
+        <strong>Examples:</strong> <code>list_pods()</code>, <code>create_pr()</code>, <code>query_db()</code>, <code>restart_service()</code>
+      </div>
+      <div class="mcp-primitive-card mcp-prim-resource">
+        <div class="mcp-prim-tag">READ-ONLY</div>
+        <div class="mcp-prim-title">📄 Resource</div>
+        <strong>What:</strong> Read-only data — the AI reads this for <em>context</em>.<br><br>
+        <strong>DevOps analogy:</strong> Like a Prometheus metric, a log file, or a config file.<br><br>
+        <strong>Examples:</strong> <code>system://info</code>, <code>db://schema</code>, current cluster state
+      </div>
+      <div class="mcp-primitive-card mcp-prim-prompt">
+        <div class="mcp-prim-tag">TEMPLATE</div>
+        <div class="mcp-prim-title">📝 Prompt</div>
+        <strong>What:</strong> Reusable interaction templates for structured tasks.<br><br>
+        <strong>DevOps analogy:</strong> Like a runbook or operational playbook.<br><br>
+        <strong>Examples:</strong> "Diagnose this service", "Review this PR", "Summarize incidents"
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔬 Advanced Features — Sampling &amp; Elicitation</div>
+    <div class="two-col" style="gap:12px;">
+      <div class="card" style="background:var(--glass2)">
+        <strong style="color:var(--mcp)">Sampling</strong><br>
+        <span style="font-size:0.83rem;color:var(--txt2)">A Server can ask the LLM "what should I do next?" — allows servers to request AI reasoning mid-execution. Example: your Bitbucket MCP server gets a complex PR diff and asks Claude to summarize it before posting a comment.</span>
+      </div>
+      <div class="card" style="background:var(--glass2)">
+        <strong style="color:var(--mcp)">Elicitation</strong><br>
+        <span style="font-size:0.83rem;color:var(--txt2)">A Server can ask the user "is it OK to do X?" — enables human-in-the-loop approvals. Example: "This will restart the production pod. Are you sure?" before executing a destructive action.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔍 Interactive Concept Explorer — See the JSON-RPC Messages</div>
+    <div class="mcp-concept-btns">
+      <button class="mcp-concept-btn active" onclick="showMcpConcept('tools_list')">tools/list</button>
+      <button class="mcp-concept-btn" onclick="showMcpConcept('tools_call')">tools/call</button>
+      <button class="mcp-concept-btn" onclick="showMcpConcept('resources_list')">resources/list</button>
+      <button class="mcp-concept-btn" onclick="showMcpConcept('resources_read')">resources/read</button>
+      <button class="mcp-concept-btn" onclick="showMcpConcept('notification')">notification</button>
+    </div>
+    <div class="mcp-concept-json" id="mcpConceptJson">{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}</div>
+    <div id="mcpConceptDesc" style="font-size:0.82rem;color:var(--txt2);margin-top:8px">Client asks: what tools do you have? This happens ONCE per session. The server returns all tool names, descriptions, and input schemas — much more token-efficient than repeating schemas in every LLM request.</div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 4: Architecture -->
+     <article data-label="Architecture" class="nb-leaf" id="mcp-architecture" role="group" aria-roledescription="page" aria-label="MCP NOTES page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
+  <div class="mcp-sec-badge">Module 03</div>
+  <h2>How MCP Works Under the Hood</h2>
+  <p class="sec-desc">JSON-RPC 2.0, two transports, five lifecycle steps. This is the entire protocol.</p>
+
+  <div class="card eli5-card">
+    <div class="card-title">🧠 ELI5 — Very Formal Conversation</div>
+    <p style="font-size:0.9rem;line-height:1.7">MCP uses <strong>JSON-RPC 2.0</strong> — like HTTP but for function calls. Every message is JSON, every request gets a response. It's a very formal conversation: "Hello" → "I support X and Y" → "List tools" → "Here are my 6 tools" → "Call tool get_cpu_usage" → "CPU is 87%". That's it. Every MCP interaction follows this exact pattern.</p>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🏗️ Architecture Diagram</div>
+    <div class="mcp-arch-diagram">HOST (Claude Desktop / LangGraph Agent)
+┌─────────────────────────────────────────┐
+│  LLM (Claude)                           │
+│    ↕ decides what to do based on tools  │
+│  MCP Client                             │
+│    ↕ JSON-RPC 2.0 messages              │
+└──────────────┬──────────────────────────┘
+               │
+       Transport Layer
+  (STDIO pipes  OR  Streamable HTTP/SSE)
+               │
+┌──────────────▼──────────────────────────┐
+│  MCP SERVER (Your Python / Node process)│
+│    list_repositories()                  │
+│    get_pull_requests()                  │
+│    get_pipeline_status()                │
+│    create_pr_comment()                  │
+└─────────────────────────────────────────┘</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔄 5-Step Lifecycle — Step Through It</div>
+    <div class="mcp-lifecycle-sim" id="mcpLcsSim">
+      <div class="mcp-lcs-dots">
+        <div class="mcp-lcs-dot active" id="mcpLcsDot0">1</div>
+        <div class="mcp-lcs-dot" id="mcpLcsDot1">2</div>
+        <div class="mcp-lcs-dot" id="mcpLcsDot2">3</div>
+        <div class="mcp-lcs-dot" id="mcpLcsDot3">4</div>
+        <div class="mcp-lcs-dot" id="mcpLcsDot4">5</div>
+      </div>
+      <div class="mcp-lcs-body">
+        <div class="mcp-lcs-title" id="mcpLcsTitle">Step 1: Initialize</div>
+        <div class="mcp-lcs-desc" id="mcpLcsDesc">Client sends <code>initialize</code> — declares its MCP protocol version and capabilities. This is the handshake. Without this step, neither side knows what the other supports.</div>
+      </div>
+      <div class="mcp-lcs-nav">
+        <button class="btn btn-sm" id="mcpLcsPrev" onclick="mcpLcsStep(-1)" disabled>← Prev</button>
+        <button class="btn btn-sm" id="mcpLcsNext" onclick="mcpLcsStep(1)">Next →</button>
+        <span class="mcp-lcs-counter" id="mcpLcsCounter">Step 1 / 5</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🚌 STDIO vs Streamable HTTP — Which Transport to Use?</div>
+    <div class="mcp-table-wrap">
+      <table class="mcp-table">
+        <thead><tr><th></th><th>STDIO</th><th>Streamable HTTP</th></tr></thead>
+        <tbody>
+          <tr><td><strong>How it works</strong></td><td>stdin/stdout pipes — like piping between Unix commands</td><td>HTTP POST requests + Server-Sent Events for streaming</td></tr>
+          <tr><td><strong>Best for</strong></td><td>Local tools: file system, local databases, CLI wrappers</td><td>Remote/cloud APIs, SaaS tools, enterprise systems</td></tr>
+          <tr><td><strong>Auth</strong></td><td>OS-level process isolation — most secure</td><td>Bearer tokens, OAuth 2.0</td></tr>
+          <tr><td><strong>Performance</strong></td><td>Fastest — no network overhead</td><td>Network latency but horizontally scalable</td></tr>
+          <tr><td><strong>Multi-client</strong></td><td>One client per process</td><td>Multiple clients, load-balanced</td></tr>
+          <tr><td><strong>When to use</strong></td><td>Claude Desktop, Cursor, local agents, your dev machine</td><td>Production enterprise APIs, shared team servers</td></tr>
+          <tr><td><strong>Example</strong></td><td>Filesystem server, kubectl wrapper, local Bitbucket Server</td><td>Official Atlassian Remote MCP, AWS MCP, Slack MCP</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📬 JSON-RPC Message Anatomy</div>
+    <div class="two-col" style="gap:12px;">
+      <div>
+        <div class="ctag">Request (Client → Server)</div>
+        <pre class="cb-code">{"jsonrpc": "2.0",
+ "id": 3,
+ "method": "tools/call",
+ "params": {
+   "name": "get_pipeline_status",
+   "arguments": {
+     "repository": "sre-autopilot",
+     "limit": 5
+   }
+ }}</pre>
+      </div>
+      <div>
+        <div class="ctag">Response (Server → Client)</div>
+        <pre class="cb-code">{"jsonrpc": "2.0",
+ "id": 3,
+ "result": {
+   "content": [{
+     "type": "text",
+     "text": "[{\"build\":42,\"state\":\"SUCCESSFUL\",
+       \"branch\":\"main\"}]"
+   }]
+ }}</pre>
+      </div>
+    </div>
+    <div class="two-col" style="gap:12px;margin-top:12px;">
+      <div>
+        <div class="ctag">Notification (Server → Client, no reply expected)</div>
+        <pre class="cb-code">{"jsonrpc": "2.0",
+ "method": "notifications/tools/list_changed"
+ // No "id" field = notification, not a request
+}</pre>
+      </div>
+      <div>
+        <div class="ctag">Error Response</div>
+        <pre class="cb-code">{"jsonrpc": "2.0",
+ "id": 3,
+ "error": {
+   "code": -32602,
+   "message": "Invalid params",
+   "data": {"missing": "repository"}
+ }}</pre>
+      </div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 5: Using MCP -->
+     <article data-label="Using MCP" class="nb-leaf" id="mcp-usage" role="group" aria-roledescription="page" aria-label="MCP NOTES page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
+  <div class="mcp-sec-badge">Module 04</div>
+  <h2>Using MCP Today — No Coding Required</h2>
+  <p class="sec-desc">Connect 100+ ready-made servers to Claude Desktop in under 5 minutes. No code needed for most use cases.</p>
+
+  <div class="card">
+    <div class="card-title">🚀 Setup in 3 Steps</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px;">
+      <div style="text-align:center;padding:16px;background:var(--glass2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:2rem;margin-bottom:8px">1️⃣</div>
+        <strong>Install Claude Desktop</strong><br>
+        <span style="font-size:0.8rem;color:var(--txt2)">Download from claude.ai — available for Mac and Windows</span>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--glass2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:2rem;margin-bottom:8px">2️⃣</div>
+        <strong>Edit claude_desktop_config.json</strong><br>
+        <span style="font-size:0.8rem;color:var(--txt2)">Mac: ~/Library/Application Support/Claude/<br>Win: %APPDATA%/Claude/</span>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--glass2);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:2rem;margin-bottom:8px">3️⃣</div>
+        <strong>Restart Claude Desktop</strong><br>
+        <span style="font-size:0.8rem;color:var(--txt2)">New tools appear automatically — ask Claude what it can do</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🌐 Popular Official MCP Servers</div>
+    <div class="mcp-servers-grid">
+      <div class="mcp-server-card"><div class="mcp-sc-name">📁 Filesystem</div><div class="mcp-sc-desc">Read, write, and search local files and directories</div><div class="mcp-sc-ex">"Find all .env files and check for hardcoded secrets"</div></div>
+      <div class="mcp-server-card"><div class="mcp-sc-name">🐙 GitHub</div><div class="mcp-sc-desc">Issues, PRs, code search, Actions workflows</div><div class="mcp-sc-ex">"List all open PRs with no review in 3+ days"</div></div>
+      <div class="mcp-server-card"><div class="mcp-sc-name">🐘 PostgreSQL</div><div class="mcp-sc-desc">Run queries, inspect schema, analyze performance</div><div class="mcp-sc-ex">"Show me the top 10 slowest queries from pg_stat"</div></div>
+      <div class="mcp-server-card"><div class="mcp-sc-name">🔍 Brave Search</div><div class="mcp-sc-desc">Real-time web search without leaving Claude</div><div class="mcp-sc-ex">"What CVEs affect OpenSSL 3.0.x this month?"</div></div>
+      <div class="mcp-server-card"><div class="mcp-sc-name">💬 Slack</div><div class="mcp-sc-desc">Send messages, read channels, create threads</div><div class="mcp-sc-ex">"Notify #deployments that prod deploy started"</div></div>
+      <div class="mcp-server-card"><div class="mcp-sc-name">☁️ AWS</div><div class="mcp-sc-desc">EC2, S3, Lambda, RDS, CloudWatch management</div><div class="mcp-sc-ex">"List all EC2 instances with no tags across all regions"</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📄 Complete claude_desktop_config.json Example</div>
+    <pre class="cb-code">{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem",
+               "/Users/me/projects", "/tmp"]
+      // Grants Claude read/write to these directories only
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxxxxxxxxxx"
+      }
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres",
+               "postgresql://localhost/mydb"]
+      // Connection string passed as argument
+    }
+  }
+}</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">💬 What You Can Ask After Setup</div>
+    <div style="display:grid;gap:10px;margin-top:10px;">
+      <div style="background:var(--glass2);border-radius:8px;padding:12px;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>📋 Log Analysis:</strong> <em style="color:var(--txt2)">"Check if my app logs have any OOM errors in the last hour"</em><br>
+        <span style="font-size:0.8rem;color:var(--txt2)">→ Filesystem MCP reads /var/log/app.log and searches for patterns</span>
+      </div>
+      <div style="background:var(--glass2);border-radius:8px;padding:12px;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>🐙 PR Review:</strong> <em style="color:var(--txt2)">"Find all open PRs older than 3 days with no reviewer assigned"</em><br>
+        <span style="font-size:0.8rem;color:var(--txt2)">→ GitHub MCP queries the repos, returns filtered list with author + date</span>
+      </div>
+      <div style="background:var(--glass2);border-radius:8px;padding:12px;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">
+        <strong>🐘 Database:</strong> <em style="color:var(--txt2)">"Query the users table and find accounts created in the last 24h"</em><br>
+        <span style="font-size:0.8rem;color:var(--txt2)">→ Postgres MCP runs the query, Claude formats and explains the results</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔄 MCP vs Function Calling — What's the Difference?</div>
+    <div class="mcp-table-wrap">
+      <table class="mcp-table">
+        <thead><tr><th></th><th>Function Calling</th><th>MCP</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tool discovery</strong></td><td>Schema sent in every single API request</td><td>tools/list called once per session</td></tr>
+          <tr><td><strong>Token cost</strong></td><td>High — tool schemas repeat every message</td><td>Low — schemas sent once, referenced by name</td></tr>
+          <tr><td><strong>Multi-tool</strong></td><td>All tools must be defined in each request</td><td>100+ tools from multiple servers, all available</td></tr>
+          <tr><td><strong>Server</strong></td><td>Baked into your API call code</td><td>Separate process — can be reused across apps</td></tr>
+          <tr><td><strong>Updates</strong></td><td>Restart your app to add tools</td><td>Server sends list_changed notification — live updates</td></tr>
+          <tr><td><strong>Ecosystem</strong></td><td>Provider-specific — OpenAI format ≠ Anthropic format</td><td>Universal — works with any MCP-compatible AI</td></tr>
+          <tr><td><strong>Use when</strong></td><td>Simple apps, one AI provider, few tools</td><td>Production agents, multiple tools, reusable servers</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 6: Build a Server -->
+     <article data-label="Build a Server" class="nb-leaf" id="mcp-build" role="group" aria-roledescription="page" aria-label="MCP NOTES page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
+  <div class="mcp-sec-badge">Module 05</div>
+  <h2>Build Your First MCP Server</h2>
+  <p class="sec-desc">From zero to a working server in 15 minutes using FastMCP — the FastAPI of MCP.</p>
+
+  <div class="card">
+    <div class="card-title">⚡ Why FastMCP?</div>
+    <p style="font-size:0.9rem;line-height:1.7;margin-bottom:0">FastMCP is to MCP what <strong>FastAPI is to REST APIs</strong>. You write Python functions. It handles the entire JSON-RPC protocol, message routing, capability negotiation, and error handling. You just add <code>@mcp.tool()</code> and you're done. No boilerplate, no manual JSON construction.</p>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📦 Step 1 — Install FastMCP</div>
+    <pre class="cb-code">pip install fastmcp psutil</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔧 Step 2 — Write Your First Server</div>
+    <pre class="cb-code"># system_monitor.py
+from fastmcp import FastMCP
+import psutil, socket, json
+
+mcp = FastMCP("system-monitor")   # Give your server a name
+
+@mcp.tool()
+def get_cpu_usage() -> str:
+    """Get current CPU usage percentage.
+    Use this when the user asks about CPU load or performance."""
+    return f"CPU: {psutil.cpu_percent(interval=1)}%"
+
+@mcp.tool()
+def get_memory_usage() -> str:
+    """Get current memory usage statistics."""
+    mem = psutil.virtual_memory()
+    return f"Memory: {mem.percent}% used ({mem.used/1e9:.1f}GB / {mem.total/1e9:.1f}GB)"
+
+@mcp.tool()
+def get_disk_usage(path: str = "/") -> str:
+    """Get disk usage for a specific path.
+    Args:
+        path: The filesystem path to check (default: /)
+    """
+    disk = psutil.disk_usage(path)
+    return f"Disk {path}: {disk.percent}% used ({disk.free/1e9:.1f}GB free)"
+
+@mcp.tool()
+def get_top_processes(sort_by: str = "cpu", limit: int = 5) -> str:
+    """Get top processes sorted by CPU or memory usage.
+    Args:
+        sort_by: Sort by 'cpu' or 'memory'
+        limit: Number of processes to return (default 5)
+    """
+    procs = []
+    for p in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
+        try: procs.append(p.info)
+        except: pass
+    key = 'cpu_percent' if sort_by == 'cpu' else 'memory_percent'
+    procs.sort(key=lambda x: x.get(key, 0), reverse=True)
+    return json.dumps(procs[:limit])
+
+if __name__ == "__main__":
+    mcp.run()   # Uses STDIO transport by default</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📊 Step 3 — Add a Resource (Read-only Context)</div>
+    <pre class="cb-code"># Add this to system_monitor.py
+@mcp.resource("system://info")
+def get_system_info() -> str:
+    """Read-only system info — AI can read this for context without calling a tool."""
+    return json.dumps({
+        "hostname": socket.gethostname(),
+        "cpu_count": psutil.cpu_count(),
+        "platform": psutil.sys.platform if hasattr(psutil, 'sys') else "linux",
+        "total_memory_gb": round(psutil.virtual_memory().total / 1e9, 1)
+    })</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔬 Step 4 — Test With MCP Inspector</div>
+    <pre class="cb-code"># Install the inspector globally
+npm install -g @modelcontextprotocol/inspector
+
+# Run the inspector against your server
+npx @modelcontextprotocol/inspector python system_monitor.py
+
+# Opens http://localhost:6274 — visual browser UI to:
+# - See all your tools with their schemas
+# - Call each tool and see the response
+# - Check resources
+# - Verify error handling</pre>
+    <div style="margin-top:10px;padding:12px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.83rem;border:1px solid var(--mcp)">
+      💡 <strong>SRE Tip:</strong> Always test every tool with the Inspector before connecting to Claude Desktop. The Inspector shows the exact JSON-RPC messages — same as what the AI will send.
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">⚙️ Step 5 — Connect to Claude Desktop</div>
+    <pre class="cb-code">{
+  "mcpServers": {
+    "system-monitor": {
+      "command": "python",
+      "args": ["/absolute/path/to/system_monitor.py"]
+      // IMPORTANT: always use absolute paths — Claude Desktop
+      // launches the process from its own working directory
+    }
+  }
+}</pre>
+    <p style="font-size:0.83rem;color:var(--txt2);margin-top:10px">Now restart Claude Desktop and ask: <em>"What's the CPU usage on my machine?"</em> — Claude will call <code>get_cpu_usage()</code> automatically.</p>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📐 MCP Server Design Principles</div>
+    <div style="display:grid;gap:10px;margin-top:10px;">
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Clear tool descriptions</strong> — the LLM reads your docstrings to decide which tool to call. Bad docstrings = wrong tool calls.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Flat input schemas</strong> — avoid deeply nested objects. Simple types (str, int, bool) work best. LLMs struggle with complex nested schemas.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Structured errors</strong> — return <code>{"error": "message", "suggestion": "try X instead"}</code> rather than letting exceptions propagate. The LLM can act on error messages.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Idempotency</strong> — same input should produce same result. Safe to retry if something goes wrong during the agent loop.</div>
+      <div style="padding:10px 14px;background:var(--glass2);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, #22c55e 42%, transparent)">✅ <strong>Rate limiting</strong> — add <code>time.sleep(0.5)</code> between external API calls. Your server is called by an LLM in a loop — it will hammer APIs without this.</div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 7: MCP + LangGraph -->
+     <article data-label="MCP + LangGraph" class="nb-leaf" id="mcp-langgraph" role="group" aria-roledescription="page" aria-label="MCP NOTES page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
+  <div class="mcp-sec-badge">Module 06 · Connecting the Dots</div>
+  <h2>MCP + LangGraph</h2>
+  <p class="sec-desc">Use langchain-mcp-adapters to connect any MCP server to your LangGraph agent — production-ready AI with real tools.</p>
+
+  <div class="card">
+    <div class="card-title">⚡ Why This Combination Is So Powerful</div>
+    <div class="two-col" style="gap:12px;margin-top:10px;">
+      <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.3);border-radius:10px;padding:14px">
+        <strong style="color:#818cf8">LangGraph gives you:</strong>
+        <ul style="font-size:0.83rem;color:var(--txt2);margin-top:8px;padding-left:16px">
+          <li>The agent reasoning loop</li>
+          <li>State management between steps</li>
+          <li>Multi-step diagnostic flows</li>
+          <li>Human-in-the-loop approvals</li>
+          <li>Retries and error recovery</li>
+        </ul>
+      </div>
+      <div style="background:rgba(14,165,233,0.08);border:1px solid var(--mcp);border-radius:10px;padding:14px">
+        <strong style="color:var(--mcp)">MCP gives you:</strong>
+        <ul style="font-size:0.83rem;color:var(--txt2);margin-top:8px;padding-left:16px">
+          <li>Standardized tools — build once</li>
+          <li>100+ ready servers (GitHub, Slack, AWS)</li>
+          <li>Build your own in 10 minutes</li>
+          <li>Credentials stay local</li>
+          <li>Works with any AI, not just LangGraph</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:12px;background:rgba(14,165,233,0.06);border-radius:8px;border:1px solid var(--mcp);font-size:0.84rem">
+      🚀 <strong>Together:</strong> A production-ready AI agent that can interact with any tool in your stack — from Bitbucket to Kubernetes to your own internal APIs.
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📦 Installation</div>
+    <pre class="cb-code">pip install langchain-mcp-adapters langchain-anthropic langgraph</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">💻 Complete LangGraph + MCP Agent</div>
+    <pre class="cb-code"># mcp_agent.py
+import asyncio, os
+from langchain_mcp_adapters.client import MultiServerMCPClient
+from langchain_anthropic import ChatAnthropic
+from langgraph.prebuilt import create_react_agent
+
+async def main():
+    # Step 1: Configure which MCP servers to connect to
+    mcp_config = {
+        "filesystem": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-filesystem", "/tmp", "/var/log"],
+            "transport": "stdio"
+        },
+        "github": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-github"],
+            "env": {"GITHUB_PERSONAL_ACCESS_TOKEN": os.getenv("GITHUB_TOKEN")},
+            "transport": "stdio"
+        }
+    }
+
+    # Step 2: Connect to servers and get all tools
+    async with MultiServerMCPClient(mcp_config) as mcp:
+        tools = await mcp.get_tools()
+        print(f"✅ Loaded {len(tools)} tools from {len(mcp_config)} MCP servers")
+        for t in tools: print(f"   • {t.name}")
+
+        # Step 3: Create a LangGraph ReAct agent with MCP tools
+        llm   = ChatAnthropic(model="claude-sonnet-4-6")
+        agent = create_react_agent(llm, tools)
+
+        # Step 4: Run it
+        result = await agent.ainvoke({
+            "messages": [{
+                "role": "user",
+                "content": "Check if there are any error logs in /var/log/app.log from the last hour"
+            }]
+        })
+
+        print("\n📋 Agent Response:")
+        print(result["messages"][-1].content)
+
+asyncio.run(main())</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🤖 Connecting to Your SRE Auto-Pilot</div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin-bottom:12px">Replace manually-defined tools in your existing LangGraph SRE agent with MCP tools — all of them, from multiple servers, automatically.</p>
+    <pre class="cb-code"># In your LangGraph SRE diagnostic agent (sre_autopilot/agent.py)
+# BEFORE: manually defined tool functions in Python
+# AFTER: replace with MCP config — all tools loaded automatically
+
+mcp_config = {
+    "filesystem": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem",
+                 "/var/log", "/etc/config"],
+    },
+    "github": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {"GITHUB_PERSONAL_ACCESS_TOKEN": os.getenv("GITHUB_TOKEN")}
+    },
+    "system-monitor": {        # Your custom MCP server from Module 05
+        "command": "python",
+        "args": ["/opt/mcp/system_monitor.py"]
+    },
+    "bitbucket": {             # Your custom Bitbucket MCP from Module 07
+        "command": "python",
+        "args": ["/opt/mcp/bitbucket_mcp.py"],
+        "env": {
+            "BITBUCKET_HOST": os.getenv("BITBUCKET_HOST"),
+            "BITBUCKET_TOKEN": os.getenv("BITBUCKET_TOKEN"),
+            "BITBUCKET_WORKSPACE": os.getenv("BITBUCKET_WORKSPACE")
+        }
+    }
+}
+# All tools from all 4 servers → automatically available in your LangGraph agent</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔀 Multi-Server Agent Flow</div>
+    <div class="mcp-langgraph-flow">
+      <div class="mcp-lg-row"><div class="mcp-lg-node">👤 User</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">"My pod is crashing — what's wrong?"</div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">🦜 LangGraph</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">Agent loop begins. Passes user message to LLM with list of available tools.</div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">🧠 LLM</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">Decides: "I should read the pod logs." Requests tool call: <code>read_file("/var/log/app.log")</code></div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">🔌 MCP Client</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">Routes tool call to the Filesystem MCP server via STDIO</div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">📁 FS Server</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">Reads the file, returns last 100 lines as tool result</div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">🧠 LLM</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">Reads logs, sees OOMKilled. Decides to check recent commits: <code>list_commits("sre-autopilot")</code></div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">🐙 GH Server</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">Returns last 5 commits. LLM spots memory limit change in commit abc1234.</div></div>
+      <div class="mcp-lg-row"><div class="mcp-lg-node">✅ Final Answer</div><div class="mcp-lg-arrow">→</div><div class="mcp-lg-desc">"Pod is OOMKilled. Commit abc1234 reduced memory limit from 512Mi to 128Mi. Fix: revert the values.yaml change."</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🛠️ Common LangGraph + MCP Patterns</div>
+    <div style="display:grid;gap:10px;margin-top:10px;">
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem">
+        <strong style="color:var(--mcp)">create_react_agent</strong> — Quick agents with automatic tool use. LLM decides when to call tools and when to stop. Best for open-ended diagnostic tasks.
+        <pre style="margin-top:8px;font-size:0.78rem" class="cb-code">agent = create_react_agent(llm, tools)
+result = await agent.ainvoke({"messages": [...]}, config={"recursion_limit": 25})</pre>
+      </div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem">
+        <strong style="color:var(--mcp)">StateGraph</strong> — Multi-step flows with defined transitions. Best for structured SRE runbooks: diagnose → decide → remediate → verify.
+        <pre style="margin-top:8px;font-size:0.78rem" class="cb-code">graph = StateGraph(AgentState)
+graph.add_node("diagnose", diagnose_node)
+graph.add_node("remediate", remediate_node)
+graph.add_conditional_edges("diagnose", should_remediate)</pre>
+      </div>
+      <div style="padding:12px;background:var(--glass2);border-radius:8px;font-size:0.84rem">
+        <strong style="color:var(--mcp)">interrupt()</strong> — Human-in-the-loop approval before destructive actions. Essential for production. "About to restart the pod — confirm?"
+        <pre style="margin-top:8px;font-size:0.78rem" class="cb-code">from langgraph.types import interrupt
+approval = interrupt({"action": "restart_pod", "pod": pod_name})
+if approval["confirmed"]: restart_pod(pod_name)</pre>
+      </div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 8: Custom MCP (Bitbucket) -->
+     <article data-label="Custom MCP (Bitbucket)" class="nb-leaf" id="mcp-custom" role="group" aria-roledescription="page" aria-label="MCP NOTES page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
+  <div class="mcp-sec-badge">Module 07 · Build Your Own</div>
+  <h2>Build a Custom MCP Server</h2>
+  <p class="sec-desc">Connect Bitbucket, Jira, Jenkins, or any internal tool to AI agents using the exact same pattern.</p>
+
+  <div class="card">
+    <div class="card-title">🤔 When to Build Your Own MCP Server</div>
+    <div style="display:grid;gap:8px;margin-top:10px;">
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ No official server exists for your tool (e.g., internal monitoring system)</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ You're on Bitbucket Server / Data Center (on-prem) — the official Atlassian server is cloud-only</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ You need custom logic — e.g., combined operations across multiple APIs in a single tool</div>
+      <div style="padding:10px;background:rgba(14,165,233,0.08);border-radius:8px;font-size:0.84rem;border:1px solid color-mix(in srgb, var(--mcp) 42%, transparent)">✅ You want to expose your own internal REST API to AI without building a full integration</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">☁️ Official Atlassian MCP vs Custom Python Server</div>
+    <div class="mcp-nm-grid">
+      <div class="mcp-nm-after">
+        <div class="mcp-nm-title" style="color:var(--mcp)">Official Atlassian Remote MCP</div>
+        <ul style="font-size:0.83rem;color:var(--txt2);padding-left:16px">
+          <li>Cloud-based — Atlassian hosts it</li>
+          <li>Works for Bitbucket Cloud, Jira, Confluence</li>
+          <li>One config block, no code needed</li>
+          <li>Connects via OAuth 2.0 to your Atlassian account</li>
+        </ul>
+        <pre style="margin-top:10px;font-size:0.78rem" class="cb-code">// claude_desktop_config.json
+"atlassian": {
+  "command": "npx",
+  "args": ["-y",
+    "@atlassian/mcp-atlassian",
+    "--cloud"
+  ]
+}</pre>
+      </div>
+      <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:14px">
+        <div class="mcp-nm-title" style="color:#a855f7">Custom Python MCP Server</div>
+        <ul style="font-size:0.83rem;color:var(--txt2);padding-left:16px">
+          <li>For Bitbucket Server / Data Center (on-prem)</li>
+          <li>Full control — custom filters, combined tools</li>
+          <li>Works with any internal REST API</li>
+          <li>Your credentials stay on your machine</li>
+        </ul>
+        <pre style="margin-top:10px;font-size:0.78rem" class="cb-code"># bitbucket_mcp.py
+@mcp.tool()
+def get_pull_requests(repo, state="OPEN"):
+    """Get PRs from your internal BB"""
+    r = requests.get(
+      f"{BBHOST}/repos/{repo}/prs",
+      headers=auth_headers()
+    )
+    return json.dumps(r.json())</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔑 Bitbucket Authentication — Which Method to Use?</div>
+    <div class="mcp-table-wrap">
+      <table class="mcp-table">
+        <thead><tr><th>Method</th><th>When to use</th><th>Code</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Personal Access Token</strong> ⭐</td><td>Bitbucket Server/Data Center (on-prem). Recommended for production.</td><td><code>{"Authorization": f"Bearer {token}"}</code></td></tr>
+          <tr><td><strong>OAuth 2.0</strong></td><td>Bitbucket Cloud — production apps with user-level auth</td><td>Bearer token from OAuth flow</td></tr>
+          <tr><td><strong>App Password</strong></td><td>Quick prototyping only — <strong style="color:#ef4444">deprecated June 2026</strong></td><td>HTTP Basic auth with base64</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🛠️ Complete Bitbucket MCP Server — 6 Tools</div>
+    <pre class="cb-code"># bitbucket_mcp.py
+from fastmcp import FastMCP
+import requests, os, json
+from base64 import b64encode
+
+mcp = FastMCP("bitbucket-mcp")
+
+# ── Configuration from environment variables ──────────────────────
+BBHOST    = os.getenv("BITBUCKET_HOST", "https://api.bitbucket.org/2.0")
+WORKSPACE = os.getenv("BITBUCKET_WORKSPACE")
+
+def auth_headers():
+    """Build auth headers — tries Personal Access Token first, falls back to Basic."""
+    token = os.getenv("BITBUCKET_TOKEN")
+    if token:
+        return {"Authorization": f"Bearer {token}"}
+    user = os.getenv("BITBUCKET_USERNAME")
+    pwd  = os.getenv("BITBUCKET_PASSWORD")
+    creds = b64encode(f"{user}:{pwd}".encode()).decode()
+    return {"Authorization": f"Basic {creds}"}
+
+# ── Tool 1: List Repositories ─────────────────────────────────────
+@mcp.tool()
+def list_repositories(workspace: str = None, pagelen: int = 10) -> str:
+    """List repositories in a Bitbucket workspace.
+    Args:
+        workspace: Workspace slug (uses env var BITBUCKET_WORKSPACE if not provided)
+        pagelen: Number of repos to return (default 10)
+    """
+    ws = workspace or WORKSPACE
+    r = requests.get(f"{BBHOST}/repositories/{ws}",
+                     headers=auth_headers(),
+                     params={"pagelen": pagelen}, timeout=30)
+    r.raise_for_status()
+    repos = [{"name": x["name"], "slug": x["slug"], "language": x.get("language")}
+             for x in r.json().get("values", [])]
+    return json.dumps(repos)
+
+# ── Tool 2: Get Pull Requests ─────────────────────────────────────
+@mcp.tool()
+def get_pull_requests(repository: str, state: str = "OPEN") -> str:
+    """Get pull requests for a Bitbucket repository.
+    Args:
+        repository: Repository slug (e.g., 'sre-autopilot')
+        state: PR state — OPEN, MERGED, or DECLINED
+    """
+    r = requests.get(
+        f"{BBHOST}/repositories/{WORKSPACE}/{repository}/pullrequests",
+        headers=auth_headers(),
+        params={"state": state}, timeout=30)
+    r.raise_for_status()
+    prs = [{"id": x["id"], "title": x["title"],
+            "author": x["author"]["display_name"],
+            "source": x["source"]["branch"]["name"],
+            "created_on": x.get("created_on", "")[:10]}
+           for x in r.json().get("values", [])]
+    return json.dumps(prs)
+
+# ── Tool 3: Get Pipeline Status ───────────────────────────────────
+@mcp.tool()
+def get_pipeline_status(repository: str, limit: int = 5) -> str:
+    """Get recent pipeline runs for a repository.
+    Args:
+        repository: Repository slug
+        limit: Number of pipeline runs to return (default 5)
+    """
+    r = requests.get(
+        f"{BBHOST}/repositories/{WORKSPACE}/{repository}/pipelines",
+        headers=auth_headers(),
+        params={"pagelen": limit}, timeout=30)
+    r.raise_for_status()
+    pipes = [{"build": x.get("build_number"),
+              "state": x["state"]["name"],
+              "result": x["state"].get("result", {}).get("name", ""),
+              "branch": x.get("target", {}).get("branch", {}).get("name", "")}
+             for x in r.json().get("values", [])]
+    return json.dumps(pipes)
+
+# ── Tool 4: Get Commit Diff ───────────────────────────────────────
+@mcp.tool()
+def get_commit_diff(repository: str, commit_hash: str) -> str:
+    """Get changed files and line counts for a specific commit.
+    Args:
+        repository: Repository slug
+        commit_hash: Full or short commit SHA
+    """
+    r = requests.get(
+        f"{BBHOST}/repositories/{WORKSPACE}/{repository}/diffstat/{commit_hash}",
+        headers=auth_headers(), timeout=30)
+    r.raise_for_status()
+    return json.dumps(r.json().get("values", []))
+
+# ── Tool 5: Search Code ───────────────────────────────────────────
+@mcp.tool()
+def search_code(repository: str, query: str) -> str:
+    """Search code in a Bitbucket repository.
+    Args:
+        repository: Repository slug
+        query: Search query string (supports Bitbucket code search syntax)
+    """
+    r = requests.get(
+        f"{BBHOST}/repositories/{WORKSPACE}/{repository}/search/code",
+        headers=auth_headers(),
+        params={"search_query": query}, timeout=30)
+    r.raise_for_status()
+    return json.dumps(r.json().get("values", []))
+
+# ── Tool 6: Add PR Comment ────────────────────────────────────────
+@mcp.tool()
+def create_pr_comment(repository: str, pr_id: int, comment: str) -> str:
+    """Add a review comment to a pull request.
+    Args:
+        repository: Repository slug
+        pr_id: Pull request ID number
+        comment: Comment text to post (supports markdown)
+    """
+    r = requests.post(
+        f"{BBHOST}/repositories/{WORKSPACE}/{repository}/pullrequests/{pr_id}/comments",
+        headers={**auth_headers(), "Content-Type": "application/json"},
+        json={"content": {"raw": comment}}, timeout=30)
+    r.raise_for_status()
+    return json.dumps({"id": r.json().get("id"), "created": r.json().get("created_on")})
+
+if __name__ == "__main__":
+    mcp.run()</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">⚙️ Claude Desktop Config for Bitbucket MCP</div>
+    <pre class="cb-code">{
+  "mcpServers": {
+    "bitbucket": {
+      "command": "python",
+      "args": ["/absolute/path/to/bitbucket_mcp.py"],
+      "env": {
+        // For Bitbucket Cloud:
+        "BITBUCKET_HOST": "https://api.bitbucket.org/2.0",
+        "BITBUCKET_TOKEN": "your-oauth2-or-app-password-token",
+        "BITBUCKET_WORKSPACE": "your-workspace-slug",
+
+        // For Bitbucket Server / Data Center (on-prem):
+        // "BITBUCKET_HOST": "https://bitbucket.mycompany.com/rest/api/1.0",
+        // "BITBUCKET_TOKEN": "your-personal-access-token",
+        // "BITBUCKET_WORKSPACE": "your-project-key"
+      }
+    }
+  }
+}</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔬 Testing Your Bitbucket MCP Server</div>
+    <pre class="cb-code"># 1. Set environment variables first
+export BITBUCKET_TOKEN="your-token"
+export BITBUCKET_WORKSPACE="your-workspace"
+
+# 2. Run the MCP Inspector
+npx @modelcontextprotocol/inspector python bitbucket_mcp.py
+
+# 3. Opens http://localhost:6274
+#    Go to "Tools" tab
+#    Test list_repositories → should return your repos
+#    Test get_pull_requests with your repo slug
+#    Test get_pipeline_status → shows recent build results</pre>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🔧 The Same Pattern Works for Any Internal Tool</div>
+    <div class="mcp-table-wrap">
+      <table class="mcp-table">
+        <thead><tr><th>Tool</th><th>Tools to implement</th><th>Key endpoints</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Jira</strong></td><td><code>search_issues</code>, <code>create_ticket</code>, <code>update_status</code>, <code>add_comment</code></td><td><code>/rest/api/3/issue</code>, <code>/rest/api/3/search</code></td></tr>
+          <tr><td><strong>Jenkins</strong></td><td><code>list_jobs</code>, <code>trigger_build</code>, <code>get_build_status</code>, <code>get_build_log</code></td><td><code>/api/json</code>, <code>/job/{name}/build</code></td></tr>
+          <tr><td><strong>Confluence</strong></td><td><code>search_pages</code>, <code>read_page</code>, <code>create_page</code></td><td><code>/rest/api/content</code></td></tr>
+          <tr><td><strong>PagerDuty</strong></td><td><code>list_incidents</code>, <code>acknowledge</code>, <code>add_note</code></td><td><code>/incidents</code>, <code>/services</code></td></tr>
+          <tr><td><strong>Your internal API</strong></td><td>Whatever makes sense for your domain</td><td>Check your Swagger / OpenAPI spec</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:12px;padding:12px;background:rgba(14,165,233,0.06);border-radius:8px;font-size:0.83rem;border:1px solid var(--mcp)">
+      💡 <strong>Pattern:</strong> If you have a REST API with Swagger docs, you can build an MCP server for it in under an hour. The FastMCP <code>@mcp.tool()</code> decorator is all you need. Each endpoint becomes one tool.
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 9: Simulations -->
+     <article data-label="Simulations" class="nb-leaf" id="mcp-simulations" role="group" aria-roledescription="page" aria-label="MCP NOTES page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
+  <div class="mcp-sec-badge">Module 08 · Hands-On</div>
+  <h2>MCP Simulations</h2>
+  <p class="sec-desc">See the protocol in action — step through real JSON-RPC messages, build a tool piece by piece, and trace a LangGraph agent's reasoning.</p>
+
+  <!-- Sim 1: Protocol Flow -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-title">🔄 Simulation 1 — Protocol Flow Visualizer</div>
+    <p style="font-size:0.83rem;color:var(--txt2);margin-bottom:14px">Step through the exact JSON-RPC messages exchanged when an AI connects to a Bitbucket MCP server.</p>
+    <div id="mcpFlowSim">
+      <div class="mcp-flow-sim-body">
+        <div>
+          <div class="ctag">JSON-RPC Message</div>
+          <div class="mcp-json-panel" id="mcpFlowJson"></div>
+        </div>
+        <div class="mcp-flow-explain">
+          <div class="mcp-flow-title" id="mcpFlowTitle"></div>
+          <div class="mcp-flow-desc"  id="mcpFlowDesc"></div>
+        </div>
+      </div>
+      <div class="mcp-sim-nav">
+        <button class="btn btn-sm" id="mcpFlowPrev" onclick="mcpFlowStep(-1)">← Prev</button>
+        <button class="btn btn-sm" id="mcpFlowNext" onclick="mcpFlowStep(1)">Next →</button>
+        <span class="mcp-sim-counter" id="mcpFlowCounter"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sim 2: Tool Builder -->
+  <div class="card" style="margin-bottom:20px;">
+    <div class="card-title">🛠️ Simulation 2 — Tool Builder</div>
+    <p style="font-size:0.83rem;color:var(--txt2);margin-bottom:14px">Watch a FastMCP tool get assembled from scratch — name, docstring, parameters, implementation.</p>
+    <div id="mcpBuilderSim">
+      <div class="mcp-builder-label" id="mcpBuilderLabel"></div>
+      <div class="mcp-builder-code" id="mcpBuilderCode"></div>
+      <div class="mcp-sim-nav">
+        <button class="btn btn-sm" id="mcpBuilderPrev" onclick="mcpBuilderStepFn(-1)">← Prev</button>
+        <button class="btn btn-sm" id="mcpBuilderNext" onclick="mcpBuilderStepFn(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sim 3: Agent Trace -->
+  <div class="card">
+    <div class="card-title">🤖 Simulation 3 — LangGraph Agent Trace Viewer</div>
+    <p style="font-size:0.83rem;color:var(--txt2);margin-bottom:14px">A LangGraph + MCP agent diagnosing high CPU usage. See every reasoning step, tool call, and result.</p>
+    <div id="mcpTraceSim">
+      <div class="mcp-trace-steps" id="mcpTraceSteps"></div>
+      <div class="mcp-sim-nav" style="margin-top:10px;">
+        <button class="btn btn-sm" id="mcpTracePrev" onclick="mcpTraceStep(-1)">← Prev</button>
+        <button class="btn btn-sm" id="mcpTraceNext" onclick="mcpTraceStep(1)">Next →</button>
+        <span class="mcp-sim-counter" id="mcpTraceCounter"></span>
+      </div>
+    </div>
+  </div>
+    </div>
+     </article>
+
+<!-- Section 10: Real Projects -->
+     <article data-label="Real Projects" class="nb-leaf" id="mcp-project" role="group" aria-roledescription="page" aria-label="MCP NOTES page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">MCP NOTES</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
+  <div class="mcp-sec-badge">Module 09 · Build It</div>
+  <h2>Real MCP Projects</h2>
+  <p class="sec-desc">Four projects using MCP — from beginner integrations to production AI agents.</p>
+
+  <div class="proj-card">
+    <div class="proj-header">
+      <div>
+        <div class="proj-title">SRE Diagnostic Agent</div>
+        <div class="proj-tags"><span class="ctag">Filesystem MCP</span><span class="ctag">Custom Shell MCP</span><span class="ctag">LangGraph</span></div>
+      </div>
+      <div class="proj-level" style="background:rgba(14,165,233,0.1);color:var(--mcp);border-color:rgba(14,165,233,0.3)">Intermediate</div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin:10px 0">Extend the SRE Auto-Pilot from the AI section with real MCP tools. Replace mock tool functions with a filesystem MCP server (reads real logs) and a custom shell MCP server (runs ps, df, iostat).</p>
+    <strong style="font-size:0.84rem">Architecture:</strong>
+    <p style="font-size:0.83rem;color:var(--txt2);margin:6px 0">User reports issue → LangGraph agent → MCP filesystem (reads /var/log) + custom shell server (runs ps/df/iostat) → Claude reasons → diagnosis + exact fix command</p>
+    <strong style="font-size:0.84rem">5-Step Roadmap:</strong>
+    <ol style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin-top:6px">
+      <li>Build a custom shell MCP server — wrap safe read-only commands (ps, df, iostat, netstat)</li>
+      <li>Connect filesystem + shell servers to LangGraph via MultiServerMCPClient</li>
+      <li>Add log analysis: grep for ERROR/WARN patterns, correlate with metrics</li>
+      <li>Add Slack notification tool — when diagnosis is complete, post to #incidents</li>
+      <li>Package as a systemd service — agent runs continuously, polls for alerts</li>
+    </ol>
+    <div class="proj-skills"><strong>Skills:</strong> FastMCP · subprocess · LangGraph ReAct · MultiServerMCPClient · systemd</div>
+  </div>
+
+  <div class="proj-card" style="margin-top:14px;">
+    <div class="proj-header">
+      <div>
+        <div class="proj-title">Bitbucket PR Reviewer</div>
+        <div class="proj-tags"><span class="ctag">Bitbucket MCP</span><span class="ctag">Claude Desktop</span></div>
+      </div>
+      <div class="proj-level" style="background:rgba(34,197,94,0.1);color:#22c55e;border-color:rgba(34,197,94,0.3)">Beginner</div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin:10px 0">Use the Bitbucket MCP server from Module 07 directly with Claude Desktop. No extra code needed — just configure and ask questions.</p>
+    <strong style="font-size:0.84rem">Example Prompts:</strong>
+    <ul style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin:6px 0">
+      <li>"List all open PRs in sre-autopilot older than 3 days"</li>
+      <li>"Check the latest pipeline status for all repos in my workspace"</li>
+      <li>"Find all commits this week that changed the values.yaml file"</li>
+      <li>"Add a review comment to PR #47: Please update the CHANGELOG"</li>
+    </ul>
+    <strong style="font-size:0.84rem">3-Step Roadmap:</strong>
+    <ol style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin-top:6px">
+      <li>Set up and test the Bitbucket MCP server with MCP Inspector</li>
+      <li>Configure Claude Desktop with the server path and credentials</li>
+      <li>Create a prompt library — save the most useful queries as templates</li>
+    </ol>
+    <div class="proj-skills"><strong>Skills:</strong> FastMCP · Bitbucket REST API · Claude Desktop config · Personal Access Tokens</div>
+  </div>
+
+  <div class="proj-card" style="margin-top:14px;">
+    <div class="proj-header">
+      <div>
+        <div class="proj-title">DevOps Multi-Tool Chatbot</div>
+        <div class="proj-tags"><span class="ctag">GitHub MCP</span><span class="ctag">Slack MCP</span><span class="ctag">Postgres MCP</span><span class="ctag">Custom K8s MCP</span><span class="ctag">LangGraph</span></div>
+      </div>
+      <div class="proj-level" style="background:rgba(14,165,233,0.1);color:var(--mcp);border-color:rgba(14,165,233,0.3)">Intermediate</div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin:10px 0">An AI ops chatbot that can answer: "What's causing the latest deployment failure?" — connects GitHub Actions, Postgres metrics DB, Kubernetes cluster, and Slack for notifications.</p>
+    <strong style="font-size:0.84rem">What it can handle:</strong>
+    <ul style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin:6px 0">
+      <li>Root cause analysis across logs, metrics, and code changes simultaneously</li>
+      <li>Cross-reference: GitHub commit → K8s deployment event → Postgres slow queries</li>
+      <li>Automated Slack alerts when it finds a problem</li>
+    </ul>
+    <strong style="font-size:0.84rem">4-Step Roadmap:</strong>
+    <ol style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin-top:6px">
+      <li>Start with GitHub + Slack MCP servers — basic CI/CD status queries working</li>
+      <li>Add custom Kubernetes MCP — wraps kubectl read-only commands safely</li>
+      <li>Add Postgres MCP — query metrics tables, find slow queries, check connection counts</li>
+      <li>Build LangGraph multi-step flow: detect → correlate → diagnose → notify</li>
+    </ol>
+    <div class="proj-skills"><strong>Skills:</strong> MultiServerMCPClient · LangGraph StateGraph · kubectl · Postgres · Slack API</div>
+  </div>
+
+  <div class="proj-card" style="margin-top:14px;">
+    <div class="proj-header">
+      <div>
+        <div class="proj-title">kubectl AI Assistant</div>
+        <div class="proj-tags"><span class="ctag">Custom K8s MCP</span><span class="ctag">Claude Desktop</span><span class="ctag">LangGraph</span></div>
+      </div>
+      <div class="proj-level" style="background:rgba(34,197,94,0.1);color:#22c55e;border-color:rgba(34,197,94,0.3)">Beginner</div>
+    </div>
+    <p style="font-size:0.84rem;color:var(--txt2);margin:10px 0">Build a custom MCP server that safely wraps kubectl (read-only commands only). Connect to Claude Desktop and debug Kubernetes issues in plain English.</p>
+    <strong style="font-size:0.84rem">Tools to implement:</strong>
+    <ul style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin:6px 0">
+      <li><code>get_pods(namespace)</code> — lists pods with status and restarts</li>
+      <li><code>describe_pod(name, namespace)</code> — full pod description including events</li>
+      <li><code>get_logs(pod_name, tail=100)</code> — recent log lines</li>
+      <li><code>get_events(namespace)</code> — cluster events sorted by timestamp</li>
+      <li><code>get_resource_usage(namespace)</code> — CPU/memory from kubectl top</li>
+    </ul>
+    <strong style="font-size:0.84rem">3-Step Roadmap:</strong>
+    <ol style="font-size:0.83rem;color:var(--txt2);padding-left:18px;margin-top:6px">
+      <li>Build K8s MCP server — wrap subprocess calls to kubectl with read-only safety check</li>
+      <li>Configure Claude Desktop — test with "Why is my pod crashlooping?"</li>
+      <li>Add LangGraph for multi-step diagnosis — get pod → read logs → check events → diagnose</li>
+    </ol>
+    <div class="proj-skills"><strong>Skills:</strong> FastMCP · subprocess · kubectl · LangGraph · Claude Desktop</div>
+  </div>
+    </div>
+     </article>
+
+     <article data-label="The End" class="nb-leaf nb-backcover" id="nb-mcp-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Mcp Notes notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-mcp-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>🧠 AI Learning Mentor for DevOps Engineers</span>
+    <span>Built with HTML · CSS · Vanilla JS - runs fully offline</span>
+  </div>
+</footer>
+
+<script src="script.js?v=25"></script>
+</body>
+</html>
