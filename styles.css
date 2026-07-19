@@ -5811,3 +5811,773 @@ pre.ascii,
 /* Native select never forces its container wider than the viewport */
 select, .sim-select { max-width: 100%; }
 .sim-controls .sim-select { flex: 1 1 100%; width: 100%; }
+
+/* ═══════════════════════════════════════════════════
+   KUBERNETES NOTES — handwritten spiral-notebook module
+   Fully namespaced (nb-*), isolated from every other section.
+   Both themes are first-class: dark = "night notebook"
+   (dark paper, soft ink), light = bright cream paper like
+   the owner's sample. Everything is driven off --nb-* tokens
+   so a theme flip is a pure token swap. Code always stays
+   monospace; a plain-text toggle swaps handwriting for sans.
+═══════════════════════════════════════════════════ */
+
+/* Notebook tokens — DARK (default) = night notebook */
+:root {
+  --nb-paper:    #191d29;   /* dark paper */
+  --nb-paper2:   #141824;   /* inset panels / table stripes */
+  --nb-rule:     rgba(157,180,255,0.09);   /* faint ruled lines */
+  --nb-margin:   rgba(251,113,133,0.55);   /* red margin line */
+  --nb-ink:      #d6ddee;   /* handwriting body ink */
+  --nb-ink2:     #aab2c4;   /* secondary hand ink */
+  --nb-marker:   #ff6f61;   /* marker-red titles/headings, warm on dark */
+  --nb-navy:     #9db4ff;   /* "navy" role, lifted for dark legibility */
+  --nb-box:      rgba(157,180,255,0.42);   /* hand-drawn box border */
+  --nb-box-solid:#9db4ff;
+  --nb-code-bg:  #0c1019;   /* monospace card well */
+  --nb-code-ink: #dfe6f2;
+  --nb-edge:     rgba(255,255,255,0.10);   /* sheet outer edge */
+  --nb-ring:     #565c66;   /* spiral ring metal */
+  --nb-ring-hi:  #8b9099;
+  --nb-desk:     radial-gradient(130% 130% at 50% -10%, #1a2130 0%, var(--bg) 74%);
+
+  /* Handwriting fonts + fallbacks */
+  --nb-title: "Permanent Marker", "Comic Sans MS", cursive;
+  --nb-head:  "Caveat", "Segoe Script", cursive;
+  --nb-hand:  "Kalam", "Comic Sans MS", cursive;
+  --nb-sans:  var(--font-body);
+  --nb-mono:  var(--font-mono);
+}
+
+/* Notebook tokens — LIGHT = bright cream paper (matches the sample) */
+[data-theme="light"] {
+  --nb-paper:    #fbfaf6;
+  --nb-paper2:   #f2f0e7;
+  --nb-rule:     #d3ddec;
+  --nb-margin:   #e2a0a0;
+  --nb-ink:      #28338a;   /* navy handwriting */
+  --nb-ink2:     #3a4166;
+  --nb-marker:   #c0362b;   /* marker red */
+  --nb-navy:     #28338a;
+  --nb-box:      #3a4166;
+  --nb-box-solid:#28338a;
+  --nb-code-bg:  #eceee6;
+  --nb-code-ink: #2f3327;
+  --nb-edge:     rgba(15,23,42,0.16);
+  --nb-ring:     #5a5f68;
+  --nb-ring-hi:  #b9bec6;
+  --nb-desk:     radial-gradient(130% 130% at 50% -10%, #e7e4d7 0%, var(--bg) 78%);
+}
+
+/* Plain-text accessibility mode — swap handwriting for clean sans.
+   Code stays monospace because .nb-code never reads these vars. */
+html.nb-plain {
+  --nb-title: var(--font-display);
+  --nb-head:  var(--font-body);
+  --nb-hand:  var(--font-body);
+}
+
+/* The notebook section sits on a subtle "desk" so the paper reads as a sheet */
+.nb-section { background: var(--nb-desk); }
+
+/* ── The sheet (shared by cover + pages) ── */
+.nb-sheet {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  background-color: var(--nb-paper);
+  background-image: repeating-linear-gradient(
+    to bottom, transparent 0 31px, var(--nb-rule) 31px 32px);
+  color: var(--nb-ink);
+  border: 1px solid var(--nb-edge);
+  border-radius: 3px 14px 14px 3px;
+  box-shadow: var(--shadow);
+  padding: 26px 34px 44px 62px;   /* left room for spiral + margin */
+  overflow: hidden;
+}
+/* red margin line */
+.nb-sheet::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 46px;
+  width: 2px; background: var(--nb-margin); opacity: 0.85;
+}
+/* spiral binding gutter — a subtle shaded strip the rings sit on */
+.nb-sheet::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 4px; width: 30px;
+  background: color-mix(in srgb, var(--nb-paper2) 70%, transparent);
+  border-right: 1px solid var(--nb-edge); border-radius: 6px 0 0 6px;
+}
+/* the metallic spiral rings, evenly stacked over the gutter */
+.nb-rings {
+  position: absolute; top: 0; bottom: 0; left: 4px; width: 30px; z-index: 1;
+  display: flex; flex-direction: column; justify-content: space-around;
+  padding: 14px 0; align-items: center; pointer-events: none;
+}
+.nb-rings i {
+  display: block; width: 22px; height: 9px; border-radius: 9px;
+  background: linear-gradient(var(--nb-ring-hi), var(--nb-ring));
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.45), 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* plain-text toggle button (top-right of each sheet) */
+.nb-plain-toggle {
+  position: absolute; top: 12px; right: 14px; z-index: 3;
+  font-family: var(--nb-sans); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nb-ink2);
+  background: var(--nb-paper2);
+  border: 1px solid var(--nb-edge);
+  border-radius: 20px; padding: 5px 12px; cursor: pointer;
+  transition: var(--trans-fast);
+}
+.nb-plain-toggle:hover { color: var(--nb-marker); border-color: var(--nb-box); }
+
+/* ── Masthead / page number (inner pages) ── */
+.nb-masthead {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(1.5rem, 4vw, 2rem); text-align: center;
+  transform: rotate(-0.6deg); margin: 6px 0 0; letter-spacing: 0.5px;
+}
+.nb-pagenum {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-navy);
+  text-align: center; font-size: 1.25rem; margin: 0 0 14px;
+}
+
+/* ── Text primitives ── */
+.nb-h {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker);
+  font-size: 1.35rem; margin: 18px 0 4px; line-height: 1.2;
+  text-decoration: underline; text-decoration-color: var(--nb-margin);
+  text-underline-offset: 4px;
+}
+.nb-p {
+  font-family: var(--nb-hand); font-size: 1.06rem; color: var(--nb-ink);
+  line-height: 1.55; margin: 4px 0 10px; max-width: 62ch;
+}
+html.nb-plain .nb-p { font-size: 0.98rem; line-height: 1.6; }
+.nb-list { font-family: var(--nb-hand); font-size: 1.04rem; color: var(--nb-ink);
+  margin: 4px 0 12px; padding-left: 26px; line-height: 1.5; list-style: disc; }
+.nb-list li { margin: 4px 0; }
+.nb-list.check { list-style: none; padding-left: 6px; }
+.nb-list.check li::before { content: "✓ "; color: var(--nb-marker); font-weight: 700; }
+html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
+
+/* ── Hand-drawn boxes ── */
+.nb-box {
+  font-family: var(--nb-hand); font-size: 1rem; color: var(--nb-ink);
+  border: 1.5px solid var(--nb-box); border-radius: 10px;
+  padding: 12px 16px; margin: 12px 0; line-height: 1.5;
+  background: color-mix(in srgb, var(--nb-paper2) 55%, transparent);
+}
+.nb-box.dash { border-style: dashed; }
+.nb-box .nb-box-title {
+  display: block; font-family: var(--nb-head); font-weight: 700;
+  color: var(--nb-marker); font-size: 1.15rem; text-align: center;
+  margin-bottom: 6px; text-decoration: underline;
+  text-decoration-color: var(--nb-margin); text-underline-offset: 3px;
+}
+.nb-box.note { border-color: var(--nb-box-solid); border-width: 2px; }
+
+/* two-column layout that stacks on mobile */
+.nb-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+@media (max-width: 760px) { .nb-cols { grid-template-columns: 1fr; } }
+
+/* ── Diagrams (boxes + arrows), token-driven ── */
+.nb-diagram { overflow-x: auto; margin: 12px 0; }
+.nb-flow {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 10px; min-width: 0;
+}
+.nb-flow.vert { flex-direction: column; }
+.nb-flow.vert .nb-ar { transform: rotate(90deg); }
+.nb-node {
+  font-family: var(--nb-hand); font-size: 0.95rem; color: var(--nb-navy);
+  border: 1.6px solid var(--nb-box-solid); border-radius: 9px;
+  padding: 8px 14px; text-align: center; background: var(--nb-paper);
+  line-height: 1.35;
+}
+.nb-node b, .nb-node .mk { color: var(--nb-marker); font-family: var(--nb-head); font-weight: 700; }
+.nb-node small { display: block; font-size: 0.82rem; color: var(--nb-ink2); }
+.nb-ar { color: var(--nb-marker); font-weight: 700; font-size: 1.2rem; font-family: var(--nb-sans); }
+.nb-branch { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+/* little container-chip used inside Pod diagrams */
+.nb-chip {
+  font-family: var(--nb-mono); font-size: 0.72rem; color: var(--nb-navy);
+  border: 1.4px solid var(--nb-box-solid); border-radius: 5px;
+  padding: 4px 8px; letter-spacing: 1px; background: var(--nb-paper2);
+}
+.nb-podbox {
+  border: 1.8px solid var(--nb-box-solid); border-radius: 12px;
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+  background: color-mix(in srgb, var(--nb-paper2) 50%, transparent); min-width: 220px;
+}
+.nb-podbox .nb-pod-title { font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker); text-align: center; }
+.nb-podrow { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.nb-subbox {
+  border: 1.4px solid var(--nb-box); border-radius: 8px; padding: 8px 10px;
+  font-family: var(--nb-hand); font-size: 0.9rem; color: var(--nb-ink); text-align: center; flex: 1 1 auto;
+}
+
+/* ── Tables (Docker vs K8s, Service types) ── */
+.nb-table-wrap { overflow-x: auto; margin: 12px 0; }
+.nb-table {
+  width: 100%; border-collapse: collapse; font-family: var(--nb-hand);
+  font-size: 0.95rem; color: var(--nb-ink); min-width: 460px;
+}
+.nb-table th, .nb-table td { border: 1.4px solid var(--nb-box); padding: 8px 11px; text-align: left; vertical-align: top; }
+.nb-table th { font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker); background: var(--nb-paper2); text-align: center; }
+.nb-table tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--nb-paper2) 45%, transparent); }
+
+/* ── kubectl / code card — always real monospace, copy-pasteable ── */
+.nb-code {
+  position: relative; margin: 12px 0;
+  background: var(--nb-code-bg);
+  border: 1.5px solid var(--nb-box);
+  border-left: 3px solid var(--nb-marker);
+  border-radius: 8px;
+}
+.nb-code .nb-code-label {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker);
+  font-size: 1rem; padding: 8px 14px 0; display: block;
+}
+.nb-code pre {
+  font-family: var(--nb-mono); font-size: 0.82rem; color: var(--nb-code-ink);
+  line-height: 1.7; padding: 10px 14px 14px; margin: 0;
+  overflow-x: auto; white-space: pre;
+}
+.nb-code pre .cmt { color: var(--nb-ink2); font-style: italic; }
+/* copy button reuses the site .term-copy handler; nb-copy just restyles it */
+.nb-copy {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  font-family: var(--nb-sans); font-size: 0.7rem; font-weight: 600;
+  color: var(--nb-code-ink); background: color-mix(in srgb, var(--nb-code-bg) 70%, #808080 30%);
+  border: 1px solid var(--nb-box); border-radius: 6px; padding: 3px 9px; cursor: pointer;
+  transition: var(--trans-fast);
+}
+.nb-copy:hover { border-color: var(--nb-marker); color: var(--nb-marker); }
+.nb-copy.copied { color: var(--nb-navy); border-color: var(--nb-navy); }
+
+/* ── Cover page ── */
+.nb-cover-title {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(2.4rem, 9vw, 4.2rem); line-height: 0.95; text-align: center;
+  transform: rotate(-1deg); margin: 16px 0 2px; letter-spacing: -1px;
+}
+.nb-cover-title small { display: block; font-size: 1em; }
+.nb-cover-band {
+  font-family: var(--nb-head); font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: var(--nb-navy); text-align: center; border: 2px solid var(--nb-navy);
+  border-radius: 10px; padding: 8px 14px; margin: 20px auto 16px; max-width: 560px;
+  transform: rotate(0.4deg);
+}
+.nb-cover-desc {
+  font-family: var(--nb-hand); font-size: 1.1rem; text-align: center;
+  color: var(--nb-ink); max-width: 620px; margin: 0 auto 22px; line-height: 1.55;
+}
+.nb-cover-quote {
+  font-family: var(--nb-head); font-weight: 700; font-size: clamp(1.05rem, 3vw, 1.4rem);
+  color: var(--nb-navy); text-align: center; border: 2px solid var(--nb-navy);
+  border-radius: 10px; padding: 10px; margin: 22px auto 4px; max-width: 620px;
+  transform: rotate(-0.5deg);
+}
+.nb-cover-quote .star { color: var(--nb-marker); }
+
+/* mobile: shrink the binding gutter so nothing overflows */
+@media (max-width: 560px) {
+  .nb-sheet { padding: 22px 16px 34px 46px; border-radius: 2px 10px 10px 2px; }
+  .nb-sheet::before { left: 34px; }
+  .nb-sheet::after, .nb-rings { left: 4px; width: 20px; }
+  .nb-rings i { width: 15px; height: 8px; }
+  .nb-plain-toggle { position: static; display: inline-block; margin: 0 0 8px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   KUBERNETES NOTES — page-turn "book" interaction
+   Scoped to the nb-* module. Progressive enhancement:
+   without JS (no .nb-ready) the leaves stack and scroll
+   like normal sections, so content is never gated on the
+   animation. With JS, one leaf shows at a time inside a
+   fixed reading frame and moving between leaves is a 3D
+   page turn. Reduced-motion collapses the turn to an
+   instant switch via the global reduced-motion block.
+═══════════════════════════════════════════════════ */
+
+.nb-book { position: relative; max-width: 940px; margin: 0 auto; }
+
+/* ── No-JS / pre-ready fallback: stack the leaves, hide book chrome ── */
+.nb-book .nb-leaf + .nb-leaf { margin-top: 30px; }
+.nb-book .nb-backcover,
+.nb-book .nb-corner,
+.nb-book .nb-book-controls { display: none; }
+
+/* ── Reading frame (only once JS adds .nb-ready) ── */
+.nb-book.nb-ready { }
+.nb-book.nb-ready .nb-stage {
+  position: relative;
+  height: clamp(540px, 80vh, 900px);
+  perspective: 2200px;
+  overflow: hidden;
+  border-radius: 3px 16px 16px 3px;
+  box-shadow: var(--shadow);
+}
+.nb-book.nb-ready .nb-leaf {
+  position: absolute; inset: 0; margin: 0;
+  overflow-y: auto; overflow-x: hidden;
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  backface-visibility: hidden;
+  visibility: hidden;
+  transition: transform 0.62s var(--ease);
+  will-change: transform;
+  background: transparent;
+}
+.nb-book.nb-ready .nb-leaf.is-current { visibility: visible; z-index: 20; }
+.nb-book.nb-ready .nb-leaf.is-under   { visibility: visible; z-index: 10; }
+.nb-book.nb-ready .nb-leaf.is-turning { visibility: visible; z-index: 30;
+  box-shadow: 0 0 40px rgba(0,0,0,0.35); }
+.nb-book.nb-ready .nb-backcover { display: block; }
+
+/* the paper sheet fills the whole leaf in book mode */
+.nb-book.nb-ready .nb-sheet {
+  max-width: none; margin: 0; min-height: 100%;
+  border: none; border-radius: inherit; box-shadow: none;
+}
+
+/* ── Page controls (below the frame) ── */
+.nb-book.nb-ready .nb-book-controls {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  margin: 18px auto 0; max-width: 460px;
+}
+.nb-nav-btn {
+  font-family: var(--nb-head); font-weight: 700; font-size: 1.05rem;
+  color: var(--nb-navy); background: var(--nb-paper);
+  border: 1.6px solid var(--nb-box-solid); border-radius: 10px;
+  padding: 8px 18px; cursor: pointer; transition: var(--trans-fast);
+  min-width: 96px;
+}
+.nb-nav-btn:hover:not(:disabled) { color: var(--nb-marker); border-color: var(--nb-marker); }
+.nb-nav-btn:disabled { opacity: 0.4; cursor: default; }
+.nb-nav-btn:focus-visible { outline: 2px solid var(--nb-marker); outline-offset: 2px; }
+.nb-page-indicator {
+  font-family: var(--nb-hand); color: var(--nb-ink2); font-size: 0.95rem;
+  min-width: 92px; text-align: center;
+}
+
+/* ── Dog-ear corner affordances (decorative; buttons are the a11y path) ── */
+.nb-book.nb-ready .nb-corner {
+  display: block; position: absolute; bottom: 0; width: 54px; height: 54px;
+  z-index: 25; border: none; cursor: pointer; padding: 0;
+  background: transparent; transition: transform 0.18s var(--ease);
+}
+.nb-book.nb-ready .nb-corner-next { right: 0; }
+.nb-book.nb-ready .nb-corner-prev { left: 0; }
+.nb-corner::after {
+  content: ""; position: absolute; bottom: 0; width: 0; height: 0;
+}
+.nb-corner-next::after { right: 0; border-bottom: 40px solid var(--nb-box-solid);
+  border-left: 40px solid transparent; opacity: 0.55;
+  border-bottom-right-radius: 3px; }
+.nb-corner-prev::after { left: 0; border-bottom: 40px solid var(--nb-box-solid);
+  border-right: 40px solid transparent; opacity: 0.55;
+  border-bottom-left-radius: 3px; }
+.nb-corner-next:hover { transform: translate(-3px, -3px); }
+.nb-corner-prev:hover { transform: translate(3px, -3px); }
+
+/* ── End / back-cover leaf ── */
+.nb-endsheet { display: flex; align-items: center; justify-content: center; }
+.nb-end-inner { text-align: center; margin: auto; padding: 24px; max-width: 520px; }
+.nb-end-mark {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(2rem, 7vw, 3.2rem); transform: rotate(-1.2deg); margin-bottom: 10px;
+}
+.nb-end-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+.nb-end-btn {
+  font-family: var(--nb-head); font-weight: 700; font-size: 1.1rem;
+  color: var(--nb-paper); background: var(--nb-marker);
+  border: 2px solid var(--nb-marker); border-radius: 10px;
+  padding: 9px 20px; cursor: pointer; transition: var(--trans-fast);
+}
+.nb-end-btn.ghost { color: var(--nb-navy); background: transparent; border-color: var(--nb-navy); }
+.nb-end-btn:hover { filter: brightness(1.08); }
+.nb-end-btn:focus-visible { outline: 2px solid var(--nb-marker); outline-offset: 3px; }
+
+/* ── Book open / close swings (JS adds these on the moving leaf) ── */
+.nb-book.nb-ready .nb-leaf.nb-swing-open { transform: rotateY(-92deg); }
+.nb-book.nb-ready .nb-leaf.nb-swing-shut { transform: rotateY(92deg); }
+
+/* Reduced motion: the global block already collapses transitions to
+   ~instant. Also drop the 3D tilt so switches read as a clean cut. */
+@media (prefers-reduced-motion: reduce) {
+  .nb-book.nb-ready .nb-leaf,
+  .nb-book.nb-ready .nb-leaf.turned-left,
+  .nb-book.nb-ready .nb-leaf.nb-swing-open,
+  .nb-book.nb-ready .nb-leaf.nb-swing-shut { transform: none !important; }
+}
+
+/* Mobile: shorter frame, controls stay inside, no horizontal page overflow */
+@media (max-width: 560px) {
+  .nb-book.nb-ready .nb-stage { height: clamp(460px, 74vh, 760px); }
+  .nb-nav-btn { min-width: 78px; padding: 8px 12px; font-size: 0.98rem; }
+  .nb-book.nb-ready .nb-corner { width: 44px; height: 44px; }
+  .nb-corner-next::after, .nb-corner-prev::after { border-bottom-width: 32px; }
+  .nb-corner-next::after { border-left-width: 32px; }
+  .nb-corner-prev::after { border-right-width: 32px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   NOTEBOOK ROLLOUT — ported topic content on paper
+   Each existing topic became a notebook. A topic's original
+   sections are ported AS-IS into .nb-leaf pages wrapped in a
+   .nb-sheet.nb-ported. The ported content keeps its own site
+   styling and per-topic brand colours; the sheet only adds the
+   paper, spiral binding, masthead and page number around it.
+   Per-book brand tints recolour the notebook chrome (marker
+   headings/cover/controls) so each notebook still feels like
+   its topic, without touching the ported content's own colours.
+═══════════════════════════════════════════════════ */
+
+/* Ported content sits directly on the paper. It brings its own
+   theme-aware tokens (--txt, --card surfaces, brand colours), so it
+   stays legible on both the cream and night-notebook paper. */
+.nb-sheet.nb-ported { padding-top: 20px; }
+.nb-sheet.nb-ported .sec-header { margin-top: 6px; }
+/* The page (sheet) is sized to its content via the width tiers below, so
+   ported content should fill the paper - no artificial left-half cap. */
+.nb-sheet.nb-ported img,
+.nb-sheet.nb-ported canvas { max-width: 100%; height: auto; }
+
+/* Per-book brand tint: recolour only the notebook chrome (--nb-marker
+   drives cover title, masthead, page underline, controls, corners). */
+.nb-book--helm  { --nb-marker: var(--helm); }
+.nb-book--argocd{ --nb-marker: var(--argocd); }
+.nb-book--mcp   { --nb-marker: var(--mcp); }
+.nb-book--adot  { --nb-marker: var(--adot); }
+.nb-book--otel  { --nb-marker: var(--cyan); }
+.nb-book--ai    { --nb-marker: var(--accent-ink); }
+.nb-book--setup { --nb-marker: var(--accent-ink); }
+
+/* ═══════════════════════════════════════════════════
+   BOOKSHELF LANDING — the site front door
+   A cozy library: labelled wooden shelves, each topic a
+   book standing on the plank in its own brand colour.
+   Clicking a book opens that notebook (see initShelf in
+   script.js). Fully token-driven so wood (light) and the
+   night-library palette (dark) are a pure theme swap.
+═══════════════════════════════════════════════════ */
+:root {
+  --shelf-room:  radial-gradient(120% 90% at 50% 0%, #1c1712 0%, #120f0c 70%);
+  --shelf-plank: linear-gradient(180deg, #4a3a2b 0%, #33271d 60%, #241b13 100%);
+  --shelf-plank-edge: #5c4632;
+  --shelf-plank-shadow: rgba(0,0,0,0.5);
+  --shelf-label: var(--txt);
+}
+[data-theme="light"] {
+  --shelf-room:  radial-gradient(120% 90% at 50% 0%, #f6efe2 0%, #ece0cc 75%);
+  --shelf-plank: linear-gradient(180deg, #caa878 0%, #b2895a 55%, #96703f 100%);
+  --shelf-plank-edge: #82602f;
+  --shelf-plank-shadow: rgba(90,60,25,0.35);
+  --shelf-label: #4a361f;
+}
+
+.shelf-section {
+  background: var(--shelf-room);
+  max-width: none;
+  padding: 56px clamp(20px, 4vw, 64px) 96px;
+  scroll-margin-top: 72px;
+}
+.shelf-inner { max-width: 1080px; margin: 0 auto; }
+
+/* Header: title + search */
+.shelf-head-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap; margin-bottom: 40px;
+}
+.shelf-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.03em; }
+.shelf-sub { font-family: "Caveat", cursive; font-size: 1.5rem; color: var(--accent); margin-top: 2px; }
+.shelf-search { position: relative; flex: 0 1 320px; min-width: 200px; }
+.shelf-search input {
+  width: 100%; font-family: var(--font-body); font-size: 0.95rem;
+  color: var(--txt); background: var(--surface-1);
+  border: 1px solid var(--border-h); border-radius: 10px; padding: 10px 14px 10px 38px;
+}
+.shelf-search input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.shelf-search .shelf-search-ico { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); opacity: 0.6; pointer-events: none; }
+
+/* One shelf (row) */
+.shelf-row { margin-bottom: 42px; }
+.shelf-row-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.shelf-row-label { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--shelf-label); }
+.shelf-row-count {
+  font-size: 0.72rem; font-weight: 700; color: var(--txt2);
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: 20px; padding: 2px 9px;
+}
+.shelf-row-all {
+  margin-left: auto; font-size: 0.8rem; font-weight: 600; color: var(--accent);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 3px;
+}
+.shelf-row-all:hover { color: var(--accent-ink); }
+
+/* The plank + the books standing on it */
+.shelf-deck { position: relative; }
+.shelf-books { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px; padding: 0 14px; position: relative; z-index: 1; }
+.shelf-plank {
+  height: 18px; margin: 0 2px; border-radius: 4px;
+  background: var(--shelf-plank);
+  border-top: 1px solid var(--shelf-plank-edge);
+  box-shadow: 0 9px 18px var(--shelf-plank-shadow);
+  position: relative; z-index: 0;
+}
+
+/* A book, cover facing out, in its topic brand colour */
+.shelf-book {
+  --book: var(--brand);
+  position: relative;
+  width: 112px; min-height: 148px; box-sizing: border-box;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 11px 11px 13px; text-decoration: none;
+  border-radius: 2px 6px 6px 2px;
+  border-left: 4px solid color-mix(in srgb, var(--book) 55%, #000 45%);
+  background: linear-gradient(180deg,
+    var(--book) 0%, var(--book) 42%,
+    color-mix(in srgb, var(--book) 48%, #000 52%) 100%);
+  color: #fff;
+  box-shadow: 0 7px 13px rgba(0,0,0,0.32), inset -7px 0 12px rgba(0,0,0,0.16);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.shelf-book .sb-emoji { font-size: 1.15rem; line-height: 1; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.3)); }
+.shelf-book .sb-title { font-family: var(--font-display); font-weight: 800; font-size: 0.72rem; line-height: 1.18; text-shadow: 0 1px 2px rgba(0,0,0,0.4); word-break: normal; overflow-wrap: break-word; hyphens: auto; }
+.shelf-book .sb-meta { font-size: 0.62rem; font-weight: 600; opacity: 0.9; text-shadow: 0 1px 1px rgba(0,0,0,0.35); }
+/* page-edge stripes on the fore-edge */
+.shelf-book::after {
+  content: ""; position: absolute; top: 4px; bottom: 4px; right: 2px; width: 3px;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,0.5) 0 1px, transparent 1px 3px);
+  border-radius: 2px; opacity: 0.5;
+}
+.shelf-book:hover, .shelf-book:focus-visible {
+  transform: translateY(-9px) rotate(-1.2deg);
+  box-shadow: 0 18px 28px rgba(0,0,0,0.42), inset -7px 0 12px rgba(0,0,0,0.16);
+}
+.shelf-book:focus-visible { outline: 2px solid var(--txt); outline-offset: 3px; }
+.shelf-book[hidden] { display: none; }
+
+/* empty search state */
+.shelf-empty { color: var(--txt2); font-size: 0.95rem; padding: 8px 14px; display: none; }
+.shelf-row.is-empty { display: none; }
+
+@media (max-width: 560px) {
+  .shelf-book { width: 104px; min-height: 142px; }
+  .shelf-books { gap: 10px; }
+  .shelf-search { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shelf-book { transition: none; }
+  .shelf-book:hover, .shelf-book:focus-visible { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 5 — sidebar-less home, page width, bookmarks
+═══════════════════════════════════════════════════ */
+
+/* (3) No global sidebar: the shelf is the home nav, bookmarks are the
+   in-book nav. The nav list stays in the DOM (hidden) so the breadcrumb
+   and nbBookGoto keep resolving page ids. */
+.sidebar, .hamburger, .sidebar-overlay { display: none !important; }
+.main, .footer { margin-left: 0 !important; }
+
+/* (1) Page width: the paper is a book-width page centred on the desk, so
+   there is never a big empty ruled area. JS tags each leaf by content:
+   text-only pages get a narrow readable page, pages with diagrams/tables/
+   grids get a wide page whose two-column content sits side by side. */
+.nb-book-section { max-width: none; padding-left: clamp(10px,1.5vw,26px); padding-right: clamp(10px,1.5vw,26px); }
+.nb-book { position: relative; max-width: min(1400px, 95vw); margin: 0 auto; padding-right: 168px; }
+.nb-book.nb-ready .nb-stage { background: var(--nb-desk); }
+/* Sheet width tiers: fill more of the book so the writing area is not
+   half-empty. Text-only pages stay narrower for a readable line length. */
+.nb-book.nb-ready .nb-sheet { max-width: 980px; margin: 0 auto; }
+.nb-book.nb-ready .nb-leaf.nb-w-text .nb-sheet { max-width: 760px; }
+.nb-book.nb-ready .nb-leaf.nb-w-wide .nb-sheet { max-width: 1240px; }
+
+/* (4) Bookmark ribbon rail — one tab per sub-topic, plus back-to-shelf.
+   Desktop: a vertical rail in the right gutter, tabs protruding toward the
+   page. Mobile/tablet: a horizontal scroll strip above the reading frame. */
+.nb-bookmarks { display: flex; flex-direction: column; gap: 6px; }
+.nb-to-shelf {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 700 0.76rem/1 var(--font-body); color: var(--accent);
+  background: var(--surface-2); border: 1px solid var(--border-h);
+  border-radius: 8px; padding: 9px 11px; cursor: pointer; text-decoration: none;
+  margin-bottom: 6px; flex: 0 0 auto;
+}
+.nb-to-shelf:hover { color: var(--accent-ink); border-color: var(--accent); }
+.nb-to-shelf:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nb-bm {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font: 600 0.74rem/1.25 var(--font-body); color: var(--txt2);
+  background: var(--surface-1); border: 1px solid var(--border);
+  border-left: 4px solid color-mix(in srgb, var(--nb-marker) 55%, transparent);
+  border-radius: 0 9px 9px 0; padding: 8px 10px 8px 10px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: transform 0.16s var(--ease), background 0.16s var(--ease), color 0.16s var(--ease);
+}
+.nb-bm:hover { background: var(--surface-2); color: var(--txt); transform: translateX(-4px); }
+.nb-bm.is-active {
+  background: var(--surface-3); color: var(--txt); font-weight: 700;
+  border-left-color: var(--nb-marker); transform: translateX(-7px);
+  box-shadow: -3px 2px 10px rgba(0,0,0,0.18);
+}
+.nb-bm:focus-visible { outline: 2px solid var(--nb-marker); outline-offset: 2px; }
+
+@media (min-width: 861px) {
+  .nb-bookmarks {
+    position: absolute; top: 0; right: 0; width: 156px; z-index: 5;
+    max-height: clamp(540px, 80vh, 900px); overflow-y: auto; padding: 0 2px 8px 0;
+  }
+}
+@media (max-width: 860px) {
+  .nb-book { padding-right: 0; }
+  .nb-book-section { scroll-margin-top: 104px; }
+  /* Horizontal, scrollable strip pinned just under the top bar so the
+     in-book nav stays visible while reading a page. */
+  .nb-bookmarks {
+    position: sticky; top: 56px; z-index: 40;
+    flex-direction: row; align-items: stretch; gap: 8px;
+    overflow-x: auto; overflow-y: hidden; margin-bottom: 12px;
+    padding: 8px 2px; background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .nb-bookmarks::-webkit-scrollbar { display: none; }
+  .nb-to-shelf { margin-bottom: 0; }
+  .nb-bm { width: auto; flex: 0 0 auto; border-radius: 8px; border-left-width: 3px; }
+  .nb-bm:hover, .nb-bm.is-active { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nb-bm { transition: none; }
+  .nb-bm:hover, .nb-bm.is-active { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 7/8 — multi-page chrome + viewport-fit shelf
+═══════════════════════════════════════════════════ */
+
+/* Breadcrumb "back to shelf" link (topic pages) */
+.tb-home {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.85rem; font-weight: 600; color: var(--accent);
+  text-decoration: none; padding: 3px 9px; border-radius: 7px;
+  transition: var(--trans-fast);
+}
+.tb-home:hover { color: var(--accent-ink); background: var(--surface-2); }
+.tb-home:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* (ADDENDUM 8) The bookshelf fits the viewport on a normal desktop window:
+   all shelves visible at once, books scaled to the available height. On short
+   or narrow screens this block is off and the shelf scrolls normally (the
+   graceful fallback), so nothing is ever clipped or overlapped. */
+@media (min-width: 760px) and (min-height: 680px) {
+  .shelf-section {
+    height: calc(100dvh - 58px);
+    overflow: hidden;
+    padding-top: clamp(14px, 2.4vh, 34px);
+    padding-bottom: clamp(14px, 2.4vh, 34px);
+  }
+  .shelf-inner { height: 100%; display: flex; flex-direction: column; }
+  .shelf-head-row { flex: 0 0 auto; margin-bottom: clamp(6px, 1.4vh, 18px); }
+  .shelf-row { flex: 1 1 0; min-height: 0; margin: 0; display: flex; flex-direction: column; }
+  .shelf-row + .shelf-row { margin-top: clamp(6px, 1.6vh, 20px); }
+  .shelf-row-head { flex: 0 0 auto; margin-bottom: clamp(3px, 0.8vh, 10px); }
+  .shelf-deck { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+  .shelf-books { flex: 1 1 0; min-height: 0; align-items: flex-end; }
+  .shelf-plank { flex: 0 0 auto; height: clamp(12px, 1.8vh, 18px); }
+  .shelf-book {
+    height: 100%; width: auto; aspect-ratio: 112 / 150; min-height: 0;
+    padding: clamp(7px, 1.2vh, 12px) clamp(8px, 0.9vw, 12px) clamp(8px, 1.2vh, 13px);
+  }
+  .shelf-book .sb-emoji { font-size: clamp(0.9rem, 1.7vh, 1.2rem); }
+  .shelf-book .sb-title { font-size: clamp(0.62rem, 1.15vh, 0.8rem); line-height: 1.14; }
+  .shelf-book .sb-meta  { font-size: clamp(0.54rem, 0.9vh, 0.66rem); }
+}
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 9 — open notebook fits the viewport
+   On a normal desktop window the notebook frame + the Prev/Cover/Next
+   footer + the bookmark rail are all visible at once with no document
+   scroll. The stage flex-fills the height between the top bar and the
+   footer; a long page scrolls INSIDE its leaf (.nb-leaf overflow-y:auto),
+   so the footer never gets pushed off. Below these breakpoints the page
+   scrolls normally (graceful fallback) - content is never clipped.
+═══════════════════════════════════════════════════ */
+@media (min-width: 861px) and (min-height: 680px) {
+  /* Section stays a block so the book keeps centering via margin:0 auto
+     (auto margins on a flex item would collapse it to content width). */
+  .nb-book-section {
+    height: 100dvh;                 /* topic pages have no top bar now */
+    overflow: hidden;
+    padding-top: clamp(6px, 1vh, 12px);       /* trim the desk strip up top */
+    padding-bottom: clamp(10px, 1.6vh, 20px);
+  }
+  .nb-book { height: 100%; display: flex; flex-direction: column; }
+  .nb-book.nb-ready .nb-stage { flex: 1 1 auto; min-height: 0; height: auto; }
+  .nb-book.nb-ready .nb-book-controls { flex: 0 0 auto; margin: clamp(8px, 1.2vh, 16px) auto 0; }
+  /* rail fills the full book height in the right gutter */
+  .nb-book.nb-ready .nb-bookmarks { top: 0; bottom: 0; max-height: none; height: auto; }
+}
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 10 — notebook header/date band + rail theme toggle
+═══════════════════════════════════════════════════ */
+
+/* Header band at the top of every leaf: running head (topic · page) on the
+   left, a handwritten "Date ____" line + the plain-text toggle on the right,
+   under a ruled hairline - the authentic notebook header. */
+/* Trim the wasted top space: the header band starts right at the top of the
+   paper (small padding) and hugs the content below it. */
+.nb-book.nb-ready .nb-sheet { padding-top: clamp(10px, 1.5vh, 16px); }
+.nb-headband {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap;
+  border-bottom: 1.5px solid var(--nb-box);
+  padding-bottom: 6px; margin-bottom: clamp(8px, 1.2vh, 12px);
+}
+/* the section content heading sits close under the band */
+.nb-sheet.nb-ported .sec-header { margin-top: 2px; }
+.nb-hb-run { display: inline-flex; align-items: baseline; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.nb-hb-title {
+  font-family: var(--nb-title); color: var(--nb-marker);
+  font-size: clamp(1.05rem, 2.3vh, 1.5rem); letter-spacing: 0.5px;
+  text-transform: uppercase; line-height: 1;
+}
+.nb-hb-page {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-ink2);
+  font-size: 0.92rem; white-space: nowrap;
+}
+.nb-hb-right { display: inline-flex; align-items: center; gap: 12px; }
+.nb-hb-date {
+  font-family: var(--nb-hand); color: var(--nb-ink2); font-size: 0.95rem;
+  display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap;
+}
+.nb-hb-line { display: inline-block; width: clamp(70px, 8vw, 120px); border-bottom: 1.5px solid var(--nb-box); }
+/* the plain-text toggle now sits inside the band (was an absolute corner) */
+.nb-plain-toggle.nb-hb-plain { position: static; top: auto; right: auto; }
+
+/* Rail header: back-to-shelf + a compact theme toggle side by side */
+.nb-rail-head { display: flex; align-items: stretch; gap: 6px; margin-bottom: 6px; }
+.nb-rail-head .nb-to-shelf { flex: 1 1 auto; margin-bottom: 0; }
+.nb-rail-theme {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; font-size: 1rem; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--border-h);
+  border-radius: 8px; color: var(--txt); transition: var(--trans-fast);
+}
+.nb-rail-theme:hover { border-color: var(--accent); }
+.nb-rail-theme:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 860px) {
+  /* rail is a horizontal strip on mobile: keep the head inline, not full-width */
+  .nb-rail-head { flex: 0 0 auto; margin-bottom: 0; }
+  .nb-rail-head .nb-to-shelf { flex: 0 0 auto; }
+}
+
+/* ADDENDUM 11 — kill the legacy 56px first-of-type top padding on book pages
+   (it was reserving space for a sticky topbar that no longer exists), so the
+   book starts near the top of the viewport with only a small desk strip. */
+.main > .nb-book-section.nb-section { padding-top: clamp(6px, 1vh, 12px); }

@@ -1,0 +1,2972 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helm Charts · The DevOps Playbook</title>
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("nbPlain")==="1")document.documentElement.classList.add("nb-plain");}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=30" />
+</head>
+<body>
+<main class="main nb-topic-main" id="mainContent">
+<section id="nb-helm-cover" data-topic="Helm Charts" class="section nb-section nb-book-section nb-book--helm" aria-roledescription="notebook" aria-label="HELM CHARTS notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <article data-label="Notebook Cover" class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="HELM CHARTS cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">HELM<small>CHARTS</small></div>
+      <div class="nb-cover-band">Your Handy Guide to Helm</div>
+      <p class="nb-cover-desc">Packaging and shipping Kubernetes apps with Helm. Chart anatomy, values, templating, the release lifecycle, and day-two work. Every original section is here as a page you can turn through.</p>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check"><li>What is Helm</li><li>Chart anatomy</li><li>values.yaml deep dive</li><li>Templates &amp; values</li><li>Release lifecycle</li><li>Hooks, testing &amp; security</li></ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Why This Notebook?</span>
+          <ul class="nb-list"><li>Package once, deploy anywhere</li><li>Clear chart structure</li><li>Safe upgrades and rollbacks</li><li>Quick to revise</li></ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">&#9733;</span> "Template it, version it, ship it."</div>
+    </div>
+     </article>
+
+       <article data-label="Helm Home" class="nb-leaf" id="helm-home" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 1">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
+    <div class="helm-hero-inner">
+      <div class="hero-badge helm-badge">⛵ Helm Deep Dive</div>
+      <h1 class="hero-title">Master <span class="helm-grad-text">Helm Charts</span></h1>
+      <p class="hero-sub">From first <code>helm install</code> to production-grade chart authoring — built for DevOps engineers who already know Kubernetes.</p>
+      <div class="hero-btns">
+        <a href="#helm-intro" class="btn btn-helm" onclick="scrollTo_('#helm-intro');return false;">Start Learning →</a>
+        <a href="#helm-simulations" class="btn btn-outline" onclick="scrollTo_('#helm-simulations');return false;">Try Simulations</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-n helm-stat-n">9</span><span class="stat-l">Modules</span></div>
+        <div class="stat"><span class="stat-n helm-stat-n">3+</span><span class="stat-l">Live Simulations</span></div>
+        <div class="stat"><span class="stat-n helm-stat-n">4</span><span class="stat-l">Projects</span></div>
+        <div class="stat"><span class="stat-n helm-stat-n">0</span><span class="stat-l">Setup Required</span></div>
+      </div>
+    </div>
+    <div class="learning-path-preview">
+      <h2 class="lp-heading">Your Helm Journey</h2>
+      <div class="lp-cards">
+        <div class="lp-card helm-lp-card" onclick="scrollTo_('#helm-intro')"><span class="lp-num">01</span><span class="lp-icon">📦</span><strong>Basics</strong><span>What &amp; Why</span></div>
+        <div class="lp-arrow">→</div>
+        <div class="lp-card helm-lp-card" onclick="scrollTo_('#helm-anatomy')"><span class="lp-num">02</span><span class="lp-icon">🗂️</span><strong>Chart Files</strong><span>Anatomy</span></div>
+        <div class="lp-arrow">→</div>
+        <div class="lp-card helm-lp-card" onclick="scrollTo_('#helm-templates')"><span class="lp-num">03</span><span class="lp-icon">🔧</span><strong>Templates</strong><span>Go templating</span></div>
+        <div class="lp-arrow">→</div>
+        <div class="lp-card helm-lp-card lp-highlight" onclick="scrollTo_('#helm-lifecycle')"><span class="lp-num">04</span><span class="lp-icon">🔄</span><strong>Production</strong><span>Lifecycle</span></div>
+      </div>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: INTRO ══════════════════════ -->
+       <article data-label="What is Helm" class="nb-leaf" id="helm-intro" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 2">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 01</div>
+      <h2>What is Helm?</h2>
+      <p class="sec-desc">The package manager for Kubernetes — install, upgrade, rollback in one command</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Helm is the <strong>apt/yum for Kubernetes</strong>. Instead of running <code>kubectl apply -f deploy.yaml</code>, <code>kubectl apply -f svc.yaml</code>, <code>kubectl apply -f ingress.yaml</code>... (10+ files), you run <code>helm install myapp ./mychart</code> and Helm handles everything — versioned, rollbackable, configurable.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag blue">😤 Without Helm</span></div>
+        <div class="code-block">kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl apply -f ingress.yaml
+kubectl apply -f configmap.yaml
+kubectl apply -f hpa.yaml
+<span style="color:var(--red)"># 10+ files to manage manually
+# No version tracking
+# No easy rollback</span></div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-tag-row"><span class="ctag green">⛵ With Helm</span></div>
+        <div class="code-block">helm install myapp ./mychart \
+  --values prod.yaml
+<span style="color:var(--green)"># One command
+# Versioned release
+# helm rollback myapp 1</span></div>
+      </div>
+    </div>
+
+    <!-- Real Scenario: The Multi-Environment Problem -->
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
+      <div class="card-tag-row"><span class="ctag cyan">🔥 Real Scenario</span><span class="ctag orange">Pain First</span></div>
+      <h3 class="card-title" style="margin-top:8px">The Problem Helm Solves — 3 Environments</h3>
+      <p class="card-sub">Imagine you're a DevOps engineer deploying <strong>myapp</strong> to dev, staging, and production. You have 5 Kubernetes files:</p>
+
+      <div class="two-col" style="margin-top:16px">
+        <div>
+          <div style="font-size:0.83rem;font-weight:600;color:var(--red);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">😩 Without Helm — 15 files to manage</div>
+          <div class="code-block" style="font-size:0.78rem">kubectl-manifests/
+├── dev/
+│   ├── deployment.yaml    ← replicas: 1, image: v1.3.0
+│   ├── service.yaml       ← port: 8080
+│   ├── ingress.yaml       ← dev.myapp.internal
+│   ├── configmap.yaml     ← LOG_LEVEL=debug
+│   └── hpa.yaml           ← disabled
+├── staging/
+│   ├── deployment.yaml    ← replicas: 2, image: v1.3.0
+│   ├── ...                ← copied &amp; tweaked manually
+│   └── hpa.yaml           ← minReplicas: 2
+└── production/
+    ├── deployment.yaml    ← replicas: 5, image: v1.2.9
+    ├── ...
+    └── hpa.yaml           ← minReplicas: 5, max: 20
+<span style="color:var(--red)"># Problem: image v1.3.0 has a bug.
+# You must edit 3 deployment.yamls manually.
+# Miss one → production still runs buggy version.</span></div>
+        </div>
+        <div>
+          <div style="font-size:0.83rem;font-weight:600;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em">✅ With Helm — 1 chart + 3 values files</div>
+          <div class="code-block" style="font-size:0.78rem">myapp/                      ← ONE chart (templates)
+├── Chart.yaml
+├── templates/
+│   ├── deployment.yaml    ← image: {{ .Values.image.tag }}
+│   ├── service.yaml
+│   ├── ingress.yaml       ← {{ if .Values.ingress.enabled }}
+│   ├── configmap.yaml
+│   └── hpa.yaml           ← {{ if .Values.autoscaling.enabled }}
+├── values.yaml            ← base defaults
+├── values-dev.yaml        ← replicas:1, debug logs, no HPA
+├── values-staging.yaml    ← replicas:2, HPA min 2
+└── values-prod.yaml       ← replicas:5, HPA min 5, max 20
+
+<span style="color:var(--green)"># Bug in v1.3.0? Fix in ONE place: values-prod.yaml
+# image:
+#   tag: v1.2.9     ← rollback all 3 envs in seconds</span></div>
+        </div>
+      </div>
+
+      <div class="helm-scenario-flow" style="margin-top:18px">
+        <div class="hsf-step">
+          <div class="hsf-cmd"><code>helm install myapp ./myapp</code></div>
+          <div class="hsf-env">Dev — uses values.yaml defaults</div>
+        </div>
+        <div class="hsf-arrow">→</div>
+        <div class="hsf-step">
+          <div class="hsf-cmd"><code>helm install myapp ./myapp -f values-staging.yaml</code></div>
+          <div class="hsf-env">Staging — 2 replicas, HPA enabled</div>
+        </div>
+        <div class="hsf-arrow">→</div>
+        <div class="hsf-step">
+          <div class="hsf-cmd"><code>helm install myapp ./myapp -f values-prod.yaml</code></div>
+          <div class="hsf-env">Production — 5 replicas, TLS, alerts</div>
+        </div>
+      </div>
+      <p style="margin-top:14px;font-size:0.84rem;color:var(--txt2)">💡 <strong>This is why Helm exists.</strong> One chart, many environments. Change the image tag in one values file and deploy everywhere. Zero copy-paste drift.</p>
+    </div>
+
+    <!-- Key concepts grid -->
+    <div class="card">
+      <h3 class="card-title">🧩 Core Concepts</h3>
+      <div class="helm-concepts-grid">
+        <div class="helm-concept-card">
+          <div class="hcc-icon">📦</div>
+          <div class="hcc-name">Chart</div>
+          <div class="hcc-desc">The package — a directory of YAML templates + values</div>
+          <div class="hcc-analogy">= npm package / apt .deb</div>
+        </div>
+        <div class="helm-concept-card">
+          <div class="hcc-icon">🚀</div>
+          <div class="hcc-name">Release</div>
+          <div class="hcc-desc">A running instance of a chart installed in a cluster</div>
+          <div class="hcc-analogy">= running container / installed app</div>
+        </div>
+        <div class="helm-concept-card">
+          <div class="hcc-icon">📡</div>
+          <div class="hcc-name">Repository</div>
+          <div class="hcc-desc">A server hosting chart packages (.tgz) and an index</div>
+          <div class="hcc-analogy">= PyPI / npm registry</div>
+        </div>
+        <div class="helm-concept-card">
+          <div class="hcc-icon">⚙️</div>
+          <div class="hcc-name">Values</div>
+          <div class="hcc-desc">Configuration injected into templates at render time</div>
+          <div class="hcc-analogy">= environment variables</div>
+        </div>
+        <div class="helm-concept-card">
+          <div class="hcc-icon">📝</div>
+          <div class="hcc-name">Templates</div>
+          <div class="hcc-desc">Go-templated Kubernetes YAML files with placeholders</div>
+          <div class="hcc-analogy">= Jinja2 for K8s manifests</div>
+        </div>
+        <div class="helm-concept-card">
+          <div class="hcc-icon">🪝</div>
+          <div class="hcc-name">Hooks</div>
+          <div class="hcc-desc">Jobs that run at specific lifecycle points (pre/post install)</div>
+          <div class="hcc-analogy">= CI/CD pipeline stages</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture -->
+    <div class="card devops-box">
+      <div class="card-tag-row"><span class="ctag orange">🏗️ Architecture</span></div>
+      <div class="helm-arch">
+        <div class="helm-arch-box helm-arch-cli">
+          <div class="helm-arch-icon">💻</div>
+          <strong>Helm CLI</strong>
+          <span>Your local terminal</span>
+        </div>
+        <div class="helm-arch-arrow">→<br><small>renders templates</small></div>
+        <div class="helm-arch-box helm-arch-lib">
+          <div class="helm-arch-icon">📚</div>
+          <strong>Helm Library</strong>
+          <span>Go template engine</span>
+        </div>
+        <div class="helm-arch-arrow">→<br><small>kubectl apply</small></div>
+        <div class="helm-arch-box helm-arch-k8s">
+          <div class="helm-arch-icon">☸️</div>
+          <strong>K8s API Server</strong>
+          <span>Creates resources</span>
+        </div>
+        <div class="helm-arch-arrow">→<br><small>stores state in</small></div>
+        <div class="helm-arch-box helm-arch-secret">
+          <div class="helm-arch-icon">🔒</div>
+          <strong>Secret</strong>
+          <span>Release history</span>
+        </div>
+      </div>
+      <p style="margin-top:14px;font-size:0.85rem;color:var(--txt2)">💡 <strong>No server-side component in Helm 3.</strong> Tiller is gone. Helm stores release state as Kubernetes Secrets in the same namespace. Your RBAC is handled by your kubeconfig, not a privileged in-cluster daemon.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Helm is a <strong>client-only</strong> tool in v3 — no Tiller, no cluster-side daemon</li>
+        <li>A Chart is immutable; a Release is a running instance that can be upgraded</li>
+        <li>Release history is stored as K8s Secrets — audit trail built-in</li>
+        <li><strong>DevOps angle:</strong> Helm is your deployment artifact. Chart version bumps = deployments</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: ANATOMY ══════════════════════ -->
+       <article data-label="Chart Anatomy" class="nb-leaf" id="helm-anatomy" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 3">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 02</div>
+      <h2>Chart Anatomy</h2>
+      <p class="sec-desc">Every file in a chart and what it does — click to explore</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>A Helm chart is just a folder with a specific structure. <code>Chart.yaml</code> is the passport (name, version), <code>values.yaml</code> is the settings file, and <code>templates/</code> is where your Kubernetes YAML lives — but with placeholders instead of hardcoded values.</p>
+    </div>
+
+    <div class="fs-layout" id="helmAnatomyLayout">
+      <div class="fs-tree-panel card" id="helmTreePanel">
+        <div class="fs-tree-header">
+          <span class="fs-tree-title">📂 mychart/</span>
+          <span class="fs-tree-hint">Click a file to explore</span>
+        </div>
+        <div class="fs-tree" id="helmTree">
+          <div class="fs-entry fs-dir fs-open" data-helm-file="chart-yaml"><span class="fs-icon">📄</span><span class="fs-name">Chart.yaml</span><span class="fs-tag cyan">metadata</span></div>
+          <div class="fs-entry fs-dir" data-helm-file="values-yaml"><span class="fs-icon">⚙️</span><span class="fs-name">values.yaml</span><span class="fs-tag orange">defaults</span></div>
+          <div class="fs-entry fs-dir" data-helm-file="values-schema"><span class="fs-icon">🔍</span><span class="fs-name">values.schema.json</span><span class="fs-tag green">validation</span></div>
+          <div class="fs-entry fs-dir" data-helm-file="helmignore"><span class="fs-icon">🙈</span><span class="fs-name">.helmignore</span><span class="fs-tag muted">ignore</span></div>
+          <div class="fs-entry fs-dir" data-helm-file="charts-dir"><span class="fs-icon">📁</span><span class="fs-name">charts/</span><span class="fs-tag blue">deps</span></div>
+          <div class="fs-entry fs-dir" data-helm-file="templates-dir"><span class="fs-icon">📁</span><span class="fs-name">templates/</span><span class="fs-tag accent">core</span></div>
+          <div class="fs-children open">
+            <div class="fs-entry fs-dir" data-helm-file="deployment-yaml"><span class="fs-icon">📄</span><span class="fs-name">deployment.yaml</span></div>
+            <div class="fs-entry fs-dir" data-helm-file="service-yaml"><span class="fs-icon">📄</span><span class="fs-name">service.yaml</span></div>
+            <div class="fs-entry fs-dir" data-helm-file="ingress-yaml"><span class="fs-icon">📄</span><span class="fs-name">ingress.yaml</span></div>
+            <div class="fs-entry fs-dir" data-helm-file="helpers-tpl"><span class="fs-icon">🔧</span><span class="fs-name">_helpers.tpl</span><span class="fs-tag purple2">partials</span></div>
+            <div class="fs-entry fs-dir" data-helm-file="notes-txt"><span class="fs-icon">📢</span><span class="fs-name">NOTES.txt</span></div>
+            <div class="fs-entry fs-dir" data-helm-file="tests-dir"><span class="fs-icon">📁</span><span class="fs-name">tests/</span><span class="fs-tag green">test</span></div>
+            <div class="fs-children open">
+              <div class="fs-entry fs-dir" data-helm-file="test-connection"><span class="fs-icon">🧪</span><span class="fs-name">test-connection.yaml</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fs-detail-panel card" id="helmDetailPanel">
+        <div class="fs-detail-content">
+          <div class="fs-detail-name" style="color:var(--cyan)">Chart.yaml</div>
+          <div class="fs-detail-subtitle">Chart Metadata — The Passport</div>
+          <div class="fs-detail-desc">Every chart must have a Chart.yaml. It tells Helm the chart name, version, and what app version it deploys. The <code>version</code> field must follow semver — this is what gets bumped on every release.</div>
+          <div class="fs-detail-files">
+            <div class="fs-detail-files-title">Example</div>
+            <pre class="cb-code" style="margin:0;font-size:0.78rem"><span class="kw">apiVersion</span>: v2
+<span class="kw">name</span>: mychart
+<span class="kw">description</span>: <span class="str">A production-ready app chart</span>
+<span class="kw">type</span>: application
+<span class="kw">version</span>: <span class="num">1.3.0</span>       <span class="cmt"># Chart version (semver)</span>
+<span class="kw">appVersion</span>: <span class="str">"2.4.1"</span> <span class="cmt"># App image tag</span>
+<span class="kw">maintainers</span>:
+  - <span class="kw">name</span>: platform-team
+    <span class="kw">email</span>: platform@company.io</pre>
+          </div>
+          <div class="fs-detail-rule">💡 <strong>version</strong> = chart package version (bump when chart logic changes). <strong>appVersion</strong> = the app you're deploying (informational only — doesn't affect Helm logic).</div>
+        </div>
+      </div>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: VALUES.YAML DEEP DIVE ══════════════════════ -->
+       <article data-label="values.yaml Deep Dive" class="nb-leaf" id="helm-values-deep" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 4">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 02b</div>
+      <h2>⚙️ values.yaml — The Complete Guide</h2>
+      <p class="sec-desc">The single most important file in your chart — everything you need to know</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p><code>values.yaml</code> is your chart's <strong>configuration knob panel</strong>. Every setting that might need to change — image tag, replica count, memory limits, domain name, feature flags — goes here instead of hardcoded in your templates. When you deploy to dev, you leave it as-is. When you deploy to prod, you override just the values that differ. One chart, infinite configurations.</p>
+    </div>
+
+    <!-- What it is and why it exists -->
+    <div class="two-col">
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag red">😩 Without values.yaml</span></div>
+        <div class="code-block" style="font-size:0.78rem"><span class="cmt"># deployment.yaml — hardcoded everything</span>
+<span class="kw">image</span>: myapp:<span style="color:var(--red)">v1.3.0</span>      <span class="cmt"># ← change for every deploy</span>
+<span class="kw">replicas</span>: <span style="color:var(--red)">5</span>           <span class="cmt"># ← different per env</span>
+<span class="kw">memory</span>: <span style="color:var(--red)">"512Mi"</span>       <span class="cmt"># ← different per env</span>
+<span class="kw">host</span>: <span style="color:var(--red)">myapp.prod.com</span> <span class="cmt"># ← different per env</span>
+
+<span class="cmt"># To deploy dev: manually edit 4+ values
+# To deploy staging: manually edit again
+# To update image tag: touch every env's file</span></div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-tag-row"><span class="ctag green">✅ With values.yaml</span></div>
+        <div class="code-block" style="font-size:0.78rem"><span class="cmt"># deployment.yaml — parameterised</span>
+<span class="kw">image</span>: myapp:<span style="color:var(--green)">{{ .Values.image.tag }}</span>
+<span class="kw">replicas</span>: <span style="color:var(--green)">{{ .Values.replicaCount }}</span>
+<span class="kw">memory</span>: <span style="color:var(--green)">{{ .Values.resources.memory }}</span>
+<span class="kw">host</span>: <span style="color:var(--green)">{{ .Values.ingress.host }}</span>
+
+<span class="cmt"># To deploy dev: helm install myapp ./chart
+# To deploy prod: helm install myapp ./chart \
+#                   -f values-prod.yaml
+# To update image: --set image.tag=v1.4.0</span></div>
+      </div>
+    </div>
+
+    <!-- Full anatomy of a well-structured values.yaml -->
+    <div class="card">
+      <h3 class="card-title">📄 Anatomy of a Well-Structured values.yaml</h3>
+      <p class="card-sub">A production-grade values file has clear sections, helpful comments, and safe defaults</p>
+      <div class="cb-header"><span class="cb-lang">values.yaml</span><span class="cb-title">Full annotated example</span></div>
+      <pre class="cb-code" style="font-size:0.77rem;line-height:1.6"><span class="cmt"># ── Replica count ──────────────────────────────────────────────
+# Number of pod replicas. Override in values-prod.yaml for scale.</span>
+<span class="kw">replicaCount</span>: <span class="num">1</span>
+
+<span class="cmt"># ── Container image ────────────────────────────────────────────</span>
+<span class="kw">image</span>:
+  <span class="kw">repository</span>: <span class="str">myregistry.io/myapp</span>  <span class="cmt"># full registry path</span>
+  <span class="kw">tag</span>: <span class="str">"v1.0.0"</span>                     <span class="cmt"># override via --set image.tag=</span>
+  <span class="kw">pullPolicy</span>: <span class="str">IfNotPresent</span>          <span class="cmt"># Always in prod, IfNotPresent in dev</span>
+
+<span class="cmt"># ── Service ────────────────────────────────────────────────────</span>
+<span class="kw">service</span>:
+  <span class="kw">type</span>: <span class="str">ClusterIP</span>   <span class="cmt"># ClusterIP | NodePort | LoadBalancer</span>
+  <span class="kw">port</span>: <span class="num">80</span>
+  <span class="kw">targetPort</span>: <span class="num">8080</span>  <span class="cmt"># port your app actually listens on</span>
+
+<span class="cmt"># ── Ingress (off by default — enable per environment) ──────────</span>
+<span class="kw">ingress</span>:
+  <span class="kw">enabled</span>: <span class="num">false</span>          <span class="cmt"># set true in values-staging/prod.yaml</span>
+  <span class="kw">host</span>: <span class="str">""</span>               <span class="cmt"># myapp.example.com</span>
+  <span class="kw">tlsEnabled</span>: <span class="num">false</span>
+  <span class="kw">annotations</span>: <span class="str">{}</span>        <span class="cmt"># nginx.ingress.kubernetes.io/... etc</span>
+
+<span class="cmt"># ── Resource limits (ALWAYS set these — no limits = cluster risk) ─</span>
+<span class="kw">resources</span>:
+  <span class="kw">requests</span>:
+    <span class="kw">cpu</span>: <span class="str">"100m"</span>
+    <span class="kw">memory</span>: <span class="str">"128Mi"</span>
+  <span class="kw">limits</span>:
+    <span class="kw">cpu</span>: <span class="str">"500m"</span>
+    <span class="kw">memory</span>: <span class="str">"256Mi"</span>
+
+<span class="cmt"># ── Horizontal Pod Autoscaler (off by default) ─────────────────</span>
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="num">false</span>
+  <span class="kw">minReplicas</span>: <span class="num">2</span>
+  <span class="kw">maxReplicas</span>: <span class="num">10</span>
+  <span class="kw">targetCPUUtilizationPercentage</span>: <span class="num">70</span>
+
+<span class="cmt"># ── Application config (non-secret env vars) ───────────────────</span>
+<span class="kw">config</span>:
+  <span class="kw">LOG_LEVEL</span>: <span class="str">"info"</span>        <span class="cmt"># override to "debug" in dev</span>
+  <span class="kw">DB_HOST</span>: <span class="str">"postgres.svc"</span>
+  <span class="kw">CACHE_TTL</span>: <span class="str">"300"</span>
+
+<span class="cmt"># ── Secrets (reference only — never put real values here!) ─────
+# Use: helm install --set secrets.dbPassword=$DB_PASS
+# Or:  helm-secrets + SOPS / External Secrets Operator</span>
+<span class="kw">secrets</span>:
+  <span class="kw">dbPassword</span>: <span class="str">""</span>          <span class="cmt"># injected via CI --set, never committed</span>
+  <span class="kw">apiKey</span>: <span class="str">""</span></pre>
+    </div>
+
+    <!-- Data types -->
+    <div class="card">
+      <h3 class="card-title">🔢 Data Types in values.yaml — Know Your YAML</h3>
+      <p class="card-sub">YAML auto-detects types. This catches beginners off-guard constantly.</p>
+      <div class="helm-table-wrap">
+        <table class="helm-table">
+          <thead><tr><th>Type</th><th>Example</th><th>Gotcha</th><th>Safe Pattern</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>String</td>
+              <td><code>tag: v1.0.0</code></td>
+              <td><code>tag: 1.0</code> → parsed as float <code>1.0</code></td>
+              <td>Always quote: <code>tag: "v1.0.0"</code></td>
+            </tr>
+            <tr>
+              <td>Integer</td>
+              <td><code>port: 8080</code></td>
+              <td>Fine as-is — YAML parses unquoted numbers as int</td>
+              <td><code>port: 8080</code> ✓</td>
+            </tr>
+            <tr>
+              <td>Boolean</td>
+              <td><code>enabled: true</code></td>
+              <td><code>enabled: "true"</code> (string) ≠ <code>true</code> (bool) in Go templates</td>
+              <td>No quotes for booleans: <code>enabled: false</code></td>
+            </tr>
+            <tr>
+              <td>Null / empty</td>
+              <td><code>annotations: {}</code></td>
+              <td><code>annotations:</code> (bare) = <code>null</code>, breaks <code>toYaml</code> pipeline</td>
+              <td>Use <code>{}</code> for empty maps, <code>[]</code> for empty lists</td>
+            </tr>
+            <tr>
+              <td>Multi-word string</td>
+              <td><code>name: my app</code></td>
+              <td>Spaces make it ambiguous — YAML may mis-parse</td>
+              <td>Quote it: <code>name: "my app"</code></td>
+            </tr>
+            <tr>
+              <td>List</td>
+              <td><code>hosts: [a.com, b.com]</code></td>
+              <td>Inline list vs block list — both valid but be consistent</td>
+              <td>Block form preferred for readability</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block" style="margin-top:12px;font-size:0.78rem"><span class="cmt"># In templates: always pipe strings through | quote for safety</span>
+<span class="kw">name</span>: <span class="helm-tpl-var">{{ .Values.config.LOG_LEVEL | quote }}</span>  <span class="cmt"># → "info"</span>
+
+<span class="cmt"># Check if a value is truly set (not empty string, not null)</span>
+<span class="helm-tpl-cond">{{- if and .Values.ingress.host (ne .Values.ingress.host "") }}</span>
+  <span class="kw">host</span>: <span class="helm-tpl-var">{{ .Values.ingress.host }}</span>
+<span class="helm-tpl-cond">{{- end }}</span></div>
+    </div>
+
+    <!-- The enabled pattern -->
+    <div class="card">
+      <h3 class="card-title">🔀 The <code>enabled</code> Pattern — Conditional Resources</h3>
+      <p class="card-sub">The most common and powerful pattern in Helm charts — toggle entire resources on/off per environment</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">values.yaml</span><span class="cb-title">Default off</span></div>
+          <pre class="cb-code" style="font-size:0.78rem"><span class="cmt"># Safe defaults — minimal resources</span>
+<span class="kw">ingress</span>:
+  <span class="kw">enabled</span>: <span class="num">false</span>  <span class="cmt"># no ingress in dev</span>
+
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="num">false</span>  <span class="cmt"># no HPA in dev</span>
+
+<span class="kw">monitoring</span>:
+  <span class="kw">enabled</span>: <span class="num">false</span>  <span class="cmt"># no ServiceMonitor in dev</span></pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">values-prod.yaml</span><span class="cb-title">Override — enable in prod</span></div>
+          <pre class="cb-code" style="font-size:0.78rem"><span class="cmt"># Only override what changes</span>
+<span class="kw">ingress</span>:
+  <span class="kw">enabled</span>: <span class="num">true</span>
+  <span class="kw">host</span>: <span class="str">myapp.example.com</span>
+
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="num">true</span>
+  <span class="kw">minReplicas</span>: <span class="num">3</span>
+
+<span class="kw">monitoring</span>:
+  <span class="kw">enabled</span>: <span class="num">true</span></pre>
+        </div>
+      </div>
+      <div class="code-block" style="margin-top:12px;font-size:0.78rem"><span class="cmt"># In templates/ingress.yaml — entire file is conditional</span>
+<span class="helm-tpl-cond">{{- if .Values.ingress.enabled }}</span>
+<span class="kw">apiVersion</span>: networking.k8s.io/v1
+<span class="kw">kind</span>: Ingress
+<span class="kw">metadata</span>:
+  <span class="kw">name</span>: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+<span class="kw">spec</span>:
+  <span class="kw">rules</span>:
+    - <span class="kw">host</span>: <span class="helm-tpl-var">{{ .Values.ingress.host }}</span>
+<span class="helm-tpl-cond">{{- end }}</span>
+<span class="cmt"># If ingress.enabled=false → this entire file renders as EMPTY
+# → K8s never sees an Ingress object
+# → No resource created, no cleanup needed</span></div>
+    </div>
+
+    <!-- values.schema.json -->
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
+      <div class="card-tag-row"><span class="ctag cyan">🔍 Values Validation</span></div>
+      <h3 class="card-title" style="margin-top:8px">values.schema.json — Validate Before Deploying</h3>
+      <p class="card-sub">Add a schema file and Helm will reject invalid values before touching your cluster — like a TypeScript type checker for your config.</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">values.schema.json</span><span class="cb-title">Enforce rules on input</span></div>
+          <pre class="cb-code" style="font-size:0.76rem">{
+  <span class="kw">"$schema"</span>: <span class="str">"http://json-schema.org/draft-07/schema"</span>,
+  <span class="kw">"type"</span>: <span class="str">"object"</span>,
+  <span class="kw">"required"</span>: [<span class="str">"replicaCount"</span>, <span class="str">"image"</span>],
+  <span class="kw">"properties"</span>: {
+    <span class="kw">"replicaCount"</span>: {
+      <span class="kw">"type"</span>: <span class="str">"integer"</span>,
+      <span class="kw">"minimum"</span>: 1,
+      <span class="kw">"maximum"</span>: 50
+    },
+    <span class="kw">"image"</span>: {
+      <span class="kw">"type"</span>: <span class="str">"object"</span>,
+      <span class="kw">"required"</span>: [<span class="str">"repository"</span>, <span class="str">"tag"</span>],
+      <span class="kw">"properties"</span>: {
+        <span class="kw">"repository"</span>: { <span class="kw">"type"</span>: <span class="str">"string"</span> },
+        <span class="kw">"tag"</span>:        { <span class="kw">"type"</span>: <span class="str">"string"</span> },
+        <span class="kw">"pullPolicy"</span>: {
+          <span class="kw">"type"</span>: <span class="str">"string"</span>,
+          <span class="kw">"enum"</span>: [<span class="str">"Always"</span>, <span class="str">"IfNotPresent"</span>, <span class="str">"Never"</span>]
+        }
+      }
+    },
+    <span class="kw">"service"</span>: {
+      <span class="kw">"type"</span>: <span class="str">"object"</span>,
+      <span class="kw">"properties"</span>: {
+        <span class="kw">"port"</span>: { <span class="kw">"type"</span>: <span class="str">"integer"</span>, <span class="kw">"minimum"</span>: 1, <span class="kw">"maximum"</span>: 65535 }
+      }
+    }
+  }
+}</pre>
+        </div>
+        <div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="card" style="margin-bottom:0;background:rgba(255,80,80,.07);border-color:rgba(255,80,80,.3)">
+              <div class="card-tag-row"><span class="ctag red">❌ Schema rejects bad input</span></div>
+              <div class="code-block" style="font-size:0.76rem">helm install myapp ./chart \
+  --set replicaCount=100
+
+<span style="color:var(--red)">Error: values don't meet the
+specifications of the schema:
+- replicaCount: Must be ≤ 50
+
+helm install myapp ./chart \
+  --set image.pullPolicy=latest
+
+Error: image.pullPolicy must be
+one of: Always, IfNotPresent, Never</span></div>
+            </div>
+            <div class="card" style="margin-bottom:0;background:rgba(0,200,80,.07);border-color:rgba(0,200,80,.3)">
+              <div class="card-tag-row"><span class="ctag green">✅ Why this matters</span></div>
+              <ul style="font-size:0.78rem;color:var(--txt2);display:flex;flex-direction:column;gap:6px;margin-top:4px">
+                <li>Catches misconfigured values <strong>before</strong> pods start</li>
+                <li>Required fields enforce contract with users</li>
+                <li>Enum rules prevent typos in critical fields</li>
+                <li>Range checks block runaway replica counts</li>
+                <li>Self-documenting — schema IS the spec</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Global values for subcharts -->
+    <div class="card">
+      <h3 class="card-title">🌐 Global Values — Sharing Config Across Subcharts</h3>
+      <p class="card-sub">When your chart has subcharts (dependencies), use <code>.Values.global</code> to share values without duplicating them in every sub-values file.</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">parent chart values.yaml</span><span class="cb-title">Define globals once</span></div>
+          <pre class="cb-code" style="font-size:0.77rem"><span class="cmt"># Global values — accessible to ALL subcharts</span>
+<span class="kw">global</span>:
+  <span class="kw">imageRegistry</span>: <span class="str">myregistry.io</span>
+  <span class="kw">environment</span>:   <span class="str">production</span>
+  <span class="kw">domain</span>:        <span class="str">example.com</span>
+  <span class="kw">imagePullSecrets</span>:
+    - <span class="str">myregistrysecret</span>
+
+<span class="cmt"># Per-subchart overrides (optional)</span>
+<span class="kw">postgresql</span>:       <span class="cmt"># subchart name</span>
+  <span class="kw">auth</span>:
+    <span class="kw">database</span>: <span class="str">myappdb</span>
+
+<span class="kw">redis</span>:            <span class="cmt"># subchart name</span>
+  <span class="kw">architecture</span>: <span class="str">standalone</span></pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">subchart templates/deployment.yaml</span><span class="cb-title">Access globals</span></div>
+          <pre class="cb-code" style="font-size:0.77rem"><span class="cmt"># Subcharts access global via .Values.global</span>
+<span class="kw">image</span>:
+  <span class="cmt"># Use global registry if set, else local value</span>
+  <span class="kw">repository</span>: <span class="helm-tpl-var">{{- if .Values.global.imageRegistry }}
+    {{ .Values.global.imageRegistry }}/myapp
+  {{- else }}
+    {{ .Values.image.repository }}
+  {{- end }}</span>
+
+<span class="kw">env</span>:
+  - <span class="kw">name</span>: ENVIRONMENT
+    <span class="kw">value</span>: <span class="helm-tpl-var">{{ .Values.global.environment | quote }}</span>
+
+<span class="kw">imagePullSecrets</span>:
+  <span class="helm-tpl-var">{{- toYaml .Values.global.imagePullSecrets | nindent 2 }}</span></pre>
+          <div class="pd-tip" style="margin-top:8px">💡 <strong>global values are merged down</strong> into every subchart automatically. You set the registry once at the parent level — all 3 subcharts use it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What NOT to put in values.yaml -->
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--red) 42%, transparent)">
+      <div class="card-tag-row"><span class="ctag red">🚨 Security</span></div>
+      <h3 class="card-title" style="margin-top:8px">What NEVER Goes in values.yaml (and What to Do Instead)</h3>
+      <div class="helm-table-wrap" style="margin-top:10px">
+        <table class="helm-table">
+          <thead><tr><th>❌ Never put in values.yaml</th><th>Why</th><th>✅ Use instead</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Database passwords, API keys, tokens</td>
+              <td>Git-committed plain text — exposed forever in history</td>
+              <td><code>--set secrets.dbPass=$DB_PASS</code> in CI, or helm-secrets + SOPS</td>
+            </tr>
+            <tr>
+              <td>TLS certificates / private keys</td>
+              <td>Extremely sensitive, large binary data in YAML is fragile</td>
+              <td>cert-manager + K8s TLS secrets</td>
+            </tr>
+            <tr>
+              <td>Cloud provider credentials (AWS keys, GCP SA JSON)</td>
+              <td>One accidental commit = full cloud account exposure</td>
+              <td>Workload Identity / IRSA / Pod Identity</td>
+            </tr>
+            <tr>
+              <td>SSH private keys</td>
+              <td>As above — immediate security incident if leaked</td>
+              <td>K8s Secrets + External Secrets Operator</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block" style="margin-top:12px;font-size:0.78rem"><span class="cmt"># ✅ Safe pattern: placeholder in values.yaml, real value injected in CI</span>
+<span class="cmt"># values.yaml:</span>
+<span class="kw">secrets</span>:
+  <span class="kw">dbPassword</span>: <span class="str">""</span>  <span class="cmt"># intentionally empty — never committed with real value</span>
+
+<span class="cmt"># CI pipeline (GitHub Actions / Jenkins / ArgoCD):</span>
+helm upgrade myapp ./chart \
+  --set secrets.dbPassword=${{ secrets.DB_PASSWORD }}
+<span class="cmt"># The real password lives only in your CI secrets vault, never in git</span></div>
+    </div>
+
+    <!-- Quick inspect commands -->
+    <div class="card devops-box">
+      <h3 class="card-title">🔍 Inspecting Active Values at Runtime</h3>
+      <p class="card-sub">Always verify what values Helm is actually using — especially after complex overrides</p>
+      <div class="code-block"><span class="cmt"># See what values are active for a running release</span>
+helm get values myapp                  <span class="cmt"># user-supplied values only</span>
+helm get values myapp --all            <span class="cmt"># ALL values including defaults</span>
+helm get values myapp --revision 3     <span class="cmt"># what was active at revision 3</span>
+helm get values myapp -n production    <span class="cmt"># specify namespace</span>
+
+<span class="cmt"># Preview what values would be used BEFORE deploying</span>
+helm install myapp ./chart \
+  -f values-prod.yaml \
+  --set image.tag=v2.0.0 \
+  --dry-run --debug \
+  2>&amp;1 | grep -A 50 "COMPUTED VALUES"  <span class="cmt"># see merged result</span>
+
+<span class="cmt"># Render templates with specific values (no cluster needed)</span>
+helm template myapp ./chart -f values-prod.yaml</div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li><code>values.yaml</code> = safe dev defaults. Every env that needs different config gets its own <code>values-{env}.yaml</code></li>
+        <li>Use the <strong><code>enabled: false</code> pattern</strong> to conditionally include whole resources (ingress, HPA, monitoring)</li>
+        <li>Always quote string values that look like numbers or booleans. Use <code>{}</code> for empty maps, <code>[]</code> for empty lists</li>
+        <li>Add <code>values.schema.json</code> to validate input — catches misconfiguration before a single pod starts</li>
+        <li><strong>Never commit secrets</strong> to values.yaml — use <code>--set</code> injection from CI secrets or External Secrets Operator</li>
+        <li>Use <code>.Values.global</code> in umbrella charts so all subcharts share registry, environment, and pull secrets from one place</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: TEMPLATES ══════════════════════ -->
+       <article data-label="Templates &amp; Values" class="nb-leaf" id="helm-templates" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 5">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 03</div>
+      <h2>Templates &amp; Values</h2>
+      <p class="sec-desc">Go templating in Kubernetes YAML — how values flow into manifests</p>
+    </div>
+
+    <!-- Live Renderer -->
+    <div class="card">
+      <h3 class="card-title">🎛️ Live Template Renderer</h3>
+      <p class="card-sub">Edit values on the left — see the rendered YAML update in real time →</p>
+      <div class="helm-renderer">
+        <div class="helm-renderer-panel">
+          <div class="helm-renderer-label">⚙️ values.yaml</div>
+          <div class="helm-values-inputs" id="helmValuesInputs">
+            <div class="hv-row"><label>replicaCount</label><input type="number" id="hv-replicas" value="2" min="1" max="10" oninput="renderHelmTemplate()"></div>
+            <div class="hv-row"><label>image.tag</label><input type="text" id="hv-tag" value="v1.4.2" oninput="renderHelmTemplate()"></div>
+            <div class="hv-row"><label>service.port</label><input type="number" id="hv-port" value="8080" oninput="renderHelmTemplate()"></div>
+            <div class="hv-row"><label>ingress.enabled</label><select id="hv-ingress" onchange="renderHelmTemplate()"><option value="true">true</option><option value="false">false</option></select></div>
+            <div class="hv-row"><label>resources.memory</label><input type="text" id="hv-memory" value="256Mi" oninput="renderHelmTemplate()"></div>
+          </div>
+        </div>
+        <div class="helm-renderer-panel">
+          <div class="helm-renderer-label">📝 deployment.yaml <small>(template)</small></div>
+          <pre class="helm-tpl-display"><span class="kw">apiVersion</span>: apps/v1
+<span class="kw">kind</span>: Deployment
+<span class="kw">metadata</span>:
+  <span class="kw">name</span>: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+<span class="kw">spec</span>:
+  <span class="kw">replicas</span>: <span class="helm-tpl-var">{{ .Values.replicaCount }}</span>
+  <span class="kw">template</span>:
+    <span class="kw">spec</span>:
+      <span class="kw">containers</span>:
+      - <span class="kw">name</span>: app
+        <span class="kw">image</span>: myapp:<span class="helm-tpl-var">{{ .Values.image.tag }}</span>
+        <span class="kw">ports</span>:
+        - <span class="kw">containerPort</span>: <span class="helm-tpl-var">{{ .Values.service.port }}</span>
+        <span class="kw">resources</span>:
+          <span class="kw">limits</span>:
+            <span class="kw">memory</span>: <span class="helm-tpl-var">{{ .Values.resources.memory }}</span>
+<span class="helm-tpl-cond">{{- if .Values.ingress.enabled }}</span>
+<span class="kw">---
+kind</span>: Ingress <span class="cmt"># rendered only when enabled</span>
+<span class="helm-tpl-cond">{{- end }}</span></pre>
+        </div>
+        <div class="helm-renderer-panel">
+          <div class="helm-renderer-label">✅ Rendered Output</div>
+          <pre class="helm-rendered-output" id="helmRenderedOutput"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Template syntax reference -->
+    <div class="card">
+      <h3 class="card-title">📖 Template Syntax Cheatsheet</h3>
+      <div class="helm-syntax-grid">
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{ .Values.xxx }}</code><div class="helm-syntax-desc">Value substitution from values.yaml</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{ .Release.Name }}</code><div class="helm-syntax-desc">Built-in release name (set by helm install)</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{ include "chart.name" . }}</code><div class="helm-syntax-desc">Call a named template from _helpers.tpl</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{- if .Values.x }} ... {{- end }}</code><div class="helm-syntax-desc">Conditional block (- trims whitespace)</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{- range .Values.list }} ... {{- end }}</code><div class="helm-syntax-desc">Loop over a list or map</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{ toYaml . | nindent 8 }}</code><div class="helm-syntax-desc">Dump a map as YAML with 8-space indent</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{ .Chart.Name }}-{{ .Chart.Version }}</code><div class="helm-syntax-desc">Access Chart.yaml fields</div></div>
+        <div class="helm-syntax-card"><code class="helm-syntax-code">{{ default "80" .Values.port }}</code><div class="helm-syntax-desc">Provide a fallback default value</div></div>
+      </div>
+    </div>
+
+    <!-- Built-in objects -->
+    <div class="card">
+      <h3 class="card-title">🔑 Built-in Objects</h3>
+      <div class="helm-table-wrap">
+        <table class="helm-table">
+          <thead><tr><th>Object</th><th>Key Fields</th><th>DevOps Analogy</th></tr></thead>
+          <tbody>
+            <tr><td><code>.Release</code></td><td>Name, Namespace, Revision, IsInstall, IsUpgrade</td><td>The deployment metadata — like a CI run context</td></tr>
+            <tr><td><code>.Chart</code></td><td>Name, Version, AppVersion, Description</td><td>The artifact manifest — like an OCI image label</td></tr>
+            <tr><td><code>.Values</code></td><td>Whatever's in values.yaml</td><td>ConfigMap / environment variables</td></tr>
+            <tr><td><code>.Files</code></td><td>.Get, .Glob, .AsConfig, .AsSecrets</td><td>Embed static files as ConfigMaps</td></tr>
+            <tr><td><code>.Capabilities</code></td><td>.KubeVersion, .APIVersions</td><td>Feature detection — like checking K8s version</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Named templates -->
+    <div class="card">
+      <h3 class="card-title">🔧 Named Templates in _helpers.tpl</h3>
+      <p class="card-sub">Define reusable snippets once, include anywhere — the DRY principle for Helm</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">_helpers.tpl</span><span class="cb-title">Define</span></div>
+          <pre class="cb-code"><span class="cmt">{{/*
+  Generate standard labels for all resources
+*/}}</span>
+<span class="helm-tpl-cond">{{- define "mychart.labels" -}}</span>
+<span class="kw">app.kubernetes.io/name</span>: <span class="helm-tpl-var">{{ .Chart.Name }}</span>
+<span class="kw">app.kubernetes.io/instance</span>: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+<span class="kw">app.kubernetes.io/version</span>: <span class="helm-tpl-var">{{ .Chart.AppVersion }}</span>
+<span class="helm-tpl-cond">{{- end }}</span></pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">deployment.yaml</span><span class="cb-title">Include</span></div>
+          <pre class="cb-code"><span class="kw">metadata</span>:
+  <span class="kw">labels</span>:
+    <span class="helm-tpl-var">{{- include "mychart.labels" . | nindent 4 }}</span>
+<span class="cmt"># Rendered output:
+#   app.kubernetes.io/name: mychart
+#   app.kubernetes.io/instance: myapp
+#   app.kubernetes.io/version: "2.4.1"</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Values Override Hierarchy -->
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
+      <div class="card-tag-row"><span class="ctag cyan">🔑 Critical Concept</span></div>
+      <h3 class="card-title" style="margin-top:8px">Values Override Hierarchy — How Helm Merges Values</h3>
+      <p class="card-sub">Helm merges values from multiple sources. The order of precedence (highest wins):</p>
+
+      <div class="helm-override-chain">
+        <div class="hoc-step hoc-highest">
+          <div class="hoc-num">1 (highest)</div>
+          <div class="hoc-body">
+            <code>--set image.tag=v2.0.0</code>
+            <span>CLI flag — overrides everything. Use for one-off tweaks or CI pipeline injection</span>
+          </div>
+        </div>
+        <div class="hoc-arrow">▼ overrides</div>
+        <div class="hoc-step hoc-high">
+          <div class="hoc-num">2</div>
+          <div class="hoc-body">
+            <code>-f values-prod.yaml</code>
+            <span>Environment-specific values file passed with <code>-f</code>. Overrides defaults</span>
+          </div>
+        </div>
+        <div class="hoc-arrow">▼ overrides</div>
+        <div class="hoc-step hoc-base">
+          <div class="hoc-num">3 (lowest)</div>
+          <div class="hoc-body">
+            <code>values.yaml</code>
+            <span>Chart defaults — always present, lowest priority. Everything starts here</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:18px">
+        <div>
+          <div class="cb-header"><span class="cb-lang">values.yaml</span><span class="cb-title">Base defaults</span></div>
+          <pre class="cb-code" style="font-size:0.78rem"><span class="kw">replicaCount</span>: <span class="num">1</span>
+<span class="kw">image</span>:
+  <span class="kw">tag</span>: <span class="str">"latest"</span>
+<span class="kw">resources</span>:
+  <span class="kw">memory</span>: <span class="str">"128Mi"</span>
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="num">false</span></pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">values-prod.yaml</span><span class="cb-title">Env override</span></div>
+          <pre class="cb-code" style="font-size:0.78rem"><span class="cmt"># Only override what differs from base</span>
+<span class="kw">replicaCount</span>: <span class="num">5</span>
+<span class="kw">resources</span>:
+  <span class="kw">memory</span>: <span class="str">"512Mi"</span>
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="num">true</span>
+  <span class="kw">maxReplicas</span>: <span class="num">20</span></pre>
+        </div>
+      </div>
+
+      <div class="code-block" style="margin-top:14px;font-size:0.82rem"><span class="cmt"># Prod deploy: base values + prod override + CLI tag injection</span>
+helm upgrade --install myapp ./myapp \
+  -f values-prod.yaml \
+  --set image.tag=v2.1.0 \
+  --namespace production
+
+<span class="cmt"># Result — what Helm actually sees:
+# replicaCount: 5         (from values-prod.yaml)
+# image.tag: "v2.1.0"     (from --set, overrides prod file)
+# resources.memory: 512Mi (from values-prod.yaml)
+# autoscaling.enabled: true (from values-prod.yaml)</span></div>
+
+      <p style="margin-top:12px;font-size:0.84rem;color:var(--txt2)">💡 <strong>Best practice:</strong> Keep <code>values.yaml</code> as safe dev defaults. Create <code>values-staging.yaml</code> and <code>values-prod.yaml</code> with only the <em>differences</em>. Use <code>--set</code> in CI for dynamic values like image tags or build IDs.</p>
+    </div>
+
+    <!-- How Go templates render -->
+    <div class="card">
+      <h3 class="card-title">⚙️ How Templates Become YAML — The Rendering Pipeline</h3>
+      <p class="card-sub">Understanding what happens between <code>helm install</code> and pods starting</p>
+      <div class="helm-pipeline">
+        <div class="hp-stage hp-stage-1">
+          <div class="hp-icon">📂</div>
+          <div class="hp-name">Chart Source</div>
+          <div class="hp-desc"><code>templates/deployment.yaml</code> with <code>{{ .Values.xxx }}</code> placeholders</div>
+        </div>
+        <div class="hp-arrow">+</div>
+        <div class="hp-stage hp-stage-2">
+          <div class="hp-icon">⚙️</div>
+          <div class="hp-name">Merged Values</div>
+          <div class="hp-desc">values.yaml + -f file + --set flags merged into one object</div>
+        </div>
+        <div class="hp-arrow">→</div>
+        <div class="hp-stage hp-stage-3">
+          <div class="hp-icon">🔧</div>
+          <div class="hp-name">Go Template Engine</div>
+          <div class="hp-desc">Helm renders all <code>{{ }}</code> expressions. Conditionals, loops, includes evaluated</div>
+        </div>
+        <div class="hp-arrow">→</div>
+        <div class="hp-stage hp-stage-4">
+          <div class="hp-icon">📋</div>
+          <div class="hp-name">Pure Kubernetes YAML</div>
+          <div class="hp-desc">Plain manifests — identical to what you'd write by hand, but generated</div>
+        </div>
+        <div class="hp-arrow">→</div>
+        <div class="hp-stage hp-stage-5">
+          <div class="hp-icon">☸️</div>
+          <div class="hp-name">kubectl apply</div>
+          <div class="hp-desc">Helm sends manifests to the K8s API — resources are created/updated</div>
+        </div>
+      </div>
+      <p style="font-size:0.83rem;color:var(--txt2);margin-top:10px">💡 Run <code>helm template myapp ./myapp -f values-prod.yaml</code> to see the rendered YAML without touching the cluster — great for debugging.</p>
+    </div>
+
+    <div class="card warn-card">
+      <div class="card-tag-row"><span class="ctag orange">⚠️ Common Gotchas</span></div>
+      <ul style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+        <li style="font-size:0.88rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--orange)">→</span> Use <code>nindent</code> not <code>indent</code> — <code>nindent</code> adds a leading newline, <code>indent</code> doesn't</li>
+        <li style="font-size:0.88rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--orange)">→</span> Always <strong>quote string values</strong>: <code>{{ .Values.name | quote }}</code> — bare strings in YAML can be parsed as booleans/numbers</li>
+        <li style="font-size:0.88rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--orange)">→</span> <strong>Whitespace control</strong>: <code>{{-</code> trims leading whitespace, <code>-}}</code> trims trailing — extra blank lines break manifest indentation</li>
+        <li style="font-size:0.88rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--orange)">→</span> <code>{{ if .Values.x }}</code> vs <code>{{ if .Values.x | ne "" }}</code> — an empty string is falsy in Go templates</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: LIFECYCLE ══════════════════════ -->
+       <article data-label="Release Lifecycle" class="nb-leaf" id="helm-lifecycle" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 6">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 04</div>
+      <h2>Release Lifecycle</h2>
+      <p class="sec-desc">Install → Upgrade → Rollback → Uninstall — and every state in between</p>
+    </div>
+
+    <!-- State machine -->
+    <div class="card">
+      <h3 class="card-title">🔄 Release State Machine</h3>
+      <div class="helm-states">
+        <div class="helm-state helm-state-pending"><span class="hs-dot"></span>pending-install</div>
+        <div class="helm-state-arr">→</div>
+        <div class="helm-state helm-state-deployed"><span class="hs-dot"></span>deployed</div>
+        <div class="helm-state-arr">→</div>
+        <div class="helm-state helm-state-pending"><span class="hs-dot"></span>pending-upgrade</div>
+        <div class="helm-state-arr">→</div>
+        <div class="helm-state helm-state-deployed"><span class="hs-dot"></span>deployed (v2)</div>
+        <div style="width:100%;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:8px">
+          <div class="helm-state helm-state-failed"><span class="hs-dot"></span>failed</div>
+          <div class="helm-state-arr">→</div>
+          <div class="helm-state helm-state-deployed"><span class="hs-dot"></span>deployed (rollback)</div>
+          <div class="helm-state-arr">→</div>
+          <div class="helm-state helm-state-uninstalled"><span class="hs-dot"></span>uninstalled</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Commands reference -->
+    <div class="card-grid-4" style="margin-bottom:24px">
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">📥</div><h4>Install</h4>
+        <div class="code-block" style="margin:8px 0">helm install &lt;name&gt; &lt;chart&gt;
+helm install --dry-run --debug</div>
+        <p>First deployment. Creates revision 1.</p>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">⬆️</div><h4>Upgrade</h4>
+        <div class="code-block" style="margin:8px 0">helm upgrade &lt;name&gt; &lt;chart&gt;
+helm upgrade --install  # upsert</div>
+        <p>Bump chart or values. Revision ++.</p>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">⏪</div><h4>Rollback</h4>
+        <div class="code-block" style="margin:8px 0">helm rollback &lt;name&gt; &lt;rev&gt;
+helm history &lt;name&gt;</div>
+        <p>Restore any previous revision.</p>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">🗑️</div><h4>Uninstall</h4>
+        <div class="code-block" style="margin:8px 0">helm uninstall &lt;name&gt;
+helm uninstall --keep-history</div>
+        <p>Remove all chart resources.</p>
+      </div>
+    </div>
+
+    <!-- History table -->
+    <div class="card">
+      <h3 class="card-title">📋 Release History — <code>helm history myapp</code></h3>
+      <div class="helm-table-wrap">
+        <table class="helm-table">
+          <thead><tr><th>REVISION</th><th>STATUS</th><th>CHART</th><th>APP VERSION</th><th>DESCRIPTION</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td><span class="helm-status-pill deployed">deployed</span></td><td>mychart-1.0.0</td><td>2.3.0</td><td>Install complete</td></tr>
+            <tr><td>2</td><td><span class="helm-status-pill deployed">deployed</span></td><td>mychart-1.1.0</td><td>2.4.0</td><td>Upgrade complete</td></tr>
+            <tr><td>3</td><td><span class="helm-status-pill failed">failed</span></td><td>mychart-1.2.0</td><td>2.5.0-rc1</td><td>Upgrade failed: CrashLoopBackOff</td></tr>
+            <tr class="helm-table-active"><td>4</td><td><span class="helm-status-pill deployed">deployed</span></td><td>mychart-1.1.0</td><td>2.4.0</td><td>Rollback to revision 2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.83rem;color:var(--txt2);margin-top:12px">💡 <strong>--keep-history</strong> on uninstall preserves this table so you can audit past deployments — like keeping CloudTrail logs.</p>
+    </div>
+
+    <!-- What actually happens to pods during upgrade -->
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--cyan) 42%, transparent)">
+      <div class="card-tag-row"><span class="ctag cyan">🔑 Zero-Downtime Secret</span></div>
+      <h3 class="card-title" style="margin-top:8px">What Happens to Your Pods During <code>helm upgrade</code>?</h3>
+      <p class="card-sub">This is the question every beginner has. Here's exactly what happens — step by step.</p>
+
+      <div class="helm-upgrade-flow">
+        <div class="huf-step">
+          <div class="huf-num">1</div>
+          <div class="huf-body">
+            <strong>You run <code>helm upgrade myapp ./myapp --set image.tag=v2.0.0</code></strong>
+            <p>Helm renders new templates, compares to current cluster state, applies the diff.</p>
+          </div>
+        </div>
+        <div class="huf-step">
+          <div class="huf-num">2</div>
+          <div class="huf-body">
+            <strong>K8s starts a Rolling Update (default Deployment strategy)</strong>
+            <p>New pods with the new image are created first. Old pods are NOT immediately killed.</p>
+            <div class="code-block" style="margin-top:6px;font-size:0.78rem"><span class="cmt"># Watch what happens:</span>
+kubectl get pods -w
+<span style="color:var(--green)">myapp-v1-abc123   Running   ← still serving traffic
+myapp-v2-def456   Pending   ← new pod starting up</span>
+<span style="color:var(--green)">myapp-v2-def456   Running   ← health checks pass
+myapp-v1-abc123   Terminating ← NOW old pod is killed</span></div>
+          </div>
+        </div>
+        <div class="huf-step">
+          <div class="huf-num">3</div>
+          <div class="huf-body">
+            <strong>Readiness gates ensure zero downtime</strong>
+            <p>K8s won't kill the old pod until the new one is <em>Ready</em> (passes readinessProbe). Traffic continues flowing to v1 while v2 starts. No requests are dropped.</p>
+          </div>
+        </div>
+        <div class="huf-step">
+          <div class="huf-num">4</div>
+          <div class="huf-body">
+            <strong>If the new pod fails health checks → Helm detects failure</strong>
+            <p>With <code>--atomic</code> flag: Helm auto-rollbacks. Without it: release state = <span style="color:var(--red)">failed</span>, old pods keep running until you fix it manually.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px">
+        <div class="card" style="margin-bottom:0;background:rgba(0,200,80,.07);border:1px solid rgba(0,200,80,.2)">
+          <div class="card-tag-row"><span class="ctag green">✅ Recommended: --atomic</span></div>
+          <div class="code-block" style="font-size:0.78rem">helm upgrade myapp ./myapp \
+  --set image.tag=v2.0.0 \
+  --atomic \
+  --timeout 5m
+
+<span style="color:var(--green)"># If v2 pods don't become Ready in 5 min
+# → Helm auto-rollbacks to v1
+# → No manual intervention needed
+# → Great for CI/CD pipelines</span></div>
+        </div>
+        <div class="card" style="margin-bottom:0;background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2)">
+          <div class="card-tag-row"><span class="ctag red">⚠️ Without --atomic</span></div>
+          <div class="code-block" style="font-size:0.78rem">helm upgrade myapp ./myapp \
+  --set image.tag=v2.0.0
+
+<span style="color:var(--red)"># If upgrade fails:
+# Release state = "failed"
+# Your old pods are still running (good)
+# But next helm upgrade will fail:
+# Error: UPGRADE FAILED: another operation
+# (install/upgrade/rollback) is in progress
+# Fix: helm rollback myapp 2</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal output of real helm install -->
+    <div class="card">
+      <h3 class="card-title">🖥️ What Real <code>helm install</code> Output Looks Like</h3>
+      <p class="card-sub">First-timers are often confused by what to expect. Here's a real terminal session:</p>
+      <div class="two-col" style="margin-top:12px">
+        <div>
+          <div class="cb-header"><span class="cb-lang">terminal</span><span class="cb-title">Successful install</span></div>
+          <pre class="cb-code" style="font-size:0.77rem;color:var(--green)">$ helm install myapp ./myapp \
+    -f values-prod.yaml \
+    --namespace production \
+    --create-namespace
+
+NAME: myapp
+LAST DEPLOYED: Mon Mar 17 10:42:15 2026
+NAMESPACE: production
+STATUS: deployed
+REVISION: 1
+NOTES:
+  Application myapp has been deployed!
+  Access it at: https://myapp.example.com
+
+  <span style="color:var(--txt2)">Verify pods are running:</span>
+  kubectl get pods -n production</pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">terminal</span><span class="cb-title">Failed install (and what to do)</span></div>
+          <pre class="cb-code" style="font-size:0.77rem;color:var(--red)">$ helm install myapp ./myapp \
+    -f values-prod.yaml
+
+Error: INSTALLATION FAILED:
+  timed out waiting for the condition
+
+<span style="color:var(--txt2)"># Pods stuck? Check what's wrong:</span>
+<span style="color:var(--cyan)">$ kubectl get pods -n production
+NAME            STATUS             AGE
+myapp-abc123    CrashLoopBackOff   90s
+
+$ kubectl logs myapp-abc123
+Error: DB_HOST env var not set
+
+# Fix: add DB_HOST to values-prod.yaml
+# then: helm upgrade myapp ./myapp
+#        -f values-prod.yaml --atomic</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li><code>helm upgrade --install</code> is the <strong>idempotent upsert</strong> — use this in CI/CD pipelines</li>
+        <li>Every upgrade creates a new revision — rollback is always one command away</li>
+        <li><strong>failed</strong> state blocks future upgrades until you rollback or fix</li>
+        <li>Use <code>--atomic</code> flag to auto-rollback on upgrade failure</li>
+        <li>Pods are replaced via rolling update — <strong>zero downtime</strong> when readinessProbe is configured</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: VERSION CONTROL ══════════════════════ -->
+       <article data-label="Version Control" class="nb-leaf" id="helm-versions" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 7">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Guide</div>
+      <h2>🕰️ Version Control &amp; Rollbacks</h2>
+      <p class="sec-desc">Every release is versioned — list history, inspect any revision, roll back in one command</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Helm automatically keeps a full history of every deploy — like <strong>git log for your Kubernetes deployments</strong>. Each <code>helm install</code> or <code>helm upgrade</code> creates a new revision number. If something breaks, <code>helm rollback myapp 2</code> instantly restores the exact state of revision 2 — the same templates, the same values, everything.</p>
+    </div>
+
+    <!-- How Helm stores history -->
+    <div class="card">
+      <h3 class="card-title">📦 How Helm Stores Release History</h3>
+      <p class="card-sub">No external database. Helm stores each revision as a Kubernetes Secret in the same namespace.</p>
+      <div class="two-col">
+        <div>
+          <div class="code-block"><span class="cmt"># See the raw secrets Helm creates:</span>
+kubectl get secrets -n production \
+  -l owner=helm,name=myapp
+
+<span style="color:var(--cyan)">NAME                          TYPE
+sh.helm.release.v1.myapp.v1   helm.sh/release.v1
+sh.helm.release.v1.myapp.v2   helm.sh/release.v1
+sh.helm.release.v1.myapp.v3   helm.sh/release.v1
+sh.helm.release.v1.myapp.v4   helm.sh/release.v1</span></div>
+        </div>
+        <div class="card devops-box" style="margin-bottom:0">
+          <div class="card-tag-row"><span class="ctag orange">🏗️ What each secret contains</span></div>
+          <ul style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <li style="font-size:0.82rem;color:var(--txt2)"><strong style="color:var(--txt1)">Rendered manifests</strong> — the exact YAML that was applied to the cluster at that revision</li>
+            <li style="font-size:0.82rem;color:var(--txt2)"><strong style="color:var(--txt1)">Computed values</strong> — all merged values (base + overrides + --set flags)</li>
+            <li style="font-size:0.82rem;color:var(--txt2)"><strong style="color:var(--txt1)">Chart metadata</strong> — chart name, version, app version</li>
+            <li style="font-size:0.82rem;color:var(--txt2)"><strong style="color:var(--txt1)">Release status</strong> — deployed / failed / superseded</li>
+            <li style="font-size:0.82rem;color:var(--txt2)"><strong style="color:var(--txt1)">Timestamps &amp; description</strong> — when deployed and any description you set</li>
+          </ul>
+          <p style="font-size:0.78rem;color:var(--txt2);margin-top:10px">💡 This is why <code>helm rollback</code> is so reliable — it replays the exact stored state, not a guess.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive History Inspector -->
+    <div class="card">
+      <h3 class="card-title">🔬 Release History Inspector — <code>helm history myapp</code></h3>
+      <p class="card-sub">Click any revision to inspect it and see the rollback command</p>
+
+      <div class="hvi-layout">
+        <!-- History timeline -->
+        <div class="hvi-timeline">
+          <div class="hvi-rev hvi-rev-active" data-rev="1" onclick="selectHelmRev(1)">
+            <div class="hvi-rev-num">Rev 1</div>
+            <div class="hvi-rev-meta">
+              <span class="helm-status-pill deployed">deployed</span>
+              <span class="hvi-chart">mychart-1.0.0</span>
+            </div>
+            <div class="hvi-rev-desc">Install complete</div>
+            <div class="hvi-rev-date">Mar 10, 09:12</div>
+          </div>
+          <div class="hvi-connector"></div>
+          <div class="hvi-rev" data-rev="2" onclick="selectHelmRev(2)">
+            <div class="hvi-rev-num">Rev 2</div>
+            <div class="hvi-rev-meta">
+              <span class="helm-status-pill deployed">deployed</span>
+              <span class="hvi-chart">mychart-1.1.0</span>
+            </div>
+            <div class="hvi-rev-desc">Upgrade: image v1.2.0 → v1.3.0</div>
+            <div class="hvi-rev-date">Mar 12, 14:30</div>
+          </div>
+          <div class="hvi-connector"></div>
+          <div class="hvi-rev" data-rev="3" onclick="selectHelmRev(3)">
+            <div class="hvi-rev-num">Rev 3</div>
+            <div class="hvi-rev-meta">
+              <span class="helm-status-pill failed">failed</span>
+              <span class="hvi-chart">mychart-1.2.0</span>
+            </div>
+            <div class="hvi-rev-desc">Upgrade failed: CrashLoopBackOff</div>
+            <div class="hvi-rev-date">Mar 14, 10:05</div>
+          </div>
+          <div class="hvi-connector"></div>
+          <div class="hvi-rev" data-rev="4" onclick="selectHelmRev(4)">
+            <div class="hvi-rev-num">Rev 4</div>
+            <div class="hvi-rev-meta">
+              <span class="helm-status-pill deployed">deployed</span>
+              <span class="hvi-chart">mychart-1.1.0</span>
+            </div>
+            <div class="hvi-rev-desc">Rollback to revision 2</div>
+            <div class="hvi-rev-date">Mar 14, 10:08</div>
+          </div>
+          <div class="hvi-connector"></div>
+          <div class="hvi-rev hvi-rev-current" data-rev="5" onclick="selectHelmRev(5)">
+            <div class="hvi-rev-num">Rev 5 <span style="font-size:0.65rem;background:var(--cyan);color:#000;padding:1px 5px;border-radius:3px;font-weight:700">CURRENT</span></div>
+            <div class="hvi-rev-meta">
+              <span class="helm-status-pill deployed">deployed</span>
+              <span class="hvi-chart">mychart-1.2.1</span>
+            </div>
+            <div class="hvi-rev-desc">Upgrade: hotfix v1.4.0 with DB fix</div>
+            <div class="hvi-rev-date">Mar 15, 16:44</div>
+          </div>
+        </div>
+
+        <!-- Detail panel -->
+        <div class="hvi-detail" id="hviDetail">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Commands reference -->
+    <div class="card">
+      <h3 class="card-title">📋 All Version Control Commands</h3>
+      <div class="hvc-grid">
+        <div class="hvc-cmd-card">
+          <div class="hvc-cmd-icon">📜</div>
+          <div class="hvc-cmd-body">
+            <div class="hvc-cmd-title">List all revisions</div>
+            <div class="code-block" style="margin:6px 0">helm history myapp
+helm history myapp -n production
+helm history myapp --max 20   <span class="cmt"># limit output</span></div>
+            <div class="hvc-cmd-note">Shows: revision, date, status, chart version, app version, description</div>
+          </div>
+        </div>
+        <div class="hvc-cmd-card">
+          <div class="hvc-cmd-icon">🔍</div>
+          <div class="hvc-cmd-body">
+            <div class="hvc-cmd-title">Inspect a specific revision</div>
+            <div class="code-block" style="margin:6px 0"><span class="cmt"># What values were used?</span>
+helm get values myapp --revision 2
+helm get values myapp --revision 2 --all
+
+<span class="cmt"># What manifests were applied?</span>
+helm get manifest myapp --revision 2
+
+<span class="cmt"># Notes shown to user at that revision</span>
+helm get notes myapp --revision 2</div>
+            <div class="hvc-cmd-note">Use this before rolling back — confirm the revision has the config you expect</div>
+          </div>
+        </div>
+        <div class="hvc-cmd-card">
+          <div class="hvc-cmd-icon">⏪</div>
+          <div class="hvc-cmd-body">
+            <div class="hvc-cmd-title">Roll back to a revision</div>
+            <div class="code-block" style="margin:6px 0"><span class="cmt"># Rollback to specific revision</span>
+helm rollback myapp 2
+helm rollback myapp 2 -n production
+
+<span class="cmt"># Rollback to the previous revision</span>
+helm rollback myapp
+
+<span class="cmt"># Rollback creates a NEW revision</span>
+<span class="cmt"># (rev 2 restored = becomes rev 5)</span>
+
+<span class="cmt"># Dry-run first (see what changes)</span>
+helm rollback myapp 2 --dry-run</div>
+            <div class="hvc-cmd-note">⚠️ Rollback creates a new revision — it does NOT delete the failed one. History is always preserved.</div>
+          </div>
+        </div>
+        <div class="hvc-cmd-card">
+          <div class="hvc-cmd-icon">🗑️</div>
+          <div class="hvc-cmd-body">
+            <div class="hvc-cmd-title">Keep or delete history on uninstall</div>
+            <div class="code-block" style="margin:6px 0"><span class="cmt"># Default: wipes ALL history secrets</span>
+helm uninstall myapp
+
+<span class="cmt"># Keep history even after uninstall</span>
+helm uninstall myapp --keep-history
+
+<span class="cmt"># With --keep-history you can still see:</span>
+helm history myapp
+<span class="cmt"># STATUS = uninstalled (but history intact)</span>
+
+<span class="cmt"># And even re-install later with history</span>
+helm rollback myapp 3   <span class="cmt"># restores rev 3</span></div>
+            <div class="hvc-cmd-note">Use <code>--keep-history</code> in production — audit trail is essential for incident review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Real incident scenario -->
+    <div class="card" style="border:1px solid color-mix(in srgb, var(--red) 42%, transparent)">
+      <div class="card-tag-row"><span class="ctag red">🚨 Real Incident</span><span class="ctag orange">Prod Down — 30 Second Recovery</span></div>
+      <h3 class="card-title" style="margin-top:8px">Scenario: You upgraded prod at 10:05 AM. At 10:07 AM — alerts fire.</h3>
+      <div class="kh-deploy-flow" style="margin-top:14px">
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num" style="color:#fff;background:var(--red);-webkit-text-fill-color:unset;border-radius:4px;padding:2px 8px;font-size:0.9rem">1</div>
+          <div class="kh-ds-body">
+            <strong>Check what's running and what broke</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Is the release in failed state?</span>
+helm status myapp -n production
+<span style="color:var(--red)"># STATUS: failed</span>
+
+<span class="cmt"># See full history — find the last good revision</span>
+helm history myapp -n production
+<span style="color:var(--cyan)"># REVISION  STATUS    CHART          DESCRIPTION
+# 1         deployed  mychart-1.0.0  Install complete
+# 2         deployed  mychart-1.1.0  Upgrade: v1.3.0   ← last good ✓
+# 3         failed    mychart-1.2.0  CrashLoopBackOff  ← this broke it</span></div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num" style="color:#fff;background:var(--orange);-webkit-text-fill-color:unset;border-radius:4px;padding:2px 8px;font-size:0.9rem">2</div>
+          <div class="kh-ds-body">
+            <strong>Verify revision 2 has what you expect (don't just blindly roll back)</strong>
+            <div class="code-block" style="margin-top:6px">helm get values myapp --revision 2 -n production
+<span style="color:var(--cyan)"># image:
+#   tag: v1.3.0       ← confirmed, this was stable
+# replicaCount: 5
+# autoscaling:
+#   enabled: true</span></div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num" style="color:#fff;background:var(--green);-webkit-text-fill-color:unset;border-radius:4px;padding:2px 8px;font-size:0.9rem">3</div>
+          <div class="kh-ds-body">
+            <strong>Roll back — one command, prod is restored</strong>
+            <div class="code-block" style="margin-top:6px">helm rollback myapp 2 -n production
+<span style="color:var(--green)"># Rollback was a success.
+
+# Helm has now:
+# → Re-applied revision 2's templates to the cluster
+# → Started a rolling update back to v1.3.0
+# → Created revision 4 = "Rollback to revision 2"
+# → Pods are healthy in ~30 seconds</span>
+
+<span class="cmt"># Confirm recovery</span>
+helm status myapp -n production
+helm history myapp -n production</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:0.84rem;color:var(--txt2);margin-top:12px">⏱️ <strong>Total time from alert to recovery: ~30–60 seconds.</strong> This is the power of Helm version control — you never need to scramble to find the "old" YAML files.</p>
+    </div>
+
+    <!-- helm diff plugin -->
+    <div class="card devops-box">
+      <h3 class="card-title">🔭 Pro Tip: Preview Changes Before Upgrading — <code>helm diff</code></h3>
+      <p class="card-sub">The <code>helm-diff</code> plugin shows exactly what will change before you run <code>helm upgrade</code> — like <code>git diff</code> before committing.</p>
+      <div class="two-col">
+        <div>
+          <div class="code-block"><span class="cmt"># Install the plugin (one-time)</span>
+helm plugin install \
+  https://github.com/databus23/helm-diff
+
+<span class="cmt"># Preview an upgrade before applying it</span>
+helm diff upgrade myapp ./myapp \
+  -f values-prod.yaml \
+  --set image.tag=v2.0.0
+
+<span class="cmt"># Preview a rollback before committing</span>
+helm diff rollback myapp 2</div>
+        </div>
+        <div>
+          <div class="code-block"><span class="cmt"># Example diff output:</span>
+<span style="color:var(--red)">- image: myapp:v1.3.0</span>
+<span style="color:var(--green)">+ image: myapp:v2.0.0</span>
+
+<span style="color:var(--red)">- replicas: 3</span>
+<span style="color:var(--green)">+ replicas: 5</span>
+
+<span class="cmt"># No surprise changes — you see every
+# field that will be modified before
+# a single pod is touched.</span></div>
+        </div>
+      </div>
+      <p style="font-size:0.83rem;color:var(--txt2);margin-top:10px">💡 <strong>SRE best practice:</strong> Make <code>helm diff upgrade</code> a required step in your CI/CD pipeline before <code>helm upgrade</code>. Post the diff as a PR comment — your team reviews what's actually changing, not just the PR description.</p>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Every <code>helm install</code> / <code>upgrade</code> / <code>rollback</code> creates a new revision — full audit trail</li>
+        <li>Use <code>helm get values --revision N</code> to inspect the exact config that was active at any revision</li>
+        <li>Rollback creates a <strong>new revision</strong> — it never deletes history</li>
+        <li>Always <code>helm uninstall --keep-history</code> in production so audit logs survive</li>
+        <li>Use <code>helm diff</code> plugin to preview changes before every upgrade — no surprises</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: REPOS ══════════════════════ -->
+       <article data-label="Repositories" class="nb-leaf" id="helm-repos" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 8">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 05</div>
+      <h2>Repositories</h2>
+      <p class="sec-desc">Where charts live, how to find them, and how to host your own</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag blue">📦 Traditional Repo</span></div>
+        <p>An HTTP server with an <code>index.yaml</code> and chart <code>.tgz</code> files. Helm fetches the index, resolves the chart, downloads the tarball.</p>
+        <div class="code-block">helm repo add bitnami \
+  https://charts.bitnami.com/bitnami
+helm repo update
+helm search repo bitnami/postgresql</div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-tag-row"><span class="ctag green">🐳 OCI Registry</span></div>
+        <p>Helm 3.8+ supports storing charts in any OCI-compliant registry (ECR, GCR, ACR, Harbor). No separate index file needed.</p>
+        <div class="code-block">helm push mychart-1.0.0.tgz \
+  oci://registry.example.com/charts
+helm install myapp \
+  oci://registry.example.com/charts/mychart</div>
+      </div>
+    </div>
+
+    <!-- Popular repos -->
+    <div class="card">
+      <h3 class="card-title">🌟 Popular Public Repositories</h3>
+      <div class="helm-repos-grid">
+        <div class="helm-repo-card">
+          <div class="hrep-icon">🔍</div>
+          <strong>ArtifactHub</strong>
+          <span>hub.helm.sh — search all public charts in one place</span>
+          <code>artifacthub.io</code>
+        </div>
+        <div class="helm-repo-card">
+          <div class="hrep-icon">🧪</div>
+          <strong>Bitnami</strong>
+          <span>Production-hardened charts (PostgreSQL, Redis, Kafka…)</span>
+          <code>charts.bitnami.com</code>
+        </div>
+        <div class="helm-repo-card">
+          <div class="hrep-icon">📊</div>
+          <strong>Prometheus</strong>
+          <span>prometheus-community/kube-prometheus-stack</span>
+          <code>prometheus-community</code>
+        </div>
+        <div class="helm-repo-card">
+          <div class="hrep-icon">🌐</div>
+          <strong>Ingress-NGINX</strong>
+          <span>The standard ingress controller chart for K8s</span>
+          <code>kubernetes/ingress-nginx</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dependencies -->
+    <div class="card">
+      <h3 class="card-title">🔗 Chart Dependencies</h3>
+      <p class="card-sub">Declare sub-chart dependencies in Chart.yaml — Helm resolves and downloads them automatically</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">Chart.yaml</span><span class="cb-title">Declare deps</span></div>
+          <pre class="cb-code"><span class="kw">dependencies</span>:
+  - <span class="kw">name</span>: postgresql
+    <span class="kw">version</span>: <span class="str">"~13.0"</span>     <span class="cmt"># semver range</span>
+    <span class="kw">repository</span>: <span class="str">"https://charts.bitnami.com/bitnami"</span>
+    <span class="kw">condition</span>: postgresql.enabled
+  - <span class="kw">name</span>: redis
+    <span class="kw">version</span>: <span class="str">"~18.0"</span>
+    <span class="kw">repository</span>: <span class="str">"oci://registry-1.docker.io/bitnamicharts"</span></pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">Shell</span><span class="cb-title">Download deps</span></div>
+          <pre class="cb-code"><span class="cmt"># Downloads charts/ to lock file</span>
+helm dependency update ./mychart
+
+<span class="cmt"># Check what's locked</span>
+cat Chart.lock
+
+<span class="cmt"># Enable/disable via values</span>
+helm install myapp ./mychart \
+  --set postgresql.enabled=true \
+  --set redis.enabled=false</pre>
+        </div>
+      </div>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: HOOKS ══════════════════════ -->
+       <article data-label="Hooks" class="nb-leaf" id="helm-hooks" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 9">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 06</div>
+      <h2>Hooks</h2>
+      <p class="sec-desc">Run jobs at specific lifecycle points — database migrations, smoke tests, notifications</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Hooks are like <strong>CI/CD pipeline stages</strong>. A <code>pre-install</code> hook runs before Helm creates any resources — perfect for a DB migration job. A <code>post-install</code> hook runs after everything is up — perfect for a smoke test. Helm waits for each hook to complete before proceeding.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📋 Hook Reference</h3>
+      <div class="helm-table-wrap">
+        <table class="helm-table">
+          <thead><tr><th>Hook</th><th>When it runs</th><th>Common use case</th></tr></thead>
+          <tbody>
+            <tr><td><code>pre-install</code></td><td>Before any templates are applied</td><td>Database migration Job</td></tr>
+            <tr><td><code>post-install</code></td><td>After all templates are running</td><td>Smoke test, send Slack notification</td></tr>
+            <tr><td><code>pre-upgrade</code></td><td>Before upgrade begins</td><td>Backup current state</td></tr>
+            <tr><td><code>post-upgrade</code></td><td>After upgrade completes</td><td>Cache warm-up, verify health</td></tr>
+            <tr><td><code>pre-rollback</code></td><td>Before rollback begins</td><td>Notify on-call, capture state</td></tr>
+            <tr><td><code>pre-delete</code></td><td>Before uninstall</td><td>Data export, drain connections</td></tr>
+            <tr><td><code>test</code></td><td>On <code>helm test</code> command</td><td>Connection test, API health check</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">📝 Pre-install DB Migration Hook</h3>
+      <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">templates/pre-install-migration.yaml</span></div>
+      <pre class="cb-code"><span class="kw">apiVersion</span>: batch/v1
+<span class="kw">kind</span>: Job
+<span class="kw">metadata</span>:
+  <span class="kw">name</span>: <span class="helm-tpl-var">{{ .Release.Name }}</span>-db-migrate
+  <span class="kw">annotations</span>:
+    <span class="str">"helm.sh/hook"</span>: pre-install,pre-upgrade  <span class="cmt"># ← This is what makes it a hook</span>
+    <span class="str">"helm.sh/hook-weight"</span>: <span class="str">"-5"</span>              <span class="cmt"># ← Lower = runs first</span>
+    <span class="str">"helm.sh/hook-delete-policy"</span>: hook-succeeded <span class="cmt"># ← Auto-cleanup</span>
+<span class="kw">spec</span>:
+  <span class="kw">template</span>:
+    <span class="kw">spec</span>:
+      <span class="kw">restartPolicy</span>: Never
+      <span class="kw">containers</span>:
+      - <span class="kw">name</span>: migrate
+        <span class="kw">image</span>: myapp:<span class="helm-tpl-var">{{ .Values.image.tag }}</span>
+        <span class="kw">command</span>: [<span class="str">"python"</span>, <span class="str">"manage.py"</span>, <span class="str">"migrate"</span>]</pre>
+      <div class="pd-tip"><strong>💡 Hook weight</strong>: multiple hooks of the same type run in ascending weight order (-10 before -5 before 0 before 5). Use negative weights for hooks that must run earliest.</div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🗑️ Hook Deletion Policies</h3>
+      <div class="card-grid-4">
+        <div class="card" style="margin-bottom:0"><h4>hook-succeeded</h4><p>Delete the hook resource after it succeeds. Good for migrations — keeps the cluster clean.</p></div>
+        <div class="card" style="margin-bottom:0"><h4>hook-failed</h4><p>Delete even if it fails. Use only when you have external logging — you'll lose the failure logs.</p></div>
+        <div class="card" style="margin-bottom:0"><h4>before-hook-creation</h4><p>Default. Delete the old hook resource before running the new one. Allows retries on re-install.</p></div>
+        <div class="card" style="margin-bottom:0"><h4>(none)</h4><p>Keep the resource forever. Useful for audit trail — but your cluster accumulates old Job objects.</p></div>
+      </div>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: TESTING ══════════════════════ -->
+       <article data-label="Testing Charts" class="nb-leaf" id="helm-testing" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 10">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 10 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 07</div>
+      <h2>Testing Charts</h2>
+      <p class="sec-desc">Lint, dry-run, unit test, and CI validation — before anything touches the cluster</p>
+    </div>
+
+    <div class="card-grid-4" style="margin-bottom:24px">
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">🔍</div><h4>helm lint</h4>
+        <p>Syntax check. Catches YAML errors, missing required values, and malformed templates.</p>
+        <div class="code-block">helm lint ./mychart \
+  -f values-dev.yaml</div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">📄</div><h4>helm template</h4>
+        <p>Render templates locally without connecting to a cluster. Review the output YAML.</p>
+        <div class="code-block">helm template myapp ./mychart \
+  --values prod.yaml</div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">🧪</div><h4>--dry-run</h4>
+        <p>Full render + server-side validation. Connects to K8s API but creates nothing.</p>
+        <div class="code-block">helm install myapp ./mychart \
+  --dry-run --debug</div>
+      </div>
+      <div class="card" style="margin-bottom:0">
+        <div class="ci">✅</div><h4>helm test</h4>
+        <p>Runs test hook pods in the cluster. Verifies the release works post-install.</p>
+        <div class="code-block">helm test myapp \
+  --logs</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🧬 helm-unittest — Unit Testing Charts</h3>
+      <p class="card-sub">Test your templates without a cluster — assert on rendered YAML output</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">tests/deployment_test.yaml</span></div>
+          <pre class="cb-code"><span class="kw">suite</span>: test deployment
+<span class="kw">tests</span>:
+  - <span class="kw">it</span>: should set replica count from values
+    <span class="kw">set</span>:
+      replicaCount: 3
+    <span class="kw">asserts</span>:
+      - <span class="kw">equal</span>:
+          <span class="kw">path</span>: spec.replicas
+          <span class="kw">value</span>: 3
+      - <span class="kw">isKind</span>:
+          <span class="kw">of</span>: Deployment
+  - <span class="kw">it</span>: should disable ingress when false
+    <span class="kw">set</span>:
+      ingress.enabled: false
+    <span class="kw">asserts</span>:
+      - <span class="kw">hasDocuments</span>:
+          <span class="kw">count</span>: 0
+        <span class="kw">template</span>: templates/ingress.yaml</pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">Shell</span><span class="cb-title">CI pipeline</span></div>
+          <pre class="cb-code"><span class="cmt"># Install plugin</span>
+helm plugin install \
+  https://github.com/helm-unittest/helm-unittest
+
+<span class="cmt"># Run all tests</span>
+helm unittest ./mychart
+
+<span class="cmt"># CI-friendly output</span>
+helm unittest ./mychart \
+  --output-type JUnit \
+  --output-file test-results.xml
+
+<span class="cmt"># Chart-testing (ct) for CI</span>
+ct lint --charts ./charts/mychart
+ct install --charts ./charts/mychart</pre>
+          <div class="pd-tip"><strong>💡 CI order:</strong> helm lint → helm unittest → helm template | kubeval → ct install. Each stage catches different issues before cluster impact.</div>
+        </div>
+      </div>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: SECURITY ══════════════════════ -->
+       <article data-label="Secrets &amp; Security" class="nb-leaf" id="helm-security" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 11">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 11 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 08</div>
+      <h2>Secrets &amp; Security</h2>
+      <p class="sec-desc">The values.yaml problem, encryption strategies, and Helm 3 RBAC model</p>
+    </div>
+
+    <div class="card warn-card">
+      <div class="card-tag-row"><span class="ctag orange">⚠️ The Problem</span></div>
+      <p><strong>values.yaml is plaintext.</strong> If you put a database password in values.yaml and commit it, it's in your git history forever. Even worse — Helm stores release state as K8s Secrets, but those are only base64-encoded, not encrypted. Anyone with cluster access can read them.</p>
+    </div>
+
+    <div class="card">
+      <h3 class="card-title">🔐 Secrets Management Approaches</h3>
+      <div class="helm-table-wrap">
+        <table class="helm-table">
+          <thead><tr><th>Approach</th><th>Tool</th><th>Pros</th><th>Cons</th></tr></thead>
+          <tbody>
+            <tr><td>Encrypted values</td><td>helm-secrets + SOPS</td><td>Git-safe, portable</td><td>Extra tooling, key management</td></tr>
+            <tr><td>External secrets</td><td>ESO + Vault / AWS SM</td><td>No secrets in chart</td><td>Operator required in cluster</td></tr>
+            <tr><td>Sealed Secrets</td><td>Bitnami Sealed Secrets</td><td>K8s native, GitOps-friendly</td><td>Cluster-specific (can't move certs)</td></tr>
+            <tr><td>CI env injection</td><td>--set in pipeline</td><td>Simple, no extra tooling</td><td>Secrets appear in CI logs, no audit</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag green">🏆 Helm 3 Security Win</span></div>
+        <h4>Tiller is Gone</h4>
+        <p>Helm 2 had Tiller — a cluster-side daemon with cluster-admin privileges. It was a massive security hole. <strong>Helm 3 is client-only</strong>: it uses your kubeconfig credentials directly, so RBAC applies normally.</p>
+        <div class="code-block"><span class="cmt"># Your CI ServiceAccount needs only:</span>
+- get/list/watch on Secrets
+- create/update/delete on
+  Deployments, Services, etc.
+<span class="cmt"># NOT cluster-admin!</span></div>
+      </div>
+      <div class="card">
+        <div class="card-tag-row"><span class="ctag blue">✅ Best Practices Checklist</span></div>
+        <ul style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <li style="font-size:0.84rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--blue)">☑</span> Never commit real secrets to values.yaml</li>
+          <li style="font-size:0.84rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--blue)">☑</span> Use values.schema.json to validate all required fields</li>
+          <li style="font-size:0.84rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--blue)">☑</span> Pin dependency versions (avoid <code>*</code> or <code>&gt;=</code>)</li>
+          <li style="font-size:0.84rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--blue)">☑</span> Use --atomic in CI to auto-rollback on failure</li>
+          <li style="font-size:0.84rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--blue)">☑</span> Verify chart integrity with <code>helm verify</code></li>
+          <li style="font-size:0.84rem;color:var(--txt2);padding-left:18px;position:relative"><span style="position:absolute;left:0;color:var(--blue)">☑</span> Least-privilege ServiceAccount for CI runners</li>
+        </ul>
+      </div>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: SIMULATIONS ══════════════════════ -->
+       <article data-label="Simulations" class="nb-leaf" id="helm-simulations" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 12">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 12 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 09</div>
+      <h2>Interactive Simulations</h2>
+      <p class="sec-desc">Hands-on Helm — template rendering, lifecycle stepping, and dependency graphs</p>
+    </div>
+
+    <!-- Sim 1: Template Renderer -->
+    <div class="card sim-card">
+      <h3 class="card-title">🔧 Simulation 1: Helm Template Renderer</h3>
+      <p class="card-sub">Edit the values on the left and watch the rendered YAML update live →</p>
+      <div class="helm-sim-renderer">
+        <div class="helm-sim-values">
+          <div class="helm-sim-panel-label">⚙️ values.yaml</div>
+          <div class="helm-sim-value-rows" id="helmSimValues">
+            <div class="hsv-row"><label>replicaCount</label><input type="number" id="hsv-rep" value="2" min="1" max="10" oninput="updateHelmSim()"></div>
+            <div class="hsv-row"><label>image.tag</label><input type="text" id="hsv-tag" value="v2.1.0" oninput="updateHelmSim()"></div>
+            <div class="hsv-row"><label>service.port</label><input type="number" id="hsv-port" value="3000" oninput="updateHelmSim()"></div>
+            <div class="hsv-row"><label>ingress.enabled</label>
+              <select id="hsv-ingress" onchange="updateHelmSim()">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+            <div class="hsv-row"><label>resources.memory</label><input type="text" id="hsv-mem" value="512Mi" oninput="updateHelmSim()"></div>
+          </div>
+        </div>
+        <div class="helm-sim-output-panel">
+          <div class="helm-sim-panel-label">✅ Rendered Output <span id="helmSimStatus" class="helm-sim-ok">● live</span></div>
+          <pre class="helm-sim-output" id="helmSimOutput"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sim 2: Lifecycle Stepper -->
+    <div class="card sim-card">
+      <h3 class="card-title">🔄 Simulation 2: Release Lifecycle Stepper</h3>
+      <p class="card-sub">Step through a real Helm release — install, upgrade, fail, rollback:</p>
+      <div class="helm-lifecycle-sim">
+        <div class="hls-command-box">
+          <div class="hls-cmd-label">Command</div>
+          <div class="hls-cmd" id="hlsCommand">$ helm install myapp ./mychart --values prod.yaml</div>
+        </div>
+        <div class="hls-state-row" id="hlsStateRow"></div>
+        <div class="hls-history-wrap">
+          <div class="hls-history-label">Release History</div>
+          <table class="helm-table" id="hlsHistoryTable">
+            <thead><tr><th>REV</th><th>STATUS</th><th>CHART</th><th>DESCRIPTION</th></tr></thead>
+            <tbody id="hlsHistoryBody"></tbody>
+          </table>
+        </div>
+        <div class="hls-btns">
+          <button class="btn btn-outline" id="hlsPrevBtn" onclick="hlsStep(-1)" disabled>← Prev</button>
+          <div class="hls-step-counter" id="hlsStepCounter">Step 1 / 6</div>
+          <button class="btn btn-helm" id="hlsNextBtn" onclick="hlsStep(1)">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sim 3: Dependency Tree -->
+    <div class="card sim-card">
+      <h3 class="card-title">🌳 Simulation 3: Helm Dependency Tree</h3>
+      <p class="card-sub">Click a chart node to see its dependencies — watch install order animate:</p>
+      <div class="helm-dep-tree" id="helmDepTree">
+        <div class="hdt-node hdt-root" id="hdtMyapp" onclick="selectHelmDep('myapp')">
+          <div class="hdt-icon">⛵</div>
+          <div class="hdt-name">myapp</div>
+          <div class="hdt-ver">v2.1.0</div>
+        </div>
+        <div class="hdt-lines">
+          <div class="hdt-branch">
+            <div class="hdt-line"></div>
+            <div class="hdt-node hdt-dep" id="hdtPostgres" onclick="selectHelmDep('postgresql')">
+              <div class="hdt-icon">🐘</div>
+              <div class="hdt-name">postgresql</div>
+              <div class="hdt-ver">~13.0</div>
+            </div>
+          </div>
+          <div class="hdt-branch">
+            <div class="hdt-line"></div>
+            <div class="hdt-node hdt-dep" id="hdtRedis" onclick="selectHelmDep('redis')">
+              <div class="hdt-icon">🔴</div>
+              <div class="hdt-name">redis</div>
+              <div class="hdt-ver">~18.0</div>
+            </div>
+          </div>
+          <div class="hdt-branch">
+            <div class="hdt-line"></div>
+            <div class="hdt-node hdt-dep" id="hdtNginx" onclick="selectHelmDep('nginx')">
+              <div class="hdt-icon">🌐</div>
+              <div class="hdt-name">ingress-nginx</div>
+              <div class="hdt-ver">~4.8</div>
+            </div>
+          </div>
+        </div>
+        <div class="hdt-detail" id="hdtDetail">
+          <div class="hdt-detail-inner">Click a chart node to see its Chart.yaml snippet</div>
+        </div>
+      </div>
+      <button class="btn btn-helm" style="margin-top:16px" onclick="animateHelmInstall()">▶ Animate Install Order</button>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: PROJECTS ══════════════════════ -->
+       <article data-label="Projects" class="nb-leaf" id="helm-projects" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 13">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 13 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Module 10</div>
+      <h2>Helm Project Ideas</h2>
+      <p class="sec-desc">Real projects to build, ship, and add to your DevOps portfolio</p>
+    </div>
+
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-header">
+          <span class="proj-icon">🪆</span>
+          <div>
+            <h3>Microservices Umbrella Chart</h3>
+            <span class="proj-diff medium">Intermediate</span>
+          </div>
+        </div>
+        <p>Build an umbrella (parent) chart that wraps 3 microservice sub-charts — api, worker, scheduler. Share global config (database URL, image registry) via <code>.Values.global</code>. Deploy the whole stack with one <code>helm install</code>.</p>
+        <div class="proj-tags">
+          <span class="ptag">Umbrella Chart</span><span class="ptag">Sub-charts</span><span class="ptag">globals</span>
+        </div>
+        <div class="proj-skills">
+          <strong>Skills:</strong> Chart dependencies, global values, per-chart overrides, Chart.yaml conditions
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <span class="proj-icon">🔁</span>
+          <div>
+            <h3>GitOps Chart Pipeline</h3>
+            <span class="proj-diff medium">Intermediate</span>
+          </div>
+        </div>
+        <p>Connect ArgoCD to a Helm chart repo. When you bump the chart <code>version</code> field, ArgoCD auto-detects the change and triggers a sync. Add Slack notifications on deploy success/failure via ArgoCD hooks.</p>
+        <div class="proj-tags">
+          <span class="ptag">ArgoCD</span><span class="ptag">GitOps</span><span class="ptag">OCI Registry</span>
+        </div>
+        <div class="proj-skills">
+          <strong>Skills:</strong> OCI chart registry, ArgoCD Application, Helm parameters, sync policies
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <span class="proj-icon">🤖</span>
+          <div>
+            <h3>Helm Operator in Python</h3>
+            <span class="proj-diff hard">Advanced</span>
+          </div>
+        </div>
+        <p>Write a Python Kubernetes operator using <code>kopf</code> that watches a custom CRD (<code>HelmRelease</code>). When the spec changes, the operator calls <code>helm upgrade --install</code>. Think of it as a lightweight Flux/ArgoCD for learning.</p>
+        <div class="proj-tags">
+          <span class="ptag">kopf</span><span class="ptag">CRD</span><span class="ptag">Python</span><span class="ptag">subprocess</span>
+        </div>
+        <div class="proj-skills">
+          <strong>Skills:</strong> K8s operators, CRDs, kopf framework, subprocess helm calls, RBAC
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-header">
+          <span class="proj-icon">🔬</span>
+          <div>
+            <h3>Chart Linting CI Pipeline</h3>
+            <span class="proj-diff easy">Beginner</span>
+          </div>
+        </div>
+        <p>GitHub Actions pipeline that runs on every PR: <code>helm lint</code> → <code>helm unittest</code> → <code>helm template | kubeval</code> → <code>ct install</code> against a <code>kind</code> cluster. Zero manual review needed for chart correctness.</p>
+        <div class="proj-tags">
+          <span class="ptag">GitHub Actions</span><span class="ptag">ct</span><span class="ptag">kind</span><span class="ptag">kubeval</span>
+        </div>
+        <div class="proj-skills">
+          <strong>Skills:</strong> chart-testing, kind cluster, GitHub Actions matrix, test artifacts
+        </div>
+      </div>
+    </div>
+      </div>
+     </article>
+
+
+  <!-- ══════════════════════ HELM: TROUBLESHOOTING ══════════════════════ -->
+       <article data-label="Troubleshooting" class="nb-leaf" id="helm-troubleshooting" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 14">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 14 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Guide</div>
+      <h2>🔧 Troubleshooting Helm</h2>
+      <p class="sec-desc">Common errors every Helm user hits — and exactly how to fix them</p>
+    </div>
+
+    <div class="card eli5-card">
+      <div class="card-tag-row"><span class="ctag purple">👶 ELI5</span></div>
+      <p>Helm errors look scary but they follow patterns. Almost every error falls into one of 4 categories: <strong>template syntax</strong> (typo in {{ }}), <strong>values mismatch</strong> (wrong key names), <strong>cluster state</strong> (resource already exists), or <strong>app crash</strong> (your code broke, not Helm). Learn these patterns and you'll debug any issue in minutes.</p>
+    </div>
+
+    <!-- Quick-reference error table -->
+    <div class="card">
+      <h3 class="card-title">⚡ Error Quick Reference</h3>
+      <div class="helm-table-wrap">
+        <table class="helm-table">
+          <thead><tr><th>Error</th><th>Category</th><th>Immediate Fix</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">cannot re-use a name that is still in use</code></td>
+              <td><span class="helm-status-pill deployed" style="font-size:0.7rem">state</span></td>
+              <td>Use <code>helm upgrade</code> instead of <code>helm install</code>, or <code>helm uninstall</code> first</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">function "xxx" not defined</code></td>
+              <td><span class="helm-status-pill" style="background:var(--purple);color:#fff;font-size:0.7rem">template</span></td>
+              <td>Typo in template function — run <code>helm lint ./chart</code> for line number</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">wrong type for value; expected string</code></td>
+              <td><span class="helm-status-pill" style="background:var(--orange);color:#fff;font-size:0.7rem">values</span></td>
+              <td>Quote the value in values.yaml: <code>tag: "1.0"</code> not <code>tag: 1.0</code></td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">rendered manifests contain a resource that already exists</code></td>
+              <td><span class="helm-status-pill deployed" style="font-size:0.7rem">state</span></td>
+              <td>Resource was created outside Helm — use <code>--force</code> or delete the resource first</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">UPGRADE FAILED: another operation (install/upgrade/rollback) is in progress</code></td>
+              <td><span class="helm-status-pill deployed" style="font-size:0.7rem">state</span></td>
+              <td>Previous op stuck in pending — <code>helm rollback myapp 0</code> or delete the pending secret</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">ImagePullBackOff / ErrImagePull</code></td>
+              <td><span class="helm-status-pill failed" style="font-size:0.7rem">app</span></td>
+              <td>Wrong image tag or registry auth — check <code>.Values.image.tag</code> and imagePullSecrets</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">CrashLoopBackOff</code></td>
+              <td><span class="helm-status-pill failed" style="font-size:0.7rem">app</span></td>
+              <td>App crashed at startup — <code>kubectl logs &lt;pod&gt;</code> to see the error</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">OOMKilled</code></td>
+              <td><span class="helm-status-pill failed" style="font-size:0.7rem">app</span></td>
+              <td>Pod exceeded memory limit — increase <code>resources.limits.memory</code> in values.yaml</td>
+            </tr>
+            <tr>
+              <td><code style="color:var(--red);font-size:0.74rem">Pending — no nodes available to schedule pods</code></td>
+              <td><span class="helm-status-pill" style="background:var(--orange);color:#fff;font-size:0.7rem">cluster</span></td>
+              <td>Cluster out of capacity — reduce <code>resources.requests</code> or scale cluster nodes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Debugging workflow -->
+    <div class="card">
+      <h3 class="card-title">🗺️ The Universal Helm Debug Flowchart</h3>
+      <div class="helm-debug-flow">
+        <div class="hdbf-node hdbf-start">
+          <strong>helm install / upgrade failed</strong>
+        </div>
+        <div class="hdbf-connector">↓</div>
+        <div class="hdbf-branch">
+          <div class="hdbf-question">Is the error during <em>rendering</em>?<br><small>(Error before any K8s API call)</small></div>
+          <div class="hdbf-yes-no">
+            <div class="hdbf-path">
+              <div class="hdbf-badge yes">YES</div>
+              <div class="hdbf-action">
+                <strong>Template / Values issue</strong>
+                <div class="code-block" style="font-size:0.75rem;margin-top:4px">helm lint ./chart
+helm template myapp ./chart \
+  -f values.yaml
+# Find the {{ }} line with the error</div>
+              </div>
+            </div>
+            <div class="hdbf-path">
+              <div class="hdbf-badge no">NO</div>
+              <div class="hdbf-action">
+                <strong>Cluster / App issue — check pods</strong>
+                <div class="code-block" style="font-size:0.75rem;margin-top:4px">kubectl get pods -n &lt;ns&gt;
+kubectl describe pod &lt;name&gt; -n &lt;ns&gt;
+kubectl logs &lt;name&gt; -n &lt;ns&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Essential troubleshooting commands -->
+    <div class="card">
+      <h3 class="card-title">🛠️ Essential Debug Commands — Bookmark These</h3>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">helm</span><span class="cb-title">Inspect release</span></div>
+          <pre class="cb-code" style="font-size:0.78rem"><span class="cmt"># Release overview</span>
+helm status myapp -n production
+
+<span class="cmt"># What values are active?</span>
+helm get values myapp -n production --all
+
+<span class="cmt"># What manifests did Helm apply?</span>
+helm get manifest myapp -n production
+
+<span class="cmt"># Full release history</span>
+helm history myapp -n production
+
+<span class="cmt"># All releases across namespaces</span>
+helm list -A</pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">kubectl</span><span class="cb-title">Inspect pods/resources</span></div>
+          <pre class="cb-code" style="font-size:0.78rem"><span class="cmt"># All pods for this release</span>
+kubectl get pods -n production \
+  -l app.kubernetes.io/instance=myapp
+
+<span class="cmt"># Why is the pod not starting?</span>
+kubectl describe pod &lt;name&gt; -n production
+
+<span class="cmt"># App logs (add -f to follow)</span>
+kubectl logs &lt;name&gt; -n production
+kubectl logs &lt;name&gt; -n production --previous
+
+<span class="cmt"># Events (great for pull errors)</span>
+kubectl get events -n production \
+  --sort-by='.lastTimestamp'</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recovery commands -->
+    <div class="card devops-box">
+      <h3 class="card-title">🆘 Recovery Commands</h3>
+      <div class="code-block"><span class="cmt"># Rollback to specific revision</span>
+helm rollback myapp 2 -n production      <span class="cmt"># roll back to revision 2</span>
+helm rollback myapp -n production        <span class="cmt"># roll back to previous revision</span>
+
+<span class="cmt"># Force uninstall a stuck release</span>
+helm uninstall myapp -n production --no-hooks   <span class="cmt"># skip hooks if they're stuck</span>
+
+<span class="cmt"># Clear a "pending" state manually (use with caution)</span>
+kubectl delete secret -n production \
+  -l owner=helm,name=myapp,status=pending-install
+
+<span class="cmt"># Re-install from scratch</span>
+helm uninstall myapp -n production
+helm install myapp ./myapp -f values-prod.yaml -n production --create-namespace</div>
+    </div>
+
+    <div class="takeaways">
+      <h3>🎯 Key Takeaways</h3>
+      <ul>
+        <li>Always run <code>helm lint</code> + <code>helm template --dry-run</code> before touching a cluster</li>
+        <li>If Helm errors before applying: it's a template/values problem</li>
+        <li>If pods crash after applying: it's an app/config problem — use <code>kubectl logs</code></li>
+        <li><code>helm get values --all</code> shows the merged values Helm actually used — great for debugging overrides</li>
+        <li><code>helm history</code> + <code>helm rollback</code> is your safety net — you can always go back</li>
+      </ul>
+    </div>
+      </div>
+     </article>
+
+  <!-- ══════════════════════ HELM: KUBECTL → HELM PROJECT ══════════════════════ -->
+       <article data-label="kubectl → Helm" class="nb-leaf" id="helm-kubectl-project" role="group" aria-roledescription="page" aria-label="HELM CHARTS page 15">
+    <div class="nb-sheet nb-page nb-ported">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">HELM CHARTS</div>
+      <div class="nb-pagenum">- Page 15 -</div>
+
+    <div class="sec-header">
+      <div class="sec-badge helm-sec-badge">Helm Lab</div>
+      <h2>Project: <span class="helm-grad-text">kubectl → Helm</span></h2>
+      <p class="sec-desc">Take 5 raw kubectl files and convert them into a production-grade Helm chart — step by step</p>
+    </div>
+
+    <!-- Problem statement -->
+    <div class="card warn-card">
+      <div class="card-tag-row"><span class="ctag orange">😩 The Problem You're Solving</span></div>
+      <p style="margin-bottom:14px">You have 5 files that you deploy with 5 separate commands. Every environment needs different values (image tag, replicas, domain). You can't version it. You can't roll it back. You can't share it with another team.</p>
+      <div class="code-block">kubectl apply -f deployment.yaml   <span style="color:var(--red)"># hardcoded image tag</span>
+kubectl apply -f service.yaml      <span style="color:var(--red)"># hardcoded port</span>
+kubectl apply -f ingress.yaml      <span style="color:var(--red)"># hardcoded hostname</span>
+kubectl apply -f configmap.yaml    <span style="color:var(--red)"># hardcoded env values</span>
+kubectl apply -f hpa.yaml          <span style="color:var(--red)"># hardcoded min/max replicas</span></div>
+      <p style="margin-top:12px;font-size:0.88rem;color:var(--txt2)">After this lab: <strong>one command deploys everything, anywhere, with any config.</strong></p>
+    </div>
+
+    <!-- Step tabs -->
+    <div class="kh-tabs" id="khTabs">
+      <button class="kh-tab active" onclick="showKHStep('structure')">01 · Chart Structure</button>
+      <button class="kh-tab" onclick="showKHStep('deployment')">02 · Deployment</button>
+      <button class="kh-tab" onclick="showKHStep('service')">03 · Service</button>
+      <button class="kh-tab" onclick="showKHStep('ingress')">04 · Ingress</button>
+      <button class="kh-tab" onclick="showKHStep('configmap')">05 · ConfigMap</button>
+      <button class="kh-tab" onclick="showKHStep('hpa')">06 · HPA</button>
+      <button class="kh-tab" onclick="showKHStep('values')">07 · values.yaml</button>
+      <button class="kh-tab" onclick="showKHStep('extras')">08 · Extras</button>
+      <button class="kh-tab" onclick="showKHStep('deploy')">09 · Deploy</button>
+      <button class="kh-tab" onclick="showKHStep('debug')">10 · Debug &amp; Verify</button>
+    </div>
+
+    <!-- ── STEP 01: STRUCTURE ── -->
+    <div class="kh-panel card" id="kh-structure">
+      <h3 class="card-title">📂 Where Do Your Files Live?</h3>
+      <p class="card-sub" style="margin-bottom:20px">Every kubectl YAML goes into <code>templates/</code>. Nothing else changes about the YAML — yet. Here's the full chart layout:</p>
+      <div class="kh-structure-layout">
+        <div class="kh-tree">
+          <div class="kh-tree-root">📁 myapp/ <span class="kh-new-badge">new chart</span></div>
+          <div class="kh-tree-children">
+            <div class="kh-tree-item kh-file-meta">📄 Chart.yaml <span class="kh-note">chart name, version, description</span></div>
+            <div class="kh-tree-item kh-file-values">⚙️ values.yaml <span class="kh-note">all your variables in one place</span></div>
+            <div class="kh-tree-item kh-file-schema">🔍 values.schema.json <span class="kh-note">validate required fields</span></div>
+            <div class="kh-tree-item kh-file-ignore">🙈 .helmignore <span class="kh-note">like .gitignore</span></div>
+            <div class="kh-tree-item kh-dir">📁 templates/</div>
+            <div class="kh-tree-grandchildren">
+              <div class="kh-tree-item kh-file-k8s">📄 deployment.yaml <span class="kh-arrow">← your existing file</span></div>
+              <div class="kh-tree-item kh-file-k8s">📄 service.yaml <span class="kh-arrow">← your existing file</span></div>
+              <div class="kh-tree-item kh-file-k8s">📄 ingress.yaml <span class="kh-arrow">← your existing file</span></div>
+              <div class="kh-tree-item kh-file-k8s">📄 configmap.yaml <span class="kh-arrow">← your existing file</span></div>
+              <div class="kh-tree-item kh-file-k8s">📄 hpa.yaml <span class="kh-arrow">← your existing file</span></div>
+              <div class="kh-tree-item kh-file-helper">🔧 _helpers.tpl <span class="kh-note">common labels (new)</span></div>
+              <div class="kh-tree-item kh-file-notes">📢 NOTES.txt <span class="kh-note">post-install message (new)</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="kh-structure-rules">
+          <div class="kh-rule-card kh-rule-yes">
+            <div class="kh-rule-icon">✅</div>
+            <div>
+              <strong>Your YAML files go in <code>templates/</code></strong>
+              <p>Copy your 5 files directly into <code>myapp/templates/</code>. They'll work as-is. You can then gradually replace hardcoded values with <code>{{ .Values.xxx }}</code> placeholders.</p>
+            </div>
+          </div>
+          <div class="kh-rule-card kh-rule-yes">
+            <div class="kh-rule-icon">✅</div>
+            <div>
+              <strong>One chart = one application</strong>
+              <p>All 5 resources belong to the same app — they go in the same chart. Helm manages them as a single unit: install all 5, upgrade all 5, rollback all 5 together.</p>
+            </div>
+          </div>
+          <div class="kh-rule-card kh-rule-no">
+            <div class="kh-rule-icon">❌</div>
+            <div>
+              <strong>Don't put secrets in templates/ or values.yaml</strong>
+              <p>Passwords, API keys, tokens — never in the chart. Use helm-secrets + SOPS, or External Secrets Operator to pull from Vault / AWS Secrets Manager.</p>
+            </div>
+          </div>
+          <div class="kh-rule-card kh-rule-tip">
+            <div class="kh-rule-icon">💡</div>
+            <div>
+              <strong>Initialise the chart structure with one command</strong>
+              <div class="code-block" style="margin-top:6px">helm create myapp
+# Then replace the generated templates
+# with your own YAML files</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 02: DEPLOYMENT ── -->
+    <div class="kh-panel card hidden" id="kh-deployment">
+      <h3 class="card-title">🚀 deployment.yaml — Before vs After</h3>
+      <p class="card-sub">Replace hardcoded values with <code>{{ .Values.xxx }}</code> placeholders. Values come from <code>values.yaml</code> or <code>--set</code> on the command line.</p>
+      <div class="kh-before-after">
+        <div>
+          <div class="kh-ba-label kh-before-label">❌ Before (kubectl)</div>
+          <pre class="cb-code">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp</span>
+  namespace: <span style="background:rgba(239,68,68,0.2);color:var(--red)">production</span>
+  labels:
+    app: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp</span>
+    version: <span style="background:rgba(239,68,68,0.2);color:var(--red)">v2.1.0</span>
+spec:
+  replicas: <span style="background:rgba(239,68,68,0.2);color:var(--red)">3</span>
+  selector:
+    matchLabels:
+      app: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp</span>
+  template:
+    spec:
+      containers:
+      - name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp</span>
+        image: <span style="background:rgba(239,68,68,0.2);color:var(--red)">registry.io/myapp:v2.1.0</span>
+        ports:
+        - containerPort: <span style="background:rgba(239,68,68,0.2);color:var(--red)">8080</span>
+        resources:
+          requests:
+            memory: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"256Mi"</span>
+            cpu: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"100m"</span>
+          limits:
+            memory: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"512Mi"</span>
+            cpu: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"500m"</span></pre>
+        </div>
+        <div class="kh-ba-arrow">→</div>
+        <div>
+          <div class="kh-ba-label kh-after-label">✅ After (Helm template)</div>
+          <pre class="cb-code">apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+  namespace: <span class="helm-tpl-var">{{ .Release.Namespace }}</span>
+  labels:
+    <span class="helm-tpl-var">{{- include "myapp.labels" . | nindent 4 }}</span>
+spec:
+  replicas: <span class="helm-tpl-var">{{ .Values.replicaCount }}</span>
+  selector:
+    matchLabels:
+      app: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+  template:
+    spec:
+      containers:
+      - name: <span class="helm-tpl-var">{{ .Chart.Name }}</span>
+        image: <span class="helm-tpl-var">"{{ .Values.image.repository }}:{{ .Values.image.tag }}"</span>
+        ports:
+        - containerPort: <span class="helm-tpl-var">{{ .Values.service.targetPort }}</span>
+        resources:
+          <span class="helm-tpl-var">{{- toYaml .Values.resources | nindent 10 }}</span></pre>
+        </div>
+      </div>
+      <div class="pd-tip"><strong>💡 {{ .Release.Name }}</strong> automatically uses whatever name you give in <code>helm install &lt;name&gt;</code> — so you can deploy multiple instances in different namespaces without editing the YAML.</div>
+    </div>
+
+    <!-- ── STEP 03: SERVICE ── -->
+    <div class="kh-panel card hidden" id="kh-service">
+      <h3 class="card-title">🌐 service.yaml — Before vs After</h3>
+      <p class="card-sub">Port and service type are the main variables here. Type can be <code>ClusterIP</code> in staging, <code>LoadBalancer</code> in prod — controlled by values.</p>
+      <div class="kh-before-after">
+        <div>
+          <div class="kh-ba-label kh-before-label">❌ Before</div>
+          <pre class="cb-code">apiVersion: v1
+kind: Service
+metadata:
+  name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp-svc</span>
+spec:
+  type: <span style="background:rgba(239,68,68,0.2);color:var(--red)">ClusterIP</span>
+  selector:
+    app: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp</span>
+  ports:
+  - port: <span style="background:rgba(239,68,68,0.2);color:var(--red)">80</span>
+    targetPort: <span style="background:rgba(239,68,68,0.2);color:var(--red)">8080</span>
+    protocol: TCP</pre>
+        </div>
+        <div class="kh-ba-arrow">→</div>
+        <div>
+          <div class="kh-ba-label kh-after-label">✅ After</div>
+          <pre class="cb-code">apiVersion: v1
+kind: Service
+metadata:
+  name: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+  labels:
+    <span class="helm-tpl-var">{{- include "myapp.labels" . | nindent 4 }}</span>
+spec:
+  type: <span class="helm-tpl-var">{{ .Values.service.type }}</span>
+  selector:
+    app: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+  ports:
+  - port: <span class="helm-tpl-var">{{ .Values.service.port }}</span>
+    targetPort: <span class="helm-tpl-var">{{ .Values.service.targetPort }}</span>
+    protocol: TCP</pre>
+        </div>
+      </div>
+      <div class="pd-tip"><strong>💡 Naming consistency:</strong> Use <code>{{ .Release.Name }}</code> for the Service name — the Deployment's selector also uses it, so they always match regardless of what name you pass to helm install.</div>
+    </div>
+
+    <!-- ── STEP 04: INGRESS ── -->
+    <div class="kh-panel card hidden" id="kh-ingress">
+      <h3 class="card-title">🔀 ingress.yaml — Conditional + Parameterised</h3>
+      <p class="card-sub">Ingress is optional — not every environment needs it. Wrap the whole file in <code>{{- if .Values.ingress.enabled }}</code> so it's only created when explicitly enabled.</p>
+      <div class="kh-before-after">
+        <div>
+          <div class="kh-ba-label kh-before-label">❌ Before</div>
+          <pre class="cb-code">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp-ingress</span>
+  annotations:
+    nginx.ingress.../rewrite-target: /
+spec:
+  rules:
+  - host: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp.company.com</span>
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp-svc</span>
+            port:
+              number: <span style="background:rgba(239,68,68,0.2);color:var(--red)">80</span></pre>
+        </div>
+        <div class="kh-ba-arrow">→</div>
+        <div>
+          <div class="kh-ba-label kh-after-label">✅ After</div>
+          <pre class="cb-code"><span class="helm-tpl-cond">{{- if .Values.ingress.enabled -}}</span>
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+  <span class="helm-tpl-cond">{{- with .Values.ingress.annotations }}</span>
+  annotations:
+    <span class="helm-tpl-var">{{- toYaml . | nindent 4 }}</span>
+  <span class="helm-tpl-cond">{{- end }}</span>
+spec:
+  rules:
+  - host: <span class="helm-tpl-var">{{ .Values.ingress.host }}</span>
+    http:
+      paths:
+      - path: <span class="helm-tpl-var">{{ .Values.ingress.path | default "/" }}</span>
+        pathType: Prefix
+        backend:
+          service:
+            name: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+            port:
+              number: <span class="helm-tpl-var">{{ .Values.service.port }}</span>
+<span class="helm-tpl-cond">{{- end }}</span></pre>
+        </div>
+      </div>
+      <div class="pd-tip"><strong>💡 Default disabled:</strong> Set <code>ingress.enabled: false</code> in values.yaml as the default. Prod overrides enable it. This way staging never accidentally exposes the app publicly.</div>
+    </div>
+
+    <!-- ── STEP 05: CONFIGMAP ── -->
+    <div class="kh-panel card hidden" id="kh-configmap">
+      <h3 class="card-title">⚙️ configmap.yaml — Environment Config</h3>
+      <p class="card-sub">ConfigMap data is just key-value config. Dump the entire <code>data:</code> block from <code>.Values.config</code> using <code>toYaml</code> — one line replaces many hardcoded entries.</p>
+      <div class="kh-before-after">
+        <div>
+          <div class="kh-ba-label kh-before-label">❌ Before</div>
+          <pre class="cb-code">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp-config</span>
+data:
+  APP_ENV: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"production"</span>
+  LOG_LEVEL: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"info"</span>
+  DB_HOST: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"postgres.internal"</span>
+  DB_PORT: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"5432"</span>
+  CACHE_TTL: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"300"</span>
+  FEATURE_X: <span style="background:rgba(239,68,68,0.2);color:var(--red)">"true"</span></pre>
+        </div>
+        <div class="kh-ba-arrow">→</div>
+        <div>
+          <div class="kh-ba-label kh-after-label">✅ After</div>
+          <pre class="cb-code">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: <span class="helm-tpl-var">{{ .Release.Name }}-config</span>
+  labels:
+    <span class="helm-tpl-var">{{- include "myapp.labels" . | nindent 4 }}</span>
+data:
+  <span class="helm-tpl-var">{{- toYaml .Values.config | nindent 2 }}</span>
+
+<span class="cmt"># In values.yaml:
+# config:
+#   APP_ENV: "production"
+#   LOG_LEVEL: "info"
+#   DB_HOST: "postgres.internal"
+#   DB_PORT: "5432"
+#   CACHE_TTL: "300"
+#   FEATURE_X: "true"</span></pre>
+        </div>
+      </div>
+      <div class="pd-tip"><strong>💡 <code>toYaml . | nindent 2</code></strong> dumps the entire <code>config</code> map as YAML with 2-space indent. Add or remove config keys purely in values.yaml — the template never needs to change.</div>
+    </div>
+
+    <!-- ── STEP 06: HPA ── -->
+    <div class="kh-panel card hidden" id="kh-hpa">
+      <h3 class="card-title">📈 hpa.yaml — Auto-scaling Config</h3>
+      <p class="card-sub">HPA min/max replicas and CPU threshold differ per environment. Dev might be 1–2, prod 3–20. Wrap in a conditional — not every deployment needs autoscaling.</p>
+      <div class="kh-before-after">
+        <div>
+          <div class="kh-ba-label kh-before-label">❌ Before</div>
+          <pre class="cb-code">apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp-hpa</span>
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: <span style="background:rgba(239,68,68,0.2);color:var(--red)">myapp</span>
+  minReplicas: <span style="background:rgba(239,68,68,0.2);color:var(--red)">3</span>
+  maxReplicas: <span style="background:rgba(239,68,68,0.2);color:var(--red)">20</span>
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: <span style="background:rgba(239,68,68,0.2);color:var(--red)">70</span></pre>
+        </div>
+        <div class="kh-ba-arrow">→</div>
+        <div>
+          <div class="kh-ba-label kh-after-label">✅ After</div>
+          <pre class="cb-code"><span class="helm-tpl-cond">{{- if .Values.autoscaling.enabled -}}</span>
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: <span class="helm-tpl-var">{{ .Release.Name }}-hpa</span>
+  labels:
+    <span class="helm-tpl-var">{{- include "myapp.labels" . | nindent 4 }}</span>
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+  minReplicas: <span class="helm-tpl-var">{{ .Values.autoscaling.minReplicas }}</span>
+  maxReplicas: <span class="helm-tpl-var">{{ .Values.autoscaling.maxReplicas }}</span>
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: <span class="helm-tpl-var">{{ .Values.autoscaling.targetCPU }}</span>
+<span class="helm-tpl-cond">{{- end }}</span></pre>
+        </div>
+      </div>
+      <div class="pd-tip"><strong>💡 HPA + replicaCount conflict:</strong> When HPA is enabled, set <code>replicaCount: 1</code> in values.yaml. The HPA takes over scaling — having a fixed replicaCount and HPA fight each other causes flapping.</div>
+    </div>
+
+    <!-- ── STEP 07: VALUES ── -->
+    <div class="kh-panel card hidden" id="kh-values">
+      <h3 class="card-title">⚙️ The Complete values.yaml</h3>
+      <p class="card-sub">All hardcoded values from your 5 files, now in one file. Override per environment with <code>-f values-prod.yaml</code>.</p>
+      <div class="two-col">
+        <div>
+          <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">values.yaml (defaults / dev)</span></div>
+          <pre class="cb-code"><span class="cmt"># ── Image ──────────────────────────</span>
+<span class="kw">image</span>:
+  <span class="kw">repository</span>: registry.io/myapp
+  <span class="kw">tag</span>: <span class="str">"latest"</span>        <span class="cmt"># override in CI</span>
+  <span class="kw">pullPolicy</span>: IfNotPresent
+
+<span class="cmt"># ── Replicas ───────────────────────</span>
+<span class="kw">replicaCount</span>: <span class="num">1</span>
+
+<span class="cmt"># ── Service ────────────────────────</span>
+<span class="kw">service</span>:
+  <span class="kw">type</span>: ClusterIP
+  <span class="kw">port</span>: <span class="num">80</span>
+  <span class="kw">targetPort</span>: <span class="num">8080</span>
+
+<span class="cmt"># ── Ingress ────────────────────────</span>
+<span class="kw">ingress</span>:
+  <span class="kw">enabled</span>: <span class="kw">false</span>     <span class="cmt"># off by default</span>
+  <span class="kw">host</span>: <span class="str">""</span>
+  <span class="kw">path</span>: <span class="str">"/"</span>
+  <span class="kw">annotations</span>: {}
+
+<span class="cmt"># ── Config (→ ConfigMap) ───────────</span>
+<span class="kw">config</span>:
+  <span class="kw">APP_ENV</span>: <span class="str">"development"</span>
+  <span class="kw">LOG_LEVEL</span>: <span class="str">"debug"</span>
+  <span class="kw">DB_HOST</span>: <span class="str">"localhost"</span>
+  <span class="kw">CACHE_TTL</span>: <span class="str">"60"</span>
+  <span class="kw">FEATURE_X</span>: <span class="str">"false"</span>
+
+<span class="cmt"># ── Resources ──────────────────────</span>
+<span class="kw">resources</span>:
+  <span class="kw">requests</span>:
+    <span class="kw">memory</span>: <span class="str">"128Mi"</span>
+    <span class="kw">cpu</span>: <span class="str">"50m"</span>
+  <span class="kw">limits</span>:
+    <span class="kw">memory</span>: <span class="str">"256Mi"</span>
+    <span class="kw">cpu</span>: <span class="str">"200m"</span>
+
+<span class="cmt"># ── Autoscaling (→ HPA) ────────────</span>
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="kw">false</span>
+  <span class="kw">minReplicas</span>: <span class="num">1</span>
+  <span class="kw">maxReplicas</span>: <span class="num">5</span>
+  <span class="kw">targetCPU</span>: <span class="num">70</span></pre>
+        </div>
+        <div>
+          <div class="cb-header"><span class="cb-lang">YAML</span><span class="cb-title">values-prod.yaml (prod overrides only)</span></div>
+          <pre class="cb-code"><span class="cmt"># Only override what's different in prod
+# Helm merges this on top of values.yaml</span>
+
+<span class="kw">image</span>:
+  <span class="kw">tag</span>: <span class="str">"v2.1.0"</span>         <span class="cmt"># pinned version</span>
+
+<span class="kw">replicaCount</span>: <span class="num">3</span>
+
+<span class="kw">service</span>:
+  <span class="kw">type</span>: LoadBalancer
+
+<span class="kw">ingress</span>:
+  <span class="kw">enabled</span>: <span class="kw">true</span>
+  <span class="kw">host</span>: <span class="str">"myapp.company.com"</span>
+  <span class="kw">annotations</span>:
+    <span class="kw">nginx.ingress.kubernetes.io/rewrite-target</span>: <span class="str">"/"</span>
+
+<span class="kw">config</span>:
+  <span class="kw">APP_ENV</span>: <span class="str">"production"</span>
+  <span class="kw">LOG_LEVEL</span>: <span class="str">"info"</span>
+  <span class="kw">DB_HOST</span>: <span class="str">"postgres.prod.internal"</span>
+  <span class="kw">CACHE_TTL</span>: <span class="str">"300"</span>
+  <span class="kw">FEATURE_X</span>: <span class="str">"true"</span>
+
+<span class="kw">resources</span>:
+  <span class="kw">requests</span>:
+    <span class="kw">memory</span>: <span class="str">"256Mi"</span>
+    <span class="kw">cpu</span>: <span class="str">"100m"</span>
+  <span class="kw">limits</span>:
+    <span class="kw">memory</span>: <span class="str">"512Mi"</span>
+    <span class="kw">cpu</span>: <span class="str">"500m"</span>
+
+<span class="kw">autoscaling</span>:
+  <span class="kw">enabled</span>: <span class="kw">true</span>
+  <span class="kw">minReplicas</span>: <span class="num">3</span>
+  <span class="kw">maxReplicas</span>: <span class="num">20</span>
+  <span class="kw">targetCPU</span>: <span class="num">70</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 08: EXTRAS ── -->
+    <div class="kh-panel card hidden" id="kh-extras">
+      <h3 class="card-title">🧩 Other Files You Need</h3>
+      <div class="card-grid-4" style="margin-bottom:20px">
+        <div class="card" style="margin-bottom:0">
+          <div class="ci">📋</div><h4>Chart.yaml</h4>
+          <pre class="cb-code" style="font-size:0.72rem;margin-top:8px">apiVersion: v2
+name: myapp
+description: My app chart
+type: application
+version: 1.0.0
+appVersion: "2.1.0"</pre>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="ci">🔧</div><h4>_helpers.tpl</h4>
+          <pre class="cb-code" style="font-size:0.72rem;margin-top:8px"><span class="helm-tpl-cond">{{- define "myapp.labels" -}}</span>
+app: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+chart: <span class="helm-tpl-var">{{ .Chart.Name }}</span>
+release: <span class="helm-tpl-var">{{ .Release.Name }}</span>
+managed-by: Helm
+<span class="helm-tpl-cond">{{- end }}</span></pre>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="ci">📢</div><h4>NOTES.txt</h4>
+          <pre class="cb-code" style="font-size:0.72rem;margin-top:8px">✅ {{ .Release.Name }} deployed!
+<span class="helm-tpl-cond">{{- if .Values.ingress.enabled }}</span>
+URL: http://<span class="helm-tpl-var">{{ .Values.ingress.host }}</span>
+<span class="helm-tpl-cond">{{- else }}</span>
+kubectl port-forward \
+  svc/<span class="helm-tpl-var">{{ .Release.Name }}</span> \
+  8080:<span class="helm-tpl-var">{{ .Values.service.port }}</span>
+<span class="helm-tpl-cond">{{- end }}</span></pre>
+        </div>
+        <div class="card" style="margin-bottom:0">
+          <div class="ci">🙈</div><h4>.helmignore</h4>
+          <pre class="cb-code" style="font-size:0.72rem;margin-top:8px">.git
+.gitignore
+*.md
+tests/
+ci/
+.env*
+values-*.yaml
+# ^ don't package env files</pre>
+        </div>
+      </div>
+      <div class="card devops-box" style="margin-bottom:0">
+        <div class="card-tag-row"><span class="ctag orange">🔒 What About Secrets?</span></div>
+        <p style="margin-bottom:12px">Your <code>configmap.yaml</code> likely had a DB password or API key. <strong>That cannot go in values.yaml.</strong> Here are your options:</p>
+        <div class="kh-secrets-grid">
+          <div class="kh-secret-opt">
+            <strong>1. helm-secrets + SOPS</strong>
+            <p>Encrypt a <code>secrets.yaml</code> file. Git-safe, decrypted at deploy time.</p>
+            <div class="code-block" style="font-size:0.72rem">helm secrets install myapp ./myapp \
+  -f values-prod.yaml \
+  -f secrets.enc.yaml</div>
+          </div>
+          <div class="kh-secret-opt">
+            <strong>2. --set in CI pipeline</strong>
+            <p>Inject at deploy time from your CI secrets store. Simple but appears in CI logs.</p>
+            <div class="code-block" style="font-size:0.72rem">helm upgrade --install myapp ./myapp \
+  --set config.DB_PASSWORD=$DB_PASS</div>
+          </div>
+          <div class="kh-secret-opt">
+            <strong>3. External Secrets Operator</strong>
+            <p>K8s operator that pulls secrets from Vault/AWS SM and creates K8s Secrets automatically.</p>
+            <div class="code-block" style="font-size:0.72rem"># Chart just has an ExternalSecret CR
+# ESO syncs the actual values</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── STEP 09: DEPLOY ── -->
+    <div class="kh-panel card hidden" id="kh-deploy">
+      <h3 class="card-title">🚀 Deploy From Anywhere</h3>
+      <p class="card-sub">Package your chart, push it to a registry, install from anywhere with a single command.</p>
+
+      <div class="kh-deploy-flow">
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">01</div>
+          <div class="kh-ds-body">
+            <strong>Render & verify locally (no cluster needed)</strong>
+            <div class="code-block" style="margin-top:6px">helm template myapp ./myapp \
+  -f values-prod.yaml
+
+helm lint ./myapp -f values-prod.yaml</div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">02</div>
+          <div class="kh-ds-body">
+            <strong>Install to a cluster</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Dev (all defaults, no ingress, no HPA)</span>
+helm install myapp ./myapp
+
+<span class="cmt"># Prod (override with prod values)</span>
+helm install myapp ./myapp \
+  -f values-prod.yaml \
+  --namespace production \
+  --create-namespace \
+  --atomic             <span class="cmt"># auto-rollback on failure</span></div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">03</div>
+          <div class="kh-ds-body">
+            <strong>Package the chart into a .tgz</strong>
+            <div class="code-block" style="margin-top:6px">helm package ./myapp
+<span class="cmt"># Creates: myapp-1.0.0.tgz</span></div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">04</div>
+          <div class="kh-ds-body">
+            <strong>Push to an OCI registry (install from anywhere)</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Push to AWS ECR / GitHub / GCR / Harbor</span>
+helm push myapp-1.0.0.tgz \
+  oci://registry.example.com/helm-charts
+
+<span class="cmt"># Install from anywhere — no local files needed</span>
+helm install myapp \
+  oci://registry.example.com/helm-charts/myapp \
+  --version 1.0.0 \
+  -f values-prod.yaml</div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">05</div>
+          <div class="kh-ds-body">
+            <strong>Upgrade (bump image tag, zero-downtime)</strong>
+            <div class="code-block" style="margin-top:6px">helm upgrade myapp \
+  oci://registry.example.com/helm-charts/myapp \
+  --version 1.1.0 \
+  -f values-prod.yaml \
+  --set image.tag=v2.2.0 \
+  --atomic
+
+<span class="cmt"># Something went wrong?</span>
+helm rollback myapp 1   <span class="cmt"># back to revision 1</span>
+helm history myapp      <span class="cmt"># see all revisions</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary comparison -->
+      <div class="card" style="margin-top:20px;margin-bottom:0">
+        <h4 class="card-title">📊 Before vs After — Full Comparison</h4>
+        <div class="helm-table-wrap">
+          <table class="helm-table">
+            <thead><tr><th>Capability</th><th style="color:var(--red)">kubectl apply</th><th style="color:var(--green)">helm install</th></tr></thead>
+            <tbody>
+              <tr><td>Deploy all 5 resources</td><td>5 separate commands</td><td>1 command</td></tr>
+              <tr><td>Different config per env</td><td>Edit files manually</td><td><code>-f values-prod.yaml</code></td></tr>
+              <tr><td>Rollback</td><td>Re-apply old files (manual)</td><td><code>helm rollback myapp 1</code></td></tr>
+              <tr><td>Release history</td><td>None (check git blame)</td><td><code>helm history myapp</code></td></tr>
+              <tr><td>Share with another team</td><td>Send YAML files over Slack</td><td>Push to OCI registry, share URL</td></tr>
+              <tr><td>Dry run</td><td><code>--dry-run</code> (no render)</td><td><code>helm template</code> + <code>--dry-run</code></td></tr>
+              <tr><td>Conditional resources (HPA)</td><td>Delete/apply manually</td><td><code>autoscaling.enabled: true/false</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 10: DEBUG & VERIFY ═══ -->
+    <div class="kh-panel card hidden" id="kh-debug">
+      <h3 class="card-title">🔍 Debug &amp; Verify — When Things Go Wrong</h3>
+      <p class="card-sub">Every beginner hits errors. Here's your debugging playbook for this exact chart.</p>
+
+      <div class="card" style="background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);margin-bottom:20px">
+        <div class="card-tag-row"><span class="ctag red">🚨 The Most Common Errors</span></div>
+        <div class="helm-table-wrap" style="margin-top:10px">
+          <table class="helm-table">
+            <thead><tr><th>Error Message</th><th>Cause</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code style="color:var(--red);font-size:0.75rem">Error: INSTALLATION FAILED: cannot re-use a name that is still in use</code></td>
+                <td>Release name already exists</td>
+                <td><code>helm upgrade myapp ./myapp</code> or <code>helm uninstall myapp</code> first</td>
+              </tr>
+              <tr>
+                <td><code style="color:var(--red);font-size:0.75rem">Error: template: mychart/templates/...: function not defined</code></td>
+                <td>Typo in template function name</td>
+                <td>Run <code>helm lint ./myapp</code> — it will show the exact line</td>
+              </tr>
+              <tr>
+                <td><code style="color:var(--red);font-size:0.75rem">CrashLoopBackOff</code> after install</td>
+                <td>App crashed — bad config or missing env var</td>
+                <td><code>kubectl logs &lt;pod-name&gt; -n &lt;namespace&gt;</code></td>
+              </tr>
+              <tr>
+                <td><code style="color:var(--red);font-size:0.75rem">ImagePullBackOff</code></td>
+                <td>Wrong image tag in values.yaml</td>
+                <td>Check <code>image.tag</code> value — fix and <code>helm upgrade</code></td>
+              </tr>
+              <tr>
+                <td><code style="color:var(--red);font-size:0.75rem">Error: UPGRADE FAILED: another operation is in progress</code></td>
+                <td>Previous install/upgrade got stuck in pending state</td>
+                <td><code>helm rollback myapp 0</code> to clear the pending state</td>
+              </tr>
+              <tr>
+                <td><code style="color:var(--red);font-size:0.75rem">Error: rendered manifests contain a resource that already exists</code></td>
+                <td>A resource was created outside Helm (raw kubectl apply)</td>
+                <td><code>--force</code> flag or delete the resource and reinstall</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h4 class="card-title">🔬 Debug Workflow — Step by Step</h4>
+      <div class="kh-deploy-flow">
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">D1</div>
+          <div class="kh-ds-body">
+            <strong>Before installing — validate your chart and values</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Lint checks YAML syntax and chart structure</span>
+helm lint ./myapp
+helm lint ./myapp -f values-prod.yaml   <span class="cmt"># test with prod values</span>
+
+<span class="cmt"># Dry-run renders templates WITHOUT connecting to cluster</span>
+helm template myapp ./myapp -f values-prod.yaml
+
+<span class="cmt"># Full dry-run: renders AND validates against cluster API</span>
+helm install myapp ./myapp \
+  -f values-prod.yaml \
+  --dry-run --debug \
+  --namespace production</div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">D2</div>
+          <div class="kh-ds-body">
+            <strong>After installing — verify resources were created</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Check release status</span>
+helm status myapp -n production
+
+<span class="cmt"># See all K8s resources this release owns</span>
+helm get manifest myapp -n production
+
+<span class="cmt"># List all releases across namespaces</span>
+helm list -A
+
+<span class="cmt"># Check pods are running</span>
+kubectl get pods -n production -l app.kubernetes.io/instance=myapp</div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">D3</div>
+          <div class="kh-ds-body">
+            <strong>Pod not starting? Investigate the logs</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Get pod name</span>
+kubectl get pods -n production
+<span class="cmt"># → myapp-7d8f9-abc12  0/1  CrashLoopBackOff</span>
+
+<span class="cmt"># Read the crash logs</span>
+kubectl logs myapp-7d8f9-abc12 -n production
+kubectl logs myapp-7d8f9-abc12 -n production --previous  <span class="cmt"># last crash</span>
+
+<span class="cmt"># Describe pod to see events (pull errors, OOM, etc.)</span>
+kubectl describe pod myapp-7d8f9-abc12 -n production</div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">D4</div>
+          <div class="kh-ds-body">
+            <strong>Check exactly what values Helm used for this release</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># See computed values (after merging all overrides)</span>
+helm get values myapp -n production
+helm get values myapp -n production --all   <span class="cmt"># include defaults</span>
+
+<span class="cmt"># See the rendered manifests Helm actually applied</span>
+helm get manifest myapp -n production</div>
+          </div>
+        </div>
+        <div class="kh-deploy-step">
+          <div class="kh-ds-num">D5</div>
+          <div class="kh-ds-body">
+            <strong>Fix → upgrade → verify loop</strong>
+            <div class="code-block" style="margin-top:6px"><span class="cmt"># Fix values-prod.yaml or template, then:</span>
+helm upgrade myapp ./myapp \
+  -f values-prod.yaml \
+  --atomic \
+  --timeout 3m \
+  --namespace production
+
+<span class="cmt"># Check revision history</span>
+helm history myapp -n production
+
+<span class="cmt"># If upgrade failed, rollback to last working revision</span>
+helm rollback myapp -n production  <span class="cmt"># rolls back to previous rev</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card devops-box" style="margin-top:20px;margin-bottom:0">
+        <div class="card-tag-row"><span class="ctag orange">🎖️ SRE Debugging Golden Rule</span></div>
+        <p style="font-size:0.88rem;color:var(--txt2);margin-top:8px">Always debug in this order: <strong>1) helm lint</strong> → <strong>2) helm template --dry-run</strong> → <strong>3) helm install --dry-run --debug</strong> → <strong>4) kubectl logs</strong> → <strong>5) kubectl describe</strong>. 90% of all Helm failures are caught in the first 3 steps before a single pod is created.</p>
+      </div>
+    </div>
+      </div>
+     </article>
+
+     <article data-label="The End" class="nb-leaf nb-backcover" id="nb-helm-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Helm Charts notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-helm-cover">&#8617; Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>&#10004; Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <button type="button" class="nb-corner nb-corner-prev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" aria-hidden="true" tabindex="-1"></button>
+    </div>
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">&#8249; Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next &#8250;</button>
+    </div>
+   </div>
+  </section>
+
+</main>
+<script src="script.js?v=30"></script>
+</body>
+</html>

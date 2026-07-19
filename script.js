@@ -6,20 +6,28 @@
 /* ══════════════════════════════════════
    THEME TOGGLE
 ══════════════════════════════════════ */
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon   = document.getElementById('themeIcon');
-
+// Theme toggling is wired by event delegation on any [data-theme-toggle]
+// control, so it works from the shelf topbar OR the in-book bookmark rail
+// (multi-page: the topbar is gone on topic pages). Every [data-theme-icon]
+// span mirrors the current icon.
+function nbThemeIcons(t) {
+  document.querySelectorAll('[data-theme-icon]').forEach(el => {
+    el.textContent = t === 'light' ? '☀️' : '🌙';
+  });
+}
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
-  themeIcon.textContent = t === 'light' ? '☀️' : '🌙';
   localStorage.setItem('theme', t);
-  // Redraw canvases on theme change
+  nbThemeIcons(t);
+  // Redraw canvases on theme change (each guards a missing canvas).
   drawLangGraph(lgCurrentNode);
   drawWorkflowCanvas();
   drawEmbedCanvas(embedCurrentQuery);
 }
 
-themeToggle.addEventListener('click', () => {
+document.addEventListener('click', (e) => {
+  const ctl = e.target.closest && e.target.closest('[data-theme-toggle]');
+  if (!ctl) return;
   const cur = document.documentElement.getAttribute('data-theme');
   setTheme(cur === 'dark' ? 'light' : 'dark');
 });
@@ -27,11 +35,11 @@ themeToggle.addEventListener('click', () => {
 // Apply saved theme early (avoid FOUC) — do NOT call setTheme() here
 // because the canvas data arrays (LG_NODES, LG_EDGES, etc.) are declared
 // with const/let further down the script and are still in the TDZ at this point.
+// (Topic pages also apply this before paint via an inline <head> script.)
 (function() {
   const saved = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
-  const icon = document.getElementById('themeIcon');
-  if (icon) icon.textContent = saved === 'light' ? '☀️' : '🌙';
+  nbThemeIcons(saved);
 })();
 
 /* ══════════════════════════════════════
@@ -58,27 +66,39 @@ function showProject(proj) {
 /* ══════════════════════════════════════
    SIDEBAR & MOBILE MENU
 ══════════════════════════════════════ */
+// The sidebar chrome only exists on the (legacy single-page) layout; the
+// multi-page split has no sidebar, so every access is guarded.
 const sidebar        = document.getElementById('sidebar');
 const hamburger      = document.getElementById('hamburger');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-hamburger.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-  sidebarOverlay.classList.toggle('open');
-});
-sidebarOverlay.addEventListener('click', () => {
-  sidebar.classList.remove('open');
-  sidebarOverlay.classList.remove('open');
-});
+if (hamburger && sidebar && sidebarOverlay) {
+  hamburger.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    sidebarOverlay.classList.toggle('open');
+  });
+  sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('open');
+  });
+}
 
 /* ══════════════════════════════════════
    SMOOTH SCROLL HELPER
 ══════════════════════════════════════ */
 function scrollTo_(id) {
+  // Notebook nav links drive the page-turn book instead of scrolling to a
+  // leaf that may be hidden. nbBookGoto is installed by initNbBook and
+  // returns true when it handled a notebook page id.
+  if (window.nbBookGoto && window.nbBookGoto(id)) {
+    if (sidebar) sidebar.classList.remove('open');
+    if (sidebarOverlay) sidebarOverlay.classList.remove('open');
+    return;
+  }
   const el = document.querySelector(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  sidebar.classList.remove('open');
-  sidebarOverlay.classList.remove('open');
+  if (sidebar) sidebar.classList.remove('open');
+  if (sidebarOverlay) sidebarOverlay.classList.remove('open');
 }
 
 // All nav links
@@ -104,6 +124,10 @@ const visitedSections = new Set();
 // the trigger-band observer below drive it identically.
 let activeSectionId = null;
 function setActiveSection(id) {
+  // Each notebook is one .section that shows one leaf at a time. When the
+  // global scroll-spy activates a book section, redirect to the leaf the book
+  // is currently showing so the breadcrumb + nav track the page on screen.
+  if (window.nbCurrentPage && window.nbCurrentPage[id]) id = window.nbCurrentPage[id];
   if (!id || id === activeSectionId) return;
   activeSectionId = id;
   // Active nav
@@ -118,7 +142,8 @@ function setActiveSection(id) {
     const secLabel  = activeLink.querySelector('span:not(.ni):not(.nbadge)');
     if (tbSection) tbSection.textContent = (secLabel ? secLabel.textContent : activeLink.textContent).trim();
     const grpLabel = activeLink.closest('.nav-group')?.querySelector('.nav-group-toggle span:not(.ni):not(.nav-group-chevron)');
-    if (tbGroup && grpLabel) tbGroup.textContent = grpLabel.textContent.trim();
+    // The shelf link is standalone (no nav-group); give it a sensible crumb.
+    if (tbGroup) tbGroup.textContent = grpLabel ? grpLabel.textContent.trim() : (id === 'shelf' ? 'Library' : tbGroup.textContent);
   }
 }
 
@@ -135,7 +160,7 @@ const revealObserver = new IntersectionObserver((entries) => {
       changed = true;
     }
   });
-  if (changed) {
+  if (changed && progFill && progPct) {
     const pct = Math.round((visitedSections.size / sections.length) * 100);
     progFill.style.width = pct + '%';
     progPct.textContent  = pct + '%';
@@ -188,6 +213,7 @@ pickActiveSection();
 ══════════════════════════════════════ */
 (function initParticles() {
   const canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;                 // hero canvas only exists on the AI page
   const ctx    = canvas.getContext('2d');
   let W, H, particles = [];
 
@@ -3735,4 +3761,416 @@ function otelSimStep(n) {
 /* Init OTel simulation */
 (function initOtelSim() {
   if (document.getElementById('otelSimOutput')) otelSimStep(0);
+})();
+
+/* ══════════════════════════════════════
+   KUBERNETES NOTES — plain-text accessibility toggle
+   Swaps the handwriting fonts for a clean sans across the
+   whole notebook module by toggling html.nb-plain. Code
+   blocks stay monospace (they never read the handwriting
+   vars). The choice persists in localStorage. Copy buttons
+   inside the notebook reuse the existing .term-copy handler.
+══════════════════════════════════════ */
+function toggleNbPlain() {
+  const on = document.documentElement.classList.toggle('nb-plain');
+  localStorage.setItem('nbPlain', on ? '1' : '0');
+  syncNbPlainButtons(on);
+}
+function syncNbPlainButtons(on) {
+  document.querySelectorAll('.nb-plain-toggle').forEach(btn => {
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.textContent = on ? 'Aa Handwriting' : 'Aa Plain text';
+  });
+}
+(function initNbPlain() {
+  const on = localStorage.getItem('nbPlain') === '1';
+  if (on) document.documentElement.classList.add('nb-plain');
+  syncNbPlainButtons(on);
+})();
+
+/* ══════════════════════════════════════
+   NOTEBOOKS — multi-book page-turn engine
+   Every .nb-book on the page becomes an independent page-turn
+   "book": a book-open swing on the cover, 3D rotateY page turns
+   between leaves, per-leaf internal scrolling, and a book-close
+   swing onto an end leaf. Progressive enhancement: if this never
+   runs the leaves just stack and scroll (see the CSS fallback).
+   Reduced motion collapses every swing to an instant switch.
+
+   The current leaf of each book is published in window.nbCurrentPage
+   (sectionId -> leafId) so setActiveSection() can redirect the book
+   section to the leaf on screen, keeping the breadcrumb/nav honest.
+   window.nbBookGoto(href) is the shared hook used by scrollTo_ and
+   deep links to drive whichever book owns that page id.
+══════════════════════════════════════ */
+window.nbCurrentPage = window.nbCurrentPage || {};
+(function initNbBooks() {
+  const books = Array.from(document.querySelectorAll('.nb-book'));
+  if (!books.length) return;
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TURN_MS = reduced ? 0 : 620;
+  const controllers = [];
+
+  function makeBook(book) {
+    const stage   = book.querySelector('.nb-stage');
+    const section = book.closest('.nb-section');
+    const leaves  = Array.from(stage.querySelectorAll(':scope > .nb-leaf'));
+    if (!stage || !section || !leaves.length) return null;
+
+    // Page id per leaf. Leaf 0 (cover) uses the book section id (the anchor).
+    const ids = leaves.map((lf, i) => (i === 0 ? section.id : lf.id));
+    const N   = leaves.length;
+    const prevBtn   = book.querySelector('.nb-prev');
+    const nextBtn   = book.querySelector('.nb-next');
+    const indicator = book.querySelector('.nb-page-indicator');
+    const cornerPrev = stage.querySelector('.nb-corner-prev');
+    const cornerNext = stage.querySelector('.nb-corner-next');
+    // The end leaf (if any) keeps the last content page highlighted in the nav.
+    const lastContentId = ids[Math.max(1, N - 2)] || section.id;
+
+    let current = 0, busy = false, opened = false;
+    let tabs = [];   // bookmark ribbon buttons, one per non-end leaf
+
+    const pageLabel = (i) => i === 0 ? 'Cover' : (i === N - 1 ? 'The End' : 'Page ' + i + ' / ' + (N - 2));
+
+    function setT(lf, t, animate) {
+      if (animate) { lf.style.transform = t; return; }
+      lf.style.transition = 'none'; lf.style.transform = t;
+      void lf.offsetHeight; lf.style.transition = '';
+    }
+
+    function render(writeHash) {
+      leaves.forEach((lf, i) => {
+        lf.classList.remove('is-current', 'is-under', 'is-turning');
+        lf.style.transition = 'none';
+        if (i === current) { lf.classList.add('is-current'); lf.style.transform = 'rotateY(0deg)'; }
+        else if (i < current) lf.style.transform = 'rotateY(-168deg)';
+        else lf.style.transform = 'rotateY(0deg)';
+        void lf.offsetHeight; lf.style.transition = '';
+      });
+      if (prevBtn) prevBtn.disabled = current === 0;
+      if (nextBtn) nextBtn.disabled = current === N - 1;
+      if (indicator) indicator.textContent = pageLabel(current);
+      const activeId = current === N - 1 ? lastContentId : ids[current];
+      window.nbCurrentPage[section.id] = activeId;
+      if (typeof setActiveSection === 'function') setActiveSection(activeId);
+      // Drive the breadcrumb directly from data attributes so it works without
+      // a sidebar/nav list (multi-page layout): group = the topic, section =
+      // the current leaf's label.
+      const tbGroup = document.getElementById('tbGroup');
+      const tbSection = document.getElementById('tbSection');
+      if (tbGroup && section.dataset.topic) tbGroup.textContent = section.dataset.topic;
+      if (tbSection) {
+        tbSection.textContent = current === N - 1
+          ? 'The End'
+          : (leaves[current].dataset.label || pageLabel(current));
+      }
+      tabs.forEach(t => {
+        const on = +t.dataset.idx === current;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      // Only user-driven turns own the URL hash. During the initial mass-render
+      // every book would otherwise fight to stamp its own cover into the hash.
+      if (writeHash !== false) {
+        try { history.replaceState(null, '', '#' + ids[current]); } catch (e) { /* file:// */ }
+      }
+    }
+
+    function animateTo(to) {
+      const from = current, dir = to > from ? 1 : -1;
+      const leaving = leaves[from], arriving = leaves[to];
+      const isOpen = to === 0, isClose = to === N - 1;
+      leaves.forEach(l => l.classList.remove('is-current', 'is-under', 'is-turning'));
+      if (isOpen) {
+        arriving.classList.add('is-current'); setT(arriving, 'rotateY(-92deg)', false);
+        requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+      } else if (dir > 0 && !isClose) {
+        arriving.classList.add('is-under');  setT(arriving, 'rotateY(0deg)', false);
+        leaving.classList.add('is-turning'); setT(leaving,  'rotateY(0deg)', false);
+        requestAnimationFrame(() => { leaving.style.transform = 'rotateY(-168deg)'; });
+      } else if (isClose) {
+        leaving.classList.add('is-under');    setT(leaving,  'rotateY(0deg)',  false);
+        arriving.classList.add('is-turning'); setT(arriving, 'rotateY(92deg)', false);
+        requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+      } else {
+        leaving.classList.add('is-under');    setT(leaving,  'rotateY(0deg)',   false);
+        arriving.classList.add('is-turning'); setT(arriving, 'rotateY(-168deg)', false);
+        requestAnimationFrame(() => { arriving.style.transform = 'rotateY(0deg)'; });
+      }
+      current = to;
+    }
+
+    function go(to) {
+      if (busy) return;
+      to = Math.max(0, Math.min(N - 1, to));
+      if (to === current) return;
+      busy = true; opened = opened || to === 0;
+      animateTo(to);
+      window.setTimeout(() => { busy = false; render(); }, TURN_MS + 40);
+    }
+
+    function playOpenOnce() {
+      if (opened) return; opened = true;
+      if (reduced || current !== 0) return;
+      const cover = leaves[0];
+      cover.classList.add('is-current');
+      setT(cover, 'rotateY(-92deg)', false);
+      requestAnimationFrame(() => { cover.style.transform = 'rotateY(0deg)'; });
+    }
+
+    // Explicit open swing on the cover — used when the bookshelf opens a book,
+    // so the open animation replays even if the book was opened before.
+    function openSwing() {
+      if (busy) return;
+      opened = true;
+      leaves.forEach(l => l.classList.remove('is-current', 'is-under', 'is-turning'));
+      current = 0;
+      const cover = leaves[0];
+      cover.classList.add('is-current');
+      if (reduced) { render(); return; }
+      busy = true;
+      setT(cover, 'rotateY(-92deg)', false);
+      requestAnimationFrame(() => { cover.style.transform = 'rotateY(0deg)'; });
+      window.setTimeout(() => { busy = false; render(); }, TURN_MS + 40);
+    }
+
+    // Resolve a hash to a leaf index. Ported inner pages keep their bare
+    // original ids (e.g. "otel-intro") while covers and the Kubernetes pages
+    // use the "nb-<topic>-..." form. Normalise by dropping a leading "nb-" on
+    // both sides so a deep link works in either convention (e.g. both
+    // "#nb-otel-intro" and "#otel-intro" resolve to the otel intro leaf).
+    const normId = (s) => String(s || '').replace(/^#/, '').replace(/^nb-/, '');
+    const indexOfId = (hash) => {
+      const h = normId(hash);
+      if (!h) return -1;
+      return ids.findIndex((id) => normId(id) === h);
+    };
+
+    if (prevBtn)    prevBtn.addEventListener('click', () => go(current - 1));
+    if (nextBtn)    nextBtn.addEventListener('click', () => go(current + 1));
+    if (cornerPrev) cornerPrev.addEventListener('click', () => go(current - 1));
+    if (cornerNext) cornerNext.addEventListener('click', () => go(current + 1));
+    stage.querySelectorAll('[data-nb-goto]').forEach(b =>
+      b.addEventListener('click', () => { const t = indexOfId(b.getAttribute('data-nb-goto')); if (t >= 0) go(t); }));
+    stage.querySelectorAll('[data-nb-finish]').forEach(b =>
+      b.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })));
+
+    // Keyboard: Left/Right turn pages, but only while THIS book fills the view.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      const t = e.target;
+      if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+      const r = section.getBoundingClientRect(), mid = window.innerHeight * 0.5;
+      if (!(r.top < mid && r.bottom > mid)) return;
+      e.preventDefault();
+      go(current + (e.key === 'ArrowRight' ? 1 : -1));
+    });
+
+    // Touch swipe: horizontal drag turns the page (vertical still scrolls).
+    let sx = 0, sy = 0, tracking = false;
+    stage.addEventListener('touchstart', (e) => {
+      const t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; tracking = true;
+    }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (!tracking) return; tracking = false;
+      const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) go(current + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+
+    // Replay the open swing whenever the cover scrolls into view fresh.
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting && current === 0) playOpenOnce(); });
+    }, { threshold: 0.35 });
+    io.observe(section);
+
+    // ── Page-width tiers (fix the dead-ruled-area bug) ──
+    // Text-only pages get a narrow, readable page; pages with diagrams,
+    // tables or grids get a wide page so their columns sit side by side.
+    const WIDE = '.nb-cols,.two-col,[class*="grid"],table,canvas,pre,.otel-seq,' +
+      '.otel-wf,.otel-cpipe,.otel-anat,.otel-comp,.nb-table-wrap,.nb-diagram,' +
+      '.nb-podbox,.sim-card,.sim-stage,.adot-arch-diagram,.mcp-arch-diagram,' +
+      '.timeline,.card-grid-4,.card-grid-3,.devops-box';
+    leaves.forEach(lf => {
+      if (lf.classList.contains('nb-leaf-cover') || lf.classList.contains('nb-backcover')) return;
+      const sheet = lf.querySelector('.nb-sheet');
+      lf.classList.add(sheet && sheet.querySelector(WIDE) ? 'nb-w-wide' : 'nb-w-text');
+    });
+
+    // ── Notebook header + date band on each leaf (real-notebook feel) ──
+    // ONE compact header line: marker topic title + page number on the LEFT,
+    // handwritten "Date ____" on the RIGHT, under a ruled hairline. The old
+    // standalone big centred masthead row is removed to reclaim top space.
+    const topic = section.dataset.topic || '';
+    leaves.forEach((lf, i) => {
+      if (lf.classList.contains('nb-backcover')) return;
+      const sheet = lf.querySelector('.nb-sheet');
+      if (!sheet || sheet.querySelector('.nb-headband')) return;
+      const isCover = lf.classList.contains('nb-leaf-cover');
+      const band = document.createElement('div');
+      band.className = 'nb-headband';
+      const run = document.createElement('span');
+      run.className = 'nb-hb-run';
+      // Cover keeps its own big title below, so its band shows just "Cover".
+      run.innerHTML = isCover
+        ? '<span class="nb-hb-page">Cover</span>'
+        : '<span class="nb-hb-title">' + topic + '</span>' +
+          '<span class="nb-hb-page">' + pageLabel(i) + '</span>';
+      const rightWrap = document.createElement('span');
+      rightWrap.className = 'nb-hb-right';
+      const date = document.createElement('span');
+      date.className = 'nb-hb-date';
+      date.innerHTML = 'Date <span class="nb-hb-line" aria-hidden="true"></span>';
+      rightWrap.appendChild(date);
+      // Fold the plain-text toggle into the header band (was absolute corner).
+      const pt = sheet.querySelector('.nb-plain-toggle');
+      if (pt) { pt.classList.add('nb-hb-plain'); rightWrap.appendChild(pt); }
+      band.appendChild(run);
+      band.appendChild(rightWrap);
+      // Drop the old separate "- Page N -" line and the big centred masthead
+      // title row (the band now carries the title + page). The cover's own
+      // .nb-cover-title is left intact.
+      const oldPageNum = sheet.querySelector('.nb-pagenum');
+      if (oldPageNum) oldPageNum.remove();
+      if (!isCover) {
+        const oldMast = sheet.querySelector('.nb-masthead');
+        if (oldMast) oldMast.remove();
+      }
+      const rings = sheet.querySelector('.nb-rings');
+      sheet.insertBefore(band, rings ? rings.nextSibling : sheet.firstChild);
+    });
+
+    // ── Bookmark ribbon rail (in-book sub-topic nav + back to shelf) ──
+    // Label source: the leaf's data-label (multi-page), falling back to a
+    // matching sidebar nav link (legacy single-page), then the aria-label.
+    function labelFor(i) {
+      const dl = leaves[i].dataset.label;
+      if (dl && dl.trim()) return dl.trim();
+      const link = document.querySelector('.nav-link[data-section="' + ids[i] + '"]');
+      if (link) {
+        const span = link.querySelector('span:not(.ni):not(.nbadge)');
+        if (span && span.textContent.trim()) return span.textContent.trim();
+      }
+      const al = leaves[i].getAttribute('aria-label');
+      return al ? al.replace(/^.*page /i, 'Page ') : 'Page ' + i;
+    }
+    const rail = document.createElement('div');
+    rail.className = 'nb-bookmarks';
+    rail.setAttribute('role', 'tablist');
+    rail.setAttribute('aria-label', (section.dataset.topic || 'Notebook') + ' sections');
+    // Back to the shelf. On the multi-page site this is a real link to
+    // index.html; on the legacy single page (shelf present) it scrolls up.
+    const back = document.createElement('a');
+    back.className = 'nb-to-shelf'; back.href = 'index.html';
+    back.innerHTML = '← Shelf';
+    back.setAttribute('aria-label', 'Back to the bookshelf');
+    back.addEventListener('click', (e) => {
+      const shelf = document.getElementById('shelf');
+      if (shelf) { e.preventDefault(); shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
+      // else: let the link navigate to index.html (multi-page)
+    });
+    // A compact theme toggle lives in the rail header (the topbar is gone on
+    // topic pages); it toggles via the shared [data-theme-toggle] delegation.
+    const railHead = document.createElement('div');
+    railHead.className = 'nb-rail-head';
+    railHead.appendChild(back);
+    const themeBtn = document.createElement('button');
+    themeBtn.type = 'button';
+    themeBtn.className = 'nb-rail-theme';
+    themeBtn.setAttribute('data-theme-toggle', '');
+    themeBtn.setAttribute('aria-label', 'Toggle light or dark theme');
+    themeBtn.innerHTML = '<span data-theme-icon>🌙</span>';
+    railHead.appendChild(themeBtn);
+    rail.appendChild(railHead);
+    nbThemeIcons(document.documentElement.getAttribute('data-theme') || 'dark');
+    leaves.forEach((lf, i) => {
+      if (lf.classList.contains('nb-backcover')) return;
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'nb-bm'; b.dataset.idx = i;
+      b.setAttribute('role', 'tab');
+      b.textContent = labelFor(i);
+      b.title = b.textContent;
+      b.setAttribute('aria-label', 'Go to ' + b.textContent);
+      b.addEventListener('click', () => go(i));
+      rail.appendChild(b); tabs.push(b);
+    });
+    book.insertBefore(rail, book.firstChild);
+
+    book.classList.add('nb-ready');
+    return { section, ids, go, render, indexOfId, openSwing,
+      hasId: (h) => indexOfId(h) >= 0,
+      set current(v) { current = v; }, get current() { return current; },
+      set opened(v) { opened = v; } };
+  }
+
+  books.forEach(b => { const c = makeBook(b); if (c) controllers.push(c); });
+
+  // Shared hook: route a page id to whichever book owns it.
+  window.nbBookGoto = function (href) {
+    const c = controllers.find(ctl => ctl.hasId(href));
+    if (!c) return false;
+    c.section.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    const idx = c.indexOfId(href);
+    if (idx === 0) c.openSwing();          // opening a book -> replay the open swing
+    else if (idx === c.current) c.render();
+    else c.go(idx);
+    return true;
+  };
+
+  // Init each book: honour a deep link on its own leaves, else open at cover.
+  // render(false) so the mass-render does not stamp the hash (only the target
+  // book keeps/sets it below).
+  const hash = location.hash;
+  let deepBook = null, coverBook = null;
+  controllers.forEach(c => {
+    const idx = c.indexOfId(hash);
+    if (idx > 0) { c.current = idx; c.opened = true; c.render(false); deepBook = c; }
+    else { if (idx === 0) coverBook = c; c.current = 0; c.render(false); }
+  });
+  const target = deepBook || coverBook;
+  if (target) {
+    try { history.replaceState(null, '', '#' + target.ids[target.current]); } catch (e) { /* file:// */ }
+    // Scroll so the book lands under the sticky chrome (top bar + mobile rail),
+    // clearing scroll-margin. Re-assert on a short timer so we win against the
+    // browser's own fragment jump to the (hidden) deep-linked leaf.
+    const land = () => target.section.scrollIntoView({ block: 'start' });
+    requestAnimationFrame(() => requestAnimationFrame(land));
+    window.setTimeout(land, 160);
+  }
+
+  // Any hash change (address bar, back/forward, cross-book links, a #shelf
+  // link) routes through the shared opener so we scroll to the OWNING book and
+  // open it at the right page - even when crossing from another book or the
+  // shelf. nbBookGoto handles cover (open swing) vs inner page and always
+  // scrolls the target book into view.
+  window.addEventListener('hashchange', () => {
+    if (!location.hash || location.hash === '#shelf') {
+      const shelf = document.getElementById('shelf');
+      if (shelf) shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      return;
+    }
+    window.nbBookGoto(location.hash);
+  });
+})();
+
+/* ══════════════════════════════════════
+   BOOKSHELF LANDING
+   Each book is a real link to its own topic page (e.g. helm.html),
+   so clicking navigates natively. We only add Space-to-activate for
+   parity with a button. Grouping lives in the HTML (one .shelf-row
+   per shelf), so regrouping is a markup move, not a code change.
+══════════════════════════════════════ */
+(function initShelf() {
+  const shelf = document.getElementById('shelf');
+  if (!shelf) return;
+  shelf.querySelectorAll('.shelf-book').forEach(b => {
+    b.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        const href = b.getAttribute('href');
+        if (href) window.location.href = href;
+      }
+    });
+  });
 })();
