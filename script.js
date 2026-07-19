@@ -6,20 +6,28 @@
 /* ══════════════════════════════════════
    THEME TOGGLE
 ══════════════════════════════════════ */
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon   = document.getElementById('themeIcon');
-
+// Theme toggling is wired by event delegation on any [data-theme-toggle]
+// control, so it works from the shelf topbar OR the in-book bookmark rail
+// (multi-page: the topbar is gone on topic pages). Every [data-theme-icon]
+// span mirrors the current icon.
+function nbThemeIcons(t) {
+  document.querySelectorAll('[data-theme-icon]').forEach(el => {
+    el.textContent = t === 'light' ? '☀️' : '🌙';
+  });
+}
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
-  themeIcon.textContent = t === 'light' ? '☀️' : '🌙';
   localStorage.setItem('theme', t);
-  // Redraw canvases on theme change
+  nbThemeIcons(t);
+  // Redraw canvases on theme change (each guards a missing canvas).
   drawLangGraph(lgCurrentNode);
   drawWorkflowCanvas();
   drawEmbedCanvas(embedCurrentQuery);
 }
 
-themeToggle.addEventListener('click', () => {
+document.addEventListener('click', (e) => {
+  const ctl = e.target.closest && e.target.closest('[data-theme-toggle]');
+  if (!ctl) return;
   const cur = document.documentElement.getAttribute('data-theme');
   setTheme(cur === 'dark' ? 'light' : 'dark');
 });
@@ -27,11 +35,11 @@ themeToggle.addEventListener('click', () => {
 // Apply saved theme early (avoid FOUC) — do NOT call setTheme() here
 // because the canvas data arrays (LG_NODES, LG_EDGES, etc.) are declared
 // with const/let further down the script and are still in the TDZ at this point.
+// (Topic pages also apply this before paint via an inline <head> script.)
 (function() {
   const saved = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
-  const icon = document.getElementById('themeIcon');
-  if (icon) icon.textContent = saved === 'light' ? '☀️' : '🌙';
+  nbThemeIcons(saved);
 })();
 
 /* ══════════════════════════════════════
@@ -3990,6 +3998,37 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       lf.classList.add(sheet && sheet.querySelector(WIDE) ? 'nb-w-wide' : 'nb-w-text');
     });
 
+    // ── Notebook header + date band on each leaf (real-notebook feel) ──
+    // A ruled header strip at the top of every page: page label on the left,
+    // a handwritten "Date ____" line + the plain-text toggle on the right.
+    const topic = section.dataset.topic || '';
+    leaves.forEach((lf, i) => {
+      if (lf.classList.contains('nb-backcover')) return;
+      const sheet = lf.querySelector('.nb-sheet');
+      if (!sheet || sheet.querySelector('.nb-headband')) return;
+      const band = document.createElement('div');
+      band.className = 'nb-headband';
+      const run = document.createElement('span');
+      run.className = 'nb-hb-run';
+      run.textContent = topic + ' · ' + pageLabel(i);
+      const rightWrap = document.createElement('span');
+      rightWrap.className = 'nb-hb-right';
+      const date = document.createElement('span');
+      date.className = 'nb-hb-date';
+      date.innerHTML = 'Date <span class="nb-hb-line" aria-hidden="true"></span>';
+      rightWrap.appendChild(date);
+      // Fold the plain-text toggle into the header band (was absolute corner).
+      const pt = sheet.querySelector('.nb-plain-toggle');
+      if (pt) { pt.classList.add('nb-hb-plain'); rightWrap.appendChild(pt); }
+      band.appendChild(run);
+      band.appendChild(rightWrap);
+      // Drop the old separate "- Page N -" line; the band carries the page.
+      const oldPageNum = sheet.querySelector('.nb-pagenum');
+      if (oldPageNum) oldPageNum.remove();
+      const rings = sheet.querySelector('.nb-rings');
+      sheet.insertBefore(band, rings ? rings.nextSibling : sheet.firstChild);
+    });
+
     // ── Bookmark ribbon rail (in-book sub-topic nav + back to shelf) ──
     // Label source: the leaf's data-label (multi-page), falling back to a
     // matching sidebar nav link (legacy single-page), then the aria-label.
@@ -4019,7 +4058,20 @@ window.nbCurrentPage = window.nbCurrentPage || {};
       if (shelf) { e.preventDefault(); shelf.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' }); }
       // else: let the link navigate to index.html (multi-page)
     });
-    rail.appendChild(back);
+    // A compact theme toggle lives in the rail header (the topbar is gone on
+    // topic pages); it toggles via the shared [data-theme-toggle] delegation.
+    const railHead = document.createElement('div');
+    railHead.className = 'nb-rail-head';
+    railHead.appendChild(back);
+    const themeBtn = document.createElement('button');
+    themeBtn.type = 'button';
+    themeBtn.className = 'nb-rail-theme';
+    themeBtn.setAttribute('data-theme-toggle', '');
+    themeBtn.setAttribute('aria-label', 'Toggle light or dark theme');
+    themeBtn.innerHTML = '<span data-theme-icon>🌙</span>';
+    railHead.appendChild(themeBtn);
+    rail.appendChild(railHead);
+    nbThemeIcons(document.documentElement.getAttribute('data-theme') || 'dark');
     leaves.forEach((lf, i) => {
       if (lf.classList.contains('nb-backcover')) return;
       const b = document.createElement('button');

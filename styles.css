@@ -6388,12 +6388,14 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
    there is never a big empty ruled area. JS tags each leaf by content:
    text-only pages get a narrow readable page, pages with diagrams/tables/
    grids get a wide page whose two-column content sits side by side. */
-.nb-book-section { max-width: none; padding-left: clamp(16px,3vw,40px); padding-right: clamp(16px,3vw,40px); }
-.nb-book { position: relative; max-width: 1040px; margin: 0 auto; padding-right: 164px; }
+.nb-book-section { max-width: none; padding-left: clamp(10px,1.5vw,26px); padding-right: clamp(10px,1.5vw,26px); }
+.nb-book { position: relative; max-width: min(1400px, 95vw); margin: 0 auto; padding-right: 168px; }
 .nb-book.nb-ready .nb-stage { background: var(--nb-desk); }
-.nb-book.nb-ready .nb-sheet { max-width: 860px; margin: 0 auto; }
-.nb-book.nb-ready .nb-leaf.nb-w-text .nb-sheet { max-width: 680px; }
-.nb-book.nb-ready .nb-leaf.nb-w-wide .nb-sheet { max-width: 1000px; }
+/* Sheet width tiers: fill more of the book so the writing area is not
+   half-empty. Text-only pages stay narrower for a readable line length. */
+.nb-book.nb-ready .nb-sheet { max-width: 980px; margin: 0 auto; }
+.nb-book.nb-ready .nb-leaf.nb-w-text .nb-sheet { max-width: 760px; }
+.nb-book.nb-ready .nb-leaf.nb-w-wide .nb-sheet { max-width: 1240px; }
 
 /* (4) Bookmark ribbon rail — one tab per sub-topic, plus back-to-shelf.
    Desktop: a vertical rail in the right gutter, tabs protruding toward the
@@ -6509,14 +6511,57 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   /* Section stays a block so the book keeps centering via margin:0 auto
      (auto margins on a flex item would collapse it to content width). */
   .nb-book-section {
-    height: calc(100dvh - 58px);
+    height: 100dvh;                 /* topic pages have no top bar now */
     overflow: hidden;
-    padding-top: clamp(12px, 2vh, 26px);
-    padding-bottom: clamp(12px, 2vh, 26px);
+    padding-top: clamp(12px, 2vh, 24px);
+    padding-bottom: clamp(12px, 2vh, 24px);
   }
   .nb-book { height: 100%; display: flex; flex-direction: column; }
   .nb-book.nb-ready .nb-stage { flex: 1 1 auto; min-height: 0; height: auto; }
   .nb-book.nb-ready .nb-book-controls { flex: 0 0 auto; margin: clamp(8px, 1.2vh, 16px) auto 0; }
   /* rail fills the full book height in the right gutter */
   .nb-book.nb-ready .nb-bookmarks { top: 0; bottom: 0; max-height: none; height: auto; }
+}
+
+/* ═══════════════════════════════════════════════════
+   ADDENDUM 10 — notebook header/date band + rail theme toggle
+═══════════════════════════════════════════════════ */
+
+/* Header band at the top of every leaf: running head (topic · page) on the
+   left, a handwritten "Date ____" line + the plain-text toggle on the right,
+   under a ruled hairline - the authentic notebook header. */
+.nb-headband {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap;
+  border-bottom: 1.5px solid var(--nb-box);
+  padding-bottom: 8px; margin-bottom: 16px;
+}
+.nb-hb-run {
+  font-family: var(--nb-head); font-weight: 700; color: var(--nb-marker);
+  font-size: 1.05rem; letter-spacing: 0.01em;
+}
+.nb-hb-right { display: inline-flex; align-items: center; gap: 12px; }
+.nb-hb-date {
+  font-family: var(--nb-hand); color: var(--nb-ink2); font-size: 0.95rem;
+  display: inline-flex; align-items: baseline; gap: 6px; white-space: nowrap;
+}
+.nb-hb-line { display: inline-block; width: clamp(70px, 8vw, 120px); border-bottom: 1.5px solid var(--nb-box); }
+/* the plain-text toggle now sits inside the band (was an absolute corner) */
+.nb-plain-toggle.nb-hb-plain { position: static; top: auto; right: auto; }
+
+/* Rail header: back-to-shelf + a compact theme toggle side by side */
+.nb-rail-head { display: flex; align-items: stretch; gap: 6px; margin-bottom: 6px; }
+.nb-rail-head .nb-to-shelf { flex: 1 1 auto; margin-bottom: 0; }
+.nb-rail-theme {
+  flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; font-size: 1rem; cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--border-h);
+  border-radius: 8px; color: var(--txt); transition: var(--trans-fast);
+}
+.nb-rail-theme:hover { border-color: var(--accent); }
+.nb-rail-theme:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 860px) {
+  /* rail is a horizontal strip on mobile: keep the head inline, not full-width */
+  .nb-rail-head { flex: 0 0 auto; margin-bottom: 0; }
+  .nb-rail-head .nb-to-shelf { flex: 0 0 auto; }
 }
