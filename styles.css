@@ -6311,48 +6311,82 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   gap: clamp(16px, 2vw, 26px);
 }
 
-/* A self-contained gradient book card in its topic brand colour. */
+/* A self-contained gradient book card in its topic brand colour.
+   Theme-aware: dark mode keeps the saturated cover with white ink,
+   light mode renders a soft pastel tint of the same hue with dark ink.
+   Every sub-element (spine, gloss, tag chip, progress bar) is driven off
+   the --book-* tokens below so a theme is a pure token swap. */
 .lib-book {
   --book: var(--brand);
+  /* dark ("night library") cover treatment - saturated, white ink */
+  --book-grad: linear-gradient(150deg, var(--book) 0%, color-mix(in srgb, var(--book) 50%, #000 50%) 100%);
+  --book-ink: #fff;
+  --book-spine: rgba(255,255,255,0.14);
+  --book-gloss: rgba(255,255,255,0.16);
+  --book-chip-bg: rgba(255,255,255,0.18);
+  --book-chip-ink: #fff;
+  --book-track: rgba(255,255,255,0.25);
+  --book-fill: #fff;
+  --book-outline: #fff;
+  --book-title-shadow: 0 1px 2px rgba(0,0,0,0.3);
   position: relative; overflow: hidden; isolation: isolate;
   min-height: 320px; border-radius: 18px; padding: 22px;
   display: flex; flex-direction: column; justify-content: space-between;
-  text-decoration: none; color: #fff;
-  background: linear-gradient(150deg, var(--book) 0%, color-mix(in srgb, var(--book) 50%, #000 50%) 100%);
+  text-decoration: none; color: var(--book-ink);
+  background: var(--book-grad);
   box-shadow: 0 16px 34px rgba(0,0,0,0.28);
   transition: transform 0.32s var(--ease), box-shadow 0.32s var(--ease);
+}
+/* Light ("reading room") cover: pastel tint of the brand hue + dark ink.
+   Pastels sit at a 26%->40% brand/white mix so dark ink clears WCAG AA
+   (min ~9.8:1) for every brand colour. */
+[data-theme="light"] .lib-book {
+  --book-grad: linear-gradient(150deg, color-mix(in srgb, var(--book) 26%, #fff) 0%, color-mix(in srgb, var(--book) 40%, #fff) 100%);
+  --book-ink: #14110c;
+  --book-spine: color-mix(in srgb, var(--book) 70%, #000);
+  --book-gloss: rgba(255,255,255,0.4);
+  --book-chip-bg: rgba(20,17,12,0.1);
+  --book-chip-ink: #14110c;
+  --book-track: rgba(20,17,12,0.16);
+  --book-fill: var(--book);
+  --book-outline: #14110c;
+  --book-title-shadow: none;
 }
 /* spine edge on the right + a soft top gloss for depth */
 .lib-book::before {
   content: ""; position: absolute; top: 0; right: 0; width: 12px; height: 100%;
-  background: rgba(255,255,255,0.14); z-index: 1;
+  background: var(--book-spine); z-index: 1;
 }
 .lib-book::after {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(255,255,255,0.16), transparent 42%);
+  background: linear-gradient(180deg, var(--book-gloss), transparent 42%);
 }
 .lib-book > * { position: relative; z-index: 2; }
+/* Hover keeps ONLY the lift/rotate/shadow. Re-assert the card ink so the
+   site-wide `a:hover { color: var(--accent-ink) }` never recolours the
+   card text to the blue accent (that global rule made cards low-contrast). */
 .lib-book:hover, .lib-book:focus-visible {
+  color: var(--book-ink);
   transform: translateY(-10px) rotate(-2deg);
   box-shadow: 0 26px 48px rgba(0,0,0,0.4);
 }
-.lib-book:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.lib-book:focus-visible { outline: 2px solid var(--book-outline); outline-offset: 3px; }
 
 .lib-book-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .lib-tag {
   font-size: 0.62rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
-  padding: 4px 9px; border-radius: 20px; background: rgba(255,255,255,0.18); color: #fff;
+  padding: 4px 9px; border-radius: 20px; background: var(--book-chip-bg); color: var(--book-chip-ink);
 }
 .lib-emoji { font-size: 2rem; line-height: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.35)); }
 
 .lib-book-body { margin-top: 16px; flex: 1 1 auto; }
-.lib-book-title { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1.2; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+.lib-book-title { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1.2; text-shadow: var(--book-title-shadow); }
 .lib-book-desc { font-size: 0.86rem; line-height: 1.5; opacity: 0.94; margin-top: 10px; }
 
 .lib-book-foot { margin-top: 18px; }
 .lib-foot-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; font-weight: 600; opacity: 0.92; margin-bottom: 9px; }
-.lib-prog { height: 6px; border-radius: 10px; background: rgba(255,255,255,0.25); overflow: hidden; }
-.lib-prog > span { display: block; height: 100%; background: #fff; border-radius: 10px; transition: width 0.5s var(--ease); }
+.lib-prog { height: 6px; border-radius: 10px; background: var(--book-track); overflow: hidden; }
+.lib-prog > span { display: block; height: 100%; background: var(--book-fill); border-radius: 10px; transition: width 0.5s var(--ease); }
 
 @media (max-width: 520px) {
   .lib-grid { grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 14px; }
