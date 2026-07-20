@@ -389,15 +389,13 @@ cd python_raasng_devops</pre>
         The <code>PYTHONPATH</code> entries are what let <code>lib/</code> and <code>Utils/lib/</code> import cleanly.
         Without them the config discovery fails.</p>
       <div class="nb-code">
-        <button class="term-copy nb-copy" data-copy="export HOME=&quot;/opt&quot;&#10;export DEVOPS_BASE=&quot;$HOME/devops_tools/python_devops&quot;&#10;export PYTHONPATH=&quot;$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:&quot;&#10;&#10;alias deploy=&quot;cd $DEVOPS_BASE/lib&quot;&#10;alias eb=&quot;vi $BASHRC&quot;&#10;alias resource=&quot;source $BASHRC&quot;">Copy</button>
+        <button class="term-copy nb-copy" data-copy="## Python Automation Framework Dependencies ##&#10;export HOME=&quot;/opt&quot;&#10;export DEVOPS_BASE=&quot;$HOME/devops_tools/python_devops&quot;&#10;export PYTHONPATH=&quot;$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:&quot;&#10;alias deploy=&quot;cd /opt/devops_tools/python_devops/lib&quot;&#10;alias eb=&quot;vi $BASHRC&quot;&#10;alias resource=&quot;source $BASHRC&quot;">Copy</button>
         <span class="nb-code-label">Add to the devops user's BASHRC</span>
-<pre><span class="cmt"># base paths</span>
+<pre><span class="cmt">## Python Automation Framework Dependencies ##</span>
 export HOME="/opt"
 export DEVOPS_BASE="$HOME/devops_tools/python_devops"
 export PYTHONPATH="$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:"
-
-<span class="cmt"># handy aliases</span>
-alias deploy="cd $DEVOPS_BASE/lib"
+alias deploy="cd /opt/devops_tools/python_devops/lib"
 alias eb="vi $BASHRC"
 alias resource="source $BASHRC"</pre>
       </div>
