@@ -4241,7 +4241,7 @@ window.NB_LIBRARY = [
   {
     title: 'Automation',
     books: [
-      { key: 'nb-pyauto-cover', href: 'python-automation.html', title: 'Python Automation', emoji: '🐍', brand: 'var(--pyauto)', tag: 'Advanced', pages: 9, desc: 'The Python and Fabric engine Jenkins drives to automate tenant and infra tasks.' },
+      { key: 'nb-pyauto-cover', href: 'python-automation.html', title: 'Python Automation', emoji: '🐍', brand: 'var(--pyauto)', tag: 'Advanced', pages: 10, desc: 'The Python and Fabric engine Jenkins drives to automate tenant and infra tasks.' },
     ],
   },
 ];

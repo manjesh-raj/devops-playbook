@@ -38,12 +38,12 @@
         <div class="nb-box">
           <span class="nb-box-title">What's Inside?</span>
           <ul class="nb-list check">
-            <li>What this framework is</li>
+            <li>What this framework is and why</li>
             <li>What it automates</li>
             <li>Why the approach works</li>
-            <li>Get the code and set it up</li>
-            <li>How the engine works</li>
-            <li>Extend it and troubleshoot it</li>
+            <li>Before you start: repo and layout</li>
+            <li>Set it up: runner, targets, first run</li>
+            <li>How the engine works, then extend and troubleshoot it</li>
           </ul>
         </div>
         <div class="nb-box dash">
@@ -60,8 +60,8 @@
     </div>
      </article>
 
-     <!-- Leaf 1: Overview -->
-     <article data-label="Overview" class="nb-leaf" id="nb-pyauto-overview" role="group" aria-roledescription="page" aria-label="Page 1: Overview">
+     <!-- Leaf 1: What it is and why -->
+     <article data-label="What It Is & Why" class="nb-leaf" id="nb-pyauto-overview" role="group" aria-roledescription="page" aria-label="Page 1: What it is and why">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -122,7 +122,7 @@
 
       <div class="nb-box note">
         The rest of this notebook walks each of these layers.
-        Pages 5 and 6 cover setup. Page 7 covers how the engine works.
+        Pages 4 to 7 cover setting it up in a new environment. Page 8 covers how the engine works.
       </div>
     </div>
      </article>
@@ -223,8 +223,8 @@
     </div>
      </article>
 
-     <!-- Leaf 3: Advantages -->
-     <article data-label="Advantages" class="nb-leaf" id="nb-pyauto-advantages" role="group" aria-roledescription="page" aria-label="Page 3: Advantages">
+     <!-- Leaf 3: Why this approach works -->
+     <article data-label="Why It Works" class="nb-leaf" id="nb-pyauto-advantages" role="group" aria-roledescription="page" aria-label="Page 3: Why this approach works">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
@@ -292,13 +292,26 @@
     </div>
      </article>
 
-     <!-- Leaf 4: Get the code -->
-     <article data-label="Get The Code" class="nb-leaf" id="nb-pyauto-getcode" role="group" aria-roledescription="page" aria-label="Page 4: Get the code">
+     <!-- Leaf 4: Before you start (prerequisites) -->
+     <article data-label="Before You Start" class="nb-leaf" id="nb-pyauto-prereqs" role="group" aria-roledescription="page" aria-label="Page 4: Before you start">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
       <div class="nb-masthead">PYTHON AUTOMATION</div>
       <div class="nb-pagenum">- Page 4 -</div>
+
+      <h3 class="nb-h">Before You Start</h3>
+      <p class="nb-p">Standing the framework up in a new environment means one Jenkins runner that reaches every target host over SSH.
+        Get the repository access and the shape of the code clear first.
+        Then the three setup parts on the next pages go in order.</p>
+
+      <div class="nb-diagram">
+        <div class="nb-flow">
+          <span class="nb-node"><b>Jenkins runner</b></span><span class="nb-ar">→</span>
+          <span class="nb-node">SSH</span><span class="nb-ar">→</span>
+          <span class="nb-node"><b>target hosts</b></span>
+        </div>
+      </div>
 
       <div class="nb-cols">
         <div>
@@ -316,19 +329,10 @@
         </div>
       </div>
 
-      <h3 class="nb-h">2. Clone It</h3>
-      <div class="nb-code">
-        <button class="term-copy nb-copy" data-copy="git clone https://github.com/manjesh-raj/python_raasng_devops.git&#10;cd python_raasng_devops">Copy</button>
-        <span class="nb-code-label">Clone the framework onto your machine</span>
-<pre><span class="cmt"># clone the private repo (you need access)</span>
-git clone https://github.com/manjesh-raj/python_raasng_devops.git
-cd python_raasng_devops</pre>
-      </div>
-
       <div class="nb-cols">
         <div>
-          <h3 class="nb-h">3. Where The Code Lives</h3>
-          <p class="nb-p">Once cloned, the layout is easy to read.
+          <h3 class="nb-h">2. Where The Code Lives</h3>
+          <p class="nb-p">The layout is easy to read.
             The framework code sits under <code>lib/</code>.
             The entry points that Jenkins runs sit under <code>bin/</code>.</p>
         </div>
@@ -348,32 +352,41 @@ cd python_raasng_devops</pre>
         Real <code>system.conf</code> and <code>pramata.conf</code> files are provided at deploy time, not committed.
         Any example in this notebook uses placeholders.
       </div>
+
+      <h3 class="nb-h">3. The Three Setup Parts</h3>
+      <div class="nb-box dash">
+        <ul class="nb-list">
+          <li><b>Part A - The Jenkins Runner</b>: provision it, clone the code into <code>/opt</code>, set the environment, install Fabric. (Page 5)</li>
+          <li><b>Part B - Each Target Host</b>: create the <code>devops</code> user and open SSH from Jenkins. (Page 6)</li>
+          <li><b>Part C - Configure And First Run</b>: point the config at this environment, dry-run, then run for real. (Page 7)</li>
+        </ul>
+      </div>
     </div>
      </article>
 
-     <!-- Leaf 5: Setup - Jenkins server -->
-     <article data-label="Setup: Jenkins Server" class="nb-leaf" id="nb-pyauto-setup-jenkins" role="group" aria-roledescription="page" aria-label="Page 5: Setup on the Jenkins server">
+     <!-- Leaf 5: Setup Part A - the Jenkins runner -->
+     <article data-label="Part A: Jenkins Runner" class="nb-leaf" id="nb-pyauto-setup-jenkins" role="group" aria-roledescription="page" aria-label="Page 5: Part A, the Jenkins runner">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
       <div class="nb-masthead">PYTHON AUTOMATION</div>
       <div class="nb-pagenum">- Page 5 -</div>
 
-      <h3 class="nb-h">Setup, Part 1: The Jenkins Server</h3>
+      <h3 class="nb-h">Setup, Part A: The Jenkins Runner</h3>
       <p class="nb-p">The framework runs from a Jenkins server.
         Jenkins triggers the tasks, and the tasks reach out to the target hosts over SSH.
-        This page sets up that Jenkins runner.</p>
+        This page sets up that Jenkins runner, in order.</p>
 
       <div class="nb-cols">
         <div>
-          <h3 class="nb-h">1. Prerequisite</h3>
+          <h3 class="nb-h">1. Provision The Jenkins Server</h3>
           <p class="nb-p">Start with a Jenkins server deployed from the AWS Marketplace.
             Use the <b>Jenkins Certified by Bitnami</b> image.
             Log in once with its credentials to confirm it is ready.</p>
         </div>
         <div class="nb-box note" style="align-self:center">
           <span class="nb-box-title">The devops User</span>
-          The framework runs as a dedicated <code>devops</code> user. Switch to it before setting anything up.
+          The framework runs as a dedicated <code>devops</code> user. Everything after step 2 runs as that user.
         </div>
       </div>
 
@@ -384,46 +397,9 @@ cd python_raasng_devops</pre>
 <pre>sudo su - devops</pre>
       </div>
 
-      <h3 class="nb-h">3. Environment Variables And Aliases</h3>
-      <p class="nb-p">Add these exports and aliases to the <code>devops</code> user's BASHRC.
-        The <code>PYTHONPATH</code> entries are what let <code>lib/</code> and <code>Utils/lib/</code> import cleanly.
-        Without them the config discovery fails.</p>
-      <div class="nb-code">
-        <button class="term-copy nb-copy" data-copy="export HOME=&quot;/opt&quot;&#10;export DEVOPS_BASE=&quot;$HOME/devops_tools/python_devops&quot;&#10;export PYTHONPATH=&quot;$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:&quot;&#10;&#10;alias deploy=&quot;cd $DEVOPS_BASE/lib&quot;&#10;alias eb=&quot;vi $BASHRC&quot;&#10;alias resource=&quot;source $BASHRC&quot;">Copy</button>
-        <span class="nb-code-label">Add to the devops user's BASHRC</span>
-<pre><span class="cmt"># base paths</span>
-export HOME="/opt"
-export DEVOPS_BASE="$HOME/devops_tools/python_devops"
-export PYTHONPATH="$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:"
-
-<span class="cmt"># handy aliases</span>
-alias deploy="cd $DEVOPS_BASE/lib"
-alias eb="vi $BASHRC"
-alias resource="source $BASHRC"</pre>
-      </div>
-      <div class="nb-box dash">
-        <ul class="nb-list">
-          <li><code>deploy</code> jumps you into the <code>lib/</code> directory where the task modules live.</li>
-          <li><code>eb</code> opens the BASHRC for editing.</li>
-          <li><code>resource</code> re-sources the BASHRC after a change.</li>
-        </ul>
-      </div>
-
-      <h3 class="nb-h">4. Install Fabric</h3>
-      <p class="nb-p">The framework needs <b>Fabric 1.x</b> on Python 2.7.
-        Install it, then verify the version.
-        You should see Fabric 1.x and Paramiko, not Fabric 2 or 3.</p>
-      <div class="nb-code">
-        <button class="term-copy nb-copy" data-copy="sudo apt-get install fabric&#10;fab -V">Copy</button>
-        <span class="nb-code-label">Install Fabric and check the version</span>
-<pre>sudo apt-get install fabric
-
-<span class="cmt"># verify: expect Fabric 1.10.2, Paramiko 1.16.0</span>
-fab -V</pre>
-      </div>
-
-      <h3 class="nb-h">5. Clone The Code Onto The Server</h3>
+      <h3 class="nb-h">3. Clone The Code Into /opt</h3>
       <p class="nb-p">As root, clone the framework into <code>/opt</code>, then hand it to the <code>devops</code> user.
+        Do this before the environment step, so the paths it exports actually resolve.
         The <code>chown</code> step matters, since the tasks run as <code>devops</code>.</p>
       <div class="nb-code">
         <button class="term-copy nb-copy" data-copy="sudo su -&#10;cd /opt&#10;git clone https://github.com/manjesh-raj/python_raasng_devops.git&#10;chown -R devops: python_raasng_devops">Copy</button>
@@ -435,20 +411,56 @@ chown -R devops: python_raasng_devops</pre>
       </div>
       <div class="nb-box note">
         The deploy path the tasks expect is under <code>/opt</code>.
-        Keep the code there so the <code>DEVOPS_BASE</code> and <code>PYTHONPATH</code> above line up.
+        Keep the code there so the <code>DEVOPS_BASE</code> and <code>PYTHONPATH</code> in the next step line up.
+      </div>
+
+      <h3 class="nb-h">4. Environment Variables And Aliases</h3>
+      <p class="nb-p">Add these exports and aliases to the <code>devops</code> user's BASHRC.
+        The <code>PYTHONPATH</code> entries are what let <code>lib/</code> and <code>Utils/lib/</code> import cleanly.
+        Without them the config discovery fails.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="## Python Automation Framework Dependencies ##&#10;export HOME=&quot;/opt&quot;&#10;export DEVOPS_BASE=&quot;$HOME/devops_tools/python_devops&quot;&#10;export PYTHONPATH=&quot;$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:&quot;&#10;alias deploy=&quot;cd /opt/devops_tools/python_devops/lib&quot;&#10;alias eb=&quot;vi $BASHRC&quot;&#10;alias resource=&quot;source $BASHRC&quot;">Copy</button>
+        <span class="nb-code-label">Add to the devops user's BASHRC</span>
+<pre><span class="cmt">## Python Automation Framework Dependencies ##</span>
+export HOME="/opt"
+export DEVOPS_BASE="$HOME/devops_tools/python_devops"
+export PYTHONPATH="$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:"
+alias deploy="cd /opt/devops_tools/python_devops/lib"
+alias eb="vi $BASHRC"
+alias resource="source $BASHRC"</pre>
+      </div>
+      <div class="nb-box dash">
+        <ul class="nb-list">
+          <li><code>deploy</code> jumps you into the <code>lib/</code> directory where the task modules live.</li>
+          <li><code>eb</code> opens the BASHRC for editing.</li>
+          <li><code>resource</code> re-sources the BASHRC after a change.</li>
+        </ul>
+      </div>
+
+      <h3 class="nb-h">5. Install Fabric</h3>
+      <p class="nb-p">The framework needs <b>Fabric 1.x</b> on Python 2.7.
+        Install it, then verify the version.
+        You should see Fabric 1.x and Paramiko, not Fabric 2 or 3.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="sudo apt-get install fabric&#10;&#10;# verify: expect Fabric 1.10.2, Paramiko 1.16.0&#10;fab -V">Copy</button>
+        <span class="nb-code-label">Install Fabric and check the version</span>
+<pre>sudo apt-get install fabric
+
+<span class="cmt"># verify: expect Fabric 1.10.2, Paramiko 1.16.0</span>
+fab -V</pre>
       </div>
     </div>
      </article>
 
-     <!-- Leaf 6: Setup - Target server -->
-     <article data-label="Setup: Target Server" class="nb-leaf" id="nb-pyauto-setup-target" role="group" aria-roledescription="page" aria-label="Page 6: Setup on the target server">
+     <!-- Leaf 6: Setup Part B - each target host -->
+     <article data-label="Part B: Target Host" class="nb-leaf" id="nb-pyauto-setup-target" role="group" aria-roledescription="page" aria-label="Page 6: Part B, each target host">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
       <div class="nb-masthead">PYTHON AUTOMATION</div>
       <div class="nb-pagenum">- Page 6 -</div>
 
-      <h3 class="nb-h">Setup, Part 2: The Target Server</h3>
+      <h3 class="nb-h">Setup, Part B: The Target Server</h3>
       <p class="nb-p">The Jenkins server reaches each target host over SSH as the <code>devops</code> user.
         So every target needs that user and the right SSH settings.
         Bake these changes into the AMI, so every new instance is ready out of the box.</p>
@@ -515,13 +527,68 @@ AllowUsers devops</pre>
     </div>
      </article>
 
-     <!-- Leaf 7: How it works -->
-     <article data-label="How It Works" class="nb-leaf" id="nb-pyauto-howitworks" role="group" aria-roledescription="page" aria-label="Page 7: How the framework works">
+     <!-- Leaf 7: Setup Part C - configure and first run -->
+     <article data-label="Part C: First Run" class="nb-leaf" id="nb-pyauto-firstrun" role="group" aria-roledescription="page" aria-label="Page 7: Part C, configure and first run">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
       <div class="nb-masthead">PYTHON AUTOMATION</div>
       <div class="nb-pagenum">- Page 7 -</div>
+
+      <h3 class="nb-h">Setup, Part C: Configure And First Run</h3>
+      <p class="nb-p">The runner and the targets are ready.
+        The last part points the config at this environment, then proves the path works end to end.
+        Start with a dry-run so nothing changes on a fresh environment.</p>
+
+      <h3 class="nb-h">1. Point The Config At This Environment</h3>
+      <p class="nb-p">Three files describe the environment.
+        The two INI files carry per-host connection and secrets. The newer YAML file carries per-environment values.</p>
+      <div class="nb-box dash">
+        <span class="nb-box-title">Config Files To Set</span>
+        <ul class="nb-list">
+          <li><code>config/system.conf</code> - per-host SSH identity: user, sudo user, password, port.</li>
+          <li><code>config/pramata.conf</code> - per-host application secrets used by tasks that opt in.</li>
+          <li><code>config/raas-&lt;env&gt;.yml</code> - the newer per-environment YAML values.</li>
+        </ul>
+      </div>
+      <div class="nb-box note">
+        Use placeholders while you wire things up.
+        The real files are provided at deploy time, and <code>config/</code> is kept out of Git.
+      </div>
+
+      <h3 class="nb-h">2. Dry-Run First</h3>
+      <p class="nb-p">The <code>print_only</code> flag previews a task without executing anything.
+        Run it that way first on a fresh environment. It is safe and it confirms the config resolves.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="deploy&#10;python bin/execute_&lt;task&gt;.py --print_only">Copy</button>
+        <span class="nb-code-label">Preview a task, nothing runs</span>
+<pre>deploy
+python bin/execute_&lt;task&gt;.py --print_only</pre>
+      </div>
+
+      <h3 class="nb-h">3. Run A Real Task And Confirm</h3>
+      <p class="nb-p">Now run one entry point for real and check the exit code.
+        A <code>0</code> exit code proves the whole path works: Jenkins to Fabric to the target host.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="python bin/execute_&lt;task&gt;.py&#10;echo $?   # 0 means success">Copy</button>
+        <span class="nb-code-label">Run for real, then read the exit code</span>
+<pre>python bin/execute_&lt;task&gt;.py
+echo $?   <span class="cmt"># 0 means success</span></pre>
+      </div>
+      <div class="nb-box note">
+        This page only points you at the files and the run flow.
+        The next page covers how the config layers and the commander actually work.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 8: How it works -->
+     <article data-label="How It Works" class="nb-leaf" id="nb-pyauto-howitworks" role="group" aria-roledescription="page" aria-label="Page 8: How the framework works">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 8 -</div>
 
       <h3 class="nb-h">1. The Layered Config Model</h3>
       <p class="nb-p">There are three config files.
@@ -605,13 +672,13 @@ AllowUsers devops</pre>
     </div>
      </article>
 
-     <!-- Leaf 8: Extending it -->
-     <article data-label="Extend It" class="nb-leaf" id="nb-pyauto-extend" role="group" aria-roledescription="page" aria-label="Page 8: Extending it">
+     <!-- Leaf 9: Extending it -->
+     <article data-label="Extend It" class="nb-leaf" id="nb-pyauto-extend" role="group" aria-roledescription="page" aria-label="Page 9: Extending it">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
       <div class="nb-masthead">PYTHON AUTOMATION</div>
-      <div class="nb-pagenum">- Page 8 -</div>
+      <div class="nb-pagenum">- Page 9 -</div>
 
       <h3 class="nb-h">Add A New Config File</h3>
       <p class="nb-p">The pattern is small.
@@ -693,13 +760,13 @@ example_api_secret = REPLACE_ME</pre>
     </div>
      </article>
 
-     <!-- Leaf 9: Troubleshooting -->
-     <article data-label="Troubleshooting" class="nb-leaf" id="nb-pyauto-troubleshooting" role="group" aria-roledescription="page" aria-label="Page 9: Troubleshooting">
+     <!-- Leaf 10: Troubleshooting -->
+     <article data-label="Troubleshooting" class="nb-leaf" id="nb-pyauto-troubleshooting" role="group" aria-roledescription="page" aria-label="Page 10: Troubleshooting">
     <div class="nb-sheet nb-page">
       <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
       <div class="nb-masthead">PYTHON AUTOMATION</div>
-      <div class="nb-pagenum">- Page 9 -</div>
+      <div class="nb-pagenum">- Page 10 -</div>
 
       <h3 class="nb-h">Fabric And OS Upgrade Pitfalls</h3>
       <p class="nb-p">Most breakage comes from an OS or Jenkins upgrade that pulls in Python 3 Fabric.
@@ -771,7 +838,7 @@ pip3 install Fabric3</pre>
     </div>
      </article>
 
-     <!-- Leaf 10: end / back cover -->
+     <!-- Leaf 11: end / back cover -->
      <article data-label="The End" class="nb-leaf nb-backcover" id="nb-pyauto-end" role="group" aria-roledescription="page" aria-label="End of notebook">
        <div class="nb-sheet nb-endsheet">
          <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
