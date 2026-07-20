@@ -4599,8 +4599,6 @@ main :where([style*="grid"], [class*="grid"], .two-col) > * { min-width: 0; }
 :root {
   --pyauto:      #f0c040;   /* warm gold, legible as text on dark */
   --pyauto2:     #d4a017;
-  --pyauto-grad: linear-gradient(135deg, #f0c040, #d4a017);
-  --pyauto-glow: rgba(240,192,64,0.18);
 }
 [data-theme="light"] { --pyauto: #a16207; --pyauto2: #854d0e; }
 
