@@ -6076,8 +6076,24 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
   font-family: var(--nb-title); color: var(--nb-marker);
   font-size: clamp(2.4rem, 9vw, 4.2rem); line-height: 0.95; text-align: center;
   transform: rotate(-1deg); margin: 16px 0 2px; letter-spacing: -1px;
+  /* Safety net: long/unbreakable tokens wrap inside the sheet instead of
+     overflowing the notebook width at desktop or mobile. */
+  max-width: 100%; overflow-wrap: anywhere; word-break: break-word;
 }
 .nb-cover-title small { display: block; font-size: 1em; }
+/* Repo / source-name chip under a cover title — a small monospace label,
+   never the giant marker font, so long tokens like a repo name fit. */
+.nb-cover-repo {
+  text-align: center; margin: 6px auto 0; max-width: 100%;
+}
+.nb-cover-repo code {
+  font-family: var(--font-mono); font-size: clamp(0.72rem, 2.4vw, 0.95rem);
+  color: var(--nb-marker); background: var(--nb-paper2);
+  border: 1px solid var(--nb-box); border-radius: 8px;
+  padding: 3px 10px; letter-spacing: 0;
+  overflow-wrap: anywhere; word-break: break-word;
+  display: inline-block; max-width: 100%;
+}
 .nb-cover-band {
   font-family: var(--nb-head); font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.5rem);
   color: var(--nb-navy); text-align: center; border: 2px solid var(--nb-navy);
