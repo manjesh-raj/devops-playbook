@@ -4238,6 +4238,12 @@ window.NB_LIBRARY = [
       { key: 'nb-adot-cover',   href: 'aws-adot.html',      title: 'AWS ADOT',      emoji: '📡', brand: 'var(--adot)', tag: 'Advanced', pages: 11, desc: 'Ship OpenTelemetry data into AWS with the managed ADOT collector.' },
     ],
   },
+  {
+    title: 'Automation',
+    books: [
+      { key: 'nb-pyauto-cover', href: 'python-automation.html', title: 'Python Automation', emoji: '🐍', brand: 'var(--pyauto)', tag: 'Advanced', pages: 9, desc: 'The Python and Fabric engine Jenkins drives to automate tenant and infra tasks.' },
+    ],
+  },
 ];
 
 (function initShelf() {
