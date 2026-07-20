@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python Framework for Automation · The DevOps Playbook</title>
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t="dark";document.documentElement.setAttribute("data-theme",t);if(localStorage.getItem("nbPlain")==="1")document.documentElement.classList.add("nb-plain");}catch(e){}})();</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Permanent+Marker&family=Caveat:wght@600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=33" />
+</head>
+<body>
+<main class="main nb-topic-main" id="mainContent">
+<section id="nb-pyauto-cover" data-topic="Python Automation" class="section nb-section nb-book-section nb-book--pyauto" aria-roledescription="notebook" aria-label="Python Framework for Automation notebook">
+   <div class="nb-book" data-open="false">
+    <div class="nb-stage" tabindex="-1">
+
+     <!-- Leaf 0: cover -->
+     <article data-label="Notebook Cover" class="nb-leaf nb-leaf-cover" role="group" aria-roledescription="page" aria-label="Notebook cover">
+    <div class="nb-sheet nb-cover">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-cover-title">PYTHON AUTOMATION<small>python_raasng_devops</small></div>
+      <div class="nb-cover-band">A Python + Fabric engine that Jenkins drives</div>
+      <p class="nb-cover-desc">This notebook explains the home-grown automation framework behind tenant onboarding, database work, DNS, and a large catalogue of one-off infrastructure tasks.
+        It covers how the framework is built, how to set it up, how to extend it, and how to fix the common pitfalls.</p>
+      <div class="nb-diagram">
+        <div class="nb-flow">
+          <span class="nb-node"><b>Jenkins</b></span><span class="nb-ar">→</span>
+          <span class="nb-node">bin/execute_*.py</span><span class="nb-ar">→</span>
+          <span class="nb-node">Task class</span><span class="nb-ar">→</span>
+          <span class="nb-node"><b>Fabric</b> over SSH</span>
+        </div>
+      </div>
+      <div class="nb-cols" style="margin-top:20px">
+        <div class="nb-box">
+          <span class="nb-box-title">What's Inside?</span>
+          <ul class="nb-list check">
+            <li>What this framework is</li>
+            <li>What it automates</li>
+            <li>Why the approach works</li>
+            <li>Get the code and set it up</li>
+            <li>How the engine works</li>
+            <li>Extend it and troubleshoot it</li>
+          </ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Who Is This For?</span>
+          <ul class="nb-list">
+            <li>Anyone running the DevOps automation jobs</li>
+            <li>Anyone standing up a new Jenkins runner</li>
+            <li>Anyone adding a new automation task</li>
+            <li>Anyone debugging a Fabric upgrade break</li>
+          </ul>
+        </div>
+      </div>
+      <div class="nb-cover-quote"><span class="star">★</span> "One engine, many tasks, driven from Jenkins."</div>
+    </div>
+     </article>
+
+     <!-- Leaf 1: Overview -->
+     <article data-label="Overview" class="nb-leaf" id="nb-pyauto-overview" role="group" aria-roledescription="page" aria-label="Page 1: Overview">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 1 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. What This Is</h3>
+          <p class="nb-p"><code>python_raasng_devops</code> is a home-grown Python automation framework.
+            It runs DevOps operations against remote hosts.
+            It is the engine behind tenant onboarding, deboarding, database work, and a large catalogue of one-off infrastructure tasks.</p>
+          <p class="nb-p">The framework is written in Python and built on <b>Fabric 1.x</b>, which needs Python 2.7.
+            Jenkins jobs drive it. Each job runs a small command-line entry point that does one task.</p>
+        </div>
+        <div class="nb-box note" style="align-self:center">
+          <span class="nb-box-title">In Simple Words</span>
+          You describe a task once as a Python class. Jenkins runs it. Fabric carries the commands over SSH to the target host.
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">2. The Problems It Solves</h3>
+          <p class="nb-p">Without a framework, every automation job is its own script.
+            Each script re-invents SSH connection handling, secrets, logging, dry-run, and exit codes.
+            That is slow to write and easy to get wrong.</p>
+          <p class="nb-p">This framework gives every task the same shape.
+            Connection identity lives in one place. Secrets live in another.
+            The base class handles execution, logging, dry-run, error policy, and exit codes for you.</p>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">What You Get For Free</span>
+          <ul class="nb-list">
+            <li>One SSH connection layer for every host</li>
+            <li>Secrets kept separate from connection details</li>
+            <li>A uniform task shape</li>
+            <li>Ordered, repeatable multi-command runs</li>
+            <li>Built-in dry-run preview</li>
+            <li>Exit codes Jenkins can gate on</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="nb-h">3. The Shape Of The Codebase</h3>
+      <p class="nb-p">The design is a small layered core plus many thin task modules.
+        There are around 112 task modules under <code>lib/</code> and 109 matching entry points under <code>bin/</code>.</p>
+      <div class="nb-box">
+        <ul class="nb-list">
+          <li><b>lib/config.py</b> - the config core. It turns INI files into validated Python dicts.</li>
+          <li><b>lib/system_config.py</b> - the connection layer. It holds SSH identity per host.</li>
+          <li><b>lib/pramata_config.py</b> - the secrets layer. It holds per-host application credentials.</li>
+          <li><b>lib/commander.py</b> - the execution engine. It generates commands and runs them through Fabric.</li>
+          <li><b>lib/&lt;task&gt;.py</b> - one thin module per task. It subclasses the engine and lists the commands to run.</li>
+          <li><b>bin/execute_&lt;task&gt;.py</b> - the CLI entry point that Jenkins invokes.</li>
+        </ul>
+      </div>
+
+      <div class="nb-box note">
+        The rest of this notebook walks each of these layers.
+        Pages 5 and 6 cover setup. Page 7 covers how the engine works.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 2: What it automates -->
+     <article data-label="What It Automates" class="nb-leaf" id="nb-pyauto-capabilities" role="group" aria-roledescription="page" aria-label="Page 2: What it automates">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 2 -</div>
+
+      <h3 class="nb-h">1. What It Automates</h3>
+      <p class="nb-p">The task modules cover the full lifecycle of the multi-tenant RaaS infrastructure.
+        Every task is a CLI entry point that Jenkins invokes.
+        The list below groups the real modules by area.</p>
+
+      <div class="nb-cols">
+        <div class="nb-box dash">
+          <span class="nb-box-title">Tenant Onboarding</span>
+          <ul class="nb-list">
+            <li>Ingress and networking, Istio service setup, UAT IAM</li>
+            <li>Search API setup, reindex, and trigger</li>
+            <li>Notifications with SNS, email with SES, synthetic monitoring</li>
+            <li>Database migrator setup and user access</li>
+            <li>Data management and CDA API migrations</li>
+          </ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Tenant Deboarding</span>
+          <ul class="nb-list">
+            <li>Elasticsearch, ingress, and SFTP cleanup</li>
+            <li>S3 replication rule and bucket-policy removal</li>
+            <li>SNS, IAM, and Auth0 cleanup</li>
+            <li>GenAI, OCR, and synthetic monitoring teardown</li>
+            <li>GoDaddy subdomain deletion</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div class="nb-box dash">
+          <span class="nb-box-title">AI, GenAI, and OCR</span>
+          <ul class="nb-list">
+            <li>Enable GenAI for a tenant</li>
+            <li>OCR setup</li>
+            <li>Digitizer AI extractor config</li>
+            <li>Clause analytics config</li>
+          </ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Databases</span>
+          <ul class="nb-list">
+            <li>Database restore</li>
+            <li>Grant tenant database access</li>
+            <li>Write, read, and count query execution</li>
+            <li>DocumentDB read queries</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div class="nb-box dash">
+          <span class="nb-box-title">DNS, Secrets, and AWS</span>
+          <ul class="nb-list">
+            <li>Route53 CNAME create and delete</li>
+            <li>GoDaddy DNS changes</li>
+            <li>AWS secrets create and update, service secrets</li>
+            <li>S3 lifecycle rules, inventory, and file listing</li>
+            <li>SNS, SES, and IP whitelisting</li>
+          </ul>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Jenkins, Services, and Checks</span>
+          <ul class="nb-list">
+            <li>Create Jenkins build and deploy jobs</li>
+            <li>Update Jenkins deploy jobs</li>
+            <li>Service setup with configmap, deployment, and Istio</li>
+            <li>Cron add and delete, scheduled S3 deletion</li>
+            <li>SFTP checks and WAF log sync</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nb-box note">
+        In short: tenant onboarding and deboarding, database restore and access grants, SFTP checks, Route53 and GoDaddy DNS, Jenkins job creation, AWS secrets, S3, SNS, and SES, GenAI and OCR enablement, and Kubernetes and Istio service setup.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 3: Advantages -->
+     <article data-label="Advantages" class="nb-leaf" id="nb-pyauto-advantages" role="group" aria-roledescription="page" aria-label="Page 3: Advantages">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 3 -</div>
+
+      <h3 class="nb-h">Why This Approach Works</h3>
+      <p class="nb-p">These advantages are grounded in what the code actually does.
+        They are the reason the repo can carry 100+ task modules cheaply.</p>
+
+      <div class="nb-cols">
+        <div class="nb-box">
+          <span class="nb-box-title">1. One Place For Connection Identity</span>
+          <code>SystemConfig</code> holds the SSH user, sudo user, password, and port per host, with a <code>[DEFAULT]</code> fallback.
+          Every task inherits the same connection behaviour. There is no per-script SSH boilerplate.
+        </div>
+        <div class="nb-box">
+          <span class="nb-box-title">2. Connection Split From Secrets</span>
+          Transport config and application secrets are separate layers.
+          A task states what secrets it needs, apart from how to reach the host.
+          Swapping the secret set is a one-line change.
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div class="nb-box">
+          <span class="nb-box-title">3. Uniform Task Shape</span>
+          A new task is a subclass plus a few small methods that return command descriptors.
+          The base class already handles execution, logging, dry-run, error policy, and exit codes.
+          The cost to add automation stays low.
+        </div>
+        <div class="nb-box">
+          <span class="nb-box-title">4. Ordered, Repeatable Runs</span>
+          The driver runs command generators in a deterministic order.
+          It aggregates return codes and applies the same error policy across every task.
+          A run behaves the same way every time.
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div class="nb-box">
+          <span class="nb-box-title">5. Dry-Run Safety Built In</span>
+          A <code>print_only</code> flag lets an operator preview exactly what would run before executing.
+          This matters for destructive tenant and database operations.
+        </div>
+        <div class="nb-box">
+          <span class="nb-box-title">6. Jenkins-Friendly Exit Codes</span>
+          Each task has a <code>bin/execute_*.py</code> wrapper that parses options and calls <code>run()</code>.
+          The engine maps aggregate failure to a process exit code, so a Jenkins job can gate pass or fail.
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div class="nb-box">
+          <span class="nb-box-title">7. Typed, Explicit Errors</span>
+          Both layers raise named exceptions instead of leaking raw parser or IO errors.
+          Config problems and command failures are easy to read in a Jenkins log.
+        </div>
+        <div class="nb-box">
+          <span class="nb-box-title">8. Multi-Host Parallelism Available</span>
+          The engine can fan a command out across hosts with <code>xargs -P</code>.
+          Multi-host config classes exist for when a task targets a fleet.
+        </div>
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 4: Get the code -->
+     <article data-label="Get The Code" class="nb-leaf" id="nb-pyauto-getcode" role="group" aria-roledescription="page" aria-label="Page 4: Get the code">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 4 -</div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. The Repository</h3>
+          <p class="nb-p">The framework lives in a single GitHub repository.
+            It is a <b>private</b> repo, so you need access before you can clone it.</p>
+          <p class="nb-p">Repo URL:</p>
+          <ul class="nb-list">
+            <li><code>https://github.com/manjesh-raj/python_raasng_devops</code></li>
+          </ul>
+        </div>
+        <div class="nb-box note" style="align-self:center">
+          <span class="nb-box-title">Access First</span>
+          This is a private repository. If the clone fails with an authentication error, request access to the repo before trying again.
+        </div>
+      </div>
+
+      <h3 class="nb-h">2. Clone It</h3>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="git clone https://github.com/manjesh-raj/python_raasng_devops.git&#10;cd python_raasng_devops">Copy</button>
+        <span class="nb-code-label">Clone the framework onto your machine</span>
+<pre><span class="cmt"># clone the private repo (you need access)</span>
+git clone https://github.com/manjesh-raj/python_raasng_devops.git
+cd python_raasng_devops</pre>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">3. Where The Code Lives</h3>
+          <p class="nb-p">Once cloned, the layout is easy to read.
+            The framework code sits under <code>lib/</code>.
+            The entry points that Jenkins runs sit under <code>bin/</code>.</p>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Repo Layout</span>
+          <ul class="nb-list">
+            <li><code>lib/</code> - the framework core and every task module</li>
+            <li><code>bin/</code> - the CLI entry points, one per task</li>
+            <li><code>Utils/lib/</code> - shared helpers such as logging</li>
+            <li><code>config/</code> - the INI and YAML config files</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nb-box note">
+        The <code>config/</code> directory holds secrets, so it is kept out of Git.
+        Real <code>system.conf</code> and <code>pramata.conf</code> files are provided at deploy time, not committed.
+        Any example in this notebook uses placeholders.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 5: Setup - Jenkins server -->
+     <article data-label="Setup: Jenkins Server" class="nb-leaf" id="nb-pyauto-setup-jenkins" role="group" aria-roledescription="page" aria-label="Page 5: Setup on the Jenkins server">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 5 -</div>
+
+      <h3 class="nb-h">Setup, Part 1: The Jenkins Server</h3>
+      <p class="nb-p">The framework runs from a Jenkins server.
+        Jenkins triggers the tasks, and the tasks reach out to the target hosts over SSH.
+        This page sets up that Jenkins runner.</p>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">1. Prerequisite</h3>
+          <p class="nb-p">Start with a Jenkins server deployed from the AWS Marketplace.
+            Use the <b>Jenkins Certified by Bitnami</b> image.
+            Log in once with its credentials to confirm it is ready.</p>
+        </div>
+        <div class="nb-box note" style="align-self:center">
+          <span class="nb-box-title">The devops User</span>
+          The framework runs as a dedicated <code>devops</code> user. Switch to it before setting anything up.
+        </div>
+      </div>
+
+      <h3 class="nb-h">2. Switch To The devops User</h3>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="sudo su - devops">Copy</button>
+        <span class="nb-code-label">Become the devops user on the Jenkins server</span>
+<pre>sudo su - devops</pre>
+      </div>
+
+      <h3 class="nb-h">3. Environment Variables And Aliases</h3>
+      <p class="nb-p">Add these exports and aliases to the <code>devops</code> user's BASHRC.
+        The <code>PYTHONPATH</code> entries are what let <code>lib/</code> and <code>Utils/lib/</code> import cleanly.
+        Without them the config discovery fails.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="export HOME=&quot;/opt&quot;&#10;export DEVOPS_BASE=&quot;$HOME/devops_tools/python_devops&quot;&#10;export PYTHONPATH=&quot;$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:&quot;&#10;&#10;alias deploy=&quot;cd $DEVOPS_BASE/lib&quot;&#10;alias eb=&quot;vi $BASHRC&quot;&#10;alias resource=&quot;source $BASHRC&quot;">Copy</button>
+        <span class="nb-code-label">Add to the devops user's BASHRC</span>
+<pre><span class="cmt"># base paths</span>
+export HOME="/opt"
+export DEVOPS_BASE="$HOME/devops_tools/python_devops"
+export PYTHONPATH="$PYTHONPATH:$DEVOPS_BASE/lib:$DEVOPS_BASE/Utils/lib:"
+
+<span class="cmt"># handy aliases</span>
+alias deploy="cd $DEVOPS_BASE/lib"
+alias eb="vi $BASHRC"
+alias resource="source $BASHRC"</pre>
+      </div>
+      <div class="nb-box dash">
+        <ul class="nb-list">
+          <li><code>deploy</code> jumps you into the <code>lib/</code> directory where the task modules live.</li>
+          <li><code>eb</code> opens the BASHRC for editing.</li>
+          <li><code>resource</code> re-sources the BASHRC after a change.</li>
+        </ul>
+      </div>
+
+      <h3 class="nb-h">4. Install Fabric</h3>
+      <p class="nb-p">The framework needs <b>Fabric 1.x</b> on Python 2.7.
+        Install it, then verify the version.
+        You should see Fabric 1.x and Paramiko, not Fabric 2 or 3.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="sudo apt-get install fabric&#10;fab -V">Copy</button>
+        <span class="nb-code-label">Install Fabric and check the version</span>
+<pre>sudo apt-get install fabric
+
+<span class="cmt"># verify: expect Fabric 1.10.2, Paramiko 1.16.0</span>
+fab -V</pre>
+      </div>
+
+      <h3 class="nb-h">5. Clone The Code Onto The Server</h3>
+      <p class="nb-p">As root, clone the framework into <code>/opt</code>, then hand it to the <code>devops</code> user.
+        The <code>chown</code> step matters, since the tasks run as <code>devops</code>.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="sudo su -&#10;cd /opt&#10;git clone https://github.com/manjesh-raj/python_raasng_devops.git&#10;chown -R devops: python_raasng_devops">Copy</button>
+        <span class="nb-code-label">Clone as root, then chown to devops</span>
+<pre>sudo su -
+cd /opt
+git clone https://github.com/manjesh-raj/python_raasng_devops.git
+chown -R devops: python_raasng_devops</pre>
+      </div>
+      <div class="nb-box note">
+        The deploy path the tasks expect is under <code>/opt</code>.
+        Keep the code there so the <code>DEVOPS_BASE</code> and <code>PYTHONPATH</code> above line up.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 6: Setup - Target server -->
+     <article data-label="Setup: Target Server" class="nb-leaf" id="nb-pyauto-setup-target" role="group" aria-roledescription="page" aria-label="Page 6: Setup on the target server">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 6 -</div>
+
+      <h3 class="nb-h">Setup, Part 2: The Target Server</h3>
+      <p class="nb-p">The Jenkins server reaches each target host over SSH as the <code>devops</code> user.
+        So every target needs that user and the right SSH settings.
+        Bake these changes into the AMI, so every new instance is ready out of the box.</p>
+
+      <div class="nb-box note">
+        Do this in the base image, not by hand on each server.
+        A one-time AMI change means every target host that boots from it can already be reached.
+      </div>
+
+      <h3 class="nb-h">1. Create The devops User</h3>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="adduser devops">Copy</button>
+        <span class="nb-code-label">Create the linux devops user on the target</span>
+<pre>adduser devops</pre>
+      </div>
+      <p class="nb-p">Create the user in the image, then set the password on the running EC2 instance.</p>
+
+      <h3 class="nb-h">2. Add The Sudoers Entries</h3>
+      <p class="nb-p">Give the <code>devops</code> user sudo rights.
+        Add these lines to the sudoers config.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="%wheel  ALL=(ALL)  ALL&#10;%devops ALL=(ALL)  ALL">Copy</button>
+        <span class="nb-code-label">Sudoers entries</span>
+<pre>%wheel  ALL=(ALL)  ALL
+%devops ALL=(ALL)  ALL</pre>
+      </div>
+
+      <h3 class="nb-h">3. Configure SSH</h3>
+      <p class="nb-p">Edit <code>/etc/ssh/sshd_config</code>.
+        Turn on password authentication and limit logins to the <code>devops</code> user.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="# in /etc/ssh/sshd_config&#10;PasswordAuthentication yes&#10;AllowUsers devops">Copy</button>
+        <span class="nb-code-label">Edit /etc/ssh/sshd_config</span>
+<pre><span class="cmt"># in /etc/ssh/sshd_config</span>
+PasswordAuthentication yes
+AllowUsers devops</pre>
+      </div>
+
+      <h3 class="nb-h">4. Restart SSH</h3>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="service sshd restart">Copy</button>
+        <span class="nb-code-label">Apply the SSH config change</span>
+<pre>service sshd restart</pre>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">5. Open Port 22</h3>
+          <p class="nb-p">Open port 22 from the Jenkins server to the target server.
+            This is what lets Fabric open the SSH session.
+            Scope the rule to the Jenkins server, not the whole internet.</p>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Checklist For Each Target</span>
+          <ul class="nb-list check">
+            <li>devops user exists</li>
+            <li>Sudoers entries added</li>
+            <li>Password auth on, AllowUsers devops</li>
+            <li>sshd restarted</li>
+            <li>Port 22 open from Jenkins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 7: How it works -->
+     <article data-label="How It Works" class="nb-leaf" id="nb-pyauto-howitworks" role="group" aria-roledescription="page" aria-label="Page 7: How the framework works">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 7 -</div>
+
+      <h3 class="nb-h">1. The Layered Config Model</h3>
+      <p class="nb-p">There are three config files.
+        At runtime, two configs are always live inside a commander.
+        Each file has one clear job.</p>
+      <div class="nb-table-wrap">
+        <table class="nb-table">
+          <thead><tr><th>Layer</th><th>File / class</th><th>Holds</th></tr></thead>
+          <tbody>
+            <tr><td>Core</td><td><code>config.py</code></td><td>INI parsing, validation, file discovery, and DEFAULT inheritance. Nothing domain-specific.</td></tr>
+            <tr><td>System</td><td><code>system_config.py</code> <code>SystemConfig</code></td><td>Per-host SSH identity: user, sudo user, password, port. Always loaded.</td></tr>
+            <tr><td>Application</td><td><code>pramata_config.py</code> <code>PramataConfig</code></td><td>Per-host app secrets: git, Jenkins, WAF, GoDaddy, DB. Loaded per task.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">2. config.py - The Core</h3>
+          <p class="nb-p">This file turns INI files into validated Python dicts.
+            It defines the file format, where config files live, and the shapes a config can take.
+            It raises typed exceptions on bad sections, keys, or files.</p>
+          <p class="nb-p">It offers three access patterns.
+            One host, many hosts, or a section per host with a <code>[DEFAULT]</code> fallback.</p>
+        </div>
+        <div class="nb-box dash">
+          <span class="nb-box-title">Two Axes Of Layering</span>
+          <ul class="nb-list">
+            <li><b>Within one file</b>: the <code>[DEFAULT]</code> section sets fleet-wide values, and each host section overrides only what differs.</li>
+            <li><b>Across files</b>: the connection config and the task's secret config both live in the same commander at once.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nb-cols">
+        <div>
+          <h3 class="nb-h">3. system_config.py - Connection</h3>
+          <p class="nb-p">This is the "how do I reach the box" layer.
+            <code>SystemConfig</code> uses the section-per-host pattern.
+            The <code>[DEFAULT]</code> section gives fleet-wide connection defaults, and each host section overrides only what changes.
+            The engine feeds it straight into Fabric's SSH settings.</p>
+        </div>
+        <div>
+          <h3 class="nb-h">4. pramata_config.py - Secrets</h3>
+          <p class="nb-p">This is the "once I am on the box, what secrets do I need" layer.
+            <code>PramataConfig</code> uses the one-section-per-host pattern.
+            It is not auto-loaded. A task opts into it, and the host is passed in for you so the right section is picked.</p>
+        </div>
+      </div>
+
+      <h3 class="nb-h">5. The Commander And Fabric</h3>
+      <p class="nb-p"><code>commander.py</code> is the execution engine.
+        It is a thin object-oriented wrapper over Fabric 1.x.
+        A task declares a set of command generator methods. Each returns a list of command descriptor dicts.
+        The engine walks those methods in source order and runs each descriptor through the matching Fabric operation.</p>
+      <div class="nb-box dash">
+        <ul class="nb-list">
+          <li>Descriptors carry a <code>cmd_type</code>: <code>sudo</code>, <code>run</code>, <code>local</code>, <code>put</code>, <code>get</code>, or <code>noop</code>.</li>
+          <li>Connection settings come from <code>system_config</code>. Application secrets come from the task's chosen config.</li>
+          <li>Each command's return code is recorded and summed. The process exits with that code so Jenkins sees pass or fail.</li>
+          <li><code>print_only</code> is dry-run. <code>execute_all</code> continues past failures. Both are first-class flags.</li>
+        </ul>
+      </div>
+
+      <h3 class="nb-h">6. The Control Flow, End To End</h3>
+      <div class="nb-code">
+        <span class="nb-code-label">From a Jenkins job to a Fabric call</span>
+<pre>Jenkins / operator
+  -> bin/execute_&lt;task&gt;.py        <span class="cmt"># parse options, build class, run()</span>
+     -> lib/&lt;task&gt;.py             <span class="cmt"># a Task(HostCommanderBase)</span>
+        - config_meta_data()      <span class="cmt"># names which config to load</span>
+        - command generators      <span class="cmt"># return lists of command dicts</span>
+     -> CommanderBase.run()       <span class="cmt"># walk generators in order</span>
+        -> execute_cmd()          <span class="cmt"># Fabric run / sudo / put / get / local</span>
+        -> sum return codes, sys.exit(code)</pre>
+      </div>
+      <div class="nb-box note">
+        A newer pattern reads per-environment values from <code>config/raas-&lt;env&gt;.yml</code> with YAML, beside the original INI config.
+        The codebase mixes eras. Both patterns are in use.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 8: Extending it -->
+     <article data-label="Extend It" class="nb-leaf" id="nb-pyauto-extend" role="group" aria-roledescription="page" aria-label="Page 8: Extending it">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 8 -</div>
+
+      <h3 class="nb-h">Add A New Config File</h3>
+      <p class="nb-p">The pattern is small.
+        One module in <code>lib/</code>, one <code>.conf</code> file in <code>config/</code>, and a one-line selector in the task that should use it.
+        There is no central registry. Discovery happens by name at instantiation time.</p>
+
+      <div class="nb-cols">
+        <div class="nb-box">
+          <span class="nb-box-title">Step 1: Create The Module</span>
+          Add <code>lib/&lt;name&gt;_config.py</code>. Subclass the access pattern that fits.
+          <ul class="nb-list">
+            <li>One host: <code>HostBasedConfig</code></li>
+            <li>Many hosts: <code>HostsBasedConfig</code></li>
+            <li>Section per host with defaults: <code>SectionBasedConfig</code></li>
+          </ul>
+        </div>
+        <div class="nb-box">
+          <span class="nb-box-title">Step 2: Create The File</span>
+          Add <code>config/&lt;name&gt;.conf</code> in the sibling <code>config/</code> directory.
+          For a host-based config, use one section per host, named exactly by the host string you pass in.
+        </div>
+      </div>
+
+      <div class="nb-box">
+        <span class="nb-box-title">Step 3: Select It In A Task</span>
+        Point the task's <code>config_meta_data()</code> at your module and class.
+        That return value is the switch that picks which config is active.
+        Swap the module and class name there, and the task loads a different config, with no other change.
+      </div>
+
+      <h3 class="nb-h">Minimal Template</h3>
+      <p class="nb-p">A new config module for one host looks like this.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="from config import HostBasedConfig&#10;&#10;&#10;class ExampleConfig(HostBasedConfig):&#10;&#10;    def config_file_name(self):&#10;        return 'example.conf'&#10;&#10;    def config_keys(self):&#10;        return [&#10;            'ssh_port',&#10;            'user',&#10;            'example_api_token',&#10;            'example_api_secret',&#10;        ]">Copy</button>
+        <span class="nb-code-label">lib/example_config.py</span>
+<pre><span class="kw">from</span> config <span class="kw">import</span> HostBasedConfig
+
+
+<span class="kw">class</span> ExampleConfig(HostBasedConfig):
+
+    <span class="kw">def</span> config_file_name(self):
+        <span class="kw">return</span> <span class="str">'example.conf'</span>
+
+    <span class="kw">def</span> config_keys(self):
+        <span class="kw">return</span> [
+            <span class="str">'ssh_port'</span>,
+            <span class="str">'user'</span>,
+            <span class="str">'example_api_token'</span>,
+            <span class="str">'example_api_secret'</span>,
+        ]</pre>
+      </div>
+
+      <div class="nb-cols">
+        <div class="nb-code">
+          <button class="term-copy nb-copy" data-copy="[my-host.internal]&#10;ssh_port           = 22&#10;user               = devops&#10;example_api_token  = REPLACE_ME&#10;example_api_secret = REPLACE_ME">Copy</button>
+          <span class="nb-code-label">config/example.conf</span>
+<pre>[my-host.internal]
+ssh_port           = 22
+user               = devops
+example_api_token  = REPLACE_ME
+example_api_secret = REPLACE_ME</pre>
+        </div>
+        <div class="nb-code">
+          <button class="term-copy nb-copy" data-copy="class MyTask(HostCommanderBase):&#10;    def config_meta_data(self):&#10;        return {'module_name': 'example_config',&#10;                'class_name': 'ExampleConfig'}&#10;    # reach values via&#10;    # self.config.get_config_value('example_api_token')">Copy</button>
+          <span class="nb-code-label">The one-line selector in a task</span>
+<pre><span class="kw">class</span> MyTask(HostCommanderBase):
+    <span class="kw">def</span> config_meta_data(self):
+        <span class="kw">return</span> {<span class="str">'module_name'</span>: <span class="str">'example_config'</span>,
+                <span class="str">'class_name'</span>: <span class="str">'ExampleConfig'</span>}
+    <span class="cmt"># reach values via</span>
+    <span class="cmt"># self.config.get_config_value('example_api_token')</span></pre>
+        </div>
+      </div>
+
+      <div class="nb-box note">
+        If the task extends <code>HostCommanderBase</code> and your class is host-based, the host is passed to it automatically.
+        For fleet-wide defaults with per-host overrides, subclass <code>SectionBasedConfig</code> and also implement <code>default_config_keys()</code>.
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 9: Troubleshooting -->
+     <article data-label="Troubleshooting" class="nb-leaf" id="nb-pyauto-troubleshooting" role="group" aria-roledescription="page" aria-label="Page 9: Troubleshooting">
+    <div class="nb-sheet nb-page">
+      <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="nb-plain-toggle" type="button" onclick="toggleNbPlain()" aria-pressed="false">Aa Plain text</button>
+      <div class="nb-masthead">PYTHON AUTOMATION</div>
+      <div class="nb-pagenum">- Page 9 -</div>
+
+      <h3 class="nb-h">Fabric And OS Upgrade Pitfalls</h3>
+      <p class="nb-p">Most breakage comes from an OS or Jenkins upgrade that pulls in Python 3 Fabric.
+        The framework runs on Fabric 1.x, which needs Python 2.7.
+        A Python 3 <code>fab</code> shim breaks it.</p>
+
+      <div class="nb-box dash">
+        <span class="nb-box-title">Symptom</span>
+        After an Ubuntu upgrade you see:
+        <div class="nb-code" style="margin-top:8px">
+          <span class="nb-code-label">The tell-tale error</span>
+<pre>ImportError: cannot import name 'isMappingType'</pre>
+        </div>
+        This comes from <code>fabric/main.py</code> running under Python 3.
+        The root cause is a Python 3 <code>fab</code> shim over Fabric 1.x code.
+      </div>
+
+      <h3 class="nb-h">Fix A: Keep Fabric 1.x On Python 2.7</h3>
+      <p class="nb-p">This is the fix that matches how the framework is meant to run.
+        Point <code>fab</code> back at Python 2.7 and reinstall Fabric 1.x under Python 2.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="# 1. point the fab shebang back to python 2.7&#10;#    edit /usr/local/bin/fab&#10;#    change  #!/usr/bin/python3  ->  #!/usr/bin/python2.7&#10;&#10;# 2. remove the python3 fabric/paramiko packages&#10;sudo apt-get remove 'python3.*'&#10;&#10;# 3. install pip for python 2.7&#10;curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py&#10;sudo python2 get-pip.py&#10;&#10;# 4. install Fabric 1.x&#10;pip2 install fabric==1.10.2&#10;&#10;# 5. if you hit: ImportError: No module named Crypto&#10;sudo pip install pycrypto">Copy</button>
+        <span class="nb-code-label">Restore Fabric 1.10.2 on Python 2.7</span>
+<pre><span class="cmt"># 1. point the fab shebang back to python 2.7</span>
+<span class="cmt">#    edit /usr/local/bin/fab</span>
+<span class="cmt">#    change  #!/usr/bin/python3  ->  #!/usr/bin/python2.7</span>
+
+<span class="cmt"># 2. remove the python3 fabric/paramiko packages</span>
+sudo apt-get remove 'python3.*'
+
+<span class="cmt"># 3. install pip for python 2.7</span>
+curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+sudo python2 get-pip.py
+
+<span class="cmt"># 4. install Fabric 1.x</span>
+pip2 install fabric==1.10.2
+
+<span class="cmt"># 5. if you hit: ImportError: No module named Crypto</span>
+sudo pip install pycrypto</pre>
+      </div>
+      <div class="nb-box note">
+        Install Fabric for every user that runs it, not just <code>devops</code>.
+        The <code>tomcat</code> user needed it too.
+        The safest route is to install as root so it is on the path for all of them.
+      </div>
+
+      <h3 class="nb-h">Fix B: Fabric3 On Python 3</h3>
+      <p class="nb-p">A later working sequence used <b>Fabric3</b> on Python 3 instead of restoring Fabric 1.x.
+        Use this only if you have decided to move off Python 2.7.</p>
+      <div class="nb-code">
+        <button class="term-copy nb-copy" data-copy="sudo apt update&#10;sudo apt install python3 python3-pip&#10;sudo pip3 install &quot;invoke&gt;=1.3.0&quot;&#10;python3 -m pip install --upgrade pip setuptools wheel&#10;pip3 install Fabric3">Copy</button>
+        <span class="nb-code-label">The Fabric3 alternative</span>
+<pre>sudo apt update
+sudo apt install python3 python3-pip
+sudo pip3 install "invoke>=1.3.0"
+python3 -m pip install --upgrade pip setuptools wheel
+pip3 install Fabric3</pre>
+      </div>
+
+      <div class="nb-box dash">
+        <span class="nb-box-title">Quick Reference</span>
+        <ul class="nb-list">
+          <li><code>isMappingType</code> import error means a Python 3 fab over Fabric 1.x. Pick Fix A or Fix B.</li>
+          <li><code>No module named Crypto</code> means <code>pycrypto</code> is missing. Install it.</li>
+          <li>Install Fabric for every user that runs it. Prefer installing as root.</li>
+          <li>Confirm the result with <code>fab -V</code> before running any job.</li>
+        </ul>
+      </div>
+    </div>
+     </article>
+
+     <!-- Leaf 10: end / back cover -->
+     <article data-label="The End" class="nb-leaf nb-backcover" id="nb-pyauto-end" role="group" aria-roledescription="page" aria-label="End of notebook">
+       <div class="nb-sheet nb-endsheet">
+         <div class="nb-rings" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+         <div class="nb-end-inner">
+           <div class="nb-end-mark">The End</div>
+           <p class="nb-cover-desc">You reached the end of the Python Automation notebook.<br>Turn back any time to revisit a page.</p>
+           <div class="nb-end-actions">
+             <button type="button" class="nb-end-btn" data-nb-goto="nb-pyauto-cover">↩ Read again</button>
+             <button type="button" class="nb-end-btn ghost" data-nb-finish>✔ Finish</button>
+           </div>
+         </div>
+       </div>
+     </article>
+
+     <!-- decorative dog-ear corners (real controls are the Prev/Next buttons) -->
+     <button type="button" class="nb-corner nb-corner-prev" id="nbCornerPrev" aria-hidden="true" tabindex="-1"></button>
+     <button type="button" class="nb-corner nb-corner-next" id="nbCornerNext" aria-hidden="true" tabindex="-1"></button>
+
+    </div><!-- /nb-stage -->
+
+    <div class="nb-book-controls" aria-label="Notebook page controls">
+      <button type="button" class="nb-nav-btn nb-prev" aria-label="Previous page">‹ Prev</button>
+      <span class="nb-page-indicator" aria-live="polite">Cover</span>
+      <button type="button" class="nb-nav-btn nb-next" aria-label="Next page">Next ›</button>
+    </div>
+
+   </div><!-- /nb-book -->
+  </section>
+
+</main>
+<script src="script.js?v=33"></script>
+</body>
+</html>

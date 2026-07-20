@@ -4590,6 +4590,20 @@ main :where([style*="grid"], [class*="grid"], .two-col) > * { min-width: 0; }
 /* Sidebar */
 #navGroupADOT.open .nav-sub-list { max-height: 700px; }
 
+/* ══════════════════════════════════════════════════════
+   PYTHON FRAMEWORK FOR AUTOMATION — python_raasng_devops
+   Color: --pyauto: gold (Python's second brand colour)
+   Distinct from: ArgoCD orange, ADOT green, Helm cyan,
+   MCP sky-blue, AI indigo
+══════════════════════════════════════════════════════ */
+:root {
+  --pyauto:      #f0c040;   /* warm gold, legible as text on dark */
+  --pyauto2:     #d4a017;
+  --pyauto-grad: linear-gradient(135deg, #f0c040, #d4a017);
+  --pyauto-glow: rgba(240,192,64,0.18);
+}
+[data-theme="light"] { --pyauto: #a16207; --pyauto2: #854d0e; }
+
 /* Hero */
 .adot-hero-section {
   background: radial-gradient(ellipse at 60% 0%, rgba(16,185,129,0.12) 0%, transparent 65%),
@@ -6255,6 +6269,7 @@ html.nb-plain .nb-p, html.nb-plain .nb-list { color: var(--nb-ink2); }
 .nb-book--otel  { --nb-marker: var(--cyan); }
 .nb-book--ai    { --nb-marker: var(--accent-ink); }
 .nb-book--setup { --nb-marker: var(--accent-ink); }
+.nb-book--pyauto{ --nb-marker: var(--pyauto); }
 
 /* ═══════════════════════════════════════════════════
    BOOKSHELF LANDING - the site front door
