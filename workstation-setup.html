@@ -247,7 +247,7 @@
             <div class="term-bar">
               <div class="term-btn"></div>
               <span class="term-label">~/.config/wezterm/wezterm.lua</span>
-              <button class="term-copy" data-copy="local wezterm = require(&quot;wezterm&quot;)&#10;&#10;local config = wezterm.config_builder()&#10;&#10;local is_windows = os.getenv(&quot;OS&quot;) and os.getenv(&quot;OS&quot;):lower():find(&quot;windows&quot;)&#10;local is_macos = wezterm.target_triple:lower():find(&quot;darwin&quot;) ~= nil&#10;&#10;config.color_scheme = &quot;rose-pine-moon&quot;&#10;config.max_fps = 120&#10;config.font = wezterm.font(&quot;Hack Nerd Font&quot;, { weight = &quot;DemiBold&quot; })&#10;config.window_decorations = &quot;INTEGRATED_BUTTONS|RESIZE&quot;&#10;config.window_frame = {&#10;  font = wezterm.font(&quot;Hack Nerd Font&quot;, { weight = &quot;Bold&quot; }),&#10;}&#10;config.inactive_pane_hsb = {&#10;  saturation = 0.0,&#10;  brightness = 0.5,&#10;}&#10;&#10;if is_windows then&#10;  config.win32_system_backdrop = &quot;Acrylic&quot;&#10;  config.window_background_opacity = 0.7&#10;  config.window_frame.font_size = 10.0&#10;end&#10;&#10;if is_macos then&#10;  config.window_background_opacity = 0.8&#10;  config.macos_window_background_blur = 50&#10;  config.font_size = 15.0&#10;  config.window_frame.font_size = 13.0&#10;end&#10;&#10;return config">Copy</button>
+              <button class="term-copy" data-copy="local wezterm = require(&quot;wezterm&quot;)&#10;&#10;local config = wezterm.config_builder()&#10;&#10;local is_windows = os.getenv(&quot;OS&quot;) and os.getenv(&quot;OS&quot;):lower():find(&quot;windows&quot;)&#10;local is_macos = wezterm.target_triple:lower():find(&quot;darwin&quot;) ~= nil&#10;&#10;config.color_scheme = &quot;rose-pine-moon&quot;&#10;-- Make text selection clearly visible (rose-pine-moon's default is too faint):&#10;-- solid light-purple (iris) block with dark text.&#10;config.colors = {&#10;  selection_fg = &quot;#232136&quot;, -- base (dark) text&#10;  selection_bg = &quot;#c4a7e7&quot;, -- iris (light purple)&#10;}&#10;config.max_fps = 120&#10;config.font = wezterm.font(&quot;Hack Nerd Font&quot;, { weight = &quot;DemiBold&quot; })&#10;config.window_decorations = &quot;INTEGRATED_BUTTONS|RESIZE&quot;&#10;config.window_frame = {&#10;  font = wezterm.font(&quot;Hack Nerd Font&quot;, { weight = &quot;Bold&quot; }),&#10;}&#10;config.inactive_pane_hsb = {&#10;  saturation = 0.0,&#10;  brightness = 0.5,&#10;}&#10;&#10;if is_windows then&#10;  config.win32_system_backdrop = &quot;Acrylic&quot;&#10;  config.window_background_opacity = 0.7&#10;  config.window_frame.font_size = 10.0&#10;end&#10;&#10;if is_macos then&#10;  config.window_background_opacity = 0.8&#10;  config.macos_window_background_blur = 50&#10;  config.font_size = 15.0&#10;  config.window_frame.font_size = 13.0&#10;end&#10;&#10;return config">Copy</button>
             </div>
             <div class="term-body"><span class="kw">local</span> <span class="cmd">wezterm</span> = <span class="fn">require</span>(<span class="str">"wezterm"</span>)
 
@@ -257,6 +257,12 @@
 <span class="kw">local</span> <span class="cmd">is_macos</span> = wezterm.target_triple:lower():find(<span class="str">"darwin"</span>) ~= <span class="kw">nil</span>
 
 config.color_scheme = <span class="str">"rose-pine-moon"</span>
+<span class="cmt">-- Make text selection clearly visible (rose-pine-moon's default is too faint):</span>
+<span class="cmt">-- solid light-purple (iris) block with dark text.</span>
+config.colors = {
+  selection_fg = <span class="str">"#232136"</span>, <span class="cmt">-- base (dark) text</span>
+  selection_bg = <span class="str">"#c4a7e7"</span>, <span class="cmt">-- iris (light purple)</span>
+}
 config.max_fps = <span class="cmd">120</span>
 config.font = wezterm.font(<span class="str">"Hack Nerd Font"</span>, { weight = <span class="str">"DemiBold"</span> })
 config.window_decorations = <span class="str">"INTEGRATED_BUTTONS|RESIZE"</span>
@@ -288,6 +294,7 @@ config.inactive_pane_hsb = {
           <table class="kv-table">
             <tr><th>Setting</th><th>Effect</th></tr>
             <tr><td class="k">color_scheme</td><td>Built-in Rose Pine Moon palette — no separate install needed.</td></tr>
+            <tr><td class="k">colors.selection_bg / _fg</td><td>Makes selected text clearly visible - a solid iris (light purple) highlight with dark text, instead of rose-pine-moon's faint default.</td></tr>
             <tr><td class="k">max_fps</td><td>Caps rendering at 120fps for smoother scrolling on high refresh-rate displays.</td></tr>
             <tr><td class="k">font</td><td>Hack Nerd Font, DemiBold weight, for the terminal body text.</td></tr>
             <tr><td class="k">window_decorations</td><td>Merges the close/minimize/zoom buttons into the tab bar instead of a separate title bar.</td></tr>
